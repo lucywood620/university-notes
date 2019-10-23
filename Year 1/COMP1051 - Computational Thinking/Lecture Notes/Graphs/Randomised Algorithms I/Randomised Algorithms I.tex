@@ -1,0 +1,290 @@
+\documentclass{article}[18pt]
+\usepackage{../../../../../format}
+\lhead{CT - Graphs}
+\lstset{language=C,
+	basicstyle=\ttfamily,
+	keywordstyle=\bfseries,
+	showstringspaces=false,
+	morekeywords={if, else, then, print, end, for, do, while},
+	tabsize=4,
+	mathescape=true,
+	escapechar=£,
+	numbers=left,
+	stepnumber=1,
+}
+
+\usepackage{caption}
+\DeclareCaptionFont{white}{\color{white}}
+\DeclareCaptionFormat{listing}{\colorbox{gray}{\parbox{\textwidth}{#1#2#3}}}
+\captionsetup[lstlisting]{format=listing,labelfont=white,textfont=white}
+
+\begin{document}
+\begin{center}
+\underline{\huge Randomised Algorithms I}
+\end{center}
+\section{Deterministic algorithms}
+The algorithms we saw until now are deterministic:
+\begin{itemize}
+	\item Process the input and produce an output
+	\item If it runs many times with the same input it produced the same output
+	\item For many "hard" computational problems
+	\begin{itemize}
+		\item It is difficult to design efficient algorithms
+		\item or the running time is very high
+	\end{itemize}
+\end{itemize}
+Where is the difficulty:
+\begin{itemize}
+	\item We often need to make choices between two (or more) alternatives
+	\item to make a correct choice we often need to know many \textbf{structural parameters} of the input
+	\item decisions in \textbf{previous} steps may influence the range of choices in future steps
+\end{itemize}
+What can we do for that?
+\begin{itemize}
+	\item Design efficient heuristics:
+	\begin{itemize}
+		\item They run quickly
+		\item But do not always compute the optimum solution
+	\end{itemize}
+	\item Design approximation algorithms
+	\begin{itemize}
+		\item an optimum solution is not guaranteed
+		\item but it is guaranteed that their output is "not far" from the optimum (small approximation ratio)
+	\end{itemize}
+	\item Use randomisation
+\end{itemize}
+\section{Randomised algorithms}
+\begin{itemize}
+	\item An algorithm is randomised if its behaviour (output, running time) is determined by:
+	\begin{itemize}
+		\item The input and
+		\item The values produced by a random generator (correspond to the random choices that it makes)
+	\end{itemize}
+	\item If it runs many times with the same input: it has different outputs/running times (depending on the random values each time)
+\end{itemize}
+\section{Randomised numbers}
+\begin{itemize}
+	\item The procedure $RANDOM(a,b)$:
+	\begin{itemize}
+		\item returns an integer between a and b
+		\item each of then with equal probability
+		\item every call of RANDOM is independent from the other ones
+	\end{itemize}
+	\item In practice: real randomness is difficult
+	\begin{itemize}
+		\item we use pseudo-random number generators
+		\item deterministic algorithms returning number that \textbf{look random}
+	\end{itemize}
+\end{itemize}
+An application of RANDOM(a,b)
+\begin{itemize}
+	\item We are given a graph G with vertices 1.2,...,n
+	\item We want to compute the random distance of a pair of vertices in G
+\end{itemize}
+Recall
+\begin{itemize}
+	\item The algorithm BFS(G,a,b) computes the distance between the vertices a and b in G
+	\item The randomised algorithm:
+	\begin{lstlisting}[caption=Random\_Distance(G)]
+a=RANDOM(1,n) £\hfill£ // randomly choose the first vertex a
+b=a £\hfill£ // initialization
+while b=a
+	b=RANDOM(1,n) £\hfill£ // randomly choose the second vertex 
+return BFS(G,a,b) £\hfill£ //coompute the distance of a and b
+	\end{lstlisting}
+\end{itemize}
+Another application of RANDOM(a,b)
+\begin{itemize}
+	\item We are given an array A with n numbers
+	\item we want to permute its elements randomly
+\end{itemize}
+How can we do that
+\begin{itemize}
+	\item Key idea
+	\begin{itemize}
+		\item Assign each element A[i] of the array A with a "priority" P[i]
+		\item Then sort the elements of A according to these priorities
+	\end{itemize}
+	\item The randomised algorithm:
+\begin{lstlisting}[caption=Permute-By-Sorting(A)]
+n $\leftarrow$ length[A]
+for i $\leftarrow$ 1 to n
+	do P[i]=RANDOM($1,n^3$)
+sort A using P as sort keys
+return A
+\end{lstlisting}
+\end{itemize}
+\section{Randomised algorithms}
+\begin{itemize}
+	\item In a randomised algorithm:
+	\begin{itemize}
+		\item The input is \textbf{not} randomly chosen: only the decisions of the algorithm
+		\item The running time may depend on its random choices. We calculate the "expected running time"
+	\end{itemize}
+\end{itemize}
+\begin{center}
+	Terminology:
+\end{center}
+\begin{tabularx}{\textwidth}{|X |X |}
+\hline
+Randomised algorithms& Average-case analysis\\
+\hline
+\begin{itemize}
+	\item Make random choices
+	\item Input is not random
+	\item expected running time
+\end{itemize}
+&\begin{itemize}
+	\item No random choices (deterministic algorithms)
+	\item Random input
+	\item Average case running time
+\end{itemize}\\
+\hline
+\end{tabularx}
+\section{Basic probability notions}
+In a random experiment (e.g. a coin toss):
+\begin{itemize}
+	\item First we define a sample space S
+	\item Each subset of S is an event
+	\item Each single element of S is also an elementary events (elementary events are also events)
+	\item We assign to each elementary event $x\in S$ a number $Pr(x)\geqslant 0$\\
+	Such that for every event $A=\{x_1,x_2,x_3,...,x_k\}$
+	\begin{itemize}
+		\item $\operatorname { Pr } ( A ) = \operatorname { Pr } \left( x _ { 1 } \right) + \operatorname { Pr } \left( x _ { 2 } \right) + \operatorname { Pr } \left( x _ { 3 } \right) + \ldots + \operatorname { Pr } \left( x _ { k } \right)$
+		\item Pr(S)=1 i.e.S is the certain event
+	\end{itemize}
+\end{itemize}
+The probability of an event shows:
+\begin{itemize}
+	\item How probable is that the experiment has an outcome
+	\item For two events A and B, if $A\cap B=\varnothing$, then
+	\begin{itemize}
+		\item A and B are called \textbf{mutually exclusive} and
+		\item $Pr(A\cup B)=Pr(A)+Pr(B)$
+	\end{itemize}
+	\item Two events A and B are independent if:
+	\begin{itemize}
+		\item $Pr(A\cap B)=Pr(A)\cdot Pr(B)$
+	\end{itemize}
+	\item In general we consider A and B as independent if they correspond to random experiments defined on different time and space domains
+\end{itemize}
+E.g for the random experiment "two independent tosses of a 'fair' coin":
+\begin{itemize}
+	\item The sample space: $S = \{ H H , H T , T H , T T \}$
+	\item The event "one head and one tail is":
+	$$A=\{HT,TH\}$$
+and has probability
+$$Pr(A)=Pr(HT)+Pr(TH)$$
+$$=\frac{1}{2}\cdot \frac{1}{2} +\frac{1}{2}\cdot \frac{1}{2}=\frac{1}{2}$$
+\end{itemize}
+\begin{itemize}
+	\item A random variable X is a function from S to the real numbers
+	\item The expected value of X is 
+	$$E[X]=\sum_{x\in \mathbb{R}} x\cdot Pr(\{X=x\})$$
+\end{itemize}
+E.g for the experiment "toss two 'fair' coins":
+\begin{itemize}
+	\item You earn £3 for each head but lose £2 for every tail
+	\item The random variable is X="your earnings"
+	\item The expected value of X is:
+	$$E [ X ] = 6 \cdot P ( H H ) + ( 3 - 2 ) \cdot P ( \{ H T , T H \} ) - 4 \cdot P ( T T )= 6 \cdot ( 1 / 4 ) + 1 \cdot ( 1 / 4 + 1 / 4 ) - 4 \cdot ( 1 / 4 ) = 1$$
+\end{itemize}
+Theorem: for any two random variables X and Y, the expected value of the random variable X+Y is
+$$E[X+Y]=E[X]+E[Y]$$
+\begin{itemize}
+	\item This property is called "linearity of expectation"
+	\item It is particularly useful for applications
+\end{itemize}
+\section{Randomised algorithms}
+Two main types of randomised algorithms
+\begin{itemize}
+	\item Las Vegas algorithms
+	\begin{itemize}
+		\item always find the correct solution
+		\item the running time varies for every execution
+	\end{itemize}
+	\item Monte Carlo algorithms
+	\begin{itemize}
+		\item not always the correct solution
+		\item but we can bound the probability of an incorrect solution
+	\end{itemize}
+	\item Both very useful depending on the application
+\end{itemize}
+\section{Monte Carlo algorithms}
+For decision problems (answer is YES/NO), there are two kinds of Monte Carlo algorithms
+\begin{itemize}
+	\item Algorithms with two-sided error:
+	\begin{itemize}
+		\item there is a non zero probability that the answer is wrong, when it answers YES and when it answers NO
+	\end{itemize}
+	\item Algorithms with one-sided error:
+	\begin{itemize}
+		\item there is a non zero probability that the answer is wrong, when it answers NO
+		\item the answer is always correct, when it answers YES
+		\item if we run the algorithm repeatedly:
+		\begin{itemize}
+			\item the failure probability becomes very small
+			\item the running time increases
+		\end{itemize}
+	\end{itemize}
+\end{itemize}
+\section{One sided error}
+\begin{itemize}
+	\item You have two £1 coins
+	\item Bob claims that the first one is real and the second is fake
+	\item You want to verify Bob's claim:
+	\begin{itemize}
+		\item So you ask hum questions
+		\item what do you ask
+	\end{itemize}
+	\item Main idea:
+	\begin{itemize}
+		\item if the coins are not the same, you finally believe Bob
+		\item if the coins are the same, you will catch Bob lying
+	\end{itemize}
+	\item A Monte-Carlo algorithm:
+	\begin{itemize}
+		\item Put the coins behind your back
+		\item Pick one randomly (you know which one you have picked)
+		\item ask Bob whether the picked coin is real or fake
+	\end{itemize}
+	\item Why does it work
+	\begin{itemize}
+		\item If the coins are different Bob will always recognise the fake one
+		\item If the coins are the same:
+		\begin{itemize}
+			\item In this case, Bob lies
+			\item He does not know which one you picked
+			\item he will guess $\Rightarrow$ he answers incorrectly with probability $\frac{1}{2}$
+		\end{itemize}
+	\end{itemize}
+\end{itemize}
+Our decision is "does Bob lie?"
+\begin{itemize}
+	\item if you answer YES
+	\begin{itemize}
+		\item then you caught Bob lying
+		\item $\Rightarrow$ you are sure he lies (always correct YES answer)
+	\end{itemize}
+	\item If you answer NO
+	\begin{itemize}
+		\item then you did not catch Bob lying
+		\item $\Rightarrow$ either he is honest, or he was just lucky (erroneous NO answer with probability $\frac{1}{2}$)
+	\end{itemize}
+	\item If you repeat the experiment k times:
+	\begin{itemize}
+		\item You give an erroneous NO answer with probability $\frac{1}{2^k}$ i.e. if he is too lucky (all k times)
+	\end{itemize}
+\end{itemize}
+\begin{itemize}
+	\item The graph isomorphism problem: "given two graphs $G_1,G_2$, are they the same graph?
+	\item A hard problem - nobody knows whether an efficient algorithm exists
+	\item If Bob claims that $G_1$ and $G_2$ are not the same
+	\begin{itemize}
+		\item randomly pick one of the graphs
+		\item ask Bob whether this is $G_1$ or $G_2$
+		\item similar idea with the coins
+	\end{itemize}
+\end{itemize}
+$\Rightarrow$ we have a Monte Carlo algorithm with one-sided error for the problem "graph non-isomorphism"
+\end{document}

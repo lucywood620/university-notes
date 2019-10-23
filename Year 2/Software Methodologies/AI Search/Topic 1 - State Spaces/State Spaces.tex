@@ -1,0 +1,208 @@
+\documentclass{article}[18pt]
+\usepackage{../../../../format}
+\lhead{Software Methodologies}
+
+
+\begin{document}
+\begin{center}
+\underline{\huge State Spaces}
+\end{center}
+\section{State spaces}
+State space - a set of states\\
+\\
+Two types of search problems
+\begin{itemize}
+	\item Global search problems - solutions are paths (state spaces are states and transitions. Get from initial to goal state by a sequence of transitions. Each transition has a step cost. Different actions can be used for the same transitions. The aim is to find a path from initial to goal state where the total step cost for the path is either max or min depending on the problem)
+	\item Local search problems - Have state space and state transitions but no actions or goal states. Each state has a cost associated called an objective cost. Find the state of either smallest or largest cost depending on if the problem is to minimise or maximise
+\end{itemize}
+\textit{How can you deal with an infinite state space?} - Only ever retain in memory what has already been visited in the state space. Build states when you have to
+\section{Real world problems}
+\subsubsection{8-Puzzle Problems}
+\begin{itemize}
+	\item Move tiles into the empty cell to reach a specific tile configuration
+	\item Not always a solution for n problem, but can find if there is a solution in P
+	\item If there is a solution, finding one is in P
+	\item Finding a solution with the fewest moves is in NP
+\end{itemize}
+\textit{What is a state?} - A particular tile configuration\\
+\textit{How might we represent this state?}
+\begin{itemize}
+	\item As a \textbf{tuple} $x\in \{0,1,...,8\}^9$ so that all components are distinct (sequence of 9 integers in a list, numbers between 1 and 9)
+	\item As a $3\times 3$ \textbf{matrix} M over $\{0,1,...,8\}$ so that all components are distinct (just a matrix looking like the grid)
+\end{itemize}
+\textit{What is a state transition} - Moving a tile into the empty space\\
+\textit{How might we represent this transition?}
+\begin{itemize}
+	\item $(x,y)$ is a transition iff
+	\begin{itemize}
+		\item $x_i=y_i \ \forall i \in \{1,2,...,9\}$ except $\exists j,k$ s.t. $0=x_j\neq y_j$ and $x_k\neq y_k=0$
+	\end{itemize}
+	\item $(M_1,M_2)$ is a transition iff
+	\begin{itemize}
+		\item $M_1[1,j]=M_2[i,j] \ \forall i, j \in \{1,2,3\}$ except $\exists (a,b), (c,d)$  s.t.$0=M_1[a,b]\neq M_2[a,b]$ and $M_1[c,d]\neq M_2[c,d]=0$
+		\item Either ($a=c$ and $|b=d|=1$) or ($b=d$ and $|a-c|=1$)
+	\end{itemize}
+	\item The initial state and the goal state are as required
+\end{itemize}
+\subsubsection{Rush hour}
+\begin{itemize}
+	\item Move car to the exit
+	\item Can generalise to $n\times n$
+	\item Finding if there is a solution is PSPACE-complete - harder than NP complete
+	\item If there are no lorries, still PSPACE-complete
+\end{itemize}
+\subsection{Path Problems}
+\subsubsection{Travelling Salesman Problem}
+\begin{itemize}
+	\item Given a set of cities and the distance between each pair of cities, find a shortest tour of all the cities
+	\item "cities" don't have to be cities and "distances" don't have to be distances. Could model anything
+	\item City-to-city distances don't have to be symmetric ($A\rightarrow B$ doesn't have to be $B\rightarrow A$ (might have a hill)) nor Euclidean (where you place them on the plane doesn't have to be scaled and stuff)
+	\begin{itemize}
+		\item Computing the optimal solution - \textbf{NP Hard}
+		\item Computing the optimal solution for the symmetric Euclidean TSP - \textbf{NP Hard}
+	\end{itemize} 
+\end{itemize}
+\textbf{Modelled as a search problem}
+
+\textit{What is a state?}
+	\begin{itemize}
+		\item A list of distinct cities (a partial tour)
+		\item A list containing each of the n cities exactly once
+	\end{itemize}
+\textit{How might we represent this state}
+\begin{itemize}
+	\item As a list of i cities, where $0\leqslant i \leqslant n$
+	\item As a list of n cities 
+\end{itemize}
+\textit{What might the initial state be?}
+\begin{itemize}
+	\item An empty list?
+\end{itemize}
+\textit{What is a state transition}
+\begin{itemize}
+	\item An ordered pair of states so that the second state is the first state incremented with an as yet unvisited city
+	\item An ordered pair of states so that the second state is the first state except that the cities in two locations have been swapped
+\end{itemize}
+\textit{How might we represent this transition?}
+\begin{itemize}
+	\item An ordered pair of lists $(p,q)$ so that $p=(p_1,p_2,...,p_i)$, for some $0\leqslant i < n$ and $q=(p_1,p_2,...,p_i,c)$, where $c\neq p_j$, $\forall j \in \{1,2,...,i\}$ (add unvisited cities)
+	\item An ordered pair of lists $(p,q)$ so that $q=(q_1,q_2,...,q_n)$ and $p=(p_1,p_2,...,p_n)$ where $p_i=q_i, \ \forall i\in \{1,2,..,n\}$ except $\exists j\neq k$ s.t. $p_j=q_k$ and $p_k=q_j$
+\end{itemize}
+\textit{What are the initial state and a goal state?}
+\begin{itemize}
+
+\item \textit{Idea 1}
+\begin{itemize}
+	\item Initial state: the empty list
+	\item Goal State: A list of all cities
+\end{itemize}
+\item \textit{Idea 2}
+\begin{itemize}
+	\item Initial state: list of cities in an arbitrary order
+	\item Goal state: Every state
+\end{itemize}
+\end{itemize}
+\textit{What is the cost to move from n-1 to n cities?}\\
+The cost of moving from n-1 to nth cities, and the cost from the nth city back to the 1st
+
+\subsubsection{Disjoint Connecting Paths}
+\begin{itemize}
+	\item In a labyrinth of rooms connected by corridors, each person $p_i$, where $i=1,2,...,k$ has to reach their own exit-room $t_i$ starting at their own start-room $s_i$
+	\item Start and exit rooms can only appear as terminal rooms on paths and no other room lies on more than one person's path
+\end{itemize}
+\section{Some considerations (and subtleties)}
+\textit{The state space might be very large or even infinite}
+\begin{itemize}
+	\item There are $n!$ states in an instance of the n-puzzle problem
+	\item There are $> 2n!$ and $n!$ states, respectively, in our two n-city TSP abstractions
+\end{itemize}
+\textit{So how do we store the state space?}
+\begin{itemize}
+	\item We describe states succinctly using appropriate data structures
+	\item State transitions are described using roles for application. So, states are built as and when we need them
+	\item There is a tension between how we represent states and state transitions versus the "implementation cost" of building states and establishing state transitions
+\end{itemize}
+\textit{In an optimization problem, how do we know we have an optimal path to a goal state}
+\begin{itemize}
+	\item This will be down to the search algorithm that we employ. Maybe we'll have to settle for non-optimal solutions
+\end{itemize}
+\textit{We need to ensure that our abstraction of the real world problem is:}
+\begin{itemize}
+	\item Such that solutions to the search problem and real-world problem correspond
+	\item Such that the level of real-world abstraction is appropriate. A balance between "abstraction" complexity and "computational" complexity
+\end{itemize}
+\section{In summary}
+\textit{To formally describe a real-world problem, we need to undertake the following}
+\begin{enumerate}
+	\item Define a state space that contains representations of all possible essential configurations of the objects of the real-world problem
+	\begin{itemize}
+		\item One need not enumerate all states, but one should be able to "build" a state as and when required
+	\end{itemize}
+	\item Specify an initial state corresponding to the configuration in which the real world problem starts
+	\item Specify goal states corresponding to the real-world configurations that are acceptable from which to derive solutions to the problem
+	\item Specify a set of rules to describe the transitions, possibly via actions between states in the state space, being sure to consider
+	\begin{itemize}
+		\item All real world assumptions made in the abstraction of the problem
+		\item The generality of the rules in relation to the adequacy in yielding solutions
+		\item How much work should be represented within the rules
+	\end{itemize}
+	\item Establish a notion of cost to measure the relative quality of solutions.
+\end{enumerate}
+\section{Definition of a "global path-based" search problem - KNOW FOR EXAM}
+\textit{Every (search) problem has six essential components}
+\begin{enumerate}
+	\item An \textbf{initial state} in which a problem-solving agent starts
+	\item A description of the possible \textbf{actions} available to the agent, via a \textbf{transition}(or \textbf{successor}) function $\phi$ which for each state x in the \textbf{state space} and each action $\alpha$, details a set of states (possibly empty) reachable from $x$ via action $\alpha$
+	\begin{itemize}
+		\item The state space is implicit in the description of the transition function
+		\item The pair $(y,\alpha)$ is a successor of $x$ if $y\in \phi(x,a)$
+		\item This is going from state x to state y by action $\alpha$
+	\end{itemize}
+	\item A goal test which determines whether a state is a goal state
+	\item A non negative step-cost function $\sigma$ which details the cost $\sigma (x,\alpha, y)$ of a transition from any state $x$ to any state $y$ via any action $\alpha$ (if possible)
+
+\item \textit{A solution to a problem}
+\begin{itemize}
+	\item A path from the initial state to a goal state
+\end{itemize}
+\item \textit{An optimal solution}
+\begin{itemize}
+	\item A solution with the lowest/highest path-cost among all solutions where path-cost of some path is the sum of the constituent step-costs
+\end{itemize}
+\end{enumerate}
+\section{Searching for solution paths - KNOW FOR EXAM}
+\textit{We're interested in search strategies that generate/reveal the search tree}
+\textit{Initially, the search tree consists of a root-node}
+\begin{itemize}
+	\item The associated state is the initial state
+\end{itemize}
+\textit{A search tree is generated/revealed by iteratively expanding, one by one, the hitherto unexpanded leaves of the tree so that}
+\begin{itemize}
+	\item A leaf is augmented with new (tree-) nodes so that the states associated with the new leaves are successor states of the state associated with the old leaf
+\end{itemize}
+\textit{If $y\in \phi(x,\alpha)$ and $y\in \phi(x,\beta)$, where $\alpha$ and $\beta$ are different actions}
+\begin{itemize}
+	\item Then a tree-node with associated state $x$ will have two children each of whose associated state is $y$. One for the transition via $\alpha$ and one from the transition via $\beta$
+	\item Each child node $y$ will have an associated action - the action undertaken to get from its parent node 
+\end{itemize}
+\textit{The unexpanded leaves form the fringe} - the choice of which fringe leaf to expand is determined by the \textbf{search strategy}
+A goal-node is a tree node for which the associated state is a goal state
+\section{Generating/revealing the search tree}
+\textit{Generating the search tree}
+\begin{itemize}
+	\item Suppose in the state space $\phi(x_0,\alpha)=\{x_1,x_2\},\phi(x_0,\beta)=\{x_2\}$ and $\phi(x_0,\gamma)=\varnothing$
+	\item Expand the root node
+	\item Suppose in the state space $\phi(x_1,\alpha)=\{x_1\},\phi(x_1,\beta)=\varnothing$ and $\phi(x_1,\gamma)=\{x_3\}$
+	\item Expand the left-most fringe node (because the search strategy says so)
+\end{itemize}
+\textit{Revealing the search tree}
+\begin{itemize}
+	\item Fringe equates to the tree-nodes that have been revealed
+\end{itemize}
+\section{Search Tree vs State Space}
+\textit{The search tree can also be seen as the "unrolling" of the state space}
+\begin{itemize}
+	\item For every "walk" w in the state space from the initial state there is a path \textbf{p} in the tree starting at the root node so that the states associated with the tree-nodes of this path \textbf{p} form the walk \textbf{w}
+	\item For every path \textbf{p} in the tree starting at the root node there is a walk \textbf{w} in the state space from the initial state so that the states of \textbf{w} form the sequence of states associated with the nodes of \textbf{p}
+\end{itemize}
+\end{document}

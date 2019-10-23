@@ -1,0 +1,92 @@
+\documentclass[grid,avery5388]{flashcards}
+\usepackage{amssymb}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{verse}
+\usepackage[version=3]{mhchem}
+\usepackage{graphicx}
+\settowidth{\versewidth}{It lies behind stars and under hills,}
+\addtolength{\versewidth}{2em}
+\usepackage{pgfplots}
+\geometry{headheight=12pt}
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0pt}
+
+\hyphenpenalty=10000
+\title{Conversion flashcards}
+\author{Sam Robbins}
+
+\cardbackstyle[\large]{plain}
+\cardfrontstyle[\large]{headings}
+%\cardbackstyle[\large]{headings}
+
+\begin{document}
+
+\begin{flashcard}[]{Give 4 different programming paradigms and briefly explain the underlying principle for each paradigm. [6]}
+\textbf{Imperative}: Statements change a programs state (closest to "memory abstraction" of CPU)\\
+\textbf{Declarative}: Programs say what to do, rather than how to do it\\
+\textbf{Data-Oriented}: Programs work with data through manipulating and searching relations (tables). Tables have things in common that can be linked together to get more information\\
+\textbf{Scripting}: Designed to automate frequently used tasks that involve calling or passing commands to external programs. These languages have lots of libraries to make things easier to do
+\end{flashcard}
+
+\begin{flashcard}[]{Give 4 different drivers of the evolution of programming languages and briefly explain each of these driving motivations. [4]}
+\textbf{Productivity}: Speed up software development process, reduce times and costs, support fast user interface development. This lead to the development of rapid applications development (RAD) languages and scripting languages\\
+\textbf{Reliability}: To try and reduce the number of errors caused during the execution of the program, this includes things such as type checking and exception handling.\\
+\textbf{Security}: Scripting languages used for webpages can, when run on machines, enable malicious programmers to breach your security.\\
+\textbf{Execution}: Different programming languages will work better for multi-threading and multi-core processing, allowing parallel computing
+\end{flashcard}
+
+\begin{flashcard}[]{In order to execute a high-level program we must first convert it into machine code so that the CPU can ‘understand’ it. Briefly explain
+the difference between compilation and interpretation. How are Java
+programs executed? [6]}
+Compilation is where the entire program is converted into a form that can be executed by the processor before the program is run, whilst interpretation is where the program is converted into an executable form whilst it is being run.\\
+Java, however, is compiled into bytecode before run time, this bytecode is then interpreted at runtime. 
+
+\end{flashcard}
+
+\begin{flashcard}[]{Outline a more refined view of (the phases of) compilation. [8]}
+\begin{itemize}
+
+\item Lexical analysis: converts the program into basic syntactic components and converts it into a token stream.
+\item Syntax analysis: converts the token stream into a parse tree.
+\item Translation phase: converts the parse tree into a linear sequence of intermediate code.
+\item Code generation: converts the intermediate code into assembly and then machine code.
+\end{itemize}
+\end{flashcard}
+
+\begin{flashcard}[]{Outline how you would develop a Prolog program that given some facts about who is the mother or father of whom (in some collection of individuals),
+computes who is the grandmother, grandfather or descendant of whom. [8]}
+grandma(X,Y) :- mother(X,Z), parents(\_,Z,Y).\\ 
+grandma(X,Y) :- mother(X,Z), father(Z,Y).\\ 
+grandpa(X,Y) :- father(X,Z), parents(\_,Z,Y). \\
+grandpa(X,Y) :- father(X,Z), father(Z,Y). \\
+descend(X,Y) :- mother(X,Y)\\
+descend(X,Y) :- father(X,Y)\\
+descend(X,Y) :- descend(X,Z) , descend(Z,Y)\\
+\end{flashcard}
+
+\begin{flashcard}[]{What are the syntax and the semantics of a programming language?
+Give 2 reasons why we should strive for a formal semantics for a programming
+language. [6]}
+
+\textbf{Syntax}: the rules the govern what makes a program ‘legitimately written’\\
+\textbf{Semantics}: the rules which govern what a program ‘means’\\
+Formal semantics are needed in a programming language so that the programmer is left in no doubt as to what the program will do when it is executed. Without formal semantics we can no longer prove that a program will do what it is intended to do or even runs the same on different machines (with no semantics, processors may interpret the commands differently).
+
+
+\end{flashcard}
+
+\begin{flashcard}[]{Define carefully what a regular expression is and explain how a regular expression is used to denote a set of strings. [10]}
+A \textbf{regular expression} over some \textbf{alphabet} $\Sigma$ (finite set of symbols)
+\begin{itemize}
+\item Any a $\in \Sigma$ is a regular expression. A regular expression is any letter from the alphabet
+\item \o (empty set) and $\epsilon$ (empty string) are regular expressions
+\item If $\omega$ and $\omega'$ are regular expressions then so are:
+\end{itemize}
+\end{flashcard}
+
+
+
+\end{document}

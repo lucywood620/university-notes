@@ -1,0 +1,6 @@
+list = input("Input a list")
+list=list.replace("["," ")
+list=list.replace("]","")
+list2=list.split(",")
+print(list2[0])
+print(list2[len(list2)-1])

@@ -1,0 +1,165 @@
+\documentclass{article}[18pt]
+\usepackage{../../../../format}
+\lhead{Programming Paradigms - Functional Programming}
+\usepackage{minted}
+\begin{document}
+\begin{center}
+\underline{\huge Types and Classes II}
+\end{center}
+\section{Simple functions}
+\begin{minted}{haskell}
+foo :: Int -> Int
+foo x = x + 3
+\end{minted}
+Two parts
+\begin{enumerate}
+	\item Type declaration \mintinline{haskell}{foo :: Int -> Int}
+	\item Definition \mintinline{haskell}{foo x = x + 3}
+\end{enumerate}
+Any type declaration you write will be checked by the type inference engine. Error if incorrect\\
+\\
+Reasoning about types is a core part of understanding (and writing) Haskell code so always decorate function definitions with their type\\
+\\
+Syntax conventions:
+\begin{itemize}
+	\item Function application is so important that it is written as quietly as possible: with whitespace
+	\item All functions are called in prefix form: "\mintinline{haskell}{foo a b}" not "\mintinline{haskell}{a foo b}"
+	\item But there is special syntax for binary functions
+\end{itemize}
+\section{Binary functions}
+All binary functions (which have type \mintinline{haskell}{a -> b -> c}) can be written as infix functions
+\subsection{Symbol only names}
+Names consisting only of symbols
+\begin{minted}{haskell}
+1 + 2 -- infix notation
+(+) 1 2 -- prefix notation
+False && True  -- infix notation
+(&&) False True -- prefix notation
+\end{minted}
+\subsection{"Normal" names}
+Names with alpha-numeric characters
+\begin{minted}{haskell}
+mod 3 2 -- prefix notation
+3 `mod` 2 -- infix notation using backticks
+\end{minted}
+\section{Conditional Expressions}
+As in most programming languages, functions can be defined using conditional expressions
+\begin{minted}[mathescape=true,escapeinside=||]{haskell}
+abs :: Int -> Int
+abs n = if n >= 0 then n else -n
+-- you always have to have the else branch
+-- avoids ambiguity problems in the type checker
+\end{minted}
+\section{Guarded Equations}
+As an alternative to conditions, functions can also be defined using guarded equations
+\begin{minted}{haskell}
+abs n | n >= 0    =n
+      | otherwise = -n
+\end{minted}
+Otherwise is True
+\section{Pattern Matching}
+Many functions have a particularly clear definition using pattern matching on their arguments
+\begin{minted}{haskell}
+not :: Bool -> Bool
+not False = True
+not True = False
+\end{minted}
+Functions can often be defined in many different ways using pattern matching. For example
+\begin{minted}{haskell}
+(&&) :: Bool -> Bool -> Bool
+True && True = True
+False && False = False
+False && True = False
+False && False = False
+\end{minted}
+Or more compactly
+\begin{minted}{haskell}
+True && True = True
+_    && _    = False
+\end{minted}
+And more efficiently
+\begin{minted}{haskell}
+True  && b = b
+False && _ = False
+\end{minted}
+\_ is a wildcard - matches anything
+\section{Polymorphism}
+Recall that haskell is strictly typed, which looks like a problem for length
+\begin{minted}{haskell}
+length [True, False, True] -- :: [Bool] -> Int ?
+length [1,2,3] -- :: [Int] -> Int
+\end{minted}
+Polymorphic types solve this problem
+\begin{minted}{haskell}
+Prelude> :type length
+length :: [a] -> Int
+\end{minted}
+This says that length takes a list of values of any type a and returns an int
+\subsection{Contrast with OO Languages}
+\begin{defin}[Parametric Polymorphism]
+Write a single implementation of a function that applies generically and identically to values of any type
+\end{defin}
+\begin{defin}["ad-hoc" polymorphism]
+Write multiple implementations of a function, one for each type you wish to support
+\end{defin}
+\begin{defin}[Subtype polymorphism]
+Relate datatypes by some "substitutability". Write a function for a supertype instance. Now all subtypes can use it. This is duck typing
+\end{defin}
+\newpage
+\section{Haskell Classes}
+\begin{important}[Class and instance]
+	{The words class and instance are the same as in object oriented programming languages, but their meaning is very different}
+\end{important}
+\begin{defin}[Class]
+A collection of types that support certain, specified overloaded operations called methods
+\end{defin}
+\begin{defin}[Instance]
+A concrete type that belongs to a class and provided implementations of the required methods	
+\end{defin}
+\begin{itemize}
+	\item Compare: type "a collection of related values"
+	\item This is not like subclassing and inheritance in Java/C++
+	\item Closest to a combination of Java interfaces and generics
+	\item Also similar to C++ "Concepts"
+\end{itemize}
+\subsection{Type classes}
+\begin{minted}{haskell}
+Num -- Numeric Types
+Eq -- Equality Types
+Ord -- Ordered Types
+\end{minted}
+\subsection{Defining Classes}
+We define the interface the type should support
+\begin{minted}{haskell}
+class Foo a where:
+	isfoo :: a -> Bool
+\end{minted}
+Now we say how types implement this
+\begin{minted}{haskell}
+instance Foo Int where
+	isfoo _ = False
+	
+instance Foo Char where
+	isfoo c = c `elem` ['a' .. 'c']
+\end{minted}
+\begin{itemize}
+	\item Can add new interfaces to old types, and new types to old interfaces
+	\item Contrasted to Java, where if I implement a new interface it is very difficult to make existing classes implement it
+\end{itemize}
+\begin{itemize}
+	\item Classes (interfaces) can provided default implementation
+	\item Example, the \mintinline{haskell}{Eq} class representing equality requires both (==) and (/=)
+	\item Since \mintinline{haskell}{a == b} $\Leftrightarrow$ \mintinline{haskell}{not (a /= b)}, we can provide default implementations and only require that an instance implements one
+\end{itemize}
+\begin{minted}{haskell}
+class Eq a where
+	(==) :: a -> a -> Bool
+	x == y = not (x /= y)
+	(/=) :: a -> a -> Bool
+	x /= y = not (x == y)
+
+-- instance for MyType only needs to provide one of (==) or (/=)
+instance Eq MyType where
+	x == y = ..
+\end{minted}
+\end{document}

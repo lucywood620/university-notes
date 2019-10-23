@@ -1,0 +1,204 @@
+\documentclass[grid,avery5371]{flashcards}
+\usepackage{amssymb}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{verse}
+\usepackage[version=3]{mhchem}
+\usepackage{graphicx}
+\settowidth{\versewidth}{It lies behind stars and under hills,}
+\addtolength{\versewidth}{2em}
+\usepackage{pgfplots}
+\geometry{headheight=12pt}
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0pt}
+\hyphenpenalty=100000
+
+\title{Conversion flashcards}
+\author{Sam Robbins}
+
+\cardbackstyle[\large]{plain}
+\cardfrontstyle[\large]{headings}
+\cardfrontfoot{ADS}
+%\cardbackstyle[\large]{headings}
+\setlength{\cardheight}{1.0in}
+\setlength{\oddevenshift}{1.0in}
+
+%\renewcommand{\cardrows}{8}
+\begin{document}
+
+\begin{flashcard}[]{Algorithm}
+A method or process followed to solve a problem
+\end{flashcard}
+
+\begin{flashcard}[]{Data Structure}
+	A particular way of storing and organising data in a computer so that it can be used efficiently 
+\end{flashcard}
+
+\begin{flashcard}[]{Stack}
+	A collection of elements that are inserted and removed according to the last-in-first-out (LIFO) principle
+\end{flashcard}
+
+\begin{flashcard}[]{Queue}
+	A collection of objects that are inserted and removed according to the first-in-first-out (FIFO) principle
+\end{flashcard}
+
+\begin{flashcard}[]{Hash table}
+	Consists of a bucket array and a hash function
+\end{flashcard} 
+
+\begin{flashcard}[]{Bucket Array}
+	An array A of size N where each cell A is thought of as a bucket storing a collection of key-value pairs
+\end{flashcard}
+
+\begin{flashcard}[]{Capacity}
+	The size of the hash table
+\end{flashcard}
+
+\begin{flashcard}[]{Open addressing schemes}
+	Store at most one entry in each bucket
+\end{flashcard}
+
+\begin{flashcard}[]{Separate Chaining}
+	Each bucket A[i] stores a list holding the entries (k,v) such that h(k)=i
+\end{flashcard}
+
+\begin{flashcard}[]{Second-Choice Hashing}
+	Compute two hash functions and store the key value pair in the bucket containing the fewest items
+\end{flashcard}
+
+\begin{flashcard}[]{Linear Probing}
+	Try to insert into A[i], then A[(i+1) mod N] and so on until we find and empty bucket
+\end{flashcard}
+
+\begin{flashcard}[]{Robin Hood Hashing}
+	{\small
+	Variation of linear probing. If, during probing with a new key, an existing key is found that is "closer to home" than the new key, then the existing key is displaced and replaced by the new key}
+\end{flashcard}
+
+\begin{flashcard}[]{Quadratic Probing}
+{\small
+This iteratively tries the buckets:
+$$A[(i+f(j))mod N], \text{for} j=0,1,2,..., \text{where} f(j)=j^2$$
+}
+\end{flashcard}
+
+\begin{flashcard}[]{Double hashing}
+{\small
+Choose a secondary hash function h' to choose a bucket if the initial hash function leads to a full bucket
+\[
+A[(i+f(j)) \bmod N], \text { for } j=0,1,2, \ldots, \text { where } f(j)=j \dot{h'}(k)
+\]
+}
+\end{flashcard}
+
+\begin{flashcard}[]{Cuckoo Hashing}
+There are two tables with two corresponding hash functions
+\end{flashcard}
+
+\begin{flashcard}[]{Tombstone}
+A marker left in a bucket after something has been deleted
+\end{flashcard}
+
+\begin{flashcard}[]{Backtracking}
+	Build up the solution one step at a time, backtracking when unable to continue
+\end{flashcard}
+
+\begin{flashcard}[]{Degree of a polynomial}
+	The highest power in the polynomial
+\end{flashcard}
+
+\begin{flashcard}[]{Monotonic}
+	Always going in one direction (either increasing or decreasing)
+\end{flashcard}
+
+
+\begin{flashcard}[]{Time complexity}
+	Expressed in terms of the number of basic operations used by the algorithm when the input has a particular size
+\end{flashcard}
+
+\begin{flashcard}[]{Big-O}
+	$$|f(x)|\leqslant C\cdot |g(x)|$$
+	whenever $x\geqslant k$
+\end{flashcard}
+
+\begin{flashcard}[]{Sum Rule}
+The $\mathcal{O}$ of the sum of two functions is the maximum of the $\mathcal{O}$ of the two
+\end{flashcard}
+
+\begin{flashcard}[]{Product Rule}
+	The $\mathcal{O}$ of the product of two functions is the product of their $\mathcal{O}$
+\end{flashcard}
+
+\begin{flashcard}[]{Big-Omega}
+	$$|f(x)|\geqslant C\cdot |g(x)|$$
+\end{flashcard}
+
+\begin{flashcard}[]{Theta}
+	$f(x)$ is $\mathcal{O}(g(x))$ and $g(x)$ is $\mathcal{O}(f(x))$
+\end{flashcard}
+
+\begin{flashcard}[]{Little-o}
+	\[
+	\lim _{x \rightarrow \infty} \frac{f(x)}{g(x)}=0
+	\]
+\end{flashcard}
+
+\begin{flashcard}[]{Little-Omega}
+	\[
+	f=\omega(g) \quad \Leftrightarrow \quad g=o(f)
+	\]
+\end{flashcard}
+
+\begin{flashcard}[]{Comparisons needed for a comparison based sorting algorithm}
+	For any comparison based sorting algorithm $\mathcal{A}$ and any $n\in \mathbb{N}$ large enough there exists an input of length n that requires $\mathcal{A}$ to perform $\Omega(n\log n)$ comparisons
+\end{flashcard}
+
+\begin{flashcard}[]{Bucket Sort}
+Puts elements with key i into the ith bucket, then empties one bucket after another
+\end{flashcard}
+
+\begin{flashcard}[]{Radix sort}
+	Like bucket sort but keeps sorting by different levels
+\end{flashcard}
+
+\begin{flashcard}[]{Binary Search}
+	Look at the middle of the list, use that to determine which half it is in, recursively call on the sublists
+\end{flashcard}
+
+\begin{flashcard}[]{Tree}
+	A connected graph without cycles
+\end{flashcard}
+
+\begin{flashcard}[]{Binary Search Tree}
+	A tree in which no node as more than two children. All elements in the left subtree are smaller than v and all in the right are bigger
+\end{flashcard}
+
+\begin{flashcard}[]{Types of edges for DFS}	{\small
+	\textbf{Tree} - Edges in the DFS-Forest\\
+	\textbf{Back} - Join a vertex to an ancestor\\
+	\textbf{Forward} - Not in the tree but join a vertex to its descendant\\
+	\textbf{Cross} - All others}
+\end{flashcard}
+
+\begin{flashcard}[]{Kruskal's Algorithm}
+	{\small
+Sort edges by weight\\
+Let A=$\varnothing$\\
+Consider the edges in increasing order of weight. For each edge e, add e to A unless it would create a cycle}
+\end{flashcard}
+
+\begin{flashcard}[]{Prim's Algorithm}
+{\small
+Let $U=\{u\}$ where u is some vertex chosen arbitrarily\\
+Let $A=\varnothing$\\
+Until U contains all vertices: find the least-weight edge e that joins a vertex w not in U and add e to A and w to U
+
+
+}
+\end{flashcard}
+
+
+
+\end{document}

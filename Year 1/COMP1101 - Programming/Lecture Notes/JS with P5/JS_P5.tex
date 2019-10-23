@@ -1,0 +1,216 @@
+\documentclass{article}[18pt]
+\usepackage{../../../../format}
+\lhead{Prog}
+\usepackage{minted}
+\usepackage{hyperref}
+\providecommand{\tightlist}{%
+	\setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\begin{document}
+\begin{center}
+\underline{\huge JS with p5}
+\end{center}
+
+
+\hypertarget{introduction-to-javascript-with-p5.js}{%
+	\section{Introduction to Javascript with
+		p5.js}\label{introduction-to-javascript-with-p5.js}}
+
+\begin{center}\rule{0.5\linewidth}{\linethickness}\end{center}
+
+\subsection{History}
+
+\begin{itemize}
+	\tightlist
+	\item
+	Originally in browsers
+	\item
+	Not Java
+	\item
+	It has some good parts
+	\item
+	Standardised by Ecma (once ECMA) as EcmaScript
+	\item
+	Current version is ES8 (2018)
+	\item
+	Most recent widely-supported version is ES6 (2015)
+	\item
+	\href{http://kangax.github.io/compat-table/es6/}{Support varies}
+\end{itemize}
+
+\begin{center}\rule{0.5\linewidth}{\linethickness}\end{center}
+
+\hypertarget{client--and-server--side}{%
+	\subsection{Client- and server- side}\label{client--and-server--side}}
+
+\begin{itemize}
+	\tightlist
+	\item
+	Recently JS is also used server-side: nodejs
+	\item
+	Good JS engines in mobile browsers
+	\item
+	JS often used for cross-platform App dev
+	\href{https://cordova.apache.org/}{Cordova}
+	\item
+	Also for desktop applications with
+	\href{https://electronjs.org/}{electron} e.g.
+	\href{https://atom.io/}{atom}
+	\item
+	Interpreted, not compiled: errors only happen at run-time
+	\item
+	\texttt{console.log} is your friend.
+\end{itemize}
+
+\begin{center}\rule{0.5\linewidth}{\linethickness}\end{center}
+
+\hypertarget{hello-world}{%
+	\subsection{Hello world}\label{hello-world}}
+
+\begin{itemize}
+	\tightlist
+	\item
+	Embed JavaScript in a web page
+	\item
+	Use \texttt{script} tag
+\begin{minted}{html}
+<html>
+<script>
+	console.log("Hello World")
+</script>
+</html>
+\end{minted}
+\end{itemize}
+
+
+\begin{center}\rule{0.5\linewidth}{\linethickness}\end{center}
+
+\hypertarget{what-just-happened}{%
+	\subsection{What just happened?}\label{what-just-happened}}
+
+Nothing?
+
+Looks the same as this
+\begin{minted}{html}
+<html>
+	<script>
+	8731747850][];[.]
+	</script>
+</html>
+\end{minted}
+
+Use developer tools to see the console output and error
+
+\begin{center}\rule{0.5\linewidth}{\linethickness}\end{center}
+
+\subsection{Hello again}
+
+In the browser we can also use the \texttt{alert} function
+
+\begin{minted}{html}
+<html>
+	<script>
+		alert("Hello,World")
+	</script>
+<html>
+\end{minted}
+
+Can run in browser as file, not just with http
+
+\begin{center}\rule{0.5\linewidth}{\linethickness}\end{center}
+
+\subsection{Importing code}
+
+\begin{itemize}
+	\tightlist
+	\item
+	Link to external javascript code with \texttt{src} attribute
+	\item
+	Usually placed in \texttt{head}
+	\item
+	Can refer to files in same source
+	\item
+	Can refer to external files via http
+	\item
+	Content Delivery Networks (CDN)\\
+\begin{minted}{html}
+<script>
+src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.7.2/p5.js">
+</script>
+\end{minted}
+	
+	
+\end{itemize}
+
+
+
+\begin{center}\rule{0.5\linewidth}{\linethickness}\end{center}
+
+\subsection{p5 minimal example}
+\begin{minted}{html}
+<!DOCTYPE html>
+<html>
+<head>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.7.2/p5.js">
+
+</script>
+<script type="application/javascript">
+function setup() {
+}
+
+function draw() {
+ellipse(50, 50, 80, 80);
+}
+
+</script>
+</head>
+</html>
+\end{minted}
+\newpage
+\begin{center}\rule{0.5\linewidth}{\linethickness}\end{center}
+
+\subsection{More interesting p5 example}
+\begin{minted}{html}
+<!DOCTYPE html>
+<html>
+<head>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.7.2/p5.js"></script>
+<script type="application/javascript">
+function setup() {
+createCanvas(640, 480);
+}
+
+function draw() {
+background(0,10);
+if (mouseIsPressed) {
+fill(0);
+} else {
+fill(255);
+}
+ellipse(mouseX, mouseY, 80, 80);
+}
+
+</script>
+</head>
+</html>
+\end{minted}
+
+
+\begin{center}\rule{0.5\linewidth}{\linethickness}\end{center}
+
+\hypertarget{using-p5}{%
+	\subsection{Using p5}\label{using-p5}}
+
+\begin{itemize}
+	\tightlist
+	\item
+	p5 provides some (global) functions and variables
+	\item
+	Details given at \url{https://p5js.org/reference/}
+	\item
+	Tutorials at \url{https://p5js.org/learn/}
+	\item
+	Nice example at \url{https://www.openprocessing.org/}
+\end{itemize}
+
+
+\end{document}

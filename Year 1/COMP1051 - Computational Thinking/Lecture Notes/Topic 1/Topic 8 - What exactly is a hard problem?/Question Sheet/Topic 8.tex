@@ -1,0 +1,140 @@
+\documentclass[addpoints]{exam}
+\usepackage{amssymb}
+\usepackage{listings}
+\usepackage{pxfonts}
+\usepackage{xcolor}
+\lstset{language=Python,
+	basicstyle=\ttfamily,
+	keywordstyle=\bfseries,
+	showstringspaces=false,
+	morekeywords={if, else, then, print, end, for, do, while},
+	tabsize=4,
+	mathescape=true,
+	moredelim=**[is][\color{red}]{@}{@},
+}
+
+\pagestyle{headandfoot}
+\firstpageheadrule
+\runningheadrule
+\firstpageheader{CT}{}{Sam Robbins}
+\runningheader{CT}{What exactly is a hard problem?}{Sam Robbins}
+\firstpagefooter{}{}{}
+\runningfooter{}{}{}
+\renewcommand{\solutiontitle}{\noindent\textbf{Solution:}\par\noindent}
+
+
+\printanswers
+\usepackage{graphicx}
+\marksnotpoints
+\bracketedpoints
+\pointsdroppedatright
+\pointsinrightmargin
+\begin{document}
+\begin{center}
+	\underline{\huge What exactly is a hard problem?}
+\end{center}
+\begin{questions}
+\question[4]What do we mean when we say that a decision problem is tractable? What is the complexity class \textbf{P}
+\begin{solution}[2in]
+	Tractable - It can be solved by an algorithm of time complexity $\mathcal{O}(n^k)$; that is, polynomial time\\
+	\textbf{P} - The complexity class of efficiently solvable problems 
+\end{solution}
+
+\question[4]Give two objections to the definition of a tractable problem as a problem solvable in $\mathcal{O}(n^k)$ time
+\begin{solution}[2in]
+	\begin{itemize}
+		\item What about the hidden constant
+		\item What if the k is massive
+	\end{itemize}
+\end{solution}
+
+\question[3]What do we mean when we say that a decision problem is efficiently checkable?
+\begin{solution}[2in]
+	Given a potential witness that some instance is a yes-instance, we can check in polynomial time whether the witness is indeed a witness
+\end{solution}
+
+\question[6]What is a non-deterministic algorithm? How does a non-deterministic algorithm accept some input? How do we measure time taken by some non-deterministic algorithm on some input
+\begin{solution}[2in]
+	It is an algorithm which guesses the solution, then check if it is correct.\\
+	It accepts an input when tested for correctness it passes\\
+	One "thread" is executed for every possible guess, acceptance is where there is at least one accepting thread.\\
+	\\
+	Time taken is the time taken by the shortest accepting computational thread
+\end{solution}
+
+\question[2]What is the complexity class \textbf{NP}
+\begin{solution}[2in]
+	The complexity class of decision problems that are efficiently checkable
+\end{solution}
+
+\question[3]Explain why the decision problem whose instances are pairs (G,b) with G a graph and b a natural number, and whose yes-instances are instances where G can be properly b-coloured is in \textbf{NP}
+\begin{solution}[2in]
+	Looking at each node and seeing if any of its neighbours are the same colour can be calculated in polynomial time
+\end{solution}
+
+\question[3]What do we mean when we write $\mathbf{P\subseteq NP}$? Explain why $\mathbf{P\subseteq NP}$
+\begin{solution}[2in]
+	We could try every possible combination and check it, as in a non deterministic algorithm
+\end{solution}
+
+\question[2]What is the \textbf{P} versus \textbf{NP} problem
+\begin{solution}[2in]
+	Are all problems in NP also in P
+\end{solution}
+
+\question[4]Define precisely the notion of a polynomial-time transformation
+\begin{solution}[2in]
+	A polynomial time transformation from X to Y is an algorithm $\alpha$ that:
+	\begin{itemize}
+		\item Takes an instance I of X as input and provides an instance $\alpha(I)$ of Y as output
+		\item Is such that an instance I of X is a yes-instance iff the instance $\alpha(I)$ of Y is a yes-instance
+	\end{itemize}
+\end{solution}
+
+\question[5] Prove the following: if X and Y are decision problems so that
+\begin{itemize}
+	\item there is a polynomial time transformation from X to Y
+	\item $Y\in P$
+\end{itemize}
+Then $X\in P$
+\begin{solution}[2in]
+	Suppose that $X\rightarrow_{poly} Y$, via the polynomial-time algorithm $\alpha$, and in addition we know that $Y\in \mathbf{P}$, as witnessed by the polynomial-time algorithm $\beta$. Consider the algorithm $\gamma$
+	\begin{itemize}
+		\item Take as input some $I$ of X
+		\item Compute $\alpha(I)$ using algorithm $\alpha$
+		\item Decide whether $\alpha(I)$ is a yes-instance of Y using algorithm $\beta$, outputting 'yes' if it is, and 'no' it is isn't
+	\end{itemize}
+	This algorithm solves X.\\
+	Let I be some instance of X of size n. The algorithms $\alpha$ and $\beta$ take time at most $\mathcal{O}(n^k)$ and $\mathcal{O}(n^m)$ time units respectively. For an input n, the overall time takes $\mathcal{O}n^{km}$, so $X\in P$
+\end{solution}
+
+
+\question[6]Define what it means for a problem to be NP-complete. Prove that if Y is an NP-complete problem then \textbf{P=NP} if, and only if, $Y\in P$
+\begin{solution}[2in]
+	Suppose there is a problem $Y\in NP$ such that for any problem $X\in NP$, we have $X\rightarrow_{poly} Y$\\
+	Such problems are NP complete.\\
+	From the previous theorem
+	\begin{itemize}
+		\item If $Y\in NP$ then every problem $X\in NP$ is also in P; that is P=NP
+		\item Conversely, suppose that P=NP, so, as $Y\in NP$, we must have that $Y\in P$
+	\end{itemize}
+	 
+\end{solution}
+
+\question[2]What is Cook's theorem?
+\begin{solution}[2in]
+	P=NP iff $SAT\in P$
+\end{solution}
+
+\question[4]Carefully define the Satisfiability problem and explain how we measure the size of an instance
+\begin{solution}[2in]
+	An instance of size n of the Satisfiability problem is a set of n clauses of literals involving the Boolean variables $X_1,X_2,...,X_n$\\
+	A yes-instance of the satisfiability problem is an instance for which there exists a truth assignment t that makes at least 1 literal in evert clause true  
+\end{solution}	
+\end{questions}
+	
+\end{document}
+
+
+
+

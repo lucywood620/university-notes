@@ -1,0 +1,497 @@
+\documentclass[grid,avery5371]{flashcards}
+\usepackage{amssymb}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{verse}
+\usepackage[version=3]{mhchem}
+\usepackage{graphicx}
+\settowidth{\versewidth}{It lies behind stars and under hills,}
+\addtolength{\versewidth}{2em}
+\usepackage{pgfplots}
+\geometry{headheight=12pt}
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0pt}
+\hyphenpenalty=100000
+
+\title{Conversion flashcards}
+\author{Sam Robbins}
+
+\cardbackstyle[\large]{plain}
+\cardfrontstyle[\large]{headings}
+\cardfrontfoot{MCS}
+%\cardbackstyle[\large]{headings}
+\setlength{\cardheight}{1.0in}
+\setlength{\oddevenshift}{1.0in}
+
+%\renewcommand{\cardrows}{8}
+\begin{document}
+
+\begin{flashcard}[]{Syntax}
+The definition of well-formed formulae of the logic
+\end{flashcard}
+
+\begin{flashcard}[]{Semantics}
+	The association of meaning and truth to the formulae of logic
+\end{flashcard}
+
+\begin{flashcard}[]{Proof System}
+	The manipulation of formulae according to a system of rules
+\end{flashcard}
+
+\begin{flashcard}[]{Completeness}
+	All the "true" semantics formulae should be provable
+\end{flashcard}
+
+\begin{flashcard}[]{Soundness}
+	Formulae that are "provable" should be "true"
+\end{flashcard}
+
+\begin{flashcard}[]{Tautology}
+	Where $\varphi$ evaluates to true for every f
+\end{flashcard}
+
+\begin{flashcard}[]{Contradiction}
+	Where $\varphi$ evaluates to true for every f
+\end{flashcard}
+
+\begin{flashcard}[]{De Morgan's Laws}
+	$$\lnot(X\land Y)\equiv \lnot X \lor \lnot Y$$
+	$$\lnot(X\lor Y)\equiv \lnot X \land \lnot Y$$
+\end{flashcard}
+
+\begin{flashcard}[]{Law of disjunction over Conjunction}
+	\[
+	p \vee(q \wedge r) \equiv(p \vee q) \wedge(p \vee r)
+	\]
+\end{flashcard}
+
+\begin{flashcard}[]{Law of conjunction over Disjunction}
+	\[
+	p \wedge(q \vee r) \equiv(p \wedge q) \vee(p \wedge r)
+	\]
+\end{flashcard}
+
+\begin{flashcard}[]{CNF}
+	The conjunction of a disjunction of literals
+\end{flashcard}
+
+\begin{flashcard}[]{DNF}
+	The disjunction of a conjunction of literals
+\end{flashcard}
+
+\begin{flashcard}[]{$X\subseteq Y$}
+	X is a subset of Y
+\end{flashcard}
+
+\begin{flashcard}[]{$X\subsetneq Y$}
+	X is not a subset of Y
+\end{flashcard}
+
+\begin{flashcard}[]{$X\subset Y$}
+	X is a proper subset of Y
+\end{flashcard}
+
+
+\begin{flashcard}[]{Power set}
+	The set of all subsets of S
+\end{flashcard}
+
+\begin{flashcard}[]{Cartesian Product}
+	\[
+	\{(x, y) : x \in X \text { and } y \in Y\}
+	\]
+\end{flashcard}
+\begin{flashcard}[]{Disjoint}
+	Two sets that have a union of the empty set
+\end{flashcard}
+
+\begin{flashcard}[]{Domain/Source}
+	The set A in the function $A\rightarrow B$
+\end{flashcard}
+
+\begin{flashcard}[]{Codomain/Target}
+	The set B in the function $A\rightarrow B$
+\end{flashcard}
+
+\begin{flashcard}[]{Image}
+	The result of passing a value through function
+\end{flashcard}
+
+\begin{flashcard}[]{Partial function}
+	A function such that $f(a)\in B$ or $f(a)$ is undefined
+\end{flashcard}
+
+
+\begin{flashcard}[]{Injective}
+	One to one function
+\end{flashcard}
+
+\begin{flashcard}[]{Surjective}
+	Every element in A maps to an element in B, all elements in B have been mapped to by at least 1 element in A
+\end{flashcard}
+
+\begin{flashcard}[]{Bijective}
+	Both injective and surjective (1 to 1 connections and all elements in both sets have a mapping)
+\end{flashcard}
+
+\begin{flashcard}[]{Reflexive}
+	$(a,a)\in R, \forall a\in A$ (For all values in A there is a relation to itself)
+\end{flashcard}
+
+\begin{flashcard}[]{Irreflexive}
+	$(a,a)\notin R\forall a \in A$ (Not every value in A has a relation to itself)
+\end{flashcard}
+
+\begin{flashcard}[]{Symmetry}
+	Whenever $(a,b)\in R$, then $(b,a)\in R \forall a,b \in A$ (For all possible pairs of values there is both (a,b) and (b,a))
+\end{flashcard}
+
+
+\begin{flashcard}[]{Antisymmetry}
+	Whenever $(a,b)(b,a)\in R$, then $a=b \forall a,b\in A$ (If there is a pair where there is a relation both ways then the value is the same)
+\end{flashcard}
+
+\begin{flashcard}[]{Transitivity}
+	When $(a,b)(b,c)\in R$ then $(a,c)\in R, \forall a,b,c\in A$ (If there is a relation from element A to B and B to C then there is from A to C)
+\end{flashcard}
+
+\begin{flashcard}[]{Reflexive closure}
+	The smallest reflexive relation that contains R. It is obtained by adding to R all the pairs $(x,x)$ that do not already lie in R
+\end{flashcard}
+
+\begin{flashcard}[]{Symmetric closure}
+	The smallest symmetric relation that contains R. It is obtained by adding to R all the pairs (x,y) for which $(y,x)$ but not $(x,y)$ lies in R
+\end{flashcard}
+
+\begin{flashcard}[]{Transitive closure}
+	The smallest transitive relation that contains R. It is the relation defined as
+	{\small
+	\[
+	\left\{(a, b) : a, b \in A,(a, b) \in R^{n}, \text { for some } n \geq 1\right\}=\bigcup_{n=1}^{\infty} R^{n}
+	\]}
+\end{flashcard}
+
+\begin{flashcard}[]{Equivalence Relation}
+	A relation that is Reflexive, symmetric and transitive\\
+	Denoted by $a\equiv b$ or $a\sim b$
+\end{flashcard}
+
+\begin{flashcard}[]{Partial Order}
+	A relation that is reflexive, anti-symmetric and transitive\\
+	A partial order R on set S is called a \textbf{poset}
+\end{flashcard}
+
+\begin{flashcard}[]{Totally ordered set}
+	$(S,\leq)$ is a poset and two elements in S are comparable
+\end{flashcard}
+
+\begin{flashcard}[]{Well ordered set}
+	$(S,\leq)$ is a poset and $\leq$ is a total ordering and every non-empty subset of S has a least element
+\end{flashcard}
+
+\begin{flashcard}[]{Predicate Symbol}
+	A symbol with an associated arity
+\end{flashcard}
+
+\begin{flashcard}[]{Signature}
+	The finite set of predicate (relation) and constant symbols
+\end{flashcard}
+
+\begin{flashcard}[]{Sentence}
+	A formula with no free variables
+\end{flashcard}
+
+\begin{flashcard}[]{Product Rule}
+	With a two ($n_1$ and $n_2$) steps in a procedure there are $n_1\times n_2$ ways to do the procedure
+\end{flashcard}
+
+\begin{flashcard}[]{Product rule}
+	If a procedure can be done in one of $n_1$ ways or one of $n_2$ ways, there are $n_1+n_2$ ways to do the task
+\end{flashcard}
+
+\begin{flashcard}[]{Permutation}
+	A set of distinct objects in an ordered arrangement of these objects
+\end{flashcard}
+
+\begin{flashcard}[]{r-Permutation}
+	An ordered arrangement of r elements in a set of at least r (n) distinct objects
+	$$P(n,r)=\dfrac{n!}{(n-r)!}$$
+\end{flashcard}
+
+\begin{flashcard}[]{r-Combination}
+	An unordered selection of r elements from a set of at least r (n) objects
+	$$C(n,r)=\dfrac{n!}{r!(n-r)!}$$
+\end{flashcard}
+
+\begin{flashcard}[]{How to use stars and bars}
+	$$C(Stars+Bars,Bars)$$
+\end{flashcard}
+
+\begin{flashcard}[]{Experiment}
+	A procedure that yields one of a given set of possible outcomes
+\end{flashcard}
+
+\begin{flashcard}[]{Sample Space}
+	The set of possible outcomes
+\end{flashcard}
+
+
+\begin{flashcard}[]{Event}
+	A subset of the sample space
+\end{flashcard}
+
+\begin{flashcard}[]{Bernoulli trial}
+	An experiment with two possible outcomes, success and failure
+\end{flashcard}
+
+\begin{flashcard}[]{Bayes' Theorem}
+	$$
+	p(F | E)=\frac{p(E | F) p(F)}{p(E | F) p(F)+p(E | \overline{F}) p(\overline{F})}
+	$$
+\end{flashcard}
+
+\begin{flashcard}[]{Random Variable}
+	A function from the sample space of an experiment to the real numbers
+\end{flashcard}
+
+\begin{flashcard}[]{Expected Value}
+	$$
+	E(X)=\sum_{i=1}^{n} p\left(s_{i}\right) X\left(s_{i}\right)
+	$$
+\end{flashcard}
+
+\begin{flashcard}[]{Variance}
+	$$
+	V(X)=\sum_{i=1}^{n}\left(X\left(s_{i}\right)-E(X)\right)^{2} \cdot p\left(s_{i}\right)
+	$$
+\end{flashcard}
+
+\begin{flashcard}[]{Chebyshev's Inequality}
+	\[
+	p(|X(s)-E(X)| \geq r) \leq V(X) / r^{2}
+	\]
+\end{flashcard}
+
+\begin{flashcard}[]{Markov's inequality}
+	\[
+	p(X(s) \geq a) \leq E(X) / a
+	\]
+\end{flashcard}
+
+\begin{flashcard}[]{Directed Graph (digraph)}
+	Edges can have directions
+\end{flashcard}
+
+\begin{flashcard}[]{Multigraphs}
+	Multiple edges allowed between two vertices
+\end{flashcard}
+
+\begin{flashcard}[]{Pseudographs}
+	Edges of the form uu (loops) are allowed
+\end{flashcard}
+
+\begin{flashcard}[]{Vertex or edge weighted graphs}
+	Vertices and/or edges can have weights
+\end{flashcard}
+
+\begin{flashcard}[]{Endpoints}
+	The vertices at the end of an edge
+\end{flashcard}
+
+\begin{flashcard}[]{Neighbours}
+	Vertices connected by an edge
+\end{flashcard}
+
+\begin{flashcard}[]{Incident}
+	The nodes connected by an edge
+\end{flashcard}
+
+\begin{flashcard}[]{Adjacent}
+	Two edges which both go to the same vertex
+\end{flashcard}
+
+\begin{flashcard}[]{Neighbourhood}
+	The set of neighbours of a vertex
+\end{flashcard}
+
+\begin{flashcard}[]{Degree}
+	The number of neighbours
+\end{flashcard}
+
+\begin{flashcard}[]{Isolated vertex}
+	A vertex with degree 0
+\end{flashcard}
+
+\begin{flashcard}[]{End/Pendant Vertex}
+	A vertex with degree 1
+\end{flashcard}
+
+\begin{flashcard}[]{Proper Subgraph}
+	The subgraph does not contain all the vertices and edges of the graph
+\end{flashcard}
+
+\begin{flashcard}[]{Spanning subgraph}
+	All vertices in the graph are in the subgraph
+\end{flashcard}
+
+\begin{flashcard}[]{Handshaking Lemma}
+	\(\sum_{v \in V} \operatorname{deg}(v)=2|E|\)
+\end{flashcard}
+
+\begin{flashcard}[]{$P_n$}
+	A path on n vertices
+\end{flashcard}
+
+\begin{flashcard}[]{$C_n$}
+	A cycle on n vertices
+\end{flashcard}
+
+\begin{flashcard}[]{$K_{p,q}$}
+	A complete bipartite graph
+\end{flashcard}
+\begin{flashcard}[]{$K_n$}
+	A complete bipartite graph which contains all the possible edges between pairs of vertices 
+\end{flashcard}
+
+\begin{flashcard}[]{Walk}
+	A sequence of edges
+\end{flashcard}
+
+\begin{flashcard}[]{Path}
+	A walk where all vertices are distinct
+\end{flashcard}
+
+\begin{flashcard}[]{Circuit/Closed Walk}
+	A walk where the start vertex is the same as the last vertex
+\end{flashcard}
+
+\begin{flashcard}[]{Cycle}
+	A closed walk where all vertices are distinct apart from the first and last
+\end{flashcard}
+
+\begin{flashcard}[]{Length}
+	The number of edges in a path or cycle
+\end{flashcard}
+
+\begin{flashcard}[]{Distance}
+	The length of the shortest path between two vertices if a path exists, $\infty$ otherwise
+\end{flashcard}
+
+\begin{flashcard}[]{Diameter}
+	The largest distance between two vertices in a graph
+\end{flashcard}
+
+\begin{flashcard}[]{Weakly connected}
+	The graph obtained from the digraph G forgetting direction of connection
+\end{flashcard}
+
+\begin{flashcard}[]{Strongly connected}
+	Any two distinct vertices and connected by directed paths in both directions
+\end{flashcard}
+
+\begin{flashcard}[]{Strongly connected component}
+	A maximal strongly connected subgraph of G
+\end{flashcard}
+
+\begin{flashcard}[]{Eulerian circuit}
+	Each of the vertices in a connected graph have an even degree
+\end{flashcard}
+
+
+\begin{flashcard}[]{Forest}
+	An acyclic (without cycles) graph
+\end{flashcard}
+
+\begin{flashcard}[]{Tree}
+	A connected forest
+\end{flashcard}
+
+\begin{flashcard}[]{Rooted Trees}
+	A tree in which one vertex is fixed as the root and every edge is directed away from this root
+\end{flashcard}
+
+
+\begin{flashcard}[]{$a|b$}
+	a is a factor of b
+\end{flashcard}
+
+\begin{flashcard}[]{The prime number theorem}
+	The number of primes not exceeding x approaches $x/ln(x)$
+\end{flashcard}
+
+\begin{flashcard}[]{Relatively prime numbers}
+	$gcd(a,b)=1$
+\end{flashcard}
+
+\begin{flashcard}[]{Fermat's Little theorem}
+	If p is prime and a is not a multiple of p then $a^{p-1}\equiv 1\mod p$ and $a^p\equiv a\mod p$
+\end{flashcard}
+
+\begin{flashcard}[]{Euler's $\phi$ function}
+	$\phi(n)$ is the number of integers $\leqslant n$ that are relatively prime with n
+\end{flashcard}
+
+\begin{flashcard}[]{Dot product}
+	$u\cdot v=u_1v_1+u_2v_2+\ldots+u_nv_n$
+\end{flashcard}
+
+\begin{flashcard}[]{Spanning a vector space}
+	The smallest subspace of V that contains all linear combinations
+\end{flashcard}
+
+
+\begin{flashcard}[]{Basis of a vector space}
+	S is linearly independent\\
+	S spans V
+\end{flashcard}
+
+\begin{flashcard}[]{Dimension of a vector space}
+	The dimension of a vector space is n where\\
+	Any subset of V with more than n vectors is linearly dependent\\
+	Any subset of V with fewer than n vectors does not span V
+\end{flashcard}
+
+\begin{flashcard}[]{Row space}
+	The subspace of $\mathbb{R}^n$ spanned by the row vectors of A
+\end{flashcard}
+
+\begin{flashcard}[]{Column space}
+	The subspace of $\mathbb{R}^m$ spanned by the column vectors of A
+\end{flashcard}
+
+\begin{flashcard}[]{Null space}
+	The solution set of the linear system $Ax=0$
+\end{flashcard}
+
+\begin{flashcard}[]{Rank}
+	The dimension of the row space (the number of leading variables in the general solution to $ax=0$) or dimension of range
+\end{flashcard}
+
+\begin{flashcard}[]{Nullity}
+	The dimension of the null space (the number of free variables in the general solution to $ax=0$) or dimension of kernel
+\end{flashcard}
+
+\begin{flashcard}[]{Linear map}
+	A linear transformation between vector spaces
+\end{flashcard}
+
+\begin{flashcard}[]{Kernel}
+	$\{x\in V| f(x)=0\}$
+\end{flashcard}
+
+\begin{flashcard}[]{Range}
+	$\{u\in W| u=f(x) \text{ for some } x\in V\}$
+\end{flashcard}
+
+\begin{flashcard}[]{Similar Matrices}
+	$A=P^{-1}BP$
+\end{flashcard}
+
+\begin{flashcard}[]{Diagonalisable}
+	Similar to a diagonal matrix
+\end{flashcard}
+
+
+\end{document}

@@ -1,0 +1,141 @@
+\documentclass{article}[18pt]
+\usepackage{../../../../format}
+\lhead{Algorithms and Data Structures - Matthew Johnson}
+\usepackage{listings}
+\usepackage{pxfonts}
+
+\lstset{language=C,
+    basicstyle=\ttfamily,
+    keywordstyle=\bfseries,
+    showstringspaces=false,
+    morekeywords={if, else, then, print, end, for, do, while},
+    tabsize=4
+}
+
+
+\begin{document}
+\begin{center}
+\underline{\huge Introduction and Pseudocode}
+\end{center}
+\section{Algorithms}
+\textbf{Algorithm} - A method or a process followed to solve a problem\\
+Properties an algorithm must have
+\begin{itemize}
+\item Correctness
+\item Composed of concrete unambiguous steps
+\item The number of steps must be finite
+\item Must terminate
+\end{itemize}
+\section{Data Structures}
+\textbf{Data Structure} - A particular way of storing and organizing data in a computer so it can be used efficiently
+\section{Machine Model}
+Random Access Machine 
+\begin{itemize}
+\item Memory consists of an infinite array
+\item Instructions executed sequentially one at a time
+\item All instructions take unit time. Running time is the number of executions executed 
+\end{itemize}
+\section{Pseudocode}
+To describe algorithms we will use generic pseudocode, not any one programming language.\\
+There are no very strict rules on how it should be written.\\
+\\
+Will often use variables: int, float, char, str\\
+Declare variable type before using.\\
+\\
+Different formats for setting equal.\\
+\\
+Some conventions declare type separate to value, some do not\\
+\\
+Logical operators included.\\
+\\
+Keyword for output is print, to concatenate strings use a comma, for example "The value of z is",z\\
+\\
+\subsection{If then else}
+\textbf{if} condition \textbf{then}\\
+$\textrm{} \qquad$ statement\\
+\textbf{end if}\\
+To make one thing happen if a statement is true, and one if it is false, two if statements can be used, but using an else statement is better, for example\\
+\begin{lstlisting}[mathescape=true]
+if x $\neq$ 0 then
+	z=y/x
+else
+	print "division by zero error"
+end if
+\end{lstlisting}
+
+
+
+end if and indentation is used to make things clearer
+\subsection{For loop}
+If you want to iterate some (numeric) variable through some range\\
+\\
+Great many variations in how languages do this, simplest is probably
+\begin{lstlisting}[mathescape=true]
+for variable=lower to upper do
+	body
+end for
+\end{lstlisting}
+Body is simply a sequence of statements\\
+Example:
+\begin{lstlisting}[mathescape=true]
+s=0
+integer L
+integer U
+for i=L to U do
+	s=s+i
+end for
+print s
+\end{lstlisting}
+Things this for loop does without being written down:
+\begin{itemize}
+\item Set I=L
+\item Iterate i by 1
+\item Check if $i\leqslant U$
+\end{itemize}
+
+
+In this for loop, it can only iterate consecutive integers\\
+A more generic one can iterate over a given bases set:
+\begin{lstlisting}[mathescape=true]
+for value in {value1, value2 ...} do
+	body
+end for
+\end{lstlisting}
+To iterate in more than 1, for example in 2, this can also use negative numbers to reduce:
+\begin{lstlisting}[mathescape=true]
+for i=0 to 9;i+=2 do
+	print i
+end for
+\end{lstlisting}
+
+\subsection{While loop}
+Do something while a condition is true:
+\begin{lstlisting}[mathescape=true]
+while condition do
+	body
+end while
+\end{lstlisting}
+Important difference between \textbf{for} and \textbf{while} over numerical values:\\
+\textbf{for} increments loop-variable automatically; \textbf{while} doesn't\\
+\\
+Everything that happens in a \textbf{while} loop is explicit, unlike a for loop\\
+
+\begin{lstlisting}[mathescape=true]
+for i=1 to 10 do
+	print i
+end for
+\end{lstlisting}
+\begin{lstlisting}[mathescape=true]
+i=1
+while $i\leqslant10$ do
+	print i
+	i=i+1
+end while
+\end{lstlisting}
+
+
+
+
+
+
+\end{document}

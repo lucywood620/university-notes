@@ -1,0 +1,108 @@
+\documentclass{article}[18pt]
+\usepackage{../../../../format}
+\lhead{Programming}
+\lstset{basicstyle=\ttfamily,
+  showstringspaces=false,
+  commentstyle=\color{red},
+  keywordstyle=\color{blue},
+  basicstyle=\footnotesize\ttfamily,
+  keywordsprefix=--,
+  keywordsprefix=-,
+  keywordstyle=\bfseries\color{green!40!black},
+  commentstyle=\itshape\color{purple!40!black},
+  identifierstyle=\color{black},
+  stringstyle=\color{red},
+  language=bash,
+  tabsize=4
+}
+
+\begin{document}
+\begin{center}
+\underline{\huge Programming Practical 2 - git}
+\end{center}
+\section{Setup}
+\begin{itemize}
+\item To set your username and password:
+\begin{lstlisting}[mathescape=true]
+git config --global user.name "Username"
+git config --global user.name "email@domain.com"
+\end{lstlisting}
+\item To set the editor
+\begin{lstlisting}[mathescape=true]
+git config --global core.editor "nano -w"
+\end{lstlisting}
+\item To check settings
+\begin{lstlisting}[mathescape=true]
+git config --list
+\end{lstlisting}
+\end{itemize}
+\section{Creating a repository}
+\begin{itemize}
+\item To initialise a repository
+\begin{lstlisting}[mathescape=true]
+git init
+\end{lstlisting}
+\item To check the status of the project
+\begin{lstlisting}[mathescape=true]
+git status
+\end{lstlisting}
+\end{itemize}
+\section{Tracking changes}
+\begin{itemize}
+\item To add a directory to staging
+\begin{lstlisting}[mathescape=true]
+git add <file>
+\end{lstlisting}
+\item To commit the staging area to the repository
+\begin{lstlisting}[mathescape=true]
+git commit -m "Commit comment"
+\end{lstlisting}
+\item To see what has been done recently
+\begin{lstlisting}[mathescape=true]
+git log
+\end{lstlisting}
+\item To see what has been changed since the last commit
+\begin{lstlisting}[mathescape=true]
+git diff
+\end{lstlisting}
+\item To see what has been changed and added to the staging area since the last commit
+\begin{lstlisting}[mathescape=true]
+git diff --staged
+\end{lstlisting}
+\item To limit the log size:
+\begin{lstlisting}[mathescape=true]
+git log -1
+\end{lstlisting}
+To display a more compressed version of the log
+\begin{lstlisting}[mathescape=true]
+git log --oneline
+\end{lstlisting}
+\end{itemize}
+\section{Exploring history}
+\begin{itemize}
+\item HEAD can be used to refer to the most recent commit, so to get the changes in the most recent commit:
+\begin{lstlisting}[mathescape=true]
+git diff HEAD <file>
+\end{lstlisting}
+\item To refer to commits before the head, use a ~ after the head, so to refer to the penultimate commit:
+\begin{lstlisting}[mathescape=true]
+git diff HEAD~1 <file>
+\end{lstlisting}
+\item To see the changes, as well as the commit message use git show, for example
+\begin{lstlisting}[mathescape=true]
+git show HEAD~2 <file>
+\end{lstlisting}
+\item To refer to specific commits, use the hex string provided when using git log --oneline
+\begin{lstlisting}[mathescape=true]
+git diff f22b25e <file>
+\end{lstlisting}
+\item To change things back to how they were use git checkout
+\begin{lstlisting}[mathescape=true]
+git checkout f22b25e <file>
+\end{lstlisting}
+
+\end{itemize}
+
+
+
+\end{document}

@@ -1,0 +1,86 @@
+\documentclass{article}[18pt]
+\usepackage{../../../../format}
+\lhead{ADS}
+\usepackage{enumitem}
+\usepackage{listings}
+\lstset{language=C,
+	basicstyle=\ttfamily,
+	keywordstyle=\bfseries,
+	showstringspaces=false,
+	morekeywords={if, else, then, print, end, for, do, while},
+	tabsize=4,
+	mathescape=true
+}
+\begin{document}
+\begin{center}
+\underline{\huge Practical 6}
+\end{center}
+\section{Question 1}
+Consider the numbers $K_n$ defined by
+$$K _ { n } = \left\{ \begin{array} { l l } { n } & { \text { for } n \leq 3 } \\ { K _ { n - 1 } + 2 K _ { n - 2 } + 3 K _ { n - 3 } } & { \text { for } n \geq 4 } \end{array} \right.$$
+\begin{enumerate}[label=(\alph*)]
+\item Calculate $K_8$
+\begin{itemize}
+	\item $K_8=K_7+2k_6+3k_5=293$
+	\item $K_7=k_6+k_5+2k_4=125$
+	\item $k_6=k_5+2k_4+3k_3=22+20+9=51$
+	\item $k_5=k_4+6+6=22$
+	\item $k_4=3+4+3=10$
+\end{itemize}
+\item Write pseudocode for a recursive function that returns $K_n$ for an integer $n>0$
+\begin{lstlisting}
+def K (n)
+if n $\leqslant$ 3 then
+	return n
+else
+	return K(n-1)+2K(n-2)+3K(n-3)
+\end{lstlisting}
+\item Write pseudocode for a non recursive function that returns $K_n$ for an integer $n>0$
+\begin{lstlisting}
+list L[1,2,3]
+input n
+for i in range 3,n do
+	L.append(i[n-1]+2i[n-2]+3i[n-3])
+end for
+print L[n+3]	
+\end{lstlisting}
+\item Which of the two functions you have defined would it be better to implement
+\begin{itemize}
+	\item Both would take a similar time and storage capacity as they both have to store the data in a list/stack for the results from 1 up to n, and so are performing a very similar operation
+\end{itemize}
+\end{enumerate}
+\section{Question 2}
+Consider the problem of finding increasing subsequences in a sequence of
+integers. For example, in the sequence:
+$$2, 6, 1, 9, 4, 8, 5, 10, 7$$
+2,6,9 is such a subsequence, 1,4,8,10 is another and 1,4,5,7 a third (since the
+numbers appear within the sequence in that order, not necessarily consecutively).
+Use recursion to describe a procedure for finding the longest increasing
+subsequence. (Is using recursion the best approach?)
+\begin{lstlisting}
+LIS(s)
+result R
+if len(S) =1
+	return s
+else
+	x=s[-1]
+	L=LIS(s-x)
+	t=s with x and larger integers removed
+	M=LIS(t)+x
+	return whichever of L and M is longer
+end if
+\end{lstlisting}
+\section{Question 4}
+\begin{lstlisting}
+Input: coordinates of the midpoint(mp), the length of the line (l) and recursion depth d.
+Output: drawing of a H Tree.
+	calculate the points of the H h1,h2,h3 and h4
+if d = 0 then
+	draw a H with midpoint mp and line length l
+else
+	draw a H on each of the points of the h1...h4 with line length l/2
+end if
+\end{lstlisting}
+
+
+\end{document}

@@ -1,0 +1,146 @@
+\documentclass{article}[18pt]
+\usepackage{../../../../format}
+\lhead{Programming}
+\usepackage{hyperref}
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\begin{document}
+\begin{center}
+\underline{\huge Node JS REST}
+\end{center}
+\section{Testing nodejs REST}\label{testing-nodejs-rest}
+
+\begin{center}\rule{0.5\linewidth}{\linethickness}\end{center}
+
+\hypertarget{basic-approaches}{%
+\subsection{Basic Approaches}\label{basic-approaches}}
+
+\begin{itemize}
+\tightlist
+\item
+  Using browser (manual)
+\item
+  Using Postman (partly automatic)
+\item
+  Using test scripts (automatic)
+\end{itemize}
+
+\begin{center}\rule{0.5\linewidth}{\linethickness}\end{center}
+
+\hypertarget{browser-based-testing}{%
+\subsection{browser-based testing}\label{browser-based-testing}}
+
+\begin{itemize}
+\tightlist
+\item
+  GET is easy: just type in URL
+\item
+  POST is slightly harder: build HTML form
+\item
+  Other http methods more difficult
+\end{itemize}
+
+\begin{center}\rule{0.5\linewidth}{\linethickness}\end{center}
+
+\hypertarget{postman}{%
+\subsection{Postman}\label{postman}}
+
+\begin{itemize}
+\tightlist
+\item
+  Originally a chrome plugin
+\item
+  Now standalone application \url{https://www.getpostman.com/}
+\item
+  Define a set of requests in a collection
+\item
+  Choose GET or POST (or other)
+\item
+  Include body parameters for POST
+\item
+  Use x-www-form-urlencoded
+\item
+  Can specify expected responses
+\end{itemize}
+
+\begin{center}\rule{0.5\linewidth}{\linethickness}\end{center}
+
+\hypertarget{test-scripts}{%
+\subsection{Test scripts}\label{test-scripts}}
+
+\begin{itemize}
+\tightlist
+\item
+  There are very many javascript unit testing frameworks (mocha,
+  jasmine)
+\item
+  I am using Jest
+\item
+  Read a
+  \href{https://medium.com/welldone-software/an-overview-of-javascript-testing-in-2018-f68950900bc3}{recent
+  review}
+\item
+  npm install
+\item
+  Tests are js programs (as in jUnit)
+\item
+  Put tests in test directory or name .test.js
+\end{itemize}
+
+\begin{center}\rule{0.5\linewidth}{\linethickness}\end{center}
+\subsection{Running tests}
+\begin{itemize}
+\tightlist
+\item
+  Get it going first
+\item
+  Use nodemon to auto-restart server
+\item
+  Add test script to your package.json
+\item
+  run test with npm test
+\end{itemize}
+
+\begin{center}\rule{0.5\linewidth}{\linethickness}\end{center}
+
+package.json
+
+\begin{verbatim}
+{
+  "name": "seminargroups",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest",
+    "dev": "nodemon index.js"
+  }
+  ...
+  }
+\end{verbatim}
+
+\begin{center}\rule{0.5\linewidth}{\linethickness}\end{center}
+
+\hypertarget{separate-out-app-from-server}{%
+\subsection{Separate out app from
+server}\label{separate-out-app-from-server}}
+
+e.g.~app.js file
+
+\begin{verbatim}
+const express = require('express');
+const app = express();
+// ... add routes
+module.exports = app;
+\end{verbatim}
+
+e.g.~index.js file
+
+\begin{verbatim}
+const app = require('./app');
+app.listen(8090);
+\end{verbatim}
+
+
+
+
+
+\end{document}

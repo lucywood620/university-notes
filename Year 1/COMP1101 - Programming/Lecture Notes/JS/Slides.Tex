@@ -1,0 +1,338 @@
+---?color=\#7E317B
+
+\hypertarget{javascript}{%
+\section{Javascript}\label{javascript}}
+
+\begin{center}\rule{0.5\linewidth}{\linethickness}\end{center}
+
+\hypertarget{history}{%
+\subsection{\texorpdfstring{\href{https://app.pluralsight.com/player?name=javascript-good-parts-m2\&mode=live\&clip=0\&course=javascript-good-parts\&author=douglas-crockford}{History}}{History}}\label{history}}
+
+\begin{itemize}
+\tightlist
+\item
+  Originally in browsers
+\item
+  Not Java
+\item
+  It has some good parts
+\item
+  Standardised by Ecma (once ECMA) as EcmaScript
+\item
+  Current version is ES8 (2018)
+\item
+  Most recent widely-supported version is ES6 (2015)
+\item
+  \href{http://kangax.github.io/compat-table/es6/}{Support varies}
+\end{itemize}
+
+\begin{center}\rule{0.5\linewidth}{\linethickness}\end{center}
+
+\hypertarget{client--and-server--side}{%
+\subsection{Client- and server- side}\label{client--and-server--side}}
+
+\begin{itemize}
+\tightlist
+\item
+  Recently JS is also used server-side: nodejs
+\item
+  Good JS engines in mobile browsers
+\item
+  JS often used for cross-platform App dev
+  \href{https://cordova.apache.org/}{Cordova}
+\item
+  Also for desktop applications with
+  \href{https://electronjs.org/}{electron} e.g.
+  \href{https://atom.io/}{atom}
+\item
+  Interpreted, not compiled: errors only happen at run-time
+\item
+  \texttt{console.log} is your friend
+\end{itemize}
+
+\begin{center}\rule{0.5\linewidth}{\linethickness}\end{center}
+
+\hypertarget{syntax}{%
+\subsection{Syntax}\label{syntax}}
+
+\begin{itemize}
+\tightlist
+\item
+  Mostly insensitive to white space (not python)
+\item
+  Case sensitive (not php)
+\item
+  Block structured, with braces (like Java)
+\item
+  Semicolons at the end of lines can be inferred
+\item
+  ``use strict''; good practice
+\item
+  Use \texttt{require} for modules in nodejs (many ways in browser)
+\end{itemize}
+
+\begin{center}\rule{0.5\linewidth}{\linethickness}\end{center}
+
+\hypertarget{variables-and-scope}{%
+\subsection{Variables and scope}\label{variables-and-scope}}
+
+\begin{itemize}
+\tightlist
+\item
+  Variables must be declared (in strict mode)
+\item
+  Can declare with
+
+  \begin{itemize}
+  \tightlist
+  \item
+    \texttt{var} (old-style function scope)
+  \item
+    \texttt{let} (new-style block scope)
+  \item
+    \texttt{const} (new-style block scope)
+  \end{itemize}
+\item
+  \texttt{var} declarations are `hoisted' to the top of the block
+\item
+  In non-strict undeclared variables are global
+\end{itemize}
+
+\begin{center}\rule{0.5\linewidth}{\linethickness}\end{center}
+
+\hypertarget{types}{%
+\subsection{Types}\label{types}}
+
+Six primitive types
+
+\begin{itemize}
+\tightlist
+\item
+  boolean (\texttt{true} and \texttt{false})
+\item
+  null
+\item
+  undefined
+\item
+  number (no separate int) see
+  \href{https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number}{Number}
+  and
+  \href{https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math}{Math}
+\item
+  string see
+  \href{https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String}{String}
+\item
+  \href{https://developer.mozilla.org/en-US/docs/Glossary/Symbol}{symbol}
+  (immutable)
+\item
+  Also objects and functions (non-primitive)
+\end{itemize}
+
+\begin{center}\rule{0.5\linewidth}{\linethickness}\end{center}
+
+\hypertarget{using-types}{%
+\subsection{Using types}\label{using-types}}
+
+\begin{itemize}
+\tightlist
+\item
+  Values have types
+\item
+  No type for variable declarations: dynamic typing
+\item
+  Function parameters do not have types
+\item
+  Might choose to document e.g.~parameters with comments
+\item
+  \texttt{typeof} find the type of a value
+\end{itemize}
+
+\begin{center}\rule{0.5\linewidth}{\linethickness}\end{center}
+
+\hypertarget{control-structures}{%
+\subsection{Control structures}\label{control-structures}}
+
+\begin{verbatim}
+if (condition) {
+  statement_1;
+} else {
+  statement_2;
+}
+\end{verbatim}
+
+See also \texttt{while}, \texttt{for}, \texttt{switch}, \texttt{do},
+\texttt{throw}, \texttt{try}, \texttt{catch}, ternary
+
+\begin{center}\rule{0.5\linewidth}{\linethickness}\end{center}
+
+\hypertarget{true-false-truthy-and-falsy}{%
+\subsection{true, false, truthy and
+falsy}\label{true-false-truthy-and-falsy}}
+
+These are all `falsy': - false - undefined - null - 0 - NaN - the empty
+string ("")
+
+\begin{center}\rule{0.5\linewidth}{\linethickness}\end{center}
+
+Can use for default values e.g
+
+\begin{verbatim}
+var x = x || 4;
+\end{verbatim}
+
+Useful when
+
+\begin{itemize}
+\tightlist
+\item
+  optional parameters have not been provided
+\item
+  object properties might not have been initialised
+\end{itemize}
+
+\begin{center}\rule{0.5\linewidth}{\linethickness}\end{center}
+
+\hypertarget{functions}{%
+\subsection{functions}\label{functions}}
+
+\begin{itemize}
+\tightlist
+\item
+  Are first-class objects and can be
+
+  \begin{itemize}
+  \tightlist
+  \item
+    assigned to variables
+  \item
+    passed as parameters
+  \end{itemize}
+\item
+  Often used for defining event callbacks
+\item
+  Don't have to be associated with objects but can be
+\end{itemize}
+
+\begin{verbatim}
+function sum(a, b){
+   return a+b;
+}
+\end{verbatim}
+
+\begin{center}\rule{0.5\linewidth}{\linethickness}\end{center}
+
+\hypertarget{functions-as-values}{%
+\subsection{functions as values}\label{functions-as-values}}
+
+Almost equivalent is
+
+\begin{verbatim}
+var sum = function (a, b){
+    return a+b;
+}
+\end{verbatim}
+
+or
+
+\begin{verbatim}
+var sum2 = (a,b) => a+b;
+\end{verbatim}
+
+\begin{center}\rule{0.5\linewidth}{\linethickness}\end{center}
+
+\hypertarget{arrays}{%
+\subsection{Arrays}\label{arrays}}
+
+Square bracket notation: like python, Java, C
+
+These are equivalent:
+
+\begin{verbatim}
+var arr = new Array(1,2,3);
+\end{verbatim}
+
+\begin{verbatim}
+var arr = Array(1,2,3);
+\end{verbatim}
+
+\begin{verbatim}
+var arr = [1,2,3];
+\end{verbatim}
+
+Arrays can contain elements of different types
+
+\begin{center}\rule{0.5\linewidth}{\linethickness}\end{center}
+
+\hypertarget{array-iteration}{%
+\subsection{Array iteration}\label{array-iteration}}
+
+\begin{verbatim}
+for(var i=0; i < arr.length; i++){
+   console.log(arr[i]);
+}
+\end{verbatim}
+
+See methods in
+\href{https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array}{Array}
+e.g.
+
+\begin{verbatim}
+arr.push(4);
+\end{verbatim}
+
+\begin{center}\rule{0.5\linewidth}{\linethickness}\end{center}
+
+\hypertarget{objects}{%
+\subsection{Objects}\label{objects}}
+
+\begin{itemize}
+\tightlist
+\item
+  Objects have named properties
+\item
+  Properties can have any type (including object, function)
+\item
+  A bit like Java Map and python Dictionary
+\item
+  Create with \texttt{Object} constructor or literal syntax
+\item
+  Access with dot or bracket
+\item
+  Inheritance through prototypes
+\end{itemize}
+
+\begin{center}\rule{0.5\linewidth}{\linethickness}\end{center}
+
+\begin{verbatim}
+var myCar = new Object();
+myCar.make = 'VW';
+myCar.model = 'Touran';
+
+console.log(myCar.make);
+console.log(myCar['make']);
+\end{verbatim}
+
+\begin{center}\rule{0.5\linewidth}{\linethickness}\end{center}
+
+\hypertarget{see-also}{%
+\subsection{See also}\label{see-also}}
+
+\begin{itemize}
+\tightlist
+\item
+  modules: require and module.exports
+\item
+  regexps
+\item
+  backticks (string expansion)
+\item
+  Set, Map
+\item
+  spread operator
+\item
+  \url{https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide}
+\item
+  \url{https://www.theodinproject.com/courses/web-development-101/}
+\item
+  \url{https://www.w3schools.com/js/default.asp}
+\end{itemize}

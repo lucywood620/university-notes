@@ -1,0 +1,270 @@
+\documentclass{article}[18pt]
+\usepackage{../../../../format}
+\lhead{ADS}
+
+
+\begin{document}
+\begin{center}
+\underline{\huge Part 1}
+\end{center}
+\section{Introduction and Pseudocode}
+\textbf{Algorithm} - A method or process followed to solve a problem.\\
+An algorithm must have:
+\begin{itemize}
+	\item Correctness
+	\item Composed of concrete unambiguous steps
+	\item The number of steps must be finite
+	\item Must terminate
+\end{itemize}
+\textbf{Data structure} - A particular way of storing and organising data in a computer so that it can be used efficiently
+\subsection{Machine Model}
+Random access machine:
+\begin{itemize}
+	\item Memory consists of an infinite array
+	\item Instructions executed sequentially one at a time
+	\item All instructions take unit time. Running time is the number of instructions executed
+\end{itemize}
+\section{Arrays and Lists}
+\subsection{Linked list}
+\begin{itemize}
+	\item A list is made up of nodes. Each node stores an element plus a pointer or "link" to another node
+	\item The first node is called the head
+	\item The last node, called the \textbf{tail} points to null
+	\item The nodes may be scattered all over the memory
+\end{itemize}
+To implement this list we have pointers to the first and last node:
+\begin{itemize}
+	\item \texttt{L.head}
+	\item \texttt{L.tail}
+\end{itemize}
+May refer to the node N using
+\begin{itemize}
+	\item \texttt{N.data}, the element
+	\item \texttt{N.next}, the link, the next node in the list (may be \texttt{NULL})
+\end{itemize}
+\begin{center}
+	\includegraphics[scale=0.7]{"Linked List"}
+\end{center}
+\subsection{Doubly Linked Lists}
+A node in a doubly linked list stores two references
+\begin{itemize}
+	\item a next link, which points to the next node in the list
+	\item a prev link, which points to the previous node in the list
+\end{itemize}
+To simplify, we add two dummy or sentinel nodes at the ends of the doubly linked list
+\subsection{Circularly linked lists}
+In a circularly linked list the last element points to the first element rather than to NULL
+\section{Stacks and queues}
+\subsection{Stacks}
+\textbf{Stack} - A collection of elements that are inserted and removed according to the last-in-first-out (LIFO) principle\\
+\\
+A stack has the following methods:
+\begin{itemize}
+	\item \texttt{push(e)}: insert element e at the top of the stack
+	\item \texttt{pop}: remove and return the top element of the stack; an error occurs if the stack is empty
+\end{itemize}
+It may have the following methods:
+\begin{itemize}
+	\item \texttt{size}: return the number of elements in the stack
+	\item \texttt{isEmpty}: return a boolean indicating if the stack is empty
+	\item \texttt{top}: return the top element in the stack, without removing it; an error occurs if the stack is empty
+\end{itemize}
+A stack can be implemented using an array as follows:
+\begin{itemize}
+	\item the stack consists of an N element array S, an an integer variable t that gives the top element of the stack
+	\item We initialise t to -1, and we using this value for t to identify an empty stack. The size of the stack is t+1
+\end{itemize}
+\subsection{Queues}
+\textbf{Queue} - A collection of objects that are inserted and removed according to the first-in-first-out (FIFO) principle\\
+\\
+A queue has the following methods:
+\begin{itemize}
+	\item \texttt{enqueue(e)}: Insert element e at the rear of the queue
+	\item \texttt{dequeue}: Remove and return from the queue the element at the front; an error occurs if the queue is empty
+\end{itemize}
+It may have the following methods:
+\begin{itemize}
+	\item \texttt{size}: Return the number of elements in the queue
+	\item \texttt{isEmpty}: Return a boolean indicating if the queue is empty
+	\item \texttt{front}: Return the front element of the queue, without removing it; an error occurs if the queue is empty
+\end{itemize}
+A queue can be implemented using an array as follows:
+\begin{itemize}
+	\item Use two variables f and r:
+	\begin{itemize}
+		\item f is an index to the cell of Q storing the front of the queue, unless the queue is empty, in which case f=r
+		\item r is an index to the next available array cell in Q, that is, the cell after the rear of Q, if queue is not empty
+	\end{itemize}
+	\item Initially f=r=0
+	\item After each enqueue we increment r. After each dequeue we increment f
+\end{itemize}
+This is the issue that r keeps getting incremented, so we would get an array out of bounds error, to solve this use modulo N arithmetic on r and f to let them wrap around
+\section{Hash Tables}
+\textbf{Hash table} - Consists of a bucket array and a hash function\\
+\textbf{Bucket Array}- An array A of size N where each cell A is though of as a bucket storing a collection of key-value pairs\\
+\textbf{Capacity} - The size of the hash table
+\begin{itemize}
+	\item The hash function is a function mapping each key to an integer in the range [0,N-1], where N is the capacity of the hash table
+	\item The main idea is to use h(k) as an index into the bucket array A. That is, we store the key value pair (k,v) in the bucket A[h(k)]
+	\item If there are two different keys with the same hash value h(k), then two different entries will be mapped to the same bucket in A. In this case, we say that a collision has occurred
+\end{itemize}
+A hash function is usually specified as the composition of two hash functions:
+\begin{itemize}
+	\item Hash code: keys to integers
+	\item Compression function: integers to [0,N-1]
+\end{itemize}
+The hash code is applied first, and the compression function is applied next on the result\\
+\\
+The ideal goal is for a hash function to scramble the keys uniformly, but more practically:
+\begin{itemize}
+	\item Hash function should be efficiently computable
+	\item Each table position is equally likely for each key
+\end{itemize}
+Some compression functions:
+\begin{itemize}
+	\item Division: take integer mod N
+	\item multiply add and divide: y maps to ay+b mod N
+\end{itemize}
+\subsection{Collisions}
+A large number of collisions reduces the performance of the hash table\\
+A good hash function minimises the collisions as much as possible\\
+\\
+\textbf{Open addressing schemes} - Store at most one entry in each bucket
+\subsection{Separate Chaining}
+Each bucket A[i] stores a list holding the entries (k,v) such that h(k)=i\\
+\\
+Separate chaining performance:
+\begin{itemize}
+	\item Cost is proportional to length
+	\item Average length=N/M (N is amount of data, M is size of array)
+	\item Worst case: all keys hash to the same list
+\end{itemize}
+We consider instead the expected worst case performance
+\begin{itemize}
+	\item For any hash table consider the longest list in any bucket
+	\item Then the expected worst case performance is the average length of this list
+\end{itemize}
+\begin{center}
+	\textit{Assuming truly random hash functions the expected worst case cost of a lookup in a hash table with separate chaining is $\Theta(\log n/\log\log n)$}
+\end{center}
+\subsection{Second-Choice Hashing}
+\begin{itemize}
+	\item This is a refinement of separate chaining. Now we have two hash functions $h_1$ and $h_2$
+	\item For a key k, compute $h_1(k)$ and $h_2(k)$ and store the key-value pair (k,v) in whichever bucket contains fewer items
+\end{itemize}
+\begin{center}
+	\textit{Assuming truly random hash functions the expected worst-case cost of a lookup in a hash table with second choice hashing is $\Theta(\log\log n)$}
+\end{center}
+\subsection{Linear probing}
+\begin{itemize}
+	\item Try to insert into A[i], then A[(i+1) mod N], then A[(i+2) mod N] and so on until we find an empty bucket
+	\item Insert and search costs depend on the length of the cluster
+	\item Average length of cluster is N/M
+	\item Worst case: All keys hash to the same cluster
+\end{itemize}
+\begin{center}
+	\textit{Assuming truly random hash functions the expected worst-case cost of a lookup in a hash table with linear probing is $\Omega(\log n)$}
+\end{center}
+\subsection{Robin Hood Hashing}
+This is a variation of linear probing. If, during probing with a new key, an existing key is found that is "closer to home" than the new key, then the existing key is displaced and replaced by the new key
+\begin{center}
+	\textit{Assuming truly random hash functions the expected worst case lookup in a hash table with Robin Hood hashing is $\Omega(\log n)$}
+\end{center}
+\begin{center}
+	\textit{Assuming truly random hash functions the variance of the expected number of probes required in Robin Hood hashing is $\mathcal{O}(\log\log n)$}
+\end{center}
+\subsection{Quadratic Probing}
+This iteratively tries the buckets
+\[
+A[(i+f(j)) \bmod N], \text { for } j=0,1,2, \ldots, \text { where } f(j)=j^{2}
+\]
+Until finding an empty bucket\\
+\\
+This avoids clustering patterns that occur with linear probing. However, it creates its own kind of clustering, called secondary clustering\\
+This may not find an empty bucket in A even if it exists
+\subsection{Double Hashing} 
+In this approach we choose a secondary hash function h', and if h maps some key k to a bucket A[i], with i=h(k) that is already occupied, then we iteratively try the buckets
+\[
+A[(i+f(j)) \bmod N], \text { for } j=0,1,2, \ldots, \text { where } f(j)=j \dot{h'}(k)
+\]
+Common choice of secondary hash function is:
+\[
+h^{\prime}(k)=q-(k \bmod q), \text { for some prime number } q<N
+\]
+The secondary hash function should not evaluate to zero
+\subsection{Cuckoo Hashing}
+\begin{itemize}
+	\item With cuckoo hashing there are two tables, $T_1$ and $T_2$, and two corresponding hash functions $h_1$ and $h_2$
+	\item Each key k is stored in either $T_1[h_1(k)]$ or $T_2[h_2(k)]$
+	\item To lookup or delete a key can be done in time $\mathcal{O}(1)$ since only two locations need be checked
+\end{itemize}
+Insertions:
+\begin{itemize}
+	\item A key is stored in $T_1[h_1(k)]$ if it is empty
+	\item Else it is stored in $T_2[h_2(k)]$ if that is empty
+	\item If both $T_1[h_1(k)]$ and $T_2[h_2(k)]$ are occupies remove the key k' that is in $t_1[h_1(k)]$ and
+	\begin{itemize}
+		\item Put k in $T_1[h_1(k)]$, and
+		\item move $k'$ to $T_2[h_2(k')]$
+		\item If $T_2[h_2(k')]$ is occupied by another key k'' them move that to $T_1[h+1(k'')]$
+		\item And so on
+	\end{itemize}
+\end{itemize}
+\subsubsection{The cuckoo graph}
+\begin{itemize}
+	\item The cuckoo graph is a bipartite graph derived from a cuckoo hash table
+	\item The vertices are the buckets, and for each key k, there is an edge from $T_1[h_1(k)]$ to $T_2[h_2(k)]$ (so we can think of keys as being the edges of the graph)
+	\item An insertion into the table can be described as a path through the cuckoo graph
+\end{itemize}
+\begin{center}
+	\textit{The insertion of key k fails if the connected component of the cuckoo graph containing k contains two or more cycles}
+\end{center}
+\begin{center}
+	\textit{The insertion of key k succeeds if the connected component of the cuckoo graph containing k contains one cycle or no cycles}
+\end{center}
+\subsubsection{Cuckoo Hashing}
+\begin{itemize}
+	\item Cuckoo hashing fails if any connected component of the cuckoo graph has more than one cycle
+	\item If we ensure the table are large enough this is very unlikely - having $M\geqslant 2N$ is sufficient
+\end{itemize}
+\subsection{Comparison}
+\begin{itemize}
+	\item The open addressing schemes are more memory efficient compared to separate chaining
+	\item Regarding running times, in experimental and theoretical analyses, the separate chaining method is either competitive or faster than the other methods
+	\item If memory space is not a major issue, the best method is separate chaining
+\end{itemize}
+\subsection{Deletions}
+\begin{itemize}
+	\item Deletions from the hash table must not hinder future searches. If a bucket is simply left empty this will hinder future problems
+	\item But the bucket should not be left unusable
+	\item To solve this problem we use tombstones: a marker that is left in a bucket after a deletion
+	\item If a tombstone is encountered when searching along a probe sequence to find a key, we know to continue
+	\item If a tombstone is encountered during insertion, then we should continue probing (to avoid creating duplicates), but then the new record can be places in the bucket where the tombstone was found
+	\item The use of tombstones lengthens the average probe sequence distance
+	\item Two possible remedies:
+	\begin{itemize}
+		\item Local reorganization: after deleting a key, continue to follow the probe sequence of that key and move records into the vacated bucket (this will not work for all collision resolution policies)
+		\item Periodically rehash the table by reinserting all records into a new hash table. And if you have a record of which keys are accessed most these can be placed where they will be found most easily
+	\end{itemize}
+\end{itemize}
+\section{Recursion}
+\begin{itemize}
+	\item A recursive algorithm must have a base case
+	\item A recursive algorithm must change its state and move towards the base case
+	\item A recursive algorithm must call itself, recursively
+\end{itemize}
+\subsection{Backtracking}
+A technique for problems with many candidate solutions but too many to try\\
+General idea: build up the solution one step at a time, backtracking when unable to continue\\
+\\
+\textbf{Generic algorithm}
+\begin{enumerate}
+	\item Do I have a solution yet?
+	\item No. Can I extend my solution by one "step"?
+	\item If yes, do that
+	\item Do I have a solution now? If yes, I'm done
+	\item If not, try and extend again
+	\item When I can't extend, take one step back and try another way
+	\item If no other extension available, then give up-no solution can be found
+\end{enumerate}
+\end{document}

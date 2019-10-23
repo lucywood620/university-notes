@@ -1,0 +1,136 @@
+\documentclass{article}[18pt]
+\usepackage{../../../../format}
+\lhead{CSys}
+
+
+\begin{document}
+\begin{center}
+\underline{\huge Sequential Circuits}
+\end{center}
+\section{Circuits}
+\begin{center}
+	\includegraphics[scale=0.7]{figure1}
+\end{center}
+\section{SR Latch}
+\begin{center}
+	\includegraphics[scale=0.7]{figure2}
+\end{center}
+\begin{center}
+	\includegraphics[scale=0.7]{figure3}
+\end{center}
+\begin{center}
+	\includegraphics[scale=0.7]{figure4}
+\end{center}
+\section{D Latch}
+\begin{center}
+	\includegraphics[scale=0.7]{figure5}
+\end{center}
+\begin{itemize}
+	\item The output will be updated to whatever the data is whenever the clock gives a pulse
+\end{itemize}
+\section{D Flip Flop}
+\begin{center}
+	\includegraphics[scale=0.7]{figure6}
+\end{center}
+\begin{itemize}
+	\item Whenever the clock is low, the data will transmit through the master, when the clock is high, the data will not transmit through the master
+\end{itemize}
+\begin{center}
+	\includegraphics[scale=0.7]{figure7}
+\end{center}
+\section{Enabled Flip Flop}
+\begin{center}
+	\includegraphics[scale=0.7]{figure8}
+\end{center}
+\begin{itemize}
+	\item Therefore the 1st diagram is the best one to use as by using the end gate, timing errors can be included
+\end{itemize}
+\section{Flip Flop Design}
+\begin{center}
+	\includegraphics[scale=0.7]{figure9}
+\end{center}
+\section{Example}
+\begin{center}
+	\includegraphics[scale=0.7]{figure10}
+\end{center}
+\section{Problem Circuits}
+\begin{center}
+	\includegraphics[scale=0.7]{figure11}
+\end{center}
+\begin{center}
+	\includegraphics[scale=0.7]{figure12}
+\end{center}
+\begin{center}
+	\includegraphics[scale=0.7]{figure13}
+\end{center}
+\section{Synchronous Circuits}
+\begin{center}
+	\includegraphics[scale=0.7]{figure14}
+\end{center}
+\section{Examples}
+\begin{center}
+	\includegraphics[scale=0.7]{figure15}
+\end{center}
+b,d,e,g,
+\section{Timing}
+\begin{center}
+	\includegraphics[scale=0.7]{figure16}
+\end{center}
+\begin{itemize}
+	\item ccq - contamination clock to q
+	\item pcq - propagation clock to q
+\end{itemize}
+\section{Setting Time}
+\begin{center}
+	\includegraphics[scale=0.7]{figure17}
+\end{center}
+\begin{center}
+	\includegraphics[scale=0.7]{figure18}
+\end{center}
+\begin{center}
+	\includegraphics[scale=0.7]{figure19}
+\end{center}
+\section{Example}
+\begin{center}
+	\includegraphics[scale=0.7]{figure20}
+\end{center}
+\begin{itemize}
+	\item Critical path goes through all 3 gates
+	\begin{itemize}
+		\item $CL_{pd}=120ps$
+	\end{itemize}
+	\item $T_c\geqslant80+120+50=250ps$
+	\item $1/250ps$ = 4GHz
+\end{itemize}
+There would be a hold time violation
+
+
+\section{Fixing the hold time violation}
+\begin{center}
+	\includegraphics[scale=0.7]{figure21}
+\end{center}
+\section{Metastable States}
+\begin{center}
+	\includegraphics[scale=0.7]{figure22}
+\end{center}
+\section{Synchronisers}
+\begin{center}
+	\includegraphics[scale=0.7]{figure23}
+\end{center}
+\section{Pipelining}
+\begin{center}
+	\includegraphics[scale=0.7]{figure24}
+\end{center}
+\begin{center}
+	\includegraphics[scale=0.7]{figure25}
+\end{center}
+\begin{center}
+	\includegraphics[scale=0.7]{figure26}
+\end{center}
+\begin{itemize}
+	\item Doing this gives higher latency, but greater throughput
+\end{itemize}
+
+
+
+\end{document}

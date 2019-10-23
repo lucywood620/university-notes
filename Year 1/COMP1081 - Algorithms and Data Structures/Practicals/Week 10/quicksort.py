@@ -1,0 +1,2 @@
+def asort(list):
+    for

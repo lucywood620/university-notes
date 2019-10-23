@@ -1,0 +1,110 @@
+\documentclass{article}[18pt]
+\usepackage{../../../../format}
+\lhead{Computer Systems - Dr Magnus Bordewich}
+
+
+\begin{document}
+\begin{center}
+\underline{\huge Number Systems}
+\end{center}
+\section{Decimal}
+The "decimal point" in general is called the \textbf{radix point}, this indicates the position of the "units", immediately to the left of the radix point
+\section{Positional number systems}
+The \textbf{base}(or \textbf{radix}) of the number system is the number of symbols (including 0). \\
+The subscript after the number indicates the base\\
+\\
+The contribution of symbol x, which is the $i^{th}$ symbol in the order, is the
+$$(i-1)\times base^{position}$$
+Where position is the number of places to the \textbf{left} of the units\\
+\\
+\begin{tabular}{|c|c|c|c|c|c|c|}
+\hline
+Position&2&1&0&.&-1&-2\\
+\hline
+$Base^{Position}$&$2^2$&$2^1$&$2^0$&.&$2^{-1}$&$2^{-2}$\\
+\hline
+Decimal Value&4&2&1&.&.5&.25\\
+\hline
+Example&1&1&0&.&1&1\\
+\hline
+\end{tabular}\\
+\\
+For this example it is equivalent to the decimal 6.75
+\section{Binary}
+Each digit in a binary number system is known as a bit
+\begin{itemize}
+\item \textbf{B}inary dig\textbf{IT}
+\end{itemize}
+A bit can have only one of two possible values
+\begin{itemize}
+\item 0 or 1 (false/true, off/on, LOW/HIGH)
+\end{itemize}
+Groups of bits are known as:
+\begin{itemize}
+\item \textbf{Nibble} - 4 bits
+\item \textbf{Byte} - 8 bits
+\item \textbf{Half Word} - 16 bits
+\item \textbf{Word} - 32 bits
+\item \textbf{Double Word} - 64 bits
+\end{itemize}
+Note that the value of a "word" is CPU dependent, as for a 64 bit CPU, a word is 64 bits, rather than the 32 stated above
+\section{Hexadecimal}
+This has 16 distinct symbols: \textbf{0,1,2,3,4,5,6,7,8,9,A,B,C,D,E,F}\\
+\\
+Why do we need Hexadecimal?
+\begin{itemize}
+\item Reading and writing binary values is difficult for humans
+\end{itemize}
+Advantages to using Hexadecimal
+\begin{itemize}
+\item \textbf{More Compact} than other number systems
+\item \textbf{Easy to convert} between binary and decimal
+\end{itemize}
+Programmers must be aware of what they are writing
+\begin{itemize}
+\item BEEF and BEEF$_{16}$ have very different meanings
+\item In Java use a prefix to denote a hexadecimal value: 0xBEEF=BEEF$_{16}$
+\end{itemize}
+\subsection{Hexadecimal conversion}
+\begin{tabular}{|c|c|c|c|c|c|c|}
+\hline
+Position&2&1&0&.&-1&-2\\
+\hline
+$Base^{Position}$&$16^2$&$16^1$&$16^0$&.&$16^{-1}$&$16^{-2}$\\
+\hline
+Decimal Value&256&16&1&.&.0625&.00390625\\
+\hline
+Example&C&2&D&.&1&0\\
+\hline
+\end{tabular}\\
+\\
+For this example it is equal to 3117.0625 in decimal
+\section{Conversion}
+\subsection{Binary to Hex}
+\begin{enumerate}
+\item Starting from the \textbf{radix point}, separate the binary number into groups of \textbf{four} binary digits (nibbles)
+\item Then \textbf{translate each group} (nibble) into its hexadecimal equivalent, group by group, maintaining left to right order
+\end{enumerate}
+Remember to add zeroes on the start and end to ensure that you get full nibbles if needed\\
+\\
+\begin{tabular}{c c c c c c}
+\textcolor{blue}{00}11&0101&1101&1000&.&001\textcolor{blue}{0}\\
+3&5&D&8&.&2
+\end{tabular}
+\subsection{Hex to binary}
+\begin{enumerate}
+\item Starting from the \textbf{radix point}, separate the hexadecimal number into digits
+\item Then translate each digit into a \textbf{4-digit binary nibble}, maintaining right to left order
+\end{enumerate}
+
+
+
+
+
+
+
+
+
+
+
+\end{document}

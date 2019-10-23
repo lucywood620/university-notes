@@ -1,0 +1,157 @@
+\documentclass{article}[18pt]
+\usepackage{../../../../format}
+\lhead{Programming}
+
+\usepackage{minted}
+\usepackage{hyperref}
+
+
+\providecommand{\tightlist}{%
+	\setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\begin{document}
+\begin{center}
+\underline{\huge JS Components}
+\end{center}
+
+
+\hypertarget{javascript-objects}{%
+	\section{Javascript Objects}\label{javascript-objects}}
+
+\hypertarget{collection-of-properties}{%
+	\subsection{Collection of properties}\label{collection-of-properties}}
+
+Each property is named (with a key) and has a value
+
+In Javascript Object Notation (JSON) we can write
+
+\begin{minted}{js}
+let ball = {x: 200, y: 300, radius: 50};
+\end{minted}
+
+\hypertarget{obj.prop}{%
+	\subsection{obj.prop}\label{obj.prop}}
+
+Access and properties like this
+
+\begin{minted}{js}
+ellipse(ball.x, ball.y, ball.radius*2, ball.radius*2);
+ball.x += 5;
+ball.z = 8;
+ball["colour"] = "red";
+\end{minted}
+The bottom line has the same effect as ball.colour="red";
+
+\hypertarget{function-valued-properties}{%
+	\subsection{Function-valued
+		properties}\label{function-valued-properties}}
+
+Object properties can be any type, including functions
+
+\begin{minted}{js}
+ball.draw = function(){ alert("I am a ball");}
+ball.draw();
+\end{minted}
+
+\hypertarget{this}{%
+	\subsection{this}\label{this}}
+
+\texttt{this} refers to the object it was called on
+
+\begin{minted}{js}
+ball.draw = function(){
+ellipse(this.x, this.y, this.radius*2, this.radius*2);
+}
+ball.draw();
+\end{minted}
+
+\hypertarget{prototypal-inheritance}{%
+	\subsection{Prototypal Inheritance}\label{prototypal-inheritance}}
+
+\begin{itemize}
+	\tightlist
+	\item
+	Every object has a property \texttt{\_\_proto\_\_} which refers to
+	another object
+	\item
+	If a property isn't found in an object's own properties, then
+	\texttt{\_\_proto\_\_} is checked
+	\item
+	Every function has a property \texttt{prototype} which can be used
+	when creating an object
+	\item
+	The \texttt{new} keyword is used with a constructor function to create
+	an object and set its \texttt{\_\_proto\_\_}
+	\item
+	Read more at
+	\href{https://developer.mozilla.org/en-US/docs/Web/JavaScript/Inheritance_and_the_prototype_chain}{MDN}
+\end{itemize}
+
+\hypertarget{inheriting-behaviour}{%
+	\subsection{Inheriting behaviour}\label{inheriting-behaviour}}
+
+\begin{itemize}
+	\item
+	In other languages (e.g Java, C\#) every object belongs to a
+	\emph{class}
+	
+	\begin{itemize}
+		\tightlist
+		\item
+		Data values (fields) are associated with objects
+		\item
+		Behaviour (methods) are associated with classes
+	\end{itemize}
+	\item
+	Things of the same type (class) can do the same things
+	\item
+	JS is more flexible: each object can define its own behaviour
+	\item
+	JS allows inheritance (common behaviour) through prototypes
+	\item
+	Java uses \emph{class-based inheritance} (object to class)
+	\item
+	JS use \emph{prototypal inheritance} (object to object)
+\end{itemize}
+
+\hypertarget{emulating-classes-in-js}{%
+	\subsection{Emulating classes in JS}\label{emulating-classes-in-js}}
+
+\href{https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes}{Simple
+	syntax for constructors and prototype functions}
+
+\begin{minted}{js}
+class Ball{
+constructor(x, y, r){
+this.x = x;
+this.y = y;
+this.radius = r;
+}
+draw(){
+ellipse(this.x, this.y,
+this.radius*2, this.radius*2);
+}
+}
+let b = new Ball(400,300,20);
+b.draw();
+\end{minted}
+
+\hypertarget{why-classes}{%
+	\subsection{Why classes?}\label{why-classes}}
+
+\begin{itemize}
+	\tightlist
+	\item
+	Reduces cut-and-paste: eases maintenance
+	\item
+	Encourages \emph{encapsulation}: hide the details so they can be
+	changed easily
+	\item
+	Make reusable compoments with classes
+	\item
+	Reuse in the same project (multiple balls) or in different projects
+\end{itemize}
+
+
+
+
+\end{document}

@@ -1,0 +1,395 @@
+\documentclass{article}[18pt]
+\usepackage{../../../../format}
+\lhead{MCS}
+
+
+\begin{document}
+\begin{center}
+\underline{\huge DMLA Term 2}
+\end{center}
+\section{Divisibility and Primes}
+The notation $a|b$ means that a is a factor of b
+\subsection{Properties of divisibility}
+The following statements about divisibility hold
+\begin{enumerate}
+	\item if $a|b$ then $a|(bc)$ for all c
+	\item If $a|b$ and $b|c$ then $a|c$
+	\item If $a|b$ and $a|c$ then $a|(sb+tc)$ for all $s,t$
+	\item For all $c\neq 0$, $a|b$ iff $(ca)|(cb)$
+\end{enumerate}
+\subsection{The division algorithm}
+Let a be an integer and d a positive integer. Then there exist unique numbers q and r, with $0\leqslant r<d$, such that $a=qd+r$\\
+In the equality in the division algorithm
+\begin{itemize}
+	\item q is the quotient, denoted $\operatorname{qent}(a,d)$ or a div d, and
+	\item r is the remainder, denoted $\operatorname{rem}(a,d)$ or a mod d
+\end{itemize}
+\subsection{Fundamental properties of primes}
+\subsubsection{Fundamental theorem of Arithmetic}
+Every positive integer $n>1$ can be uniquely represented as $n=p_1\cdot p_2 \cdots p_k$ where the numbers $p_1\leqslant p_2\leqslant\ldots \leqslant p_k$ are all prime
+\subsubsection{The infinitude of primes}
+There are infinitely many prime numbers
+\subsubsection{The prime number theorem}
+The number of primes not exceeding x approaches $x/ln(x)$ as x grows infinitely
+\subsection{The greatest common divisor}
+A linear combination of a and b is any number in the form $sa+tb$
+\begin{center}
+	\textit{gcd(a,b) is equal to the smallest positive linear combination of a and b}
+\end{center}
+\subsection{Properties of the GCD}
+The following statements hold
+\begin{enumerate}
+	\item \(\operatorname{gcd}(k a, k b)=k \cdot \operatorname{gcd}(a, b)\) for all \(k>0\)
+	\item If \(\operatorname{gcd}(a, b)=1\) and \(\operatorname{gcd}(a, c)=1\) then \(\operatorname{gcd}(a, b c)=1\)
+	\item If \(a | b c\) and \(\operatorname{gcd}(a, b)=1\) then al \(c\)
+\end{enumerate}
+\subsection{Euclid's Algorithm}
+If $a=qb+r$ then $\operatorname{gcd}(a,b)=\operatorname{gcd}(b,r)$
+\subsection{Relatively prime numbers}
+Two numbers a and b are called relatively prime if $\operatorname{gcd}(a,b)=1$
+\section{Modular Arithmetic}
+\subsection{Basic Modular Arithmetic}
+If a,b are integers and m is a positive integer then a is congruent to b modulo m iff $m|(a-b)$. Notation
+$$a\equiv b(\mod m)$$
+If a,b,m are integers and $m>0$ then $a\equiv b (\mod m)$ iff $\operatorname{rem}(a,m)=\operatorname{rem}(b,m)$\\
+Let m be a positive integer and let $a\equiv b(\mod m)$ and $c\equiv d(\mod m)$. Then
+$$a+c\equiv b+d (\mod m) \qquad \text{and} \qquad ac=bd(\mod m)$$
+\subsection{Multiplicative inverses}
+The easiest way to solve equation $ax=b$ is to multiply both parts by $a^{-1}$\\
+We can't do this within integers, but we often can when working modulo m\\
+Call $\overline{a}$ the (multiplicative) inverse of a modulo m if $\overline{a}a\equiv1\mod m$\\
+Multiplicative inverses do not always exist\\
+\\
+If $\gcd(a,m)=1$ then the inverse of a modulo m exists, and is unique
+\subsection{The Chinese Remainder theorem}
+Let $m_1,...,m_m$ be pairwise relatively prime positive integers and $a_1,...,a_n$ arbitrary integers. Then the system
+\[
+\begin{aligned} x & \equiv a_{1}\left(\bmod m_{1}\right) \\ x & \equiv a_{2}\left(\bmod m_{2}\right) \\ & \vdots \\ x & \equiv a_{n}\left(\bmod m_{n}\right) \end{aligned}
+\]
+has a unique solution modulo $m=m_1m_2\cdots m_n$. That is, there is a unique solution x with $0\leqslant x<m$ and every other solution is congruent to x modulo m
+\subsection{Fermat's Little Theorem}
+If p is a prime and a is not a multiple of p then $a^{p-1}\equiv 1\mod p$. Furthermore, for every integer a, $a^p\equiv a\mod p$
+\subsection{Euler's Theorem}
+Remember Euler's $\phi$-function: $\phi(n)$ is the number of integers $1\leqslant a \leqslant n$ that are relatively prime with n. Euler's theorem generalises Fermat's Little Theorem to non-prime moduli\\
+\\
+If n is a positive integer and $\gcd(a,n)=1$ then $a^{\phi(n)}\equiv 1\mod n$
+\subsection{Computing Euler's $\phi$-function}
+If $m_1$ and $m_2$are relatively prime then $\phi(m_1\cdot m_2)=\phi(m_1)\cdot \phi(m_2)$. If p is prime then $\phi(p^k)=p^k-p^{k-1}$
+\section{Matrices and Determinants}
+\subsection{Matrices}
+A matrix is a rectangular array of numbers. The numbers in the array are called the entries of the matrix. The entry in row i and column j is denoted by $a_{ij}$\\
+\\
+Assuming that the sizes of the matrices are such that the operations can be preformed, the following rules are valid:
+\begin{enumerate}
+	\item $A+B=B+A$
+	\item $A+(B+C)=(A+B)+C$
+	\item $A(BC)=(AB)C$
+	\item $A(B\pm C)=AB\pm AC$
+	\item $(B\pm C)A=BA+CA$
+	\item $\alpha(B\pm C)=\alpha B\pm \alpha C$
+	\item $(\alpha \pm \beta)A=\alpha A\pm \beta A$
+	\item $\alpha(\beta A)=(\alpha\beta)A$
+	\item $\alpha(BC)=(\alpha B)C=B(\alpha C)$ 
+\end{enumerate}
+\subsection{Matrix Transpose}
+If A is an $m\times n$ matrix then the transpose of A is the $n\times m$ matrix $A^T$ such that the ith row of A is the ith column of $A^T$
+\subsection{Minors and Cofactors}
+If A is a square matrix of order n, then the minor of the entry $a_{ij}$ denoted by $M_{ij}$, is the determinant of 
+the matrix (of order n-1) obtaining from A by removing its ith row and jth column\\
+The number $C_{ij}=(-1)^{i+j}M_{ij}$ is called the cofactor of $a_{ij}$
+\subsection{Determinants}
+If A is an $n\times n$ matrix then the determinant of A can be computed by any of the following cofactor expansions along the ith row and jth column respectively
+\[
+\begin{array}{l}{\operatorname{det}(A)=a_{i 1} C_{i 1}+a_{2} C_{2}+\ldots+a_{i n} C_{i n}} \\ {\operatorname{det}(A)=a_{1 j} C_{1 j}+a_{2 j} C_{2 j}+\ldots+a_{n j} C_{n j}}\end{array}
+\]
+Let
+\[
+A=\left( \begin{array}{rrr}{3} & {1} & {0} \\ {-2} & {-4} & {3} \\ {5} & {4} & {-2}\end{array}\right)
+\]
+Compute $\det(A)$ by cofactor expansion along the first row
+\[
+\left| \begin{array}{rrr}{3} & {1} & {0} \\ {-2} & {-4} & {3} \\ {5} & {4} & {-2}\end{array}\right|=3 \cdot \left| \begin{array}{rr}{-4} & {3} \\ {4} & {-2}\end{array}\right|-1 \cdot \left| \begin{array}{rr}{-2} & {3} \\ {5} & {-2}\end{array}\right|+0 \cdot \left| \begin{array}{rr}{-2} & {-4} \\ {5} & {-4}\end{array}\right|=
+\]
+\[
+3 \cdot(-4)-1 \cdot(-11)+0=-1
+\]
+\section{Linear Systems}
+\subsection{Systems of linear systems}
+\begin{itemize}
+	\item A linear equation in n variables $x_1,\ldots, x_n$ is an equation of the form 
+	\[
+	a_{1} x_{1}+a_{2} x_{2}+\ldots+a_{n} x_{n}=b
+	\]
+	Where the $a_i$'s and $b$ are constants and not all $a_i$'s are equal to 0
+	\item A finite set of linear equations is called a system of linear equations, or simply a linear system
+\end{itemize}
+\subsection{Linear systems with different numbers of solutions}
+\textbf{One solution} - Can cancel down to x or y equalling 1 value\\
+\textbf{No solutions} - Cancels down to a contradiction\\
+\textbf{Infinitely many solutions} - Cancels down to a number equals a number
+\subsection{Matrix form of a linear system}
+A linear system
+$$\begin{aligned} a _ { 11 } x _ { 1 } + a _ { 12 } x _ { 2 } + \ldots + a _ { 1 n } x _ { n } & = b _ { 1 } \\ a _ { 21 } x _ { 1 } + a _ { 22 } x _ { 2 } + \ldots + a _ { 2 n } x _ { n } & = b _ { 2 } \\ \vdots & = \vdots \\ a _ { m 1 } x _ { 1 } + a _ { m 2 } x _ { 2 } + \ldots + a _ { m n } x _ { n } & = b _ { m } \end{aligned}$$
+can be written in a matrix form as $Ax=b$ where
+$$A = \left( \begin{array} { c c c c } { a _ { 11 } } & { a _ { 12 } } & { \cdots } & { a _ { 1 n } } \\ { a _ { 21 } } & { a _ { 22 } } & { \cdots } & { a _ { 2 n } } \\ { \vdots } & { \vdots } & { } & { \vdots } \\ { a _ { m 1 } } & { a _ { m 2 } } & { \cdots } & { a _ { m n } } \end{array} \right) , \quad \mathbf { x } = \left( \begin{array} { c } { x _ { 1 } } \\ { x _ { 2 } } \\ { \vdots } \\ { x _ { n } } \end{array} \right) \quad \text { and } \mathbf { b } = \left( \begin{array} { c } { b _ { 1 } } \\ { b _ { 2 } } \\ { \vdots } \\ { b _ { m } } \end{array} \right)$$
+The matrix A is called the coefficient matrix of the system\\
+If A is (square and) invertible then the solution can be found as $x=A^{-1}b$
+\subsection{The augmented matrix and elementary row operations}
+The augmented matrix of a linear system is the matrix
+$$( A | \mathbf { b } ) = \left( \begin{array} { c c c c | c } { a _ { 11 } } & { a _ { 12 } } & { \cdots } & { a _ { 1 n } } & { b _ { 1 } } \\ { a _ { 21 } } & { a _ { 22 } } & { \cdots } & { a _ { 2 n } } & { b _ { 2 } } \\ { \vdots } & { \vdots } & { } & { \vdots } & { \vdots } \\ { a _ { m 1 } } & { a _ { m 2 } } & { \cdots } & { a _ { m n } } & { b _ { m } } \end{array} \right)$$
+The basic method for solving a linear system is to perform algebraic operations on the system that:
+\begin{enumerate}[label=(\alph*)]
+	\item Do not alter the equation set
+	\item Produce increasingly simpler systems
+\end{enumerate}
+Typically the operations are
+\begin{itemize}
+	\item Multiply an equation through by a non zero constant
+	\item Interchange two equations
+	\item Add a constant times one equation to another
+\end{itemize}
+What we want to do with this is to produce the identity matrix on the left, as then we can link variables and values
+\subsection{Homogeneous Linear Systems}
+A linear system $Ax=b$ is homogeneous if b is all 0s\\
+Such a system has a trivial solution: $x$ is all 0s. Any other solution is called non-trivial\\
+\\
+\begin{center}
+	\textit{If a homogeneous linear system has n variables and the reduced row echelon form of its augmented matrix has r non-0 rows then the system has n-r free variables}\\
+	\textit{A homogenous linear system with more variables than equations has infinitely many solutions}
+\end{center}
+\section{Matrix Inversion}
+\subsection{Elementary matrices}
+Every elementary matrix E is invertible, and the inverse is also elementary
+\subsection{Invertible matrices}
+If A is an $n\times n$ matrix, then the following are equivalent
+\begin{enumerate}
+	\item A is invertible
+	\item The linear system $Ax=0$ has only the trivial solution $x=0$
+	\item The reduced row echelon form of A is $I_n$
+	\item A can be expressed as a product of elementary matrices
+	\item $\det(A)\neq 0$
+\end{enumerate}
+\subsection{Inversion algorithm}
+\begin{enumerate}
+	\item Write the matrix $[A|I_n]$
+	\item Apply elementary row operations to the whole matrix to transform its left half to reduced row echelon form
+	\item If this form is not in $I_n$, then the matrix is not invertible
+	\item Otherwise, the obtained matrix is $[I_n|A^{-1}]$
+\end{enumerate}
+\subsection{Determinants and elementary row operations}
+Let A be a $n\times n$ matrix
+\begin{itemize}
+	\item If B is obtained from A by multiplying a row by a constant k then $\det(B)=k\cdot \det(A)$
+	\item If B is obtained from A by interchanging two rows then $\det(B)=-\det(A)$
+	\item If B is obtained from A by adding a multiple of one row to another row then $\det(B)=\det(A)$
+\end{itemize}
+\subsection{Properties of determinants}
+If A and B are square matrices of the same size then $\det(AB)=\det(A)\det(B)$\\
+If A is invertible then $\det(A^{-1})=1 / \det(A)$
+\subsection{Inverting a matrix via cofactors/adjoint}
+\begin{itemize}
+	\item $C_{ij}=(-1)^{i+j}M_{ij}$ is called the cofactor of $a_{ij}$
+	\item The matrix where all cofactors are calculated is called the matrix of cofactors of a (cof(A))
+	\item The transpose of cof(A) is the adjoint of A (adj(A))
+\end{itemize}
+\begin{center}
+	If A is an invertible matrix then $A^{-1}=\dfrac{1}{\det(A)}\cdot adj(A)$
+\end{center}
+\section{Vector spaces and linear independence}
+\subsection{Norm and dot product in $\mathbb{R}^n$}
+\begin{itemize}
+	\item The length of a vector $v\in \mathbb{R}^n$ is defined by the formula
+	\[
+	\|\mathbf{v}\|=\sqrt{v_{1}^{2}+v_{2}^{2}+\ldots+v_{n}^{2}}
+	\]
+	\item For any vector v, the vector $\dfrac{1}{\|v\|}v$ is a unit vector in the same direction as v
+	\item The dot product (aka inner product) of vectors $u=(u_1,\ldots,u_n)$ and $v=(v_1,\ldots,v_n)$ in $\mathbb{R}^n$ is defined as
+	\[
+	u \cdot v=u_{1} v_{1}+u_{2} v_{2}+\ldots+u_{n} v_{n}
+	\]
+\end{itemize}
+\subsection{Properties of dot product}
+If u,v and w are vectors in $\mathbb{R}^n$ then the following properties hold
+\begin{itemize}
+	\item $u\cdot v=v\cdot u$ (symmetry)
+	\item $u\cdot(v+w)=u\cdot v+u\cdot w$ (Distributivity)
+	\item $k(u\cdot v)=(ku)\cdot v$ (Homogeneity)
+	\item $v\cdot v\geqslant 0$ and $v\cdot v=0$ iff $v=0$ (Positivity)
+\end{itemize}
+If u and v are vectors in $\mathbb{R}^n$ then $u\cdot v\leqslant\|u\|\cdot \|v\|$\\
+If u and v are vectors in $\mathbb{R}^n$ then $\|u+v\|\leqslant\|u\|+\|v\|$
+\subsection{Orthogonality in $\mathbb{R}^n$}
+Two vectors u and v in $\mathbb{R}^n$ are orthogonal if $u\cdot v=0$\\
+\\
+If u and $a\neq 0$ are vectors in $\mathbb{R}^n$ then u can be uniquely expressed as $u=w_1+w_2$ where $w_1=ka$ and a and $w_2$ are orthogonal\\
+\\
+If u and v are orthogonal vectors in $\mathbb{R}^n$ then $\|u+v\|^2=\|u\|+\|v\|^2$
+\subsection{General (real) vector spaces}
+V is a real vector space if the following axioms hold
+\begin{enumerate}
+	\item $u+v=v+u$
+	\item $u+(v+w)=(u+v)+w$
+	\item There is an element $0\in V$ such that $u+0=0+u=u$ for all u
+	\item For each $u\in V$, there is $-u\in V$ such that $u+(-u)=(-u)+u=0$
+	\item $k(u+v)=ku=kv$
+	\item $(k+m)u=ku+mu$
+	\item $k(mu)=km(u)$
+	\item $1u=u$
+\end{enumerate}
+\subsection{Subspaces}
+A subset W of a vector space V is called a subspace of V if W is itself a vector space, with operations inherited from V
+\begin{itemize}
+	\item To verify that W is a subspace of V, we don't need to check all 8 axioms
+	\item We only need to check that W is closed under the operations of V
+\end{itemize}
+If $W_1,W_2,...,W_r$ are subspaces of V then so is $W_1\cap W_2\cap \ldots \cap W_r$
+\subsection{Linear combinations}
+If $S=\{v_1,\ldots,v_r\}$ is a non-empty subset of a vector space V then
+\begin{itemize}
+	\item The set \(W=\left\{\sum_{i=1}^{r} k_{i} \mathbf{v}_{i} | k_{i} \in \mathbb{R}\right\}\) of all linear combinations in S is a subspace of V
+	\item The set W is the (inclusion wise) smallest subspace of V that contains S
+\end{itemize}
+The set W is called the \textbf{span} of S, it is denoted by $\operatorname{span}(S)$ or $\operatorname{span}(v_1,\ldots,v_r)$
+\subsection{Linear (in)dependence}
+Vectors $v_1,\ldots,v_r$ are called linearly independent if
+\[
+k_{1} \mathbf{v}_{1}+k_{2} \mathbf{v}_{2}+\ldots+k_{r} \mathbf{v}_{r}=\mathbf{0} \Rightarrow k_{1}=k_{2}=\ldots=k_{r}=0
+\]
+Otherwise they are \textbf{linearly dependent}\\
+A set S of two or more vectors is linearly dependent iff at least one of the vectors is expressible as a linear combination of the other vectors in S\\
+\\
+Let $S=\{v_1,\ldots,v_r\}$ be a subset of $\mathbb{R}^n$. If $r>n$ then S is linearly dependent
+\section{Basis and Dimension of a vector space}
+\subsection{Basis}
+If V is a vector space and $S\{v_1,\ldots,v_r\}$ is a set of vectors in V then S is a basis for V if
+\begin{enumerate}
+	\item S is linearly independent
+	\item S spans V
+\end{enumerate}
+\begin{itemize}
+	\item The standard unit vectors form a basis for $\mathbb{R}^n$, called the standard basis
+	\item The $m\times n$ matrices $M_{ij}$ whose entries are all 0 except $a_{ij}=1$ form the standard basis for the space $\mathbb{M}_{nm}$ of all $m\times n$ matrices
+\end{itemize}
+\subsection{Basis representation is unique}
+If $S=\{v_1,...,v_n\}$ is a basis for a vector space V then each vector $v\in V$ can be expressed as \(\mathbf{v}=k_{1} \mathbf{v}_{1}+k_{2} \mathbf{v}_{2}+\ldots+k_{n} \mathbf{v}_{n}\) in exactly one way
+\subsection{Coordinates}
+If $S=\{v_1,\ldots,v_n\}$ is a basis for the vector space V then the coordinates of a vector $v\in V$ relative to the basis S are the (unique) numbers $k_1,k_2,\ldots,k_n$ such that \(\mathbf{v}=k_{1} \mathbf{v}_{1}+k_{2} \mathbf{v}_{2}+\ldots+k_{n} \mathbf{v}_{n}\)\\
+The vector $(v)_s=(k_1,k_2,\ldots,k_n)\in \mathbb{R}^n$ is the coordinate vector of v relative to S
+\subsection{Dimension}
+A vector space V is finite-dimensional if it can be spanned by a finite set of vectors. Otherwise, V is infinite-dimensional.\\
+\\
+Let V be a finite-dimensional vector space and let $\{v_1,...,v_n\}$ be any basis in V
+\begin{enumerate}
+	\item Any subset of V with more than n vectors is linearly dependent
+	\item Any subset of V with fewer than n vectors does not span V
+\end{enumerate}
+All bases of a finite dimensional vector space have the same number of vectors\\
+\\
+The dimension of a finite-dimensional vector space V, denoted by $\dim(V)$, is the number of vectors in any of its basis, by convection, $\dim(\{0\})=0$
+\subsection{Plus/Minus Theorem}
+Let S be a non-empty set of vectors in a vector space V
+\begin{enumerate}
+	\item If S is linearly independent and $v\in V$ is not in $\operatorname{span}(S)$ then $S\cup \{v\}$ is also linearly independent
+	\item If some $v\in S$ can be expressed as a linear combination of other vectors in S then $\operatorname{span}(S)=\operatorname{span}(S\ \{V\})$
+\end{enumerate}
+Let V be a n-dimensional vector space and let S be a subset of V with exactly n vectors. If S is linearly independent or S spans V then S is a basis for V
+\subsection{Dimension of a subspace}
+Let W be a subspace of a finite-dimensional vector space V. Then
+\begin{enumerate}
+	\item W is finite-dimensional and $\dim(W)\leqslant\dim(V)$
+	\item $W=V$ iff $\dim(W)=\dim(V)$
+\end{enumerate}
+\subsection{Row space, column space and null space}
+Let A be an $m\times n$ matrix\\
+The \textbf{row space} of A is the subspace of $\mathbb{R}^n$ spanned by the row vectors of A\\
+The \textbf{column space} of A is the subspace of $\mathbb{R}^m$ spanned by the column vectors of A\\
+The \textbf{null space} of A is the solution set of the linear system $Ax=0$
+\subsection{Elementary row operations and the column space}
+Elementary row operations change neither the row space nor the null space of a matrix, but they can change the column space
+\subsection{Finding basis for the row, column and null spaces}
+To find the basis for the column space
+\begin{itemize}
+	\item Transform A (by elementary row operations) to row echelon form R
+	\item Select all columns in R that have leading 1s
+	\item The corresponding columns in A form a basis
+\end{itemize}
+To find a basis for the row space of a matrix A
+\begin{itemize}
+	\item Transform A (by elementary row operations) to row echelon form R
+	\item The rows in R with the leading 1s form a basis for the row space of A
+\end{itemize}
+To find a basis for the null space
+\begin{itemize}
+	\item Find the general solution to the system $Ax=0$
+	\item For each free variable, x, take the solution (vector $v_x$) in which $x=1$ and the other free variables are set to 0
+	\item These vectors $v_x$ together form a basis for the null space
+\end{itemize}
+To find a basis for $\operatorname{span}(S)$
+\begin{itemize}
+	\item Form a matrix whose row vectors are the vectors in S and then do as above
+\end{itemize}
+\subsection{Rank and nullity}
+The row space and column space of a matrix have the same dimension.\\
+\\
+The \textbf{rank} of a matrix A, denoted by $\operatorname{rank}(A)$ is the dimension of its row space\\
+The \textbf{nullity} of A, denoted by $\operatorname{nullity}(A)$ is the dimension of the null space of A\\
+\\
+For any $m\times n$ matrix A, $\operatorname{rank}(A)$ and $\operatorname{nullity}(A)$ are the numbers of leading and free variables, respectively, in the general solution to $ax=0$\\
+\\
+For any matrix A with n columns, $\operatorname{rank}(A)+\operatorname{nullity}(A)=n$
+\section{Linear Maps}
+\subsection{Linear Maps}
+Let V and W be vector spaces. A function $f:V\rightarrow W$ is called a linear map, or a linear transformation from V to W if, for all $u,v\in V$, $k\in \mathbb{R}$\\
+If $V=W$ then f is called a linear operator
+\subsection{Bases and linear maps}
+Let $f:V\rightarrow W$ be a linear map where V is finite-dimensional. If $S=\{v_1,...,v_n\}$ is a basis for V then the image of any vector $v\in V$ can be expressed as
+\[
+f(\mathbf{v})=c_{1} f\left(\mathbf{v}_{1}\right)+c_{2} f\left(\mathbf{v}_{2}\right)+\ldots+c_{n} f\left(\mathbf{v}_{n}\right)
+\]
+where $c_1,\ldots,c_n$ are the coordinates of v relative to S
+\subsection{The kernel and range of a linear map}
+Let $f:V\rightarrow W$ be a linear map\\
+The \textbf{kernel} of f, denoted by $\operatorname{ker}(f)$ is defined by $\operatorname{ker}(f)=\{x\in V|f(x)=0\}$\\
+The \textbf{range} of f is defined as range\((f)=\{\mathbf{u} \in W | \mathbf{u}=f(\mathbf{x})\) for some \(\mathbf{x} \in V\}\)
+\subsection{Dimension theorems for matrices and linear maps}
+The \textbf{rank} of a linear map f, denoted by $\operatorname{rank}(f)$ is the dimension of $\operatorname{range}(f)$\\
+The \textbf{nullity} of f, denoted by $\operatorname{nullity}(f)$, is the dimension of $\operatorname{ker}(f)$\\
+\\
+If f is a linear map from $\operatorname{R}^n$ to $\operatorname{R}^m$ then $\operatorname{rank}(f)+\operatorname{nullity}(f)=n$
+\section{Eigenvalues and Eigenvectors}
+Let S be an $n\times n$ matrix. A non-zero vector $x\in \mathbb{R}^n$ is called an eigenvector of A, if, for some scalar $\lambda$
+$$Ax=\lambda x$$
+In this case, $\lambda$ is called an eigenvalue of A and x is an eigenvector corresponding to $\lambda$
+\subsection{Characteristic equation of a matrix}
+If A is an $n\times n$ matrix then $\lambda$ is an eigenvalue of A iff it satisfies $\det(\lambda I-A)=0$\\
+\\
+The equation $\det(\lambda I-A)=0$ is called the characteristic equation of A
+\subsection{Characteristic polynomial of a matrix}
+In general, the expression $\det(\lambda I-A)$ is a polynomial
+\[
+p(\lambda)=\lambda^{n}+c_{1} \lambda^{n-1}+\ldots+c_{n-1} \lambda+c_{n}
+\]
+where n is the order of A. It is called the characteristic polynomial of A
+\subsection{Eigenspaces and their bases}
+\begin{itemize}
+	\item Let $\lambda_0$ be an eigenvalue of A and consider the equation $(\lambda_0I-A)x=0$
+	\item The solution set of the equation is a subspace of $\mathbb{R}^n$, it is the null space of the matrix $\lambda_0I-A$
+	\item It is called the eigenspace of A corresponding to $\lambda_0$ because the non-zero vectors in this subspace are the eigenvectors of A corresponding to $\lambda_0$
+	\item To find the basis in this subspace, use the algorithm for finding basis in null space of a matrix
+\end{itemize}
+Find (a basis of) the eigenspace of $A=\left( \begin{array}{cc}{2} & {-1} \\ {10} & {-9}\end{array}\right)$ corresponding to $\lambda=8$\\
+\\
+Form the equation $(-8I-A)x=0$, or
+\[ 
+\left( \begin{array}{cc}{-10} & {1} \\ {-10} & {1}\end{array}\right) \left( \begin{array}{c}{x_{1}} \\ {x_{2}}\end{array}\right)=\left( \begin{array}{c}{0} \\ {0}\end{array}\right) \quad \text { or } \quad \begin{array}{c}{-10 x_{1}+x_{2}=0} \\ {-10 x_{1}+x_{2}=0}\end{array}
+\]
+The subspace consists of all vectors of the form $(x,10x)$. One basis is $\{(1,10)\}$
+\subsection{Similarity of matrices}
+Square matrices A and B are called similar if $A=P^{-1}BP$ for some invertible P\\
+\\
+If A and B are similar then $\det(A)=\det(B)$\\
+\\
+A square matrix is called \textbf{diagonalisable} if it is similar to a diagonal matrix
+\subsection{Diagonalization}
+An $n\times n$ matrix is diagonalisable iff it has n linearly independent eigenvectors
+\end{document}

@@ -1,0 +1,99 @@
+\documentclass{article}[18pt]
+\usepackage{../../../../../format}
+\lhead{Mathematics for Computer Science }
+
+
+\begin{document}
+\begin{center}
+\underline{\huge Introduction to Logic}
+\end{center}
+
+\section{What is logic?}
+There are two parts of logic
+\begin{itemize}
+\item Formal Language - Making statements about certain objects
+\item Formal System - Reasoning about the properties of objects
+\end{itemize}
+Objective of logic:
+\begin{itemize}
+\item To carry out \textbf{precise} and \textbf{rigorous} arguments about \textbf{assertions} and \textbf{proofs} and to \textbf{implement} these arguments and \textbf{proofs}
+\item We need a \textbf{language} whose structure (\textbf{syntax}) can be \textbf{precisely} described and whose meaning (\textbf{semantics}) can be \textbf{unambiguously} defined
+\end{itemize}
+\textbf{Proof System} - A system of \textbf{deduction} by which \textbf{proofs} can be constructed\\
+\textbf{Semantics} - A notion of \textbf{meaning} by which the \textbf{truth} of some property of some object can be determined\\
+
+
+
+\textbf{Propositional logic}- Joining propositions to create more complicated propositions\\
+\textbf{First order logic} - Statement is broken down into a subject and a \textbf{predicate}, the predicate \textbf{modifies} the subject\\
+\\
+Logic comprises of 3 components:
+\begin{itemize}
+\item \textbf{Syntax} - The definition of the formulae of the logic
+\item \textbf{Semantics} - The association of meaning and truth to the formulae of the logic
+\item \textbf{Proof System} - The manipulation of formulae according to a system of rules
+\end{itemize}
+What is desired from these components is:
+\begin{itemize}
+\item \textbf{Completeness} - All the "true" (semantics) formulae should be "provable"(syntax, proof system)
+\item \textbf{Soundness} - A formula that is "provable" (syntax, proof system) should be "true" (semantics)
+\end{itemize}
+\section{Logic in  action}
+\subsection{Programming languages}
+\textbf{Syntax} - Exactly which combinations of symbols constitute a legible program\\
+***
+
+\subsection{Circuits}
+\textbf{Logic Gate} - Performs a Boolean operation on digital inputs and provides the result of this operation as an output\\
+\textbf{Logic Circuit} - A collection of logic gates connected together\\
+\textbf{Truth Table} - A model of the intended behaviour of a logic gate
+\\
+Propositional logic can be used to create a truth table\\
+A specification of a logic circuit as a truth table may be incomplete due to a large circuit with multiple combinations that could be given, and not all need to be tested
+\subsection{Databases}
+\textbf{Database} - A structured collection of logical records\\
+\textbf{Database Query Language} - A language for asking and answering questions of the structured data\\
+The expressive power of SQL is very closely related to that of predicate logic
+\subsection{Formal Methods}
+\textbf{Formal Methods} - The use of mathematically based techniques for the specification and verification of computer systems - these prove that programs have certain property and don't just rely on testing\\
+\textbf{Model Checking} - A branch of formal methods where a computer system is modelled as a mathematical structure then a specific property that this system might have is expressed by a formula of some logic\\
+Model checking used for rapid prototyping systems\\
+\\
+Examples of use of formal methods:
+\begin{itemize}
+\item Microprocessor design
+\item Design of data-communications protocol software
+\item Critical Software
+\item Operating Systems
+\end{itemize}
+
+\begin{center}
+{\huge \textbf{Note: Non examinable from here on}}
+\end{center}
+\section{A history lesson}
+Gottlob Frege attempted to show that all of mathematics grew out of logic, in doing so inventing first order predicate logic. His intention was to show that there was:
+\begin{itemize}
+\item A set of axioms (basic and obvious facts)
+\item A set of logical rules (unambiguous)
+\end{itemize}
+This was so that all true mathematical statements could be expressed in this way
+\section{Hilbert's Programme}
+Hilbert believed that:
+\begin{itemize}
+\item All mathematical statements could be written in a formal language and manipulated according to formal rules
+\item All true mathematical statements could be proved in the formalism
+\item There would be an "Algorithm" to decide whether or not a mathematical statement is true or not
+\end{itemize}
+\section{Logic and Computation}
+Part of Hilbert's Programme was to solve the Entscheidungsproblem which is an algorithm that takes the inputs:
+\begin{itemize}
+ \item A description of a formal language 
+ \item A mathematical statement in the language
+ \end{itemize} 
+Then give the output true or false depending if the statement is true or false\\
+\\
+Later Alonzo Church and Alan Turing independently proved that a general solution to the problem is impossible, both using different methods
+\section{Computational Complexity}
+Graph colouring is NP Complete as the correct colouring cannot be easily determined for a graph, however given a coloured graph it can be checked quickly.
+
+\end{document}

@@ -1,0 +1,196 @@
+\documentclass{article}[18pt]
+\usepackage{../../../../../format}
+\lhead{CSys - Databases}
+
+
+\begin{document}
+\begin{center}
+%Karina changed the line below if you didn't know already
+\underline{\huge Functional dependencies and normalization I. SEXY AF}
+\end{center}
+\section{Two approaches to database design}
+\begin{itemize}
+	\item Top down approach: Entity-Relationship (ER) model
+	\begin{itemize}
+		\item A graphical description of the DB
+		\item Start with a set of requirements
+		\item Identify the entities that you need to represent data about
+		\item Identify the attributes of those entities
+	\end{itemize}
+	\item At the next step we construct the Relational data model
+	\item Bottom up approach
+	\begin{itemize}
+		\item Start with initial tables and attributes
+		\item analyse the relationships among the attributes
+		\item Re-design the tables and attributes in a "better" way
+		\item This becomes tricky for large databases
+		\item We need a formalization of this approach
+	\end{itemize}
+\end{itemize}
+\section{Well designed relational databases}
+\begin{itemize}
+	\item No redundancy: every data item is stored once
+	\begin{itemize}
+		\item e.g. keep the address of the customer only in one place
+		\item exception of foreign keys (they act as pointers)
+	\end{itemize}
+	\begin{enumerate}
+		\item Minimise the amount of space required
+		\item Simplify maintenance of the database
+	\end{enumerate}
+	\item If an item is stored twice (or more), then:
+	\begin{itemize}
+		\item every time we update it, we need to change it in many places
+		\item we may have inconsistencies (two different values for the same item)
+	\end{itemize}
+	\item Purpose of normalisation
+	\begin{itemize}
+		\item every relation represents a "real world" entity
+		\item single valued columns
+		\item avoid redundancy
+		\item data is easy to update correctly
+	\end{itemize}
+\end{itemize}
+\section{Redundancy}
+\begin{itemize}
+	\item \textbf{Set valued} attributes in the ER diagram: result in multiple rows in the corresponding table
+	\item \textbf{Dependencies} between attributes cause redundancy
+\end{itemize}
+\section{Data anomalies: terminology}
+\textbf{Redundancy}: repeating data in multiple different locations\\
+\textbf{Modification anomaly}: failure to maintain all existing instances of a specific value\\
+\textbf{Deletion anomaly}: losing other values as a side effect when you delete data\\
+\textbf{Insertion anomaly}: when new data items are inserted, we need to add must more irrelevant data
+\section{Decomposition}
+\begin{itemize}
+	\item \textbf{Schema refinement (decomposition)}: uses two (or more) relations to store the original relation
+	\item No update anomalies
+\end{itemize}
+\section{Normalization theory}
+\begin{itemize}
+	\item The result of ER modelling: needs further refinement to reduce data redundancy
+	\item \textbf{Decomposition} of the relations (tables)
+	\begin{itemize}
+		\item this can be done manually for a small DB
+		\item For a larger DB we need a formalization of the approach
+	\end{itemize}
+	\item Functional dependencies among data items:
+	\begin{itemize}
+		\item Strongly affect the data anomalies
+		\item The fundamentals of the underlying \textbf{normalization theory}
+		\item Specify which are the \textbf{candidate/primary/foreign keys} (\textbf{entity integrity} and \textbf{referential integrity})
+		\item Specify which attributes combine in the new tables
+	\end{itemize}
+\end{itemize}
+\section{Relational keys}
+\begin{itemize}
+	\item \textbf{Candidate key}: a minimal (not minimum) set of attributes whose values uniquely identify the tuples
+	\item \textbf{Primary key}: The candidate key selected to identify rows uniquely with the table
+	\item \textbf{Alternate key}: Those candidate key(s) not selected as primary key
+	\item \textbf{Simple key}: The key consists of one attribute
+	\item \textbf{Composite key}: The key consists of several attributes
+\end{itemize}
+\section{Functional data dependencies}
+\begin{itemize}
+	\item Functional data dependency
+	\begin{itemize}
+		\item Describes the relationship among attributes in the same relation
+		\item Let A and B be two sets of attributes; we say that "B is \textbf{functionally dependent} on A" (denotes $A\rightarrow B$) if each value of A is associated with exactly one value of B
+	\end{itemize}
+	\item Informally: if we know the attribute values of the set A then we know the (unique) values for the set B
+	\item The attribute values of B can be determined by
+	\begin{enumerate}
+		\item Calculation
+		\item Lookup
+	\end{enumerate}
+\end{itemize}
+\begin{itemize}
+	\item In a functional data dependency ($A\rightarrow B$)
+	\begin{itemize}
+		\item \textbf{determinant}: the set of all attributes on the left hand side (i.e. A)
+		\item \textbf{dependant}: the set of all attributes on the right hand side (i.e. B)
+	\end{itemize}
+	\item \textbf{Full} functional dependency $A\rightarrow B$:
+	\begin{itemize}
+		\item B is functionally dependent on A
+		\item B is not functionally dependent on any proper subset of A
+	\end{itemize}
+	\item \textbf{Partial} functional dependency $A\rightarrow B$:
+	\begin{itemize}
+		\item B is functionally dependent on A
+		\item B remains functionally dependent on at least one proper subset of A
+	\end{itemize}
+	\item \textbf{Transitive} functional dependency:
+	\begin{itemize}
+		\item If there exist functional dependencies $A\rightarrow B$ and $B\rightarrow C$
+		\item Then the functional dependency $A\rightarrow C$ also exists and is called \textbf{transitive}
+	\end{itemize}
+\end{itemize}
+\begin{itemize}
+	\item By the definition of relational keys
+	\begin{itemize}
+		\item A candidate key is a minimal set of attributes which functionally determine all attributes in a relation
+	\end{itemize}
+	\item How can we determine all functional dependencies?
+	\begin{itemize}
+		\item Some of them are obvious from the semantics
+		\item some others follow from specification/discussions with customers
+	\end{itemize}
+	\item Let F be a set of functional dependencies
+	\item The closure of F (denotes $F^+$) is the set of all functional dependencies that are implied by the dependencies in F
+\end{itemize}
+\section{The closure of a set F of dependencies}
+\begin{itemize}
+	\item To compute the closure $F^+$ of F we need a set of inference rules
+	\item Armstrong's axioms
+	\begin{enumerate}
+		\item Reflexivity: if $B\subseteq A$, then $A\rightarrow B$
+		\item Augmentation: if $A\rightarrow B$ then $A,C\rightarrow B,C$
+		\item Transitivity: if $A\rightarrow B$ and $B\rightarrow C$ then $A\rightarrow C$
+	\end{enumerate}
+	\item These inference rules are complete
+	\begin{itemize}
+		\item Given a set X of functional dependencies, all dependencies implied by X can be derived from X using these rules
+	\end{itemize}
+	\item And sound
+	\begin{itemize}
+		\item no additional functional dependencies (which are not implied by X) can be derived using these rules
+	\end{itemize}
+	\item These properties can be proved by definition of a functional dependency
+	\item Further rules can be derived from Armstrong's axioms:
+	\begin{itemize}
+		\item Decomposition: if $A\rightarrow B,C$ then $A,b$ and $A,C$
+		\item Union: if $A\rightarrow B$ and $A\rightarrow C$ then $A\rightarrow B,C$
+		\item Composition: if $A\rightarrow B$ and $C\rightarrow D$ then $A,c\rightarrow B,D$
+	\end{itemize}
+	\item For example, proof of the Union rule using the axioms:
+	\begin{itemize}
+		\item $A\rightarrow B$, augmentation with $C\Rightarrow A,C \rightarrow B,C$
+		\item $A\rightarrow C$ augmentation with $A\Rightarrow A,A\rightarrow A,C$ (i.e. $A\rightarrow A,C$)
+		\item Transitivity from the last two dependencies: $A\rightarrow A,C \rightarrow B,C$
+	\end{itemize}
+	\item To compute the closure $F^+$ of F
+	\begin{itemize}
+		\item Apply repeatedly Armstrong's axioms (or the above 3 extra rules) to get the closure of F
+	\end{itemize}
+\end{itemize}
+\section{Functional data dependencies}
+\begin{itemize}
+	\item Let F be a set of transitive dependencies
+	\item Let A be a set of attributes in a relation
+	\item The closure of A under F (denoted $A^+$):
+	\begin{itemize}
+		\item The set of all attributes that can be implied by the attributes of A using functional dependencies from F
+	\end{itemize}
+	\item We can compute the closure $A^+$ (under F)
+	\begin{itemize}
+		\item Similarly to the closure $F^+$
+		\item Start with the functional dependencies of F, which have attributes A on the left hand side
+		\item Repeatedly apply Armstrong's axioms
+	\end{itemize}
+	\item By the definition of relational keys:
+	\begin{itemize}
+		\item A candidate key is a minimal set of attributes such that $A^+$ (under $F^+$) includes all attributes in a relation
+	\end{itemize}
+\end{itemize}
+\end{document}

@@ -1,0 +1,93 @@
+\documentclass{article}[18pt]
+\usepackage{../../../../format}
+\lhead{Software Methodologies - Image Processing}
+
+
+\begin{document}
+\begin{center}
+\underline{\huge Lecture 1}
+\end{center}
+\begin{defin}[Assistive imaging]
+Enhancement, Restoration, representation or transformation of visual data to aid in visualisation and interpretation by humans or as pre-processing step for computer vision	
+\end{defin}
+\begin{defin}[Computer Vision]
+	Automatic interpretation of visual data using computers without human intervention	
+\end{defin}
+\begin{defin}[Image]
+A multidimensional signal, commonly containing visual information (in general regularly sampled)	
+\end{defin}
+
+\textbf{Pixel} - Picture Element\\
+\\
+\textbf{Spatial Resolution}: $X\times Y$ (horizontal by vertical) dimensions of the image\\
+\\
+Direct computation gives the number of pixels used to cover the visual space captured by the image relates to the sampling of the image signal\\
+\\
+\textbf{Colour Resolution} - The dimension of the colour space - known as quantization\\
+\\
+\textbf{Temporal Resolution}: In continuous capture systems (e.g. video) the number of images captured in a given time period
+\section{Representational Requirements}
+Scenes have to be sampled (spatially, temporally) and quantized in what is essentially an analogue to digital conversion.\\
+The sampling must be high enough to preserve useful information in the image. Quantisation must avoid aliasing
+\section{Aliasing}
+As resolution is limited, there is aliasing effects.
+\begin{center}
+	\includegraphics[scale=0.7]{Aliasing}
+\end{center}
+An analogue signal will always suffer some form of aliasing in the digitisation process - at some level
+\begin{center}
+	\includegraphics[scale=0.7]{Aliasing1}
+\end{center}
+Aliasing effects both the connectivity and topological measurement image features - noise is introduced. Image processing algorithms must be able to cope with the problems arising from this form of sampling noise
+\section{Colour (or intensity) quantization}
+At each pixel there is a voltage reading on the image sensor that relates to the amount and wavelength of light received.\\
+It is discretised into a number of bins representing a level of intensity.
+\section{Image colour channels}
+Red, green abd blue light intensity for each (x,y) pixel gives an \{r,g,b\} integer vector.\\
+\\
+Colour image = 3-channel image (x,y,i) for i=\{0,1,2\}\\
+\\
+Greyscale = 1 channel
+\section{Pixel co-ordinates}
+Greyscale images: image(x,y) = value\\
+Colour images: image(x,y) = (r,g,b)\\
+Pixel location: (x,y) position in the column by row coordinate system.\\
+\\
+Positive co-ordinate system: origin = top left\\
+\\
+Origin is not universal: OpenCV uses top left and:
+\begin{center}
+	column (c) = x co-ordinate\\
+	row (r) = y co-ordinate
+\end{center}
+\section{What do pixel values actually represent in image data?}
+\textbf{Intensity/colour}: Wavelength or intensity of light\\
+\textbf{Infra-red}: Infra-red electromagnetic intensity
+\begin{itemize}
+	\item Near and far infra-red are different wavelengths
+	\item Visualisation may require colour mapping
+\end{itemize}
+\textbf{Medical CT/ MRI} - Pixel values are proportional to the absorption characteristics of tissue in relation to a signal sent through the body
+\begin{itemize}
+	\item Segmentation
+	\item Visualisation of volumetric data
+\end{itemize}
+\textbf{Radar} - Pixel values are proportional to target distance from the sensor and reflectivity
+\begin{itemize}
+	\item Calibrating values correspond to distance
+	\item Noise
+\end{itemize}
+\textbf{Depth/distance} - Pixel values encode distance of object/surface from sensor
+\begin{itemize}
+	\item Explicit 3D information rather than just a 2D projection, but partial only view of the captured 3D object
+\end{itemize}
+\textbf{Scientific} - Pixel values encode measurements from a given sensor
+\begin{itemize}
+	\item Representation: positive and negative floating point image values
+	\item Visualisation: colour mapping/negative value scaling
+\end{itemize}
+
+
+
+
+\end{document}

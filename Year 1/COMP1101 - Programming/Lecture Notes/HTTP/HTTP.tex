@@ -1,0 +1,218 @@
+\documentclass{article}[18pt]
+\usepackage{../../../../format}
+\lhead{Programming}
+
+
+\usepackage{hyperref}
+
+
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+
+\begin{document}
+\begin{center}
+\underline{\huge HTTP}
+\end{center}
+\section{HTTP}
+
+\begin{center}\rule{0.5\linewidth}{\linethickness}\end{center}
+
+\hypertarget{possible-responses-from-a-web-request}{%
+\subsubsection{Possible responses from a web
+request}\label{possible-responses-from-a-web-request}}
+
+Responses include
+
+\begin{itemize}
+\tightlist
+\item
+  A plain text file
+\item
+  A web page: some HTML
+\item
+  An image file (jpeg, gif, png)
+\item
+  A document (pdf, word)
+\item
+  Some data (XML, JSON)
+\item
+  A CSS file
+\item
+  A javascript program
+\item
+  A flash movie
+\item
+  A redirection (in headers)
+\item
+  A cookie value (in headers)
+\item
+  An error
+\item
+  A combination of the above
+\end{itemize}
+
+How might requests be generated?
+
+\begin{center}\rule{0.5\linewidth}{\linethickness}\end{center}
+
+\hypertarget{sources-of-requests}{%
+\subsubsection{Sources of requests}\label{sources-of-requests}}
+
+\begin{itemize}
+\tightlist
+\item
+  URL typed in by user
+\item
+  Hyperlink followed
+\item
+  Form submitted
+\item
+  Clicking in an image map
+\item
+  Image included in source file
+\item
+  Frameset or iframe in HTML source (can be recursive)
+\item
+  Following a redirection (including 301 error)
+\item
+  Javascript execution (triggered by mouseover etc)
+\item
+  Flash execution (or other plug-in e.g.~pdf)
+\item
+  From a server (e.g.~curl, robot, web service request)
+\end{itemize}
+
+Response to request may be used to update or replace some or all of a
+web page.
+
+\begin{center}\rule{0.5\linewidth}{\linethickness}\end{center}
+
+\hypertarget{hypertext-transfer-protocol-http}{%
+\subsubsection{Hypertext Transfer Protocol
+(HTTP)}\label{hypertext-transfer-protocol-http}}
+
+\begin{itemize}
+\tightlist
+\item
+  Underlies many aspects of the web
+\item
+  Based around sockets (usually port 80 for web pages)
+\item
+  Fairly stable:
+
+  \begin{itemize}
+  \tightlist
+  \item
+    HTTP 0.9 (1991)
+  \item
+    HTTP 1.0 (1996)
+  \item
+    HTTP 1.1 (1997)
+  \item
+    HTTP 2.0 (2015)
+  \end{itemize}
+\item
+  Commonly accepted extensions: cookies
+\item
+  HTTP 2 approved in 2015, including compression, push, pipelining and
+  multiplexing\textless{}/po
+\item
+  For full details see \url{http://www.w3c.org/Protocols}
+\item
+  For tutorial see \url{http://www.jmarshall.com/easy/http/}
+\item
+  Some knowledge important for web apps
+\item
+  Not just for HTML, but general resource (uRl)
+\end{itemize}
+
+\begin{center}\rule{0.5\linewidth}{\linethickness}\end{center}
+
+\hypertarget{overview}{%
+\subsubsection{Overview}\label{overview}}
+
+\begin{itemize}
+\tightlist
+\item
+  Client/Server: (usually) no response without request
+\item
+  Requests and responses have similar format:
+
+  \begin{itemize}
+  \tightlist
+  \item
+    \textbf{Request/Status Line} including HTTP version and Status Codes
+    for response
+  \item
+    \textbf{Headers} including the host in HTTP 1.1, allowing for
+    multiple sites on same IP
+  \item
+    \textbf{Blank Line}
+  \end{itemize}
+\item
+  Can run manually using telnet
+\end{itemize}
+
+\begin{center}\rule{0.5\linewidth}{\linethickness}\end{center}
+
+\hypertarget{telnet-requests}{%
+\subsubsection{telnet requests}\label{telnet-requests}}
+
+At a Linux prompt:
+
+\begin{verbatim}
+  telnet community.dur.ac.uk 80
+  GET /s.p.bradley/teaching/WP/lecture_http/ HTTP/1.1
+  Host: community.dur.ac.uk
+\end{verbatim}
+
+Some sites require https (e.g.~www.dur.ac.uk)
+
+\begin{center}\rule{0.5\linewidth}{\linethickness}\end{center}
+
+\hypertarget{request}{%
+\subsubsection{Request}\label{request}}
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{GET} most common
+\item
+  \textbf{POST} for some forms
+\item
+  \textbf{HEAD} to check if a page exists
+\item
+  \textbf{PUT} rarely used outside web services
+\item
+  \textbf{DELETE} rarely used outside web services
+\end{itemize}
+
+Headers can include cookie values
+
+\begin{center}\rule{0.5\linewidth}{\linethickness}\end{center}
+
+\hypertarget{response}{%
+\subsubsection{Response}\label{response}}
+
+Response Codes
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{100-199} Informational (e.g.~continue). Client should respond
+\item
+  \textbf{200-299} Successful
+\item
+  \textbf{300-399} File has moved (permanently or temporarily)
+\item
+  \textbf{400-499} Client error (401 Unauthorised, 403 Forbidden, 404
+  Not Found)
+\item
+  \textbf{500-599} Server error
+\end{itemize}
+
+
+
+
+
+\end{document}

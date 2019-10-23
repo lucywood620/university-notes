@@ -1,0 +1,161 @@
+\documentclass{article}[18pt]
+\usepackage{../../../../format}
+\lhead{ADS}
+\lstset{language=C,
+	basicstyle=\ttfamily,
+	keywordstyle=\bfseries,
+	showstringspaces=false,
+	morekeywords={if, else, then, print, end, for, do, while},
+	tabsize=4,
+	mathescape=true,
+	numbers=left,
+	stepnumber=1,
+	escapechar=£,
+}
+\usepackage{caption}
+\DeclareCaptionFont{white}{\color{white}}
+\DeclareCaptionFormat{listing}{\colorbox{gray}{\parbox{\textwidth}{#1#2#3}}}
+\captionsetup[lstlisting]{format=listing,labelfont=white,textfont=white}
+
+\begin{document}
+\begin{center}
+\underline{\huge Part 4}
+\end{center}
+\section{Breadth-First Search}
+\subsection{Graphs}
+\begin{itemize}
+	\item A graph G=(V,E) is a pair of sets: vertices V and edges E
+	\item To give an adjacency list representation of a graph, for each vertex v list all the vertices adjacent to v
+	\item To give an adjacency matrix representation of a graph create a square matrix A and label the rows and columns of the vertices: the entry in row i column j is 1 if vertex j is adjacent to vertex i and 0 if it is not
+\end{itemize}
+\subsection{Breadth-First Search}
+\begin{itemize}
+	\item BFS maintains a queue that contains vertices that have been discovered but are waiting to be processed
+	\item BFS colours the vertices:
+	\begin{itemize}
+		\item \textbf{White} indicates that a vertex is undiscovered
+		\item \textbf{Grey} indicates that a vertex is discovered but unprocessed
+		\item \textbf{Black} indicates that a vertex has been processed
+	\end{itemize}
+	\item The algorithm maintains an array d (distance)
+	\begin{itemize}
+		\item d[s]=0 where s is the source vertex
+		\item If we discover a new vertex v while processing u, we set d[v]=d[u]+1
+	\end{itemize}
+\end{itemize}
+\begin{lstlisting}[caption={BFS(G,s)}]
+for each vertex u$\in$ V[G]-{s}
+	do colour[u]$\leftarrow$ WHITE
+		d[u]$\leftarrow \infty$
+			$\pi[u]\leftarrow$ NIL
+colour[s]=GREY
+d[s]$\leftarrow$ 0
+$\pi[s]\leftarrow$ NIL
+Q$\leftarrow \varnothing$
+ENQUEUE(Q,s)
+while $Q\neq \varnothing$
+	do u$\leftarrow$DEQUEUE(Q)
+		for each v$\in$ Adj[u]
+			do if colour[v]=WHITE
+				then colour[v]=GREY
+					d[v]$\leftarrow$d[u]+1
+					$\pi[v]\leftarrow$ u
+					ENQUEUE(Q,v)
+		colour[u]$\leftarrow$ BLACK			
+\end{lstlisting}
+\subsection{Analysis of running time}
+\begin{itemize}
+	\item We want an upper bound on the worst-case running time
+	\item Assume that it takes constant time for each operation such as to test and update colours, to make changes to distance and to enqueue and dequeue
+	\item Initialisation takes time $\mathcal{O}(V)$
+	\item Each vertex enters (and leaves) the queue exactly once. So queueing operations take $\mathcal{O}(V)$
+	\item In the loop the adjacency lists of each vertex are scanned. Each list is read once, and the combined lengths of the lists is $\mathcal{O}(E)$
+	\item This the total running time is $\mathcal{O}(V+E)$
+\end{itemize}
+\section{Depth-First Search}
+\begin{itemize}
+	\item Initialize: source vertex grey, others white; source discovered at time 1
+	\item Repeat:
+	\begin{itemize}
+		\item Increment the time
+		\item If there is a white neighbour of the current vertex, then it is coloured grey and its discovery time noted and it becomes current
+		\item Else colour the current vertex black, not its finish time and return to its predecessor or jump to an undiscovered vertex
+	\end{itemize}
+\end{itemize}
+\begin{lstlisting}[caption=DFS(G)]
+for each vertex u$\in$ V[G]
+	do colour[u]$\leftarrow$ WHITE
+		$\pi[u] \leftarrow$ NIL
+time $\leftarrow$ 0
+for each vertex u $\in$ V[G]
+	do if colour[u] = WHITE
+		then DFS-VISIT(u)
+\end{lstlisting}
+\begin{lstlisting}[caption=DFS-VISIT(u)]
+colour[u]$\leftarrow$ GREY £\hfill£ [vertex u has just been discovered]
+time$\leftarrow$time+1
+d[u]$\leftarrow$time
+for each vertex $v\in$ Adj[u] £\hfill£ [explore edge (u,v)]
+	do if colour[v]=WHITE
+		then $\pi[v]\leftarrow u$
+			DFS-VISIT(v)
+colour[u]$\leftarrow$BLACK £\hfill£ [u has been processed]
+f[u]$\leftarrow$time$\leftarrow$time+1
+\end{lstlisting}
+\begin{itemize}
+	\item Initialisation takes time $\mathcal{O}(V)$
+	\item Time $\mathcal{O}(V)$ spent on incrementing time, colouring vertices and updating d and f
+	\item Each vertex in each adjacency list is considered at most once. This takes time $\mathcal{O}(E)$
+	\item Total time is $\mathcal{O}(V+E)$
+\end{itemize}
+\subsection{Classification of the edges}
+\begin{itemize}
+	\item \textbf{Tree} edges are those edges in the DFS-forest
+	\item \textbf{Back} edges are edges that join a vertex to an ancestor
+	\item \textbf{Forward} edges are edges not in the tree that join a vertex to its descendant
+	\item \textbf{Cross} edges: all other edges
+\end{itemize}
+The classification is ambiguous for undirected graphs (back edges and forward edges are the same thing)\\
+\\
+Let us redefine the definition: suppose that e is an edge that joins a vertex u to its descendant v
+\begin{itemize}
+	\item e is a forward edge if DFS first considers e from u
+	\item e is a back edge if DFS first considers e from v
+\end{itemize}
+\begin{center}
+	\textit{In an undirected graph, every edge is a tree edge or a back edge}
+\end{center}
+\subsection{Using depth first search}
+\begin{itemize}
+	\item Every edge in an undirected graph is either a tree edge or a back edge
+	\item A graph is connected if each pair of vertices is joined by a path
+	\item A cycle is a sequence of edges that start and end at the same vertex
+	\item An articulation point is a vertex whose removal disconnects the graph
+\end{itemize}
+\section{Minimum Spanning Trees}
+The minimum spanning tree problem
+\begin{center}
+	\textit{Find a tree that spans the vertices and has minimum cost}
+\end{center}
+Basic properties of MSTs
+\begin{itemize}
+	\item Have $|V|-1$ edges
+	\item Have no cycles
+	\item Might not be unique
+\end{itemize}
+\subsection{Kruskal's algorithm}
+\begin{enumerate}
+	\item Sort the edges by weight
+	\item Let $A=\varnothing$
+	\item Consider edges in increasing order of weight. For each edge e, add e to A unless this would create a cycle
+\end{enumerate}
+Running time is $\mathcal{O}(E\log V)$
+\subsection{Prim's algorithm}
+\begin{enumerate}
+	\item Let $U=\{u\}$ where u is some vertex chosen arbitrarily
+	\item Let $A=\varnothing$
+	\item Until U contains all vertices: find the least-weight edge e that joins a vertex v in U to a vertex w not in U and add e to A and w to U
+\end{enumerate}
+Running time is $\mathcal{O}(V\log V+E)$
+
+\end{document}

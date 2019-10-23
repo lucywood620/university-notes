@@ -1,0 +1,105 @@
+\documentclass{article}[18pt]
+\usepackage{../../../../format}
+\lhead{Networks and Systems - Security}
+
+
+\begin{document}
+\begin{center}
+\underline{\huge Applied Cryptography}
+\end{center}
+\section{Substitution Cyphers}
+Replaces each letter of the alphabet with another letter, e.g. ROT13 is a popular basic example. ROT cyphers are easy to break as you just iterate over all keys and fuzzy string search a word list. There are lots of variants:
+\begin{itemize}
+	\item Monoalphabetic - Fixed substitution
+	\item Polyalphabetic - Change substitution rules in different parts of the message 
+	\item Polygraphic - Substitute with groups of letters
+\end{itemize}
+\section{Encryption and Decryption}
+\begin{itemize}
+	\item Both keys the same - Symmetric key
+	\item Both keys are different - Asymmetric key or public key cryptography
+	\item Range of possible values for key - keyspace
+	\item Range of possible values for cipher - cipherspace 
+\end{itemize}
+\section{Block Ciphers}
+\begin{itemize}
+	\item Symmetric key encryption method is typically used for files
+	\item Encrypts blocks of text at a time, rather than bits of text (stream ciphers)
+	\item DES encrypts 64-bit blocks at a time
+	\item AES encrypts 128-bit (or bigger) blocks at a time
+	\item Developed to eliminate the chance of encrypting identical data the same way: the ciphertext from the previous block is fed into the algorithm for computing the next block
+	\item Also uses an initialisation vector such that the same message encrypted multiple times will be different
+	\item Can't be broken easily with GPUs
+\end{itemize}
+\section{ECB vs Non-ECB modes}
+ECB - Electronic code book, doesn't use initialisation vector\\
+ECB mode means that the sensitive data can often still be decrypted, especially when it comes to images as some errors can be compensated with by the human brain.\\
+\\
+Initialisation vectors are much better, ECB mode is not secure
+\section{Hacking AES-256}
+AES-256 is currently regarded as one of the most secure block cipher algorithms. To brute force you would need $2^{256}$ guesses, which would take longer than the age of the universe\\
+\\
+There are side channel attacks on this, take a secure implementation and look at timings and outputs etc which gives another means to see how the implementation is going. As the algorithm will do different things if a password is correct or not, it is easy to look at the timing to find the answer.
+\section{Storing Passwords}
+Storing Passwords in plain text is not good
+\begin{itemize}
+	\item If someone obtains database of user IDs/passwords then all users are exposed
+	\item We should design it that, even if there is a flaw in the system security, the password should be hard to find
+	\item We can hash the passwords and check the hashes match instead
+	\item Will storing our passwords as a list of hashes, which can't be inverted, make us secure?
+	\item Most passwords are
+	\begin{itemize}
+		\item Not random characters
+		\item Not arbitrary length
+		\item Have some structure to them
+	\end{itemize}
+	\item For example 9 characters would take 2 years to brute force
+\end{itemize}
+
+\section{Hash Functions}
+\begin{itemize}
+	\item Any function that can map data of arbitrary size to a fixed size
+	\item Different applications require hash functions with different properties
+	\item Cryptographic hash functions should guarantee these properties
+	\begin{itemize}
+		\item Deterministic (the same message always should result in the same hash)
+		\item One-way function (can't reverse output to input)
+		\item No collisions (no two input messages produce the same output)
+		\item Avalanche effect (changing 1 bit in the input should produce a massive change in the output)
+		\item Fast? (depends on the application, password storage should be slow to make brute forcing harder)
+	\end{itemize}
+\end{itemize}
+
+\section{Precomputed hash tables}
+By precomputing and crowd-funding the hashes, the lookups would be much faster. Without compression this would be too big\\
+Rainbow tables are a combination of an algorithm and a data structure.
+\begin{itemize}
+	\item Have a mapping between hashes and plaintext
+	\item Hash the plaintext, apply reduction function (truncate e.g)
+	\item Keep going 100,000 times
+	\item The input and output hash contains all the information of 100,000 times
+\end{itemize}
+A rainbow table maps hashes to their plaintext equivalent\\
+To query the rainbow table
+\begin{enumerate}
+	\item Iterate 100,000 times. Look for the hash in the sorted list of final hashes
+	\item If not found reduce the hash into another plaintext, and hash the new plaintext
+	\item If it is found, the chain for which the hash matches the final hash contains the original hash. You can now go from the start of the chain to recover the secret plain text
+\end{enumerate}
+\section{Salts}
+\begin{itemize}
+	\item Using rainbow tables we can recover passwords within minutes and retain reasonable storage requirements
+	\item So we introduce a "salt" which is a random string stored as plain text alongside the hash, but we can compute the hash by
+	\begin{center}
+		hash=H(salt+password)
+	\end{center}
+	\item Two users with the same password will not have different hashes, as they will have different randomly generated salts
+	\item For 32-bit salts, you would not need to pre-compute and query $2^{32}$ rainbow table databases (for each salt value) making such hacking approaches infeasible
+\end{itemize}
+\section{Coursework}
+Over 25 vulnerabilities \\
+Try and solve the mystery in the system
+
+
+
+\end{document}

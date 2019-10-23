@@ -1,0 +1,195 @@
+\documentclass{article}[18pt]
+\usepackage{../../../../../format}
+\lhead{MCS - Logic and Discrete Structures}
+
+
+\begin{document}
+\begin{center}
+\underline{\huge Fundamentals of Propositional Logic}
+\end{center}
+\section{The Rudiments of Propositional Logic}
+Propositional Logic:
+\begin{itemize}
+\item The most fundamental logic, lying at the heart of many other things
+\item Formalises day-to-day, common sense reasoning
+\end{itemize}
+Key to propositional logic are \textbf{propositions}:
+\begin{itemize}
+\item Declarative sentences can be either \textbf{true} or \textbf{false}
+\end{itemize}
+Propositions are represented by \textbf{propositional variables} (\textbf{Boolean variables, atoms})
+\begin{itemize}
+\item Usually letters such as \textbf{x,Y,a} or subscripted letters such as $\mathbf{x_2,Y_0,a_1}$
+\item Which can take a truth value T (true) or F(false)
+\end{itemize}
+Syntax\\
+New propositions called \textbf{formulae} or \textbf{Boolean formulae} or \textbf{propositional formulae} or \textbf{compound propositions} are formed from propositional variables and formulae by the use of logical operators
+\begin{itemize}
+\item $\land$ - conjunction(and)
+\item $\lor$ - disjunction(or)
+\item $\lnot$ - negation(not)
+\item $\Rightarrow$ - implies (if left statement true, then right statement must be true, if LHS false, whole statement becomes true)
+\item $\Leftrightarrow$ - if and only if (iff)
+\end{itemize}
+\section{Some formulae}
+\subsection{Construction}
+The operators $\land, \lor , \Rightarrow$ and $\Leftrightarrow$ take two propositional formulae $\varphi$ and $\psi$\\
+\\
+The operator $\lnot$ takes one propositional formula $\varphi$ and yields a new one
+\begin{itemize}
+\item $\lnot\varphi$
+\end{itemize}
+\subsection{Use of parentheses}
+$(\varphi \land \psi)\lor\chi$ means first build $\varphi\land\psi$ and then build $(\varphi \land \psi)\lor\chi$\\
+$\varphi \land (\psi\lor\chi)$ means first build $\psi\lor\chi$ and then build $\varphi \land (\psi\lor\chi)$
+\subsection{Some typical well formed formulae}
+$$\lnot((\lnot b\land a)\Rightarrow(c\lor\lnot d))$$
+$$((a\land\lnot a)\lor((b\lor c)\lor d))\Leftrightarrow d$$
+$$(((a\Rightarrow b)\Rightarrow c)\Rightarrow d)$$
+\section{Semantics of propositional logic}
+Semantics: all propositional variables take the value \textbf{T(True)} or \textbf{F(false)}
+\begin{itemize}
+\item The value of a formula under some \textbf{truth assignment} is ascertained by using the \textbf{truth tables} for the above logical connectives
+\end{itemize}
+The truth tables for our logical connectives are as follows:\\
+\begin{tabular}{|l|l|l|l|l|l|l|}
+\hline
+ p&q&$p\land q$&$p\lor q$&$\lnot p$&$p\Rightarrow q$&$p\Leftrightarrow q$  \\ \hline
+ T&T&T&T&F&T&T  \\ \hline
+ T&F&F&T&F&F&F  \\ \hline
+ F&T&F&T&T&T&F  \\ \hline
+ F&F&F&F&T&T&T  \\ \hline
+\end{tabular}\\ \\
+In order to build the truth table of a formula we decompose the formula into sub formulae e.g.:\\
+\\
+\begin{tabular}{|l|l|llllllllllll}
+\cline{1-2}
+p & q & ((p                    & $\land$                & $\lnot$                & q)                     & $\lor$                 & p)                     & $\land$                & $\lnot$                 & (p                     & $\lor$                 & $\lnot$                & q                     ) \\ \hline
+T & T & \multicolumn{1}{l|}{T} & \multicolumn{1}{l|}{F} & \multicolumn{1}{l|}{F} & \multicolumn{1}{l|}{T} & \multicolumn{1}{l|}{T} & \multicolumn{1}{l|}{T} & \multicolumn{1}{l|}{F} & \multicolumn{1}{l|}{F} & \multicolumn{1}{l|}{T} & \multicolumn{1}{l|}{T} & \multicolumn{1}{l|}{F} & \multicolumn{1}{l|}{T} \\ \hline
+T & F & \multicolumn{1}{l|}{T} & \multicolumn{1}{l|}{T} & \multicolumn{1}{l|}{T} & \multicolumn{1}{l|}{F} & \multicolumn{1}{l|}{T} & \multicolumn{1}{l|}{T} & \multicolumn{1}{l|}{F} & \multicolumn{1}{l|}{F} & \multicolumn{1}{l|}{T} & \multicolumn{1}{l|}{T} & \multicolumn{1}{l|}{T} & \multicolumn{1}{l|}{F} \\ \hline
+F & T & \multicolumn{1}{l|}{F} & \multicolumn{1}{l|}{F} & \multicolumn{1}{l|}{F} & \multicolumn{1}{l|}{T} & \multicolumn{1}{l|}{F} & \multicolumn{1}{l|}{F} & \multicolumn{1}{l|}{F} & \multicolumn{1}{l|}{T} & \multicolumn{1}{l|}{F} & \multicolumn{1}{l|}{F} & \multicolumn{1}{l|}{F} & \multicolumn{1}{l|}{T} \\ \hline
+F & F & \multicolumn{1}{l|}{F} & \multicolumn{1}{l|}{F} & \multicolumn{1}{l|}{T} & \multicolumn{1}{l|}{F} & \multicolumn{1}{l|}{F} & \multicolumn{1}{l|}{F} & \multicolumn{1}{l|}{F} & \multicolumn{1}{l|}{F} & \multicolumn{1}{l|}{F} & \multicolumn{1}{l|}{T} & \multicolumn{1}{l|}{T} & \multicolumn{1}{l|}{F} \\ \hline
+\end{tabular}
+\\
+\\
+While this looks very complicated, just follow the logic through and it is simple to do.
+\section{Some basic notation}
+If we have a propositional formula $\varphi(x_1,x_2,...,x_n)$ then we can call an assignment f of either \textbf{T} or \textbf{F} to each $x_1,x_2,...,x_n$ i.e. a function
+$$f:\{x_1,x_2,...,x_n\}\rightarrow \{T,F\}$$
+a \textbf{truth assignment (interpretation, valuation)} for $\varphi$\\
+\\
+We say that $\varphi$ \textbf{evaluates} to \textbf{T}(with respective to \textbf{F} under f. If the row of the truth table for $\varphi$ corresponding to \textbf{f} evaluates to \textbf{T}(with respect to \textbf{F}.\\
+\\
+for a set of inputs f, if a formula with these inputs comes to true, then f is a satisfying truth assignment of $\varphi$\\
+\\
+$\varphi$ is the formula under which the inputs f are put under, for example $p\land q$\\
+\\
+If \textbf{f} evaluates $\varphi$ to \textbf{T} then f \textbf{satisfies} $\varphi$ or is a \textbf{satisfying truth assignment of} $\varphi$ or a \textbf{model} of $\varphi$\\
+\\
+If $\varphi$ evaluates to \textbf{T} for every f then $\varphi$ is a \textbf{tautology}\\
+If $\varphi$ evaluates to \textbf{F} for every f then $\varphi$ is a \textbf{contradiction}\\
+\\
+A \textbf{literal} is either a propositional variable, say \textbf{x}, or the negation of a propositional variable, say $\lnot$x
+\section{Logical equivalence}
+Steps in a mathematical proof are often just the replacement of one statement by another (equivalent) statement which says the same thing e.g.\\
+"If I don't explain this clearly then the students won't understand" is the same thing as\\
+"Either I explain this clearly or the students won't understand"\\
+\\
+To see this, denote the sub-statement "I don't explain this clearly" as \textbf{X} and\\
+denote the sub statement "the students won't understand" as \textbf{Y}\\
+\\
+The former statement is thus $X\Rightarrow Y$ and the latter:\\
+\\
+\begin{tabular}{|l|l|lll|llll}
+\cline{1-2}
+X & Y & X & $\Rightarrow$ & Y & $\lnot$ & X & $\lor$     & Y \\ \hline
+T & T & T & \textbf{T}    & T & F       & T & \textbf{T} & T \\ \cline{1-2}
+T & F & T & \textbf{F}    & F & F       & T & \textbf{F} & F \\ \cline{1-2}
+F & T & F & \textbf{T}    & T & T       & F & \textbf{T} & T \\ \cline{1-2}
+F & F & F & \textbf{T}    & F & T       & F & \textbf{T} & F \\ \cline{1-2}
+\end{tabular}\\
+\\
+We say that the two propositional formulae are \textbf{(logically)} equivalent if they have identical truth tables\\
+If $\varphi$ and $\psi$ are equivalent then we write $\varphi\equiv\psi$
+\section{A spot of practice}
+The \textbf{exclusive-OR} is written $X\oplus Y$ and if \textbf{true} iff exactly one of \textbf{X} and \textbf{Y} is \textbf{true}\\
+\textit{Prove that $X\oplus Y$ is logically equivalent to both $(X\land\lnot Y)\lor(\lnot X\land Y)$ and $\lnot(X\Leftrightarrow Y)$}\\
+\\
+\begin{tabular}{|l|l|lll|lllllllll|llll}
+\cline{1-2}
+X & Y & X & $\oplus$   & Y & (X & $\land$ & $\lnot$ & Y) & $\lor$     & $(\lnot$ & X & $\land$ & Y & $\lnot$    & (X & $\Leftrightarrow$ & Y) \\ \hline
+T & T & T & \textbf{F} & T & T  & F       & F       & T  & \textbf{F} & F        & T & F       & T & \textbf{F} & T  & T                 & T  \\ \cline{1-2}
+T & F & T & \textbf{T} & F & T  & T       & T       & F  & \textbf{T} & F        & T & F       & F & \textbf{T} & T  & F                 & F  \\ \cline{1-2}
+F & T & F & \textbf{T} & T & F  & F       & F       & T  & \textbf{T} & T        & F & T       & T & \textbf{T} & F  & F                 & T  \\ \cline{1-2}
+F & F & F & \textbf{F} & F & F  & F       & T       & F  & \textbf{F} & T        & F & F       & F & \textbf{F} & F  & T                 & F  \\ \cline{1-2}
+\end{tabular}
+\section{De Morgan's Laws}
+These are two very useful logical equivalences known as De Morgan's Laws\\
+\textbf{De Morgan's Laws} are:
+\begin{itemize}
+\item $\lnot(X\land Y)\equiv \lnot X\lor\lnot Y$
+\item $\lnot(X\lor Y)\equiv \lnot X\land\lnot Y$
+\end{itemize}
+These formulae are indeed equivalences:\\
+\\
+
+\begin{tabular}{|l|l|llll|lllll||llll|lllll}
+\cline{1-2}
+X & Y & $\lnot$    & (X & $\land$ & Y) & $\lnot$ & X & $\lor$     & $\lnot$ & Y & $\lnot$    & (X & $\lor$ & Y) & $\lnot$ & X & $\land$    & $\lnot$ & y \\ \hline
+T & T & \textbf{F} & T  & T       & T  & F       & T & \textbf{F} & F       & T & \textbf{F} & T  & T      & T  & F       & T & \textbf{F} & F       & T \\ \cline{1-2}
+T & F & \textbf{T} & T  & F       & F  & F       & T & \textbf{T} & T       & F & \textbf{F} & T  & T      & F  & F       & T & \textbf{F} & T       & F \\ \cline{1-2}
+F & T & \textbf{T} & F  & F       & T  & T       & F & \textbf{T} & F       & T & \textbf{F} & F  & T      & T  & T       & F & \textbf{F} & F       & T \\ \cline{1-2}
+F & F & \textbf{T} & F  & F       & F  & T       & F & \textbf{T} & T       & F & \textbf{T} & F  & F      & F  & T       & F & \textbf{T} & T       & F \\ \cline{1-2}
+\end{tabular}
+\begin{itemize}
+\item De Morgan's Laws can be applied not just to variables, but to formulae $\varphi$ and $\psi$
+\item De Morgan's Laws are often used to simplify formulae with regard to negations
+\end{itemize}
+\section{Applying De Morgan's Laws}
+In fact, not only can De Morgan's Laws be applied to formula, they can be applied to \textbf{sub-formulae} within a formula\\
+\\
+Take the propositional formula:
+$$\lnot(p\lor\lnot(q\land\lnot p))\land\lnot(p\Rightarrow q)$$
+and the sub formula
+$$\lnot(q\land\lnot p)$$
+\\
+By De Morgan's Laws
+$$\lnot(q\land\lnot p)\equiv \lnot q \lor \lnot \lnot p\equiv \lnot q \lor p$$
+\\
+So:
+$$\lnot(p\lor \lnot(q\land\lnot p))\land \lnot(p\Rightarrow q)\equiv \lnot(p\lor(\lnot q \lor p))\land \lnot (p\Rightarrow q)$$
+\\
+Indeed, we can always replace any sub-formula of some propositional formula with an \textbf{equivalent formula} without affecting the truth(table) of the original.
+\section{A spot of practice}
+Consider $\lnot(p\lor\lnot(q\land\lnot p))\land \lnot(p\Rightarrow q)$\\
+Can we manipulate it so as to simplify it?\\
+\begin{tabular}{l l}
+$\lnot(p\lor\lnot(q\land\lnot p))\land \lnot (p\Rightarrow q)$& Apply De Morgan's laws\\
+$\lnot(p\lor(\lnot q\lor \lnot\lnot p))\land \lnot(p\Rightarrow q)$&Remove double negation\\
+$\lnot(p\lor(\lnot q \lor p))\land \lnot(p\Rightarrow q)$&apply De Morgan's laws\\
+$(\lnot p \land \lnot(\lnot q \land p)) \land \lnot (p\Rightarrow q)$&apply De Morgan's laws\\
+$(\lnot p \land (\lnot\lnot q \land \lnot p)) \land \lnot(p\Rightarrow q)$&Remove double negation\\
+$(\lnot p \land (q \land \lnot p)) \land \lnot (p\Rightarrow q)$& $\Rightarrow$ using $\lor, \lnot$\\
+$(\lnot p \land (q \land \lnot p)) \land \lnot(\lnot p \lor q)$& apply De Morgan's Laws\\
+$(\lnot p \land (q \land \lnot p)) \land (\lnot\lnot p \land \lnot q)$&remove double negation\\
+$(\lnot p \land (q \land \lnot p)) \land p(\land \lnot q)$& Associativity of $\land$\\
+$(\lnot p \land q \land \lnot p) \land (p \land \lnot q$& Associativity of $\land$\\
+$\lnot p \land q \land \lnot p \land p \land \lnot q$ & Commutativity of $\land$\\
+$\lnot p \land \lnot p \land p \land q \land \lnot q$& $X\land \lnot X\equiv F$\\
+$\lnot p \land F \land q \land \lnot q$& $F\land \varphi \equiv F$\\
+$F$&
+\end{tabular}
+\section{Generalised De Morgan's Laws}
+We can actually generalise De Morgan's laws so that negations can be "pushed inside" conjunction/disjunctions of more than two literals\\
+\\
+To do this we apply De Morgan's laws to sub formulae of a formula\\
+\\
+Consider $\lnot(X\lor Y\lor Z)$\\
+Rewrite this formula as $\lnot(X\lor(Y\lor Z))$ and denote $Y\lor Z$ by $\varphi$\\
+Applying De Morgan's laws to $\lnot(X\lor \varphi)$
+
+\section{Some rules}
+$$(p\land q)\land r \equiv p\land (q \land r)$$
+$$(p \lor q)\lor r \equiv p \lor (q \lor r)$$
+$$p \land \lnot p \equiv F$$
+\end{document}

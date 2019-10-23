@@ -1,0 +1,112 @@
+\documentclass{article}[18pt]
+\usepackage{../../../../../format}
+\lhead{CSys - Databases}
+
+
+\begin{document}
+\begin{center}
+\underline{\huge Database Schemas }
+\end{center}
+\section{Transactions and concurrency control}
+\begin{itemize}
+	\item We need to trust a DBMS
+	\item We need mechanisms to ensure that the database:
+	\begin{itemize}
+		\item is reliable
+		\item remains in a consistent state
+	\end{itemize}
+	\item Especially when
+	\begin{itemize}
+		\item software/hardware failures
+		\item multiple users access the database simultaneously
+	\end{itemize}
+	\item Database Recovery - The process of restoring a database to a correct state after a failure
+	\item Concurrency control protocols: prevent database accesses to interfere with each other
+	\item Central notion in a DBMS:
+	\begin{itemize}
+		\item Transaction: an action carried out by a single user/program which reads/updates the database
+	\end{itemize}
+	\item At the end of a transaction:
+	\begin{itemize}
+		\item database again in consistent state
+		\item valid integrity/referential constraints
+	\end{itemize}
+	\item During the execution of a transaction
+	\begin{itemize}
+		\item maybe in an inconsistent state
+	\end{itemize}
+	\item A transaction can have two outcomes:
+	\begin{itemize}
+		\item Committed - completes successfully
+		\item Rolled back - does not complete successfully
+	\end{itemize}
+	\item Concurrency control: the process of managing simultaneous operations on the DB
+	\item Two transactions may be:
+	\begin{itemize}
+		\item both correct by themselves
+		\item but when executed simultaneously they may cause inconsistency in the database
+	\end{itemize}
+\end{itemize}
+\section{Abstract data models}
+\begin{itemize}
+	\item Data definition model - specifies entities/attributes/relationships/constraints for the stored data
+	\item However, DDL is too low level to describe the data organisation in a simple way, understandable by most users
+	\item We need a data model - a collection of intuitive concepts describing data, their relationships and constraints
+\end{itemize}
+\section{Types of data organisation}
+\begin{itemize}
+	\item Three characterisations of data:
+	\begin{itemize}
+		\item Structured data
+		\begin{itemize}
+			\item Data represented in strict format
+			\item The DBMS checks to ensure that the data follows:
+			\begin{itemize}
+				\item the structures
+				\item the integrity and referential constraints
+			\end{itemize}
+		\end{itemize}
+		\item Semi structured data
+		\begin{itemize}
+			\item Self describing data
+			\item the "schema" information is mixed with the data values
+			\item How do we end up with such data?
+			\begin{itemize}
+				\item sometimes ad-hoc
+				\item not known in advance how it will be stored/managed
+			\end{itemize}
+			\item This data may have some structure, but:
+			\begin{itemize}
+				\item not all the parts of the data have the same structure
+				\item each data object may have different attributes that are not known in advance
+			\end{itemize}
+		\end{itemize}
+		\item Unstructured data
+		\begin{itemize}
+			\item Very limited indication of the type/structure of the data
+		\end{itemize}
+	\end{itemize}
+\end{itemize}
+\section{Database design}
+\begin{itemize}
+	\item Conceptual design
+	\begin{itemize}
+		\item Construct a first, high level model of the data: ER model
+		\item using the users' requirements specification
+		\item independently of any physical considerations
+		\item it serves as the fundamental understanding of the system
+	\end{itemize}
+	\item Logical design
+	\begin{itemize}
+		\item construct the relational data model of the data
+		\item Using the conceptual design map entities and relationships to tables
+		\item use normalization techniques to eliminate data redundancy and anomalies
+	\end{itemize}
+	\item Physical design
+	\begin{itemize}
+		\item describe the database implementation of the logical design
+		\item specific storage structures/ access methods/ security protection
+		\item aim is optimum performance
+	\end{itemize}
+\end{itemize}
+\end{document}

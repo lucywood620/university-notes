@@ -1,0 +1,102 @@
+\documentclass{article}[18pt]
+\usepackage{../../../../../format}
+\lhead{MCS - Logic and Discrete Structures}
+
+
+\begin{document}
+\begin{center}
+\underline{\huge More on Natural Deduction for Propositional Logic}
+\end{center}
+\section{More rules}
+\begin{itemize}
+	\item Rules for introducing disjunction\\
+	\includegraphics[scale=0.7]{v-introduction.png}
+	\item Rules for eliminating disjunction\\
+	\includegraphics[scale=0.7]{v-elimination.png}\
+	\item In order to apply the rule $\lor$e, we use boxes as previously
+	\begin{itemize}
+		\item But now there is a box starting with each disjunct $\varphi$ and $\psi$
+		\item Each box needs to end with the same intended formula, $\chi$
+	\end{itemize}
+\end{itemize}
+\section{A proof using $\lor$ elimination}
+\includegraphics[scale=0.7]{v_proof1.png}\\
+\begin{itemize}
+	\item Assume that p is true, so the RHS is true
+	\item $p\lor r$ is true
+	\item Open box assuming q is true
+	\item Eliminate the implies symbol from the LHS
+	\item Shown that no matter if p or q is true, the statement $p\lor r$ will be true
+	\item It has been shown that if $p\lor q$ is true, that $p\lor r$ is true, so $(p\lor q)\Rightarrow (p\lor r)$ will always be true
+\end{itemize}
+\includegraphics[scale=0.7]{v_proof2.png}
+\begin{itemize}
+	\item Basically trying to build the RHS from the LHS
+\end{itemize}
+\section{More rules}
+\begin{itemize}
+	\item Rules for negation\\
+	\includegraphics[scale=0.7]{negation_rules.png}
+	\item The symbol $\bot$, known as bottom, represents a contradiction, in natural deduction if one has a contradiction then one can infer \textbf{any} formula
+	\item Rules for introducing negation\\
+	\includegraphics[scale=0.7]{introduce_negation.png}
+\end{itemize}
+\section{A proof using rules for negation}
+\includegraphics[scale=0.7]{negation_proof1.png}
+\begin{itemize}
+	\item $p\land\lnot p\Rightarrow \varphi$ holds as $p\land\lnot p$ will always be false, and if the LHS of an implication is false, then the whole statement will be true 
+	\item Lines $2\rightarrow 5$ say $x\Rightarrow(y\Rightarrow x)$
+\end{itemize}
+\includegraphics[scale=0.7]{negation_proof2.png}
+\section{A derived rule}
+\begin{itemize}
+	\item We can derive other rules in natural deduction 
+	\item Consider modus tollens $\varphi\Rightarrow\psi, \lnot\psi\vdash\lnot\varphi$ \\
+	\includegraphics[scale=0.7]{modus_tollens.png}
+	\item Note that we can use derived rules just as if they were rules of natural deduction
+	\begin{itemize}
+		\item e.g., in a proof with
+		\begin{itemize}
+			\item a line reading $\varphi\Rightarrow\psi$
+			\item and another line reading $\lnot\psi$
+		\end{itemize}
+		\item we could immediately infer $\lnot\psi$ and write modus tollens as an explaining remark
+	\end{itemize}
+\end{itemize}
+
+\section{More derived rules}
+\begin{itemize}
+	\item Proof by contradiction is the principle "if from $\lnot\varphi$ I can prove $\bot$ then I can deduce $\varphi$
+	\item Here is a proof that this principle can be applied in natural deduction\\
+	\includegraphics[scale=0.7]{ProofByContradiction.png}
+	\item We denote reductio ad absurdum by RAA
+\end{itemize}
+\section{More derived rules}
+\begin{itemize}
+	\item The law of excluded middle states that either $\varphi$ is true or $\lnot\varphi$ is true
+	\item Here is a proof of it\\
+	\includegraphics[scale=0.7]{MiddleStates.png}
+	\item We denote the law of excluded middle by LEM
+\end{itemize}
+\section{Some facts about Natural Deduction}
+\begin{itemize}
+	\item Natural deduction is sound and complete
+	\item Let $\varphi_1,\varphi_2,...,\varphi_m$ and $\psi$ be formulae
+	\item Soundness
+	\begin{itemize}
+		\item If the sequent $\varphi_1,\varphi_2,...\varphi_m\vdash\psi$ is provable then the formula $\varphi_1\land\varphi_2\land...\land\varphi_m\Rightarrow\psi$ is a tautology
+	\end{itemize}
+	\item Completeness
+	\begin{itemize}
+		\item If $\varphi_1\land\varphi_2\land...\land\varphi_m\Rightarrow\psi$ is a tautology then the sequent $\varphi_1,\varphi_2,...\varphi_m\vdash\psi$ is provable
+	\end{itemize} 
+	\item A \textbf{theorem} is a formula $\psi$ for which the sequent $\vdash\psi$ is provable, thus, the soundness and completeness of natural deduction tells us that every theorem is a tautology and every tautology is a theorem
+\end{itemize}
+\section{Proving Theorems}
+\begin{itemize}
+	\item Here is a proof that the sequent $(p\Rightarrow(\lnot p\lor q))\lor (p\Rightarrow\lnot q)$ is a theorem\\
+	\includegraphics[scale=0.7]{ProvingTheorems}
+	
+	
+\end{itemize}
+\end{document}

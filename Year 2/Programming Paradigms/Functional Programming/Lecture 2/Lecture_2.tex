@@ -1,0 +1,175 @@
+\documentclass{article}[18pt]
+\usepackage{../../../../format}
+\lhead{Programming Paradigms - Functional Programming}
+\usepackage{minted}
+\setminted[python]{tabsize=2}
+\usepackage[framemethod=TikZ]{mdframed}
+
+\newcounter{theo}[section]\setcounter{theo}{0}
+\renewcommand{\thetheo}{\arabic{section}.\arabic{theo}}
+\newenvironment{theo}[2][]{%
+	\refstepcounter{theo}%
+	\ifstrempty{#1}%
+	{\mdfsetup{%
+			frametitle={%
+				\tikz[baseline=(current bounding box.east),outer sep=0pt]
+				\node[anchor=east,rectangle,fill=red!50]
+				{\strut Important~\thetheo};}}
+	}%
+	{\mdfsetup{%
+			frametitle={%
+				\tikz[baseline=(current bounding box.east),outer sep=0pt]
+				\node[anchor=east,rectangle,fill=red!50]
+				{\strut Important~\thetheo:~#1};}}%
+	}%
+	\mdfsetup{innertopmargin=10pt,linecolor=red!50,%
+		linewidth=2pt,topline=true,%
+		frametitleaboveskip=\dimexpr-\ht\strutbox\relax
+	}
+	\begin{mdframed}[]\relax%
+		\centering
+		\label{#2}}{\end{mdframed}}
+
+\begin{document}
+\begin{center}
+\underline{\huge Types and Classes}
+\end{center}
+
+
+\begin{theo}[Immutable]{thm:Immutable}
+In Haskell, everything is immutable! 
+\end{theo}
+\section{Types}
+\begin{itemize}
+	\item Mathematics and programming rely on the notion of types
+	\item Tell us how to interpret a variable
+	\item Provide restrictions on valid operations
+\end{itemize}
+
+\begin{minipage}{0.4\textwidth}
+	\begin{minted}{java}
+int a = 4;
+int b = 3;
+
+double c = a/b;
+
+/* c=1.0 */
+	\end{minted}
+\end{minipage}
+\begin{minipage}{0.4\textwidth}
+	\begin{minted}{java}
+double a = 4;
+double b = 3;
+
+double c = a/b;	
+
+/* c=1.33333... */
+	\end{minted}
+\end{minipage}
+\\
+\\
+The result depends on input types\\
+Since computers represent everything as sequences of bits, types are also required to define what these bit streams mean.\\
+\\
+Types are required to know what a bit sequence means
+\begin{itemize}
+	\item \textbf{Implementation} - Find the correct implementation of, for example '+'
+	\item \textbf{Correctness} - Check whether an operation on some data is valid and/or well-defined or check whether a code fragment is correct (type safety)
+	\item \textbf{Documentation} - Document the code's semantics (for the reader)
+\end{itemize}
+\subsection{Types in Haskell}
+Haskell is \textbf{strongly, statically typed} - every well-formed expression has exactly one type, these types are known at compile time
+\begin{itemize}
+	\item \mintinline{haskell}{Bool} the two logical values \mintinline{haskell}{True} and \mintinline{haskell}{False}  
+	\item \mintinline{haskell}{Bool -> Bool} the set of all functions that take \mintinline{haskell}{Bool} as input and produce a \mintinline{haskell}{Bool} as output
+	\item We will see more standard types soon
+\end{itemize}
+\subsubsection{Attaching Types}
+Haskell's notation for "e is of type T" is spelt
+\begin{minted}{haskell}
+e :: T
+-- False is of type Bool
+False :: Bool
+-- not is of type Bool -> Bool
+not :: Bool -> Bool
+\end{minted}
+\subsubsection{What type does X have?}
+Every valid expression is Haskell must have a valid type.\\
+You can ask GHCi what the type of the expression is with the command \texttt{type expr}
+\begin{minted}{haskell}
+Prelude> :type sum
+sum :: Num a => [a] -> a
+\end{minted}
+\subsection{All the types in Haskell}
+\mintinline{haskell}{Bool} - Logical values\\
+\mintinline{haskell}{Char} - Single Characters\\
+\mintinline{haskell}{String} - Strings of characters\\
+\mintinline{haskell}{Int} - fixed-precision integers\\
+\mintinline{haskell}{Integer} - Arbitrary-precision integers\\
+\mintinline{haskell}{Float} - Floating-point numbers
+\subsection{List Types}
+A list is a sequence of values of the same type\\
+The type of the elements is unrestricted, for example we can have lists of lists
+\begin{minted}{haskell}
+[['a'],['b','c']] :: [[Char]]
+\end{minted}
+\subsection{Tuple types}
+A tuple is a sequence of values of different types
+\begin{minted}{haskell}
+(False,True) :: (Bool, Bool)
+(False, 'a', True) :: (Bool, Char, Bool)
+\end{minted}
+\section{Type Checking}
+\subsection{Statically Typed Language}
+We check correctness at translation time. Invalid types mean "translation error"
+\begin{minted}{haskell}
+-- Invalid
+foo = 1 + "f"
+\end{minted}
+\subsection{Dynamically Typed Language}
+We check correctness at run time\\
+Invalid types only detected if we "use them"
+\begin{minted}{python}
+def foo():
+	return 1 + "f"
+\end{minted}
+\subsection{How the translator determines the type of expression}
+\textbf{Explicit Annotation}:
+Programmer annotates all variables with type information (C/Java)\\
+\textbf{Type inference}:
+Translator infers the types of variables based on the operations used (e.g. Haskell/ML)\\
+\textbf{Duck typing}:
+Translator/runtime just tries the operation, if it succeeds, that was a valid type
+\section{Functions Have Types}
+\subsection{Programming With Functions}
+\textbf{Functions of one argument "unary"} Map from one type to another
+\begin{minted}{haskell}
+not :: Bool -> Bool
+and :: [Bool] -> Bool
+\end{minted}
+\textbf{Functions of two arguments "binary} Map from two types to another
+\begin{minted}{haskell}
+add :: (Int, Int) -> Int
+\end{minted}
+\section{Currying}
+\textbf{Currying} - Turn a function of n arguments into a function of n-1 arguments\\
+Why currying?
+\begin{itemize}
+	\item Easier to reason about and prove things with functions of only one variable
+	\item Flexibility in programming makes composing functions simpler
+	\item Related to partial evaluation where we bind some variables in an n-ary function to a value
+\end{itemize}
+\subsection{Function types}
+A function is a mapping from values of one type to values of another type, for example
+\begin{minted}{haskell}
+not :: Bool -> Bool
+add :: (Int, Int) -> Int
+\end{minted}
+\subsection{Curried Functions}
+Functions with multiple arguments are also possible by returning functions as results
+\begin{minted}{haskell}
+add' :: Int -> (Int -> Int)
+add' x y = x+y
+\end{minted}
+Add and add' produce the same final result, but add takes its two arguments at the same time, whereas add' takes them one at a time
+\end{document}

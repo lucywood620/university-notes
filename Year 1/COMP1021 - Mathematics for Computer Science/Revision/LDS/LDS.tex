@@ -1,0 +1,244 @@
+\documentclass{article}[18pt]
+\usepackage{../../../../format}
+\lhead{MCS}
+
+
+\begin{document}
+\begin{center}
+\underline{\huge LDS Revision Notes}
+\end{center}
+\section{Introduction to Logic}
+\textbf{Syntax} - The definition of the well-formed formulae of the logic\\
+\textbf{Semantics} - The association of meaning and truth to the formulae of the logic\\
+\textbf{Proof system} - The manipulation of formulae according to a system of rules\\
+\textbf{Completeness} - All the "true" semantics formulae should be "provable"\\
+\textbf{Soundness} - Formula that is "provable" should be "true"
+\section{Fundamentals of propositional logic}
+If $\varphi$ evaluates to T for every f then $\varphi$ is a tautology\\
+If $\varphi$ evaluates to F for every f then $\varphi$ is a contradiction
+\subsection{De Morgan's Laws}
+\[
+\begin{array}{l}{\neg(X \wedge Y) \equiv \neg X \vee \neg Y} \\ {\neg(X \vee Y) \equiv \neg X \wedge \neg Y}\end{array}
+\]
+These can be generalised to
+\[
+\begin{array}{l}{\neg\left(X_{1} \vee X_{2} \vee \ldots \vee X_{n}\right) \equiv \neg X_{1} \wedge \neg X_{2} \wedge \ldots \wedge \neg X_{n}} \\ {\neg\left(X_{1} \wedge X_{2} \wedge \ldots \wedge X_{n}\right) \equiv \neg X_{1} \vee \neg X_{2} \vee \ldots \vee \neg X_{n}}\end{array}
+\]
+\section{More on Propositional Logic}
+The Distributive Law of Disjunction over Conjunction
+\[
+p \vee(q \wedge r) \equiv(p \vee q) \wedge(p \vee r)
+\]
+The Distributive law of Conjunction over Disjunction
+\[
+p \wedge(q \vee r) \equiv(p \wedge q) \vee(p \wedge r)
+\]
+These can be generalised to
+\[
+\begin{aligned} X_{\wedge}\left(Y_{1} \vee Y_{2} \vee \ldots \vee Y_{n}\right) & \equiv\left(X \wedge Y_{1}\right) \vee\left(X \wedge Y_{2}\right) \vee \ldots \vee\left(X \wedge Y_{n}\right) \\ X \vee\left(Y_{1} \wedge Y_{2} \wedge \ldots \wedge Y_{n}\right) & \equiv\left(X \vee Y_{1}\right) \wedge\left(X \vee Y_{2}\right) \wedge \ldots \wedge\left(X \vee Y_{n}\right) \end{aligned}
+\]
+\subsection{Functional Completeness}
+We say that a set C of logical connectives is functionally complete if any propositional formula is equivalent to one constructed using only the connectives from C
+\subsection{Conjunctive and Disjunctive Normal Form}
+Disjunctive normal form is of the form
+$$\chi_1\lor \chi_2\lor \ldots \lor \chi_m$$
+Where each $\chi_i$ is a conjunction of literals\\
+\\
+Conjunctive normal form is of the form
+$$\chi_1\land \chi_2\land \ldots \land \chi_m$$
+Where each $\chi_i$ is a disjunction of literals
+\section{Natural Deduction for Propositional Logic}
+Modus Ponens
+$$\dfrac{p\qquad p\Rightarrow q}{q}$$
+Modus Tollens
+$$\dfrac{\lnot q \qquad p\Rightarrow q}{\lnot p}$$
+Hypothetical Syllogism
+$$\dfrac{p\Rightarrow q \qquad q\Rightarrow r}{p\Rightarrow r}$$
+Resolution
+$$\dfrac{p\lor q\qquad \lnot p \lor r}{q\lor r}$$
+\subsection{Natural Deduction}
+$\land$ introduction
+$$\dfrac{a\qquad b}{a\land b}$$
+$\land$ elimination 1
+$$\dfrac{a\land b}{a}$$
+$\land$ elimination 2
+$$\dfrac{a\land b}{b}$$
+$\lor$ introduction 1
+$$\dfrac{a}{a\lor b}$$
+$\lor$ introduction 2
+$$\dfrac{b}{a\lor b}$$
+$\lor$ elimination
+$$\dfrac{a\lor b \qquad \fbox{\parbox{0.2cm}{A\\ \vdots\\ X}} \quad \fbox{\parbox{0.2cm}{B\\ \vdots\\ X}} }{X}$$
+$\Rightarrow$ introduction
+$$\dfrac{ \fbox{\parbox{0.2cm}{a\\ \vdots\\ b}} }{a\Rightarrow b}$$
+$\Rightarrow$ elimination
+$$\dfrac{a\Rightarrow b\qquad a}{b}$$
+$\lnot$ introduction
+$$\dfrac{ \fbox{\parbox{0.2cm}{a\\ \vdots\\ $\bot$}} }{\lnot a}$$
+$\lnot$ elimination
+$$\dfrac{a\qquad \lnot a}{\bot}$$
+$\lnot\lnot$ elimination
+$$\dfrac{\lnot\lnot a}{a}$$
+$\bot$ elimination
+$$\dfrac{\bot}{\varphi}$$
+\section{Sets}
+$x\in X$  - x is an element of the set X\\
+$x\notin X$ - x is not a member of the set X\\
+$\mathbb{N}$ - Natural Numbers (+ve inc 0)\\
+$\mathbb{Z}$ - Integers (+ve and -ve)\\
+$\mathbb{Q}$ - Rational Numbers (expressible as a fraction)\\
+$\mathbb{R}$ - Real Numbers (not imaginary)
+\subsection{Cardinality}
+$|S|$ - The size of the set S\\
+$\varnothing$ - Empty set
+\subsection{Set equality}
+$X=Y$ - They have the same elements\\
+Note that sets are objects and they can have sets of elements
+$$\{\varnothing\}\neq \varnothing$$
+\subsection{Subsets}
+$X\subseteq Y$ - X is a subset of Y\\
+$X\subsetneq Y$ - X is not a subset of Y\\
+$X\subset Y$ - A is a proper subset of Y
+\subsection{The power set}
+The power set of S is the set of all subsets of S 
+\subsection{The Cartesian Product}
+The cartesian product $X\times Y$ is the set
+\[
+\{(x, y) : x \in X \text { and } y \in Y\}
+\]
+Example:\\
+The cartesian product of $\{0,1,2\}$ and $\{a,b\}$ is
+\[
+\{(0, a),(1, a),(2, a),(0, b),(1, b),(2, b)\}
+\]
+The cartesian product of $\{a,b\}$ and $\{0,1,2\}$
+\[
+\{(a, 0),(a, 1),(a, 2),(b, 0),(b, 1),(b, 2)\}
+\]
+\subsection{Union and Intersection}
+$A\cup B$ - Union of A and B, the set that contains all elements in A, in B, and in both\\
+$A\cap B$ - Intersection of A and B, the set of all elements in both A and B\\
+\textbf{Disjoint} - Two sets that have a union of the empty set
+\subsection{Difference and Complement}
+$A-B$ or $A \backslash B$ - The difference of A and B. The set that contains all elements in A and not in B\\
+$\overline{A}$ - All the elements that are not in A
+\section{Discrete Structures - Functions}
+In the case of a function $A\rightarrow B$
+\begin{itemize}
+	\item The set A is known as the domain (or source)
+	\item The set B is known as the codomain (or target)
+\end{itemize}
+If $f(a)=b$ then b is the image of a (under f)\\
+The pre-image of $b\in B$ (under f) is the subset $\{a: f(a)=b\}$ of A\\
+The image (or range) of f is the set of images of elements of A
+\subsection{Partial Functions}
+A partial function $f:A\rightarrow B$ is such that either $f(a)\in B$ or $f(a)$ is undefined
+\subsection{Special Types of function}
+\textbf{Injective} - One to one function
+$$\forall a\in A \ and  \ a'\in A \  f(a)=f(a')\Rightarrow a=a'$$
+\textbf{Surjective} - Onto
+$$\forall b\in B \exists a\in A \ s.t. \ f(a)=b$$
+\textbf{Bijective} - Both injective and surjective
+\begin{center}
+	\includegraphics[scale=0.7]{"Types of Function"}
+\end{center}
+\subsection{Compositions of functions}
+Suppose that $f:A\rightarrow B$ and $g:B\rightarrow C$ are functions. We can define the composition of g and f as the function $g\circ f: A\rightarrow C$ defined as $(g\circ f)(x)=g(f(x))$
+\subsection{Inverses}
+The inverse of the function $f:A\rightarrow B$ is the function $f^{-1}:B\rightarrow A$
+\subsection{Cardinality Revisited}
+Two sets A and B have some cardinality iff there is a bijection from A to B\\
+A set is countable if it is finite or has the same cardinality as $\mathbb{N}$\\
+A set is uncountable if it does not have cardinality $\aleph_0$
+\subsection{Uncountable sets}
+There exist uncountable sets, such as $\mathbb{R}$
+\section{Discrete Structures - Relations}
+A binary relation R from A to B is a subset of the cartesian product $A\times B$
+\begin{itemize}
+	\item We write $(a,b)\in R$ or say that $R(a,b)$ holds if the ordered pair $(a,b)$ is in the binary relation R
+	\item We write $(a,b)\notin R$ or say that $R(a,b)$ does not hold
+\end{itemize}
+\subsection{Functions as binary relations}
+Functions can be viewed as binary relations\\
+If $f:A\rightarrow B$ then the graph of the function f is the binary relation 
+\[
+\{(a, f(a)) : a \in A\} \subseteq A \times B
+\]
+\subsection{Properties of relations}
+\textbf{Reflexive} - $(a,a)\in R, \forall a\in A$\\
+\textbf{Irreflexive} - $(a,a)\notin R\forall a \in A$\\
+\textbf{Symmetry} - Whenever $(a,b)\in R$, then $(b,a)\in R \forall a,b \in A$\\
+\textbf{Antisymmetry} - Whenever $(a,b)(b,a)\in R$, then $a=b \forall a,b\in A$\\
+\textbf{Transitivity} - When $(a,b)(b,c)\in R$ then $(a,c)\in R, \forall a,b,c\in A$
+\subsection{Combining relations}
+Let $R\subseteq A\times B$ and $S\subseteq B\times C$ be relations. The composite relation $S\circ R\subseteq A\times C$ is defined as
+\[
+\{(a, c) : a \in A, c \in C, \exists b \in B \text { s.t. }(a, b) \in R \text { and }(b, c) \in S\}
+\]
+\subsection{Projections}
+Projections are things, I don't understand them
+\subsection{Closures of relations}
+Let $R\subseteq A\times A$\\
+\textbf{Reflexive closure} - The smallest reflexive relation that contains R. It is obtained by adding to R all the pairs $(x,x)$ tat do not already lie in R\\
+\textbf{Symmetric closure} - The smallest symmetric relation that contains R. It is obtained by adding to R all the pairs $(x,y)$ for which $(y,x)$, but not $(x,y)$, lies in R\\
+\textbf{Transitive closure} - The smallest transitive relation that contains R. It is the relation defined as
+\[
+\left\{(a, b) : a, b \in A,(a, b) \in R^{n}, \text { for some } n \geq 1\right\}=\bigcup_{n=1}^{\infty} R^{n}
+\]
+\subsection{Equivalence Relations}
+The relation $R\subseteq A\times A$ is called an equivalence relation if it is reflexive, symmetric and transitive.\\
+This can be denoted by $a\equiv b$ or $a\sim b$ or $b\equiv a$
+\subsection{Partial Orders}
+A binary relation that is reflexive, anti-symmetric and transitive\\
+A set S together with a partial order R on S is called a partially ordered set (or \textbf{poset}) and written (S,R)\\
+We denote a partial order relation in a poset by $\leq$ even though we may not be referring to the usual ordering on numbers, and write $a\leq b$ rather than $\leq(a,b)$\\
+If $(S,\leq)$ is some poset then two elements of S are comparable if either $a\leq b$ or $b\leq a$ and incomparable otherwise
+\subsection{Total and Well orders}
+If $(S,\leq)$ is a poset and every two elements in S are comparable then S is a \textbf{totally ordered set} or \textbf{linearly ordered set}\\
+If $(S,\leq)$ is a poset and $\leq$ is a total ordering and every non-empty subset of S has a least element (under $\leq$) then $(S,\leq)$ is a well-ordered set
+\section{An overview of first-order logic}
+\textbf{Predicate Symbol} - A symbol with an associated arity
+\subsection{Quantifiers}
+A formula with free variables can be quantified using the $\exists$ quantifier\\
+A formula with bound variables can be quantified using the $\forall$ quantifier
+\section{Formal Syntax and Semantics}
+\subsection{Syntax of first order logic}
+Every well formed formula of first order logic is constructed from atoms. We define the syntax of first order logic by defining what we mean by atoms and constructions we are allowed to use\\
+\\
+\textbf{Signature} - The finite set of predicate (relation) and constant symbols\\
+\textbf{Sentence} - A formula with no free variables
+\subsection{Parse trees}
+If a formula can be written in a parse tree then it is well formed
+\subsection{Semantics of first-order logic}
+An interpretation or a structure for first-order formula $\phi$ is:
+\begin{itemize}
+	\item A domain of discourse D
+	\item A value from D for every free variable of $\phi$
+	\item A relation over D for every relation symbol involved in $\phi$
+	\item A value from D for every constant symbol involved in $\phi$
+\end{itemize}1
+The semantics of a first-order formula in some interpretation is as follows:
+\begin{itemize}
+	\item We interpret atoms as propositional variables
+	\item We interpret $\land,\lor$, and $\lnot$ as in propositional logic
+	\item We interpret $\forall x \phi$ as true if $\phi$ is true for all values for x
+	\item We interpret $\exists x \phi$ as true if there is at least one value for x making $\phi$ true
+\end{itemize}
+\section{First Order Logic - Logical Equivalence}
+Two formulas $\phi$ and $\psi$ are logically equivalent if they are true for the same set of models, in which case we write $\phi\equiv \psi$\\
+\\
+All logical equivalences from propositional logic give rise to equivalences in first-order logic
+\section{Prenex Normal Form}
+To write an expression in Prenex Normal Form, first draw it into a parse tree.\\
+We say that a first-order formula is in prenex normal form if it is written in the form
+\[
+Q_{1} x_{1} Q_{2} x_{2} \ldots Q_{k} x_{k} \phi
+\]
+Where:
+\begin{itemize}
+	\item Each $Q_i$ is a quantifier
+	\item Each $x_i$ is a variable
+	\item The formula $\phi$ is quantifier free
+\end{itemize}
+To build the prenex normal form from the tree we start at the leaves and work up the tree repeatedly constructing prenex normal form formulae that are equivalent to the formulae corresponding to sub-trees of the parse trees
+\end{document}

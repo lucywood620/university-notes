@@ -1,0 +1,394 @@
+\documentclass[addpoints]{exam}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{listings}
+\usepackage{pxfonts}
+\usepackage{xcolor}
+\lstset{language=Python,
+	basicstyle=\ttfamily,
+	keywordstyle=\bfseries,
+	showstringspaces=false,
+	morekeywords={if, else, then, print, end, for, do, while,output},
+	tabsize=4,
+	mathescape=true,
+	moredelim=**[is][\color{red}]{@}{@},
+}
+
+\pagestyle{headandfoot}
+\firstpageheadrule
+\runningheadrule
+\firstpageheader{CT - Topic 5}{}{Sam Robbins}
+\runningheader{CT - Topic 5}{How do we develop algorithms to solve fundamental problems?}{Sam Robbins}
+\firstpagefooter{}{}{}
+\runningfooter{}{}{}
+\renewcommand{\solutiontitle}{\noindent\textbf{Solution:}\par\noindent}
+
+
+\printanswers
+\usepackage{graphicx}
+\marksnotpoints
+\bracketedpoints
+\pointsdroppedatright
+\pointsinrightmargin
+\begin{document}
+\begin{center}
+	\underline{\LARGE How do we develop algorithms to solve fundamental problems?}
+\end{center}
+\begin{questions}
+	\question[6]Detail, using pseudo-code, two different versions of Euclid's algorithm: a recursive one; and an iterative one
+	\begin{solution}[2in]
+		Recursive:\\
+		\begin{lstlisting}
+		IF n==0:
+		output m
+		ELSE:
+		set m=n and n=m mod n
+		Euclid(m,n)
+		\end{lstlisting}
+		Iterative:
+		\begin{lstlisting}
+		WHILE n $\neq 0$:
+		m=m-n
+		IF n>m
+		swap m and n
+		output m
+		\end{lstlisting}
+	\end{solution}
+
+
+\question[4]What is the fundamental difference between the research areas of formal methods and software testing when it comes to verifying that programs are correct?
+\begin{solution}[2in]
+	In software testing, the program is tested against a set of inputs to make sure that the correct answer is returned in the case.\\
+	In formal methods the program will be mathematically tested to ensure that in all cases the correct answer will be returned\\
+\end{solution}
+
+\question[2]Describe the key difference between recursion and iteration
+\begin{solution}[2in]
+	\begin{itemize}
+		\item In recursion an algorithm will call itself
+		\item In iteration the same routine will be performed on slightly different inputs
+	\end{itemize}
+\end{solution}
+\newpage
+\question[10]First, give a natural language description of the algorithm Bubble-sort, and, next, give pseudo-code for your algorithm. Describe how your algorithm works on the input list of numbers 4,3,6,6,2,1
+\begin{solution}[2in]
+	\begin{itemize}
+		\item The algorithm Bubble-sort repeatedly ‘passes’ through the input list of
+		numbers, comparing and swapping adjacent numbers in the list.
+		\item In a pass through the input list, consecutive pairs of numbers are compared
+		in turn, and these numbers are swapped (in their locations) if
+		the first number is greater than the second.
+		\item If a swap has been made in a pass through the list then another pass
+		is undertaken, otherwise the algorithm halts.
+	\end{itemize}
+	\begin{lstlisting}
+change = true
+WHILE change == true:
+	change = false
+	i = 0
+	WHILE i < n - 1:
+		IF A[i] > A[i + 1]:
+			swap A[i] and A[i + 1]
+			change = true
+		i = i + 1
+output A
+	\end{lstlisting}
+\end{solution}
+\newpage
+\question[4]Here is the pseudo-code for the algorithm Bubble-sort
+\begin{lstlisting}
+change = true
+WHILE change == true:
+	change = false
+	i = 0
+	WHILE i < n - 1:
+		IF A[i] > A[i + 1]:
+			swap A[i] and A[i + 1]
+			change = true
+		i = i + 1
+output A
+\end{lstlisting}
+Can you amend this algorithm so as to improve it? You should explain how you amend the pseudo-code and what improvements you have made
+\begin{solution}[2in]
+	\begin{lstlisting}
+change = true @and pass=0@
+WHILE change == true:
+	change = false
+	i = 0
+	@WHILE i < n - 1-pass:@
+		IF A[i] > A[i + 1]:
+			swap A[i] and A[i + 1]
+			change = true
+		i = i + 1
+	@pass=pass+1@
+output A
+	\end{lstlisting}
+	Because bubble sort will put the first element in the correct position on the first run and etc for the next runs, this means that it does not need to be checked the next time, by adding the pos it allows you to keep track of the place to which is correct
+\end{solution}
+
+\newpage
+\question[12]First, give a natural language description of the algorithm Selection-sort, and, next, give pseudo-code for your algorithm. Describe how your algorithm works on the input list of numbers 4,4,6,6,2,1
+\begin{solution}[2in]
+	\begin{itemize}
+		\item Take the number in A[0] and store it as $x$
+		\item Pass 0: compare x with the numbers in $A[1],A[2],...,A[n-1]$ in turn, always keeping the smaller number in x and the larger number in the list cell
+		\item put the resulting number $x$ into A[0]
+		\item Take the number in A[1] and store it as $x$
+		\item pass 1: compare $x$ with the numbers $A[2],A[3],...,A[n-1]$ in turn, always keeping the smaller number in $x$ and the larger number in the list cell
+		\item Put the resulting number $x$ into A[1]
+		\item take the number in $A[2]$ and store it as $x$
+		\item ...
+	\end{itemize}
+	\begin{lstlisting}
+pass=0
+WHILE pass < n-1
+	x=A[pass]
+	i=pass+1
+	WHILE $i\leqslant n-1$
+		IF A[i]<x
+			swap x and A[i]
+		i=i+1
+	A[pass]=x
+	pass=pass+1
+output A
+	\end{lstlisting}
+\end{solution}
+\newpage
+\question Here is the pseudo-code for the algorithm selection-sort
+\begin{lstlisting}
+pass=0
+WHILE pass < n-1
+	x=A[pass]
+	i=pass+1
+	WHILE $i\leqslant n-1$
+		IF A[i]<x
+			swap x and A[i]
+		i=i+1
+	A[pass]=x
+	pass=pass+1
+output A
+\end{lstlisting}
+\begin{parts}
+\part[4]Explain how you might amend the algorithm Selection-sort so that you no longer need the variable x	
+\begin{solution}[2in]
+\begin{lstlisting}
+pass=0
+WHILE pass < n-1
+	i=pass+1
+	WHILE $i\leqslant n-1$
+		IF A[i]<A[pass]
+			swap A[i] and A[pass]
+		i=i+1
+	pass=pass+1
+output A
+\end{lstlisting}
+\end{solution}	
+\part[4]Explain how you might amend the algorithm Selection-sort so that you lessen the number of data swaps made
+\begin{solution}[2in]
+\begin{lstlisting}
+pass = 0
+WHILE pass < n-1
+	x=pass
+	i=pass+1
+	WHILE i$\leqslant$ n-1:
+	IF A[i]<A[x]:
+		x=i
+		i=i+1
+		swap A[pass] and A[x]
+	pass=pass+1
+output A
+\end{lstlisting}
+\end{solution}
+\end{parts}	
+\droptotalpoints
+\newpage
+\question[3]Amend the algorithm Selection-sort so that it sorts a list of numbers into descending order
+\begin{solution}[2in]
+\begin{lstlisting}
+pass=0
+WHILE pass < n-1
+	x=A[pass]
+	i=pass+1
+	WHILE $i\leqslant n-1$
+		IF A[i]>x
+			swap x and A[i]
+		i=i+1
+	A[pass]=x
+	pass=pass+1
+output A
+\end{lstlisting}
+\end{solution}
+
+\question[6]Compare and contrast the efficiency of Bubble-sort and Selection-sort when the input list of numbers is already sorted into descending order. (You should explain how you interpret 'efficiency')
+\begin{solution}[2in]
+Selection sort has a constant time complexity of $\mathcal{O}(n^2)$, and in the case where the list is in the reverse order to desired, bubble sort also has its worst case of $\mathcal{O}(n^2)$. This makes the two algorithms exactly equal in terms of time complexity in this case.
+\end{solution}
+
+\question[6]Compare and contrast the efficiency of Bubble-sort and Selection-sort when the input list of numbers is already sorted into ascending order. (You should explain how you interpret 'efficiency')
+\begin{solution}[2in]
+When the list is sorted into ascending order selection sort encounters it constant time complexity $\mathcal{O}(n^2)$. Whereas bubble sort encounters it's best case and only has a time complexity of $\mathcal{O}(n)$. This makes bubble sort better than selection sort in this case.
+\end{solution}
+\newpage
+\question[14]First, give a natural language description of the algorithm Merge-Sort, and, next,give pseudo-code for your algorithm (you need not provide pseudo-code to describe how two ordered lists are merged into an ordered list). Describe how your algorithm works on the input list of numbers 4,3,6,6,2,1
+\begin{solution}[2in]
+	\begin{itemize}
+		\item Chop the input list into roughly two 'halves' so that both 'halves' either have the same length or their lengths differ by 1
+		\item recursively sort each half' and
+		\item merge the two sorted lists together
+	\end{itemize}
+\begin{lstlisting}[mathescape=true]
+Merge-sort(l,r)
+	if l<r
+	m=$\lceil(r-l+1)/2\rceil-1$
+	Merge-sort(l,m)
+	Merge-sort(m+1,r)
+	Merge(l,m,r)
+	Mergesort(0,n-1)
+	output A
+	
+Merge(l, m, r)
+	leftptr = l and rightptr = m + 1
+	counter = l
+	WHILE leftptr $\leqslant$ m and rightptr $\leqslant$ r:
+		IF A[leftptr] $\leqslant$ A[rightptr]:
+			B[counter] = A[leftptr]
+			leftptr = leftptr + 1
+		ELSE:
+			B[counter] = A[rightptr]
+			rightptr = rightptr + 1
+		counter = counter + 1
+	IF leftptr $\leqslant$ m:
+		B[counter..r] = A[leftptr..m]
+	ELSE:
+		B[counter..r] = A[rightptr..r]
+	A[l..r] := B[l..r]
+\end{lstlisting}
+On the input list given, it will be split into two sublists (4,3,6) and (6,2,1)\\
+These will then be recursively split until the digits are individual.\\
+Then the digits are merged back together, sorting them through the comparisons between the two sublists.\\
+The merging goes all the way up the recursion stack until the input list is sorted
+\end{solution}
+
+\newpage
+\question[4]Describe an application of the research area known as coding theory and explain the relevance of this application to coding theory
+\begin{solution}[2in]
+	One application of coding theory is error correcting codes, these are added data to messages to cope with errors in transit.
+\end{solution}
+
+
+\question[10]First, describe the algorithm Binary-search using natural language, and, next, give pseudo-code for your algorithm. Describe how your algorithm works on the input list of numbers 1,2,3,5,6,6,8,9 when searching for the number 7
+\begin{solution}[2in]
+	\begin{itemize}
+		\item Compare our item x with the median element of the list
+		\item If this median element is x then we are done
+		\item Otherwise:
+		\begin{itemize}
+			\item If this median element is greater than x then x lies to the left in the list, if it appears at all; and
+			\item If this median element is greater than x then x lies to the left of the list, if it appears at all
+		\end{itemize}
+	\end{itemize}
+So we continue to look only in the respective sub-list
+\begin{lstlisting}[tabsize=4,mathescape]
+algorithm: Binary-search
+	leftptr = 0 and rightptr = n - 1
+	WHILE leftptr $\leqslant$ rightptr:
+		m = $\lceil{(leftptr + rightptr)/2}\rceil$
+		IF A[m] $>$ x:
+			rightptr = m - 1
+		ELSE:
+			IF A[m] $<$ x:
+				leftptr = m + 1
+			ELSE:
+				return m
+	return n
+\end{lstlisting}
+\end{solution}
+
+\question[2]What is the string matching problem?
+\begin{solution}[2in]
+\begin{itemize}
+	\item We are given a text string and a pattern string; and
+	\item We want to find an occurrence of the pattern in the text (if there is one)
+\end{itemize}
+\end{solution}
+\newpage
+\question[15]
+The following algorithm solves the string matching problem where the text string is T and the patten string is P:
+\begin{lstlisting}
+pos = 0
+WHILE pos $\leqslant$ n - m:
+	j = m - 1
+	WHILE (j $\geqslant$ 0) and (P[j] == T[pos + j]):
+		j = j - 1
+	IF j < 0:
+		return pos
+	ELSE:
+		pos = pos + 1
+	IF pos == n - m + 1:
+		return n
+\end{lstlisting}
+Explain using natural language how the algorithm works. The BoyerMoore algorithm improves the above algorithm by using two heuristics.
+Explain what these heuristics are and how they are applied. Assuming
+that you can pre-compute these two heuristics, what simple change can
+you make to the above algorithm so as to convert it into the BoyerMoore algorithm
+\begin{solution}[2in]
+	\begin{itemize}
+		\item  Start with the pattern P aligned against the first m symbols of the text T
+		\item If there is a match halt and output the index within the text where the pattern matches
+		\item Otherwise 'move' the pattern 1 cell to the right so that the pattern is aligned with the text symbols in T[1...m]
+		\item Repeat until a match is found
+	\end{itemize}
+The Boyer-Moore string matching improves this in the following ways:
+\begin{itemize}
+	\item \textbf{Good suffix heuristic} - If the end of the string is matching  then the string can be shifted by the length of the string, rather than by 1 iff the matching suffix is not repeated in the string
+	\item \textbf{Bad character heuristic} - If there is a mismatch then the string can be shifted until the next occurrence of the value
+\end{itemize}
+The above algorithm can be turned into the Boyer-Moore algorithm by replacing the line
+$$\texttt{pos=pos+1}$$
+With
+$$\texttt{pos=pos+max\{GS(j),BC(T[pos+j],j)\}}$$
+Where GS(j) is the offset to shift the pattern where there is a mismatch at pattern symbol j according to the good suffix heuristic.\\
+BC(x,j) is the offset to shift the pattern when there is a mismatch with the pattern symbol P[j] according to the bad character heuristic
+\end{solution}
+
+\newpage
+\question[7]Suppose we have a pattern string abab in the Boyer Moore algorithm where the alphabet of the text string is $\{a,b,c\}$. What are the values of the good suffix and the bad character heuristics at the different mis match positions
+\begin{solution}[2in]
+\textbf{Good Suffix}:
+\begin{itemize}
+	\item GS(3)=1 (No good suffix)
+	\item GS(2)=4 (need to shift the full length of the string)
+	\item GS(1)=2 (shift to next occurence)
+	\item GS(0)=2 (shift to next occurence)
+\end{itemize}
+\textbf{Bad Character}:
+\begin{align*}
+BC(C,3)=4&&BC(a,3)=1\\
+BC(C,2)=3&&BC(b,2)=1\\
+BC(C,1)=2&&BC(a,1)=1\\
+BC(C,0)=1&&BC(b,0)=1\\
+\end{align*}
+\end{solution}
+
+\question[1]Give one area of science where string matching algorithms are of direct relevance
+\begin{solution}[2in]
+	Bioinformatics - Determining if an amino acid is in a DNA sequence
+\end{solution}
+
+
+\question[2]Give an illustration of a principle of Computational Thinking in the context of algorithmic problem solving
+\begin{solution}[2in]
+	Algorithmic Graph Theory is the study of how many real life problems can be abstracted as graphs, and the study of the algorithmic properties of graphs and the properties of graphs
+\end{solution}
+
+\end{questions}
+
+	
+	
+	
+	
+\end{document}
+
+
+
+

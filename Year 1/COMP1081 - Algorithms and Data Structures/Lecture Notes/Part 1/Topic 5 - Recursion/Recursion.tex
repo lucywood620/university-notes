@@ -1,0 +1,185 @@
+\documentclass{article}[18pt]
+\usepackage{../../../../format}
+\lhead{Algorithms and Data Structures}
+\lstset{language=Python,
+    basicstyle=\ttfamily,
+    keywordstyle=\bfseries,
+    showstringspaces=false,
+    morekeywords={if, else, then, print, end, for, do, while},
+    tabsize=4
+}
+
+\begin{document}
+\begin{center}
+\underline{\huge Recursion}
+\end{center}
+\section{Factorials}
+The factorial of a positive integer n is the product of the integers 1 to n, hence we can implement the calculation of factorials using recursion
+\begin{lstlisting}[mathescape=true]
+#Iterative Factorial
+total=1
+for i=1 to n do
+	total=total$\times i$
+end for
+return total
+\end{lstlisting}
+\begin{lstlisting}[mathescape=true]
+#Recursive Factorial factorial(n)
+if n=0 then
+	return 1
+else
+	return n$\times$factorial(n-1)
+end if
+\end{lstlisting}
+\section{Recursive Algorithms}
+\begin{itemize}
+\item A recursive algorithm must have a \textbf{base case}
+\item A recursive algorithm must \textbf{change} its state and move towards the base case
+\item A recursive algorithm must \textbf{call itself}, recursively 
+\end{itemize}
+\section{Lists}
+\begin{lstlisting}[mathescape=true]
+# Iterative sum of a list L
+sum=0
+for i in L do
+	sum=sum+i
+end for
+return sum
+\end{lstlisting}
+\begin{lstlisting}[mathescape=true]
+#Recursive sum of a list L:listsum(L)
+if len(L)=1 then
+	return L(0)
+else
+	return L[0]+listsum(L[1:])
+end if
+return sum
+\end{lstlisting}
+\section{Examples on the whiteboard}
+\subsection{Fibonacci}
+\begin{lstlisting}[mathescape=true]
+#Iterative Fibonacci sequence
+input n
+fibs=[0,1]
+for i=2 to n
+	fibs=fibs+sum of last 2 entries
+return fibs[n]
+\end{lstlisting}
+\begin{lstlisting}[mathescape=true]
+# Recursive Fibonacci sequence
+Input n
+for n $\leqslant$ 1
+	return n
+fibs
+	return fibs(n-1)+fibs(n-2) 
+\end{lstlisting}
+\begin{itemize}
+\item This is exceptionally slow as the whole previous Fibonacci sequence is calculated in order to calculate each number, whereas with iteration the values are calculated then stored.
+\item The number of calls will be on the order of $2^{N}$ with recursion, whereas iteration will use N calls
+\item A way to speed up the recursive step is to store the values calculated, as values are calculated multiple times in the previous method
+\end{itemize}
+\subsection{Palindromes}
+\begin{lstlisting}[mathescape=true]
+input string s
+output true or false
+isPalindrome(S)
+	if length S$\leqslant$1 then
+		return true
+	end if
+	if the first and last characters don't match then
+		return false
+	else
+		isPalindrome(S with first and last characters removed)
+\end{lstlisting}
+\subsection{Flood fill a bounded area}
+\begin{lstlisting}[mathescape=true]
+floodfill(x,y)
+	input screen,pixel(x,y)
+	output screen with the contiguous region that contains that pixel filled with the colour
+	if (x,y) is filled then
+		return
+	fill(x,y) #change (x,y) to blue
+	floodfill(x+1,y),floodfill(x-1,y),floodfill(x,y+1),floodfill(x,y-1)
+\end{lstlisting}
+
+
+\section{Memoization}
+Store the obtained results.\\
+\\
+For example a memoized recursive algorithm for fibonacci numbers would be:
+\begin{lstlisting}[mathescape=true]
+fib_memo[0]=0
+fib_memo[1]=1
+fib(n) input n, output nth Fibonacci Number
+if not fib_memo[n]
+	fib_memo[n]=fib(n-1)+fib(n-2)
+return fib_memo[n]
+\end{lstlisting}
+
+\section{Backtracking}
+\begin{itemize}
+\item A technique for problems with many \textbf{candidate} solutions but too many to try
+\item For example there are a huge number of ways to fill a sudoku grid
+\item General idea: Build up the solution one step at a time, \textbf{backtracking} when unable to continue
+\end{itemize}
+\subsection{Informal generic algorithm}
+\begin{enumerate}
+\item Do I have a solution yet?
+\item No. Can I extend my solution by one "step"?
+\item If yes, do that
+\item Do I have a solution now? If yes, I'm done
+\item If not, try and extend again
+\item When I can't extend, take one step back and try a different way
+\item If no other extension available, then give up - no solution can be found
+\end{enumerate}
+\subsection{Pseudocode generic algorithm}
+\begin{lstlisting}[mathescape=true]
+#extend_solution(current solution)
+if current solution is valid then
+	if current solution is complete then
+		return current solution
+	else
+		for each extension of the current solution do
+			extend_solution(extension)
+		end for
+	end if
+end if
+\end{lstlisting}
+\section{Knights tour}
+A knight's tour: To move a knight around a chessboard such that each square is visited exactly \textbf{once} before the knight returns to its \textbf{starting position}
+\begin{lstlisting}[mathescape=true]
+#extend_solution(current solution)
+if cnew move is to unvisited square on board then
+	if every square is visited then
+		return current solution
+	else
+		for each of eight possible moves do
+			extend_solution(with move added)
+		end for
+	end if
+end if
+\end{lstlisting}
+\subsection{Implementing Knights Tour}
+\begin{itemize}
+\item Rather than having a list of moves made, it is easier to maintain an $8\times8$ array recording when each square was visited (initially all values are zero)
+\item Use a counter to record how many squares have been visited
+\item If every square has been visited, we must also check that we can return to the start in one more move
+\end{itemize}
+\section{Queens Problem}
+Queen's Problem: Find all possible ways of placing 8 queens on a chessboard such that none attacks any other
+\begin{lstlisting}[mathescape=true]
+#extend_solution(current solution)
+if new queen is not under attack then
+	if 8 queens on board then
+		return current solution
+	else
+		for each of eight squares in the next row do
+			extend_solution(with extra queen)
+		end for
+	end if
+end if
+\end{lstlisting}
+
+
+
+\end{document}

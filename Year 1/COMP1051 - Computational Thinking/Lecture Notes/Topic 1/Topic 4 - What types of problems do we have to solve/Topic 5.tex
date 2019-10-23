@@ -1,0 +1,289 @@
+\documentclass{article}[18pt]
+\usepackage{../../../../format}
+\lhead{Computational Thinking}
+
+
+\begin{document}
+\begin{center}
+\underline{\huge What Types of Problems Do We Have to Solve}
+\end{center}
+\section{Problems in physical sciences}
+\begin{itemize}
+\item All scientific disciplines have goals as the solutions of problems
+\item Physics seeks to explain the universe as it is
+\item Chemistry does the same
+\item Maths the same etc etc
+\item However in CS the process to the solution is as important as the solution, making it different. 
+\end{itemize}
+CS problems
+\begin{itemize}
+\item The study of computers and what they can do
+\item The inherent powers and limitations of abstract computers
+\item The design, characteristics and use of real computers
+\item The applications of computers to solve problems
+\item 
+\item How can we write programs that don't have bugs?
+\item How do we store things and find things?
+\item Is P equal to NP
+\item How do we make computers easily programmable
+\end{itemize}
+\section{Essential notions}
+Key to problems in CS are:
+\begin{itemize}
+\item Repeated applications of solutions
+\item This makes CS unique within the physical sciences
+\end{itemize}
+\subsection{More essential notions}
+\begin{itemize}
+\item TSP
+\begin{itemize}
+\item Finding the shortest tour of a given collection of nodes
+\item Is the route the best route?
+\item Lots of things to optimise for
+\end{itemize}
+\end{itemize}
+
+Notions of
+\begin{itemize}
+\item Computation
+\item Resource
+\item Correctness
+\end{itemize}
+
+
+Additional Complication:
+\begin{itemize}
+\item CS is concerned with real world problems, but where the problem is being solved is not the real problem, but an abstraction of the problem
+\end{itemize}
+\section{Abstraction}
+\begin{itemize}
+\item Remove detail not needed for computation
+\item Just keep enough detail so that the conclusions reached are valid in the real world
+\item Model - A simulation of what would happen, Abstraction - Cover a whole set of problems, a generalisation of the problem
+\end{itemize}
+\subsection{More on abstraction}
+\begin{itemize}
+\item We might abstract the internet as a collection of nodes interconnected by channels, along which they can send and receive messages
+\item However, if you want to find different things about a real world thing you might not be able to with the current abstraction, so the abstraction would need to be changed to solve the problem
+\end{itemize}
+\subsection{Abstracting the TSP}
+\begin{itemize}
+\item Core info
+\begin{itemize}
+\item Number of cities
+\item Start node
+\item Distance between cities
+\end{itemize}
+\item 	As you go along you might learn more information, changing the situation, perhaps asked to visit extra node half way through
+\item Deal with not being able to get between two nodes
+\item 
+\end{itemize}
+\subsection{Decision Problems:Map Colouring}
+\begin{itemize}
+\item Colour a map with as few colours as possible, without two of the same colour touching
+\item For any pair of regions either:
+\begin{itemize}
+\item They share no part of a border
+\item Exactly one point of a border, when they tough
+\item They share a segment of some border when they tough
+\end{itemize}
+\end{itemize}
+\subsection{Decision Problems: Draughts}
+\begin{itemize}
+\item From a given position, is there a way in which you can always win?
+\item Some games, like chess have a huge state space (the given combinations of possibilities)
+\end{itemize}
+\subsection{Decision Problems}
+\begin{itemize}
+\item Have a set of instances, from the set of instances, decide yes or no
+\end{itemize}
+A Decision problem consists of
+\begin{itemize}
+\item A set of instances I
+\item A subset Y$\subseteq$ I of yes instances\\
+A set of no instances
+\end{itemize}
+\section{Abstracting map colouring}
+\begin{itemize}
+\item Repeat an instance of the problem as a graph
+\begin{itemize}
+\item V is a set of verticies, one for each region
+\item E is a set of edges (a set of pairs of distinct vertices)
+\item This has changed to a graph problem
+\end{itemize}
+\end{itemize}
+\subsection{Method}
+\begin{itemize}
+\item Draw a graph between the centres of each area, draw a line between them if they share a border
+\item Remember that this method is destructive, it will be impossible to reconstruct the map from the graph
+\item You never need more than 4 colours
+\item Never overlapping edges - if there are overlapping edges it can't be from a map and may require more than 4 colours
+\item 2 colours is the most optimal scenario for any connected graph
+\end{itemize}
+\subsubsection{Different approaches to hand colouring}
+\begin{itemize}
+\item Work through the vertices in order and try to use the lowest colour (give them hierarchy)
+\item Can't use the same colour if connected by an edge
+\item This is a \textbf{greedy algorithm}
+\item This is non optimal as it gives a 5 colouring for some 4 colourable graphs
+\end{itemize}
+\section{Sorting lists}
+\begin{itemize}
+\item You are given a list and can order them in some way
+\item There can be repetitions and potentially available items might not appear in the list. Even though there are repetitions, the order of those elements matters
+\item The desired output is the sorted list
+\end{itemize}
+\section{Finding routes}
+\begin{itemize}
+\item Want to get from A to B, but following rules (for example, don't use motorways)
+\item Draw cities as vertices, roads as edges
+\item When it comes to the abstraction, your decision whether to include things excluded by the rules. Leaving them in makes it easier to solve multiple problems with the same map but different rules
+\end{itemize}
+\section{Search Problems}
+\begin{itemize}
+\item Numerous acceptable solutions, but only one should be returned or
+\item There is no acceptable solution, and this should be signalled
+\end{itemize}
+A search problem consists of
+\begin{itemize}
+\item A set of instances, i (for example any map you could think of)
+\item A set of solutions, j
+\item A binary search relation $R\subseteq I\times J$
+\end{itemize}
+In order to solve a search problem, for instance any $x\in J$ we need to find a solution $y\in J$ such that $(x,y)\in R$ if there is one, or answer no if there is no solution\\
+\\
+Sometimes our search problem might be such that for every $x\in I$, there is exactly one $y\in J$ such that $(x,y)\in R$\\
+\section{Decision vs Search}
+\begin{itemize}
+\item Corresponding to any decision, there is usually a search problem
+\item For example with map colouring decision problem, the equivalent search problem is to give the colouring
+\end{itemize}
+There is always a decision problem corresponding to a search problem
+\begin{itemize}
+\item The decision problem has the same set of instances I
+\item If you can find a solution in the search problem, then the answer is yes to the decision problem
+\item The yes instances are those instances $x\in J$ for which there exists some $y\in J$ for which $(x,y)\in R$
+\end{itemize}
+\section{TSP}
+\begin{itemize}
+\item This is a different type of problem as there are lots of solutions, but some are better than others
+\end{itemize}
+\subsection{Finding tours}
+\begin{itemize}
+\item Pick the shortest distance
+\item 
+\end{itemize}
+
+
+
+\section{Sports Day}
+\begin{itemize}
+\item Job to create the schedule for a school sports day
+\item Every event takes 30 mins
+\item Each time slot 30 mins
+\item It is possible to have different events occurring at the same time, providing people are available for it (not doing 2 events at once)
+\item During the first slot, have as many events as possible
+\item Try to finish as early as possible
+\item Also with this, not all schedules are equal
+\end{itemize}
+\subsection{Abstracting}
+\begin{itemize}
+\item This can be abstracted as a graph $G=(V,E)$
+\begin{itemize}
+\item Verticies of V consist of the different events
+\item Edge $(u,v)\in E$ if there is an athlete that wants to participate in sports u and v
+\end{itemize}
+\item Want to maximise the number of non connected vertices
+\begin{enumerate}
+\item Choose an event at random
+\item Rule out the connected events
+\item Choose a random unconnected event
+\item Rule out the connected events to that new event
+\item Keep going until no more can be chosen
+\item Remove all from graph and do again for the next slot
+\end{enumerate}
+\item It is then simple to make the first slot have the most events
+\item However the total problem is difficult to solve
+\end{itemize}
+\subsubsection{Subtleties}
+\begin{itemize}
+\item The random choosing can lead to more or less optimal solutions
+\end{itemize}
+
+
+\section{Generalised colouring}
+\begin{itemize}
+\item What are the smallest number of colours required to colour a graph
+\item Lemma: A planar graph can be coloured in 4 colours
+\item May be asked to minimise/maximise the number of nodes of a certain colour
+\end{itemize}
+Proof of 4 colour theorem
+\begin{itemize}
+\item Start with assumption the graph needs at least 5 colours
+\item Take a set of graphs and prove that this assumption can't exist
+\end{itemize}
+\section{Optimisation Problems}
+\begin{itemize}
+\item Set of problems, instances and solutions
+\item Need information about the quality of a solution
+\item Looking for the best solution
+\end{itemize}
+An optimisation problem is defines:
+\begin{itemize}
+\item There is a set of instances I
+\item For every instance $x\in I$ there is a set of \textbf{feasible solutions f(x)}
+\item For every $x\in I$ and for every $y\in f(x)$ there is a value $v(x,y)\in N$ giving the \textbf{measure} of the feasible solution y for the instance x
+\item There is a goal which is either min or max
+\end{itemize}
+To solve an optimisation problem, given $x\in I$
+\begin{itemize}
+\item We need to find a feasible solution of the max/min measure
+\end{itemize}
+There may be
+\begin{itemize}
+\item No feasible solutions for an instance or
+\item For a maximisation problem, feasible solutions of increasingly large measure
+\end{itemize}
+\section{Application of independent sets}
+\begin{itemize}
+\item Given a communications channel where message bits get randomly flipped
+\item When encode the characters, make sure that every pair of characters has at least 2 bits different (2 bits need to change to change between characters)
+\item This allows you to know (if only 1 bit has been flipped) that an error has occurred
+\item These character encodings can be represented in a graph (all distance 2 apart)
+\item This cannot be used to correct errors, just to know that one has occurred
+\end{itemize}
+\section{Finding independent sets}
+\begin{itemize}
+\item Can use a greedy algorithm to find them
+\begin{itemize}
+\item Find a vertex of smallest degree and put it in the independent set
+\item Remove it and its neighbours from the graph
+\item Iterate the remaining graph until there is nothing left, output I
+\end{itemize}
+\item This is reasonably good, but does not guarantee an optimal solution
+\end{itemize}
+\section{Finding tours in the TSP}
+\begin{itemize}
+	\item Use a greedy algorithm
+	\item Proceeds as follows:
+	\begin{enumerate}
+		\item Start at some city
+		\item Go to the closest unvisited neighbour
+		\item Output the resulting tour 
+	\end{enumerate}
+	\item This doesn't necessarily result in an optimal tour
+	\item Moving a node further away will result in it being missed out when visiting near it, resulting in a longer route
+\end{itemize}
+\section{Recap}
+\begin{itemize}
+	\item Implementation is massively important
+	\item Greedy algorithms are easy to implement and give pretty good answers
+\end{itemize}
+\section{Practical applications}
+\subsection{Algorithmic Graph Theory}
+\begin{itemize}
+	\item The study of the algorithmic and structural properties of graphs
+	\item Look for better and better algorithms to solve the various problems in graphs
+	\item Lots of "hard" problems in graph theory - try to solve by finding "easy" sub problems
+\end{itemize}
+\end{document}

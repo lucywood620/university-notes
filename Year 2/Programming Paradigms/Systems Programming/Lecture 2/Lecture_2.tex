@@ -1,0 +1,193 @@
+\documentclass{article}[18pt]
+\usepackage{../../../../format}
+\lhead{Programming Paradigms - System Programming}
+\usepackage{minted}
+\setminted{tabsize=4}
+
+\begin{document}
+\begin{center}
+\underline{\huge Control Flow and Functions}
+\end{center}
+\section{Arrays}
+\begin{itemize}
+	\item You can use arrays to store multiple values of the same type
+\end{itemize}
+\begin{minted}{c}
+int a[6] = {2,4,7,1,2,4}
+\end{minted}
+\section{True/False Comparison}
+\begin{itemize}
+	\item Traditionally, C did not have boolean types and just used ints
+	\item Comparisons will evaluate to 1 if they hold and 0 if they don't
+	\item C99 introduced bool, which is defined in \texttt{stdbool.h}
+\end{itemize}
+\section{Statements and compound statements}
+\begin{itemize}
+	\item A statement in C is a single instruction terminated with a semicolon
+	\begin{minted}{c}
+	printf("Hello World!\n");
+	\end{minted}
+	\item A compound statement is a set of statements surrounded by a pair of curly brackets \{\}
+	\begin{minted}{c}
+	{
+	printf("Hello ");
+	printf("world!\n");
+	}
+	\end{minted}
+	\item You can always replace a statement with a compound statement
+	\item C doesn't care about formatting - but we need it!
+\end{itemize}
+\section{Some Style Conventions}
+Compound statement:
+\begin{itemize}
+	\item Curly brackets on own lines
+	\item Indent body with 2/4 characters or a tab
+\end{itemize}
+Variable names:
+\begin{itemize}
+	\item Constants - all capitals: MAX, PI
+	\item \#defines - all capitals: DEBUG
+	\item Normal variables
+	\begin{itemize}
+		\item camel case: myAge
+		\item or snake cake: my\_age
+	\end{itemize}
+\end{itemize}
+Comments
+\begin{minted}{c}
+/* This is a comment
+that can go on multiple lines */
+// This is a single line comment
+\end{minted}
+\section{Iteration Statements}
+\begin{itemize}
+	\item C's iteration statements are used to create loops
+	\item A loop is a statement whose job is to repeatedly execute other statements: the loop body
+	\item In C, every loop has a controlling expression
+	\item Each time the loop body is executes, the expression is evaluated
+	\item If the expression is true (has a non zero value), the loop continues to execute
+\end{itemize}
+C provides three iteration statements
+\begin{itemize}
+	\item The while statement is used for loops whose controlling expression is tested before the loop body is executed
+	\begin{minted}{c}
+while (a> 100) {...}
+	\end{minted}
+	\item The do statement is used if the expression is tested after the loop body is executed
+\begin{minted}{c}
+do {...} while (a>100);
+\end{minted}
+	\item The for statement is convenient for loops that increment or decrement a counting variable
+\begin{minted}{c}
+for (a = 199; a>100; a = a-1) {...}
+\end{minted}
+\end{itemize}
+\section{The break and continue statements}
+\begin{itemize}
+	\item The break; statement causes the innermost enclosing loop (or switch) to be exited immediately
+\begin{minted}{c}
+for(n = 10; n<=10; n++){
+	statement(s)
+	break; // or continue;
+}
+\end{minted}
+	\item continue; causes the next iteration for the loop to begin (it does not apply to switch)
+	\item In the case of a while or do loop, the test part is executed immediately; in the case of a for loop, control first passes to the increment step
+	\item In a do while, continue will evaluate before looping round
+\end{itemize}
+\section{The if-else statement}
+\begin{minted}{c}
+if (expr1){
+	statement1
+}else{
+	statement2
+}
+\end{minted}
+\subsection{Cascaded if statements}
+Allows testing of a series of conditions
+\begin{minted}{c}
+if(boolean_expression1) {
+/* Executes when the boolean expression 1 is true */
+} else if( boolean_expression2) {
+/* Executes when the boolean expression 2 is true */
+} else if( boolean_expression3) {
+/* Executes when the boolean expression 3 is true */
+} else {
+/* executes when the none of the above condition is true */
+}
+\end{minted}
+\section{Static program checking}
+Using the wall (all warnings) flag on the compiler will make static checks e.g. for
+\begin{minted}{c}
+#include <stdio.h>
+int main(){
+	int x = 0;
+	if(x=0){ printf("x is 0\n");}
+	return 0;
+}
+\end{minted}
+This doesn't give the correct output as there is an assignment in the if statement, which equates to zero, which is equivalent to false, and so the if statement passes
+
+
+\section{The switch statement}
+This has the form
+\begin{minted}{c}
+switch(expression){
+	case const-expr: statements
+	case const-expr: statements
+	default: statements
+}
+\end{minted}
+Warning: if there is no break statement, execution falls through - all the cases will be executed
+\section{Incrementing etc}
+C has many methods of incrementing and decrementing
+\begin{minted}{c}
+++
+--
++=
+-=
+*=
+/=
+%=
+\end{minted}
+x++: Evaluates to x, then adds one\\
+++x: Adds one, then evaluates to x (so +1)\\
+\\
+In a for loop it doesn't matter which one you use
+\section{Functions}
+\subsection{Declaration}
+\begin{itemize}
+	\item Functions encapsulate code in a convenient way
+	\item Analogous to methods in an O-O language
+	\item Functions can be declared before they are defined, as a function declaration:
+	\begin{minted}{c}
+return-type function-name (paramenters);
+	\end{minted}
+	\item E.g. to calculate base raise to the power n
+\begin{minted}{c}
+int power(int base, int n);
+\end{minted}
+	\item Often we put these in a header file (.h)
+\end{itemize}
+\subsection{Definition}
+Functions can be defined anywhere in a program wile, if the declaration precedes use of the function
+\begin{minted}{c}
+int power (int base, int n) {
+	int p;
+	for ( p=1; n>0; n--)
+		p=p*base
+	return p;
+}
+\end{minted}
+\subsection{Call by value}
+\begin{itemize}
+	\item Function parameters in C are passed using a call by value semantic
+	\begin{minted}{c}
+result = power(x,y);
+	\end{minted}
+	\item Here when x and y are passed through to \texttt{power()}, the values of x \& y are copied to the base and n variables in the function
+	\item A function cannot affect the value of its arguments
+	\item \texttt{swap (x,y)} example
+\end{itemize}
+
+\end{document}

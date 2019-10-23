@@ -1,0 +1,208 @@
+\documentclass{article}[18pt]
+\usepackage{../../../../format}
+\lhead{MODULE}
+\usepackage{hyperref}
+\usepackage{minted}
+
+\providecommand{\tightlist}{%
+	\setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+
+\begin{document}
+\begin{center}
+\underline{\huge Coursework Questions}
+\end{center}
+
+
+\hypertarget{assignment-questions}{%
+	\section{Assignment questions}\label{assignment-questions}}
+
+\hypertarget{assignment-questions-1}{%
+	\subsection{Assignment questions}\label{assignment-questions-1}}
+
+\begin{itemize}
+	\tightlist
+	\item
+	What does a reusable component look like?
+	\item
+	What is a \texttt{draw} method with optional p5.Renderer as parameter?
+	\item
+	When are private fields appropriate?
+	\item
+	How to use ESLint?
+	\item
+	Can I convert a processing sketch?
+	\item
+	Others?
+\end{itemize}
+
+\hypertarget{what-does-a-reusable-component-look-like}{%
+	\subsection{What does a reusable component look
+		like?}\label{what-does-a-reusable-component-look-like}}
+
+\begin{itemize}
+	\tightlist
+	\item
+	Variables in sketch become properties of the object
+	\item
+	Setup code in sketch becomes the constructor
+	\item
+	Draw method in sketch becomes draw method of the object
+	\item
+	Other methods for changing parameters and handling events
+\end{itemize}
+
+\hypertarget{minimal-usage-in-sketch-index.js}{%
+	\subsection{Minimal usage in sketch
+		(index.js)}\label{minimal-usage-in-sketch-index.js}}
+
+Include p5 library your sketch class definition
+
+\begin{minted}{js}
+var c;
+
+function setup(){
+	c = new Component();
+}
+
+function draw(){
+	c.draw();
+}
+\end{minted}
+
+\hypertarget{what-is-a-draw-method-with-optional-p5.renderer-as-parameter}{%
+	\subsection{\texorpdfstring{What is a \texttt{draw} method with optional
+			p5.Renderer as
+			parameter?}{What is a draw method with optional p5.Renderer as parameter?}}\label{what-is-a-draw-method-with-optional-p5.renderer-as-parameter}}
+
+\begin{itemize}
+	\tightlist
+	\item
+	p5.Renderer objects are returned by \texttt{createCanvas} and
+	\texttt{createGraphics}
+	\item
+	Can be used e.g.~as texture for another object
+	\item
+	All calls to graphics e.g.~\texttt{rect}, \texttt{ellipse},
+	\texttt{fill} can be applied
+\end{itemize}
+
+\begin{minted}{js}
+function draw(g){
+	if(g){
+		g.ellipse(this.x, this.y, this.d, this.d);
+	}
+	else{
+		ellipse(this.x, this.y, this.d, this.d);
+	}
+
+}
+\end{minted}
+
+To avoid duplication you could
+
+\begin{itemize}
+	\tightlist
+	\item
+	(Optionally) create the canvas in the constructor and save the return
+	value
+	\item
+	OR create delegation functions inside your draw function e.g.
+\end{itemize}
+\newpage
+\begin{minted}{js}
+rect(x,y,w,h){
+	if(g){
+		g.rect(x,y,w,h);
+	}
+	else{
+		rect(x,y,w,h);
+	}
+}
+\end{minted}
+
+\hypertarget{when-are-private-fields-appropriate}{%
+	\subsection{When are private fields
+		appropriate?}\label{when-are-private-fields-appropriate}}
+
+\begin{itemize}
+	\tightlist
+	\item
+	They are a a post-ES6 experimental feature
+	\item
+	On reflection, probably not appropriate to use
+\end{itemize}
+
+\hypertarget{how-to-use-eslint}{%
+	\subsection{How to use ESLint?}\label{how-to-use-eslint}}
+
+\begin{itemize}
+	\tightlist
+	\item
+	Want to use \href{https://eslint.org/docs/rules/}{eslint:recommended}
+	rules
+	\item
+	\href{https://eslint.org/docs/user-guide/getting-started}{Set up on
+		your machine}
+	\item
+	When running \texttt{eslint\ -\/-init} choose
+	\texttt{Answer\ questions\ ...}
+\end{itemize}
+
+\begin{verbatim}
+DA-ECS-01:ball dcs0spb$ eslint --init
+? How would you like to configure ESLint? Answer questions about your style
+? Which version of ECMAScript do you use? ES2015
+? Are you using ES6 modules? No
+? Where will your code run? Browser
+? Do you use CommonJS? No
+\end{verbatim}
+
+\begin{verbatim}
+? Do you use JSX? No
+? What style of indentation do you use? Spaces
+? What quotes do you use for strings? Single
+? What line endings do you use? Unix
+? Do you require semicolons? Yes
+? What format do you want your config file to be in? JavaScript
+\end{verbatim}
+
+You might want to use Windows line endings
+
+\hypertarget{eslint-output}{%
+	\subsection{ESLint output}\label{eslint-output}}
+
+\begin{verbatim}
+DA-ECS-01:ball dcs0spb$ eslint ball.js
+
+/Users/dcs0spb/Documents/Prog18potatoes/ball/ball.js
+1:7   error  'Ball' is defined but never used                    no-unused-vars
+3:1   error  Expected indentation of 8 spaces but found 1 tab    indent
+4:1   error  Expected indentation of 8 spaces but found 1 tab    indent
+5:1   error  Expected indentation of 8 spaces but found 1 tab    indent
+5:24  error  Unnecessary semicolon                               no-extra-semi
+\end{verbatim}
+
+\hypertarget{can-i-convert-a-processing-sketch}{%
+	\subsection{Can I convert a processing
+		sketch?}\label{can-i-convert-a-processing-sketch}}
+
+Yes
+
+\begin{itemize}
+	\tightlist
+	\item
+	Replace variable types with \texttt{var} (or \texttt{let} or
+	\texttt{const})
+	\item
+	Replace method return types e.g.~\texttt{void} with \texttt{function}
+	\item
+	Find equivalent objects e.g.~\texttt{new\ PVector} becomes
+	\texttt{createVector}
+\end{itemize}
+
+\hypertarget{others}{%
+	\subsection{Others?}\label{others}}
+
+
+
+\end{document}

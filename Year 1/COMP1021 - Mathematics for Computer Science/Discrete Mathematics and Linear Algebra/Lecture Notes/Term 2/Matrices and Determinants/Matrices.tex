@@ -1,0 +1,117 @@
+\documentclass{article}[18pt]
+\usepackage{../../../../../../format}
+\lhead{MCS - DMLA - Term 2}
+
+
+\begin{document}
+\begin{center}
+\underline{\huge Matrices and Determinants}
+\end{center}
+\section{Matrices}
+\subsection{Definition}
+A matrix is a rectangular array of (real) numbers. The numbers in the array are called the \textbf{entries} of the matrix. The entry in row i and column j is denoted by $a{ij}$
+\subsection{Dimensions}
+\begin{itemize}
+	\item A matrix with m rows and n columns is said to have size $m\times n$
+	\item A general $m\times n$ matrix can be written as
+	$$\left( \begin{array} { c c c c } { a _ { 11 } } & { a _ { 12 } } & { \dots } & { a _ { 1 n } } \\ { a _ { 21 } } & { a _ { 22 } } & { \cdots } & { a _ { 2 n } } \\ { \vdots } & { \vdots } & { } & { \vdots } \\ { a _ { m 1 } } & { a _ { m 2 } } & { \cdots } & { a _ { m n } } \end{array} \right)$$
+	\item A matrix of size $n\times n$ is called a square matrix of order n
+	\item Two matrices are \textbf{equal} when they have the same size and the corresponding entries are equal
+\end{itemize}
+\section{Matrix operations}
+Let $A=a_{ij}$ and $B=(b_{ij})$ be $m\times n$ matrices
+\begin{itemize}
+	\item The \textbf{sum} A+B is defined as the $m\times n$ matrix $C=(c_{ij})$ such that $c_{ij}=a_{ij}+b_{ij}$
+	\item The difference A-B is defined similarly
+	\item If $\alpha$ is a number (scalar) then the product (of a matrix by a scalar) $\alpha A$ is the $m\times n$ matrix $C=(c_{ij})$ such that $c_{ij}=\alpha\cdot a_{ij}$
+\end{itemize}
+Example: Let
+$$A = \left( \begin{array} { c c c } { 2 } & { 3 } & { 4 } \\ { 1 } & { 3 } & { 1 } \end{array} \right) \text { and } B = \left( \begin{array} { r r r } { 0 } & { 2 } & { 7 } \\ { - 1 } & { 3 } & { - 5 } \end{array} \right)$$
+Then:
+$$2 A - B = \left( \begin{array} { c c c } { 4 } & { 6 } & { 8 } \\ { 2 } & { 6 } & { 2 } \end{array} \right) - \left( \begin{array} { r r r } { 0 } & { 2 } & { 7 } \\ { - 1 } & { 3 } & { - 5 } \end{array} \right) = \left( \begin{array} { c c c } { 4 } & { 4 } & { 1 } \\ { 3 } & { 3 } & { 7 } \end{array} \right)$$
+\section{Matrix Multiplication}
+\begin{itemize}
+	\item If A is an $m\times r$ matrix and B an $r'\times n$ matrix and the product matrix AB is defined only if $r=r'$
+	\item If $A=(a_{ij})$ is an $m\times r$ matrix and $B=(b_{ij})$ an $r\times n$ matrix then the \textbf{product} AB is the $m\times n$ matrix $C=(c_{ij})$ such that:
+\end{itemize}
+$$c _ { i j } = a _ { i 1 } b _ { 1 j } + a _ { i 2 } b _ { 2 j } + \ldots + a _ { i r } b _ { r j }$$
+
+\section{Properties of matrix arithmetic}
+Assuming that the sizes of the matrices are such that the operations can be preformed, the following rules are valid:
+\begin{enumerate}
+	\item $A+B=B+A$
+	\item $A+(B+C)=(A+B)+C$
+	\item $A(BC)=(AB)C$
+	\item $A(B\pm C)=AB\pm AC$
+	\item $(B\pm C)A=BA+CA$
+	\item $\alpha(B\pm C)=\alpha B\pm \alpha C$
+	\item $(\alpha \pm \beta)A=\alpha A\pm \beta A$
+	\item $\alpha(\beta A)=(\alpha\beta)A$
+	\item $\alpha(BC)=(\alpha B)C=B(\alpha C)$ 
+\end{enumerate}
+\section{Special matrices}
+\begin{itemize}
+	\item A matrix whose entities are all 0 is called a zero matrix and denoted by 0. \\
+	We have A+0=0+A=A and 0A=0
+	\item A square matrix $(a_{ij})$ such that $a_{ii}=1$ and $a_{ij}=0$. If $i\neq j$ is called the identity matrix. denotes $I_n$
+	 $$I _ { n } = \left( \begin{array} { c c c c c } { 1 } & { 0 } & { \cdots } & { 0 } & { 0 } \\ { 0 } & { 1 } & { \cdots } & { 0 } & { 0 } \\ { \vdots } & { \vdots } & { } & { \vdots } & { \vdots } \\ { 0 } & { 0 } & { \cdots } & { 1 } & { 0 } \\ { 0 } & { 0 } & { \cdots } & { 0 } & { 1 } \end{array} \right)$$
+	 \item It is easy to check that, for any $m\times n$ matrix A $AI_n=A=I_mA$
+\end{itemize}
+\section{AB vs BA}
+In general, even for square matrices, it is possible that
+\begin{itemize}
+	\item $AB\neq BA$
+	\item AB=0, but $A\neq 0$ and $B\neq 0$
+	\item AC=BC, but $A\neq B$
+\end{itemize}
+Example:
+$$\begin{array} { l } { \left( \begin{array} { l l } { 0 } & { 1 } \\ { 0 } & { 2 } \end{array} \right) \left( \begin{array} { c c } { 3 } & { 7 } \\ { 0 } & { 0 } \end{array} \right) = \left( \begin{array} { c c } { 0 } & { 0 } \\ { 0 } & { 0 } \end{array} \right) } \\ { \left( \begin{array} { c c } { 3 } & { 7 } \\ { 0 } & { 0 } \end{array} \right) \left( \begin{array} { c c } { 0 } & { 1 } \\ { 0 } & { 2 } \end{array} \right) = \left( \begin{array} { c c } { 0 } & { 17 } \\ { 0 } & { 0 } \end{array} \right) } \end{array}$$
+\section{Matrix Transpose}
+If A is an $m\times n$ matrix then the \textbf{transpose} of A is the $n\times m$ matrix $A^T$ such that the ith row of A is the ith column of $A^T$\\
+Example:
+$$A = \left( \begin{array} { c c c } { 2 } & { 3 } & { 4 } \\ { 1 } & { 3 } & { 1 } \end{array} \right) \text { then } A ^ { T } = \left( \begin{array} { c c } { 2 } & { 1 } \\ { 3 } & { 3 } \\ { 4 } & { 1 } \end{array} \right)$$
+\subsection{Theorem}
+If the sizes of the matrices are such that the operations can be performed then
+\begin{enumerate}
+	\item $(A^T)^T=A$
+	\item $(A+B)^T=A^T+B^T$
+	\item $(A-B)^T=A^T-B^T$
+	\item $(\alpha A)^T=\alpha A^T$
+	\item $(AB)^T=B^TA^T$
+\end{enumerate}
+\section{Matrix inverse and its properties}
+\begin{itemize}
+	\item If A is a square matrix of order n and if a matrix B of the same size can be found such that $AB=BA=I_n$, then A is said to be \textbf{invertable} (or \textbf{non singular}), and B is called an \textbf{inverse} of A
+	\item In this case A and B are inverse of each other
+	\item If no such B can be found then A is singular
+	\item If B and CD are both inverses of A then $B=C$. Indeed, we have
+	$$B = B I = B ( A C ) = ( B A ) C = I C = C$$
+	\item So, we can speak of the inverse of A, it is usually denoted by $A^{-1}$
+	\item If A and B are invertible matrices of the same size then AB is invertable and $(AB)^{-1}=B^{-1}A^{-1}$. Indeed,
+	$$( A B ) \left( B ^ { - 1 } A ^ { - 1 } \right) = A \left( B B ^ { - 1 } \right) A ^ { - 1 } = A I A ^ { - 1 } = A A ^ { - 1 } = I$$
+	\item If A is invertible then $A^T$ is also invertible and $(A^T)^{-1}=(A^{-1})^T$. Indeed,
+	$$A ^ { T } \left( A ^ { - 1 } \right) ^ { T } = \left( A ^ { - 1 } A \right) ^ { T } = I ^ { T } = I$$
+\end{itemize}
+\section{Finding the inverse of a $2\times 2$ matrix}
+Let $A = \left( \begin{array} { l l } { a } & { b } \\ { c } & { d } \end{array} \right)$. The \textbf{determinant} of A is the number $det(A)=ad-bc$. This number is also denoted by $\left| \begin{array} { l l } { a } & { b } \\ { c } & { d } \end{array} \right|$
+\subsection{Theorem}
+The matrix $A = \left( \begin{array} { l l } { a } & { b } \\ { c } & { d } \end{array} \right)$ is invertible iff $det(A)\neq 0$, in which case
+$$A ^ { - 1 } = \frac { 1 } { \operatorname { det } ( A ) } \left( \begin{array} { c c } { d } & { - b } \\ { - c } & { a } \end{array} \right)$$
+\section{Minors and cofactors}
+\begin{itemize}
+	\item We defined the determinants of $2\times 2$ matrices, so will now define them for general square matrices
+	\item Assume that we can compute determinants of square matrices of order n-1
+	\item If A is a square matrix of order n, then the \textbf{minor of the entry $a_{ij}$} denoted my $M_{ij}$, is the determinant of the matrix (of order n-1) obtained from A by removing its ith row and jth column
+	\item The number $C _ { i j } = ( - 1 ) ^ { i + j } M _ { i j }$ is called the \textbf{cofactor of $a_{ij}$}
+\end{itemize}
+Example: Let
+$$A = \left( \begin{array} { c c c } { 3 } & { 1 } & { - 4 } \\ { 2 } & { 5 } & { 6 } \\ { 1 } & { 4 } & { 8 } \end{array} \right)$$
+The minor of $a_{32}$ is
+$$M _ { 32 } = \left| \begin{array} { r r r } { 3 } & { 1 } & { - 4 } \\ { 2 } & { 5 } & { 6 } \\ { 1 } & { 4 } & { 8 } \end{array} \right| = \left| \begin{array} { r r } { 3 } & { - 4 } \\ { 2 } & { 6 } \end{array} \right| = 26$$
+The cofactor of $a_{32}$ is
+$$C _ { 32 } = ( - 1 ) ^ { 3 + 2 } \cdot 26 = - 26$$
+\section{Determinants}
+If A is an $n\times n$ matrix then the \textbf{determinant} of A can be computed by any of the following \textbf{cofactor expressions} along the ith row and along the jth column, respectiveley:
+$$\operatorname { det } ( A ) = a _ { i 1 } C _ { i 1 } + a _ { 2 } C _ { i 2 } + \ldots + a _ { i n } C _ { i n }$$
+$$\operatorname { det } ( A ) = a _ { 1 j } C _ { 1 j } + a _ { 2 j } C _ { 2 j } + \ldots + a _ { n j } C _ { n j }$$
+\end{document}

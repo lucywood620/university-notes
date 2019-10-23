@@ -1,0 +1,143 @@
+\documentclass{article}[18pt]
+\usepackage{../../../../../format}
+\lhead{MCS - LDS}
+\let\[\equation
+\let\]\endequation
+\usepackage{changepage}
+\begin{document}
+\begin{center}
+\underline{\huge First Order Logic - Resolution}
+\end{center}
+\section{Resolution for first-order logic}
+Resolution is not only a proof system for propositional logic but it is a sound and complete proof system for first order logic too:
+\begin{itemize}
+	\item If $\Sigma$ is a set of first order formulae and $\phi$ is a first order formula such that:
+	\begin{center}
+	for every interpretation $M , M = \Sigma \Rightarrow M = \phi$
+	\end{center}
+	then the proof system resolution will answer "yes" (completeness)
+	\item If the proof system resolution answers "yes" on input $(\Sigma,\phi)$ then for every interpretation $M , M = \Sigma \Rightarrow M = \phi$ (soundness)
+\end{itemize}
+We shall only consider Resolution for first order logic very briefly.\\
+We are given a set of first-order formulae $\Sigma$ and another first order formula $\phi$ and we want to know whether for every interpretation M, if M satisfies each formula in $\Sigma$ then M necessarily satisfies $\phi$
+\\
+\begin{adjustwidth}{2em}{2em}
+\begin{center}
+	That is, we want to know whether the conjunction of the formula in $\Sigma$, denoted $\Sigma$ too, is such that $\Sigma\Rightarrow\phi$ is valid, i.e. holds in all interpretations
+\end{center}
+\end{adjustwidth}
+We describe how the Resolution proof system proceeds and given an example (but omit a more detailed discussion)
+\section{How we proceed}
+\begin{enumerate}
+	\item Form the conjunction of all formula in $\Sigma$ and $\lnot\phi$
+	\item Reduce the resulting formula to prenex normal form $Q _ { 1 } x _ { 1 } Q _ { 2 } x _ { 2 } \ldots Q _ { k } x _ { k } \psi$
+	\item For any existentially quantified variable $x_i$, replace each occurrence of $x_i$ in $\psi$ with the term $F _ { i } \left( x _ { j _ { 1 } } , x _ { j _ { 2 } } , \dots , x _ { j _ { r } } \right)$, where $X _ { j _ { 1 } } , X _ { j _ { 2 } } , \ldots , x _ { j r }$ are the universally quantified variables appearing in the list $x_1,x_2,...,x_{i-1}$ and $F_i$ is a new function symbol
+	\item Delete the prefix of quantifiers $Q_1x_1Q_2x_2...Q_kx_k$
+	\item Reduce the remaining quantifier-free formula to c.n.f and apply the generalised resolution rule to the resulting set of clauses
+	\item If we resolve the empty clause then we answer "yes". If we get to the point where we can resolve no more new clauses then we answer "no"\\
+	We may keep on resolving for ever
+\end{enumerate}
+\subsection{Substitutions}
+Suppose that we have the two clauses:
+$$A ( F ( x ) ) \vee L ( G ( x ) , x ) \text { and } \neg L ( u , v ) \vee \neg K ( u , v )$$
+This bit above is just like resolution on anded clauses in propositional logic\\
+Note that u and v are universally quantified as they are not expressed as functions\\
+We can unify the terms and variables $\{ u / G ( x ) , v / x \}$, make these substitutions throughout the clauses, and then resolve the resulting clauses:
+$$A ( F ( x ) ) \vee L ( G ( x ) , x ) \text { and } \neg L ( G ( x ) , x ) \vee \neg K ( G ( x ) , x )$$
+resolve to yield $A ( F ( x ) ) \vee \neg K ( G ( x ) , x )$
+\subsection{An illustration}
+Suppose we know the following:
+\begin{itemize}
+	\item Everyone who loves all animals is loved by someone
+	\item Anyone who kills an animal is loved by no-one
+	\item Jack loves all animals
+	\item Either Jack or Curiosity killed the cat, whose name is Tuna
+\end{itemize}
+And we want to know: Did Curiosity kill the cat?\\
+Translate to first order logic:\\
+\\
+\textbf{Statement 1:}
+\begin{equation}\label{eq:1}\forall x ( \forall y ( \text { Animal } ( y ) \Rightarrow \text { Loves } ( x , y ) ) \Rightarrow \exists y ( \text { Loves } ( y , x ) ) )
+\end{equation}
+\textbf{Statement 2 : }
+\begin{equation}\label{eq:2}\forall x ( \exists y ( \text { Animal } ( y ) \wedge \text { Kills } ( x , y ) ) \Rightarrow \forall z ( \neg \operatorname { Loves } ( z , x ) ) )\end{equation}
+\textbf{Statement 3 :}
+\begin{equation}\label{eq:3}\forall x ( \text { Animal } ( x ) \Rightarrow \text { Loves } ( \operatorname { Jack } , x ) )\end{equation}
+\textbf{Statement 4:}
+\begin{equation}\label{eq:4}\text{Kills(Jack, Tuna)} \lor \text{Kills(Curiosity, Tuna)}\end{equation}
+\textbf{Also from statement 4:}
+\begin{equation}\label{eq:5}\text{Animal(Tuna)}\end{equation}
+\textbf{The question being asked:}
+\begin{equation}\label{eq:6}\text{Kills(Curiosity, Tuna)}?\end{equation}
+
+Convert to prenex normal form with the quantifier-free part in conjunctive normal form: $\forall x \exists y \exists z \forall u \forall v \forall w \forall t$\\
+All statements in the same order and have been converted
+\setcounter{equation}{0}
+\begin{equation}\label{eq:7}( ( \text { Animal } ( y ) \vee \text { Loves } ( z , x ) ) \wedge ( \neg \text { Loves } ( x , y ) \vee \text { Loves } ( z , x ) ) )\end{equation}
+
+\begin{equation}\label{eq:8}( \neg \text { Animal(v } ) \vee \neg \text { Kills } ( u , v ) ) \vee \neg \text { Loves } ( w , u ) )\end{equation}
+
+\begin{equation}\label{eq:9}(\operatorname{Animal}(t)\lor \operatorname{Loves}(Jack,t))\end{equation}
+
+\begin{equation}\label{eq:10}\operatorname{Kills}(Jack, Tuna)\lor \operatorname{Kills}(Curiosity, Tuna)\end{equation}
+
+\begin{equation}\label{eq:11}\operatorname{Animal}(Tuna)\end{equation}
+
+\begin{equation}\label{eq:12}\lnot(\operatorname{Kills}(Curiosity, Tuna))\end{equation}
+
+Replace existential quantifiers and remove universal quantifiers:
+\setcounter{equation}{0}
+\begin{equation}\label{eq:13}((\operatorname{Animal}(F(x))\lor \operatorname{Loves}(G(x),x)) \land (\lnot \operatorname{Loves}(x,F(x)) \lor \operatorname{Loves}(G(x),x)) )\end{equation}
+
+\begin{equation}\label{eq:14}\lnot \operatorname{Animal}(v)\lor \lnot \operatorname{Kills}(u,v) \lor \lnot \operatorname{Loves}(w,u)\end{equation}
+
+\begin{equation}\label{eq:15}\operatorname{Animal}(t)\lor \operatorname{Kills}(Curiosity, Tuna)\end{equation}
+
+\begin{equation}\label{eq:16}\operatorname{Animal}(Tuna)\end{equation}
+
+\begin{equation}\label{eq:17}\lnot(\operatorname{Kills}(Curiosity, Tuna))?\end{equation}
+
+Apply Resolution
+\setcounter{equation}{0}
+\begin{equation}\label{eq:18}( ( \text { Animal } ( F ( x ) ) \vee \operatorname { Loves } ( G ( x ) , x ) ) \wedge ( \neg \operatorname { Loves } ( x , F ( x ) ) \vee \operatorname { Loves } ( G ( x ) , x ) ) )\end{equation}
+
+\begin{equation}\label{eq:19}( \neg \text { Animal } ( v ) \vee \neg \text { Kills } ( u , v ) ) \vee \neg \text { Loves } ( w , u ) )\end{equation}
+
+\begin{equation}\label{eq:20}(\operatorname{Animal}(t)\lor \operatorname{Loves}(Jack,t))\end{equation}
+
+\begin{equation}\label{eq:21}\operatorname{Kills}(Jack,Tuna)\lor \operatorname{Kills}(Curiosity, Tuna)\end{equation}
+
+\begin{equation}\label{eq:22}\operatorname{Animal}(Tuna)\end{equation}
+
+\begin{equation}\label{eq:23}\lnot(\operatorname{Kills}(Curiosity, Tuna))\end{equation}
+Combining \eqref{eq:19} and \eqref{eq:22}
+\begin{equation}\label{eq:24}v / Tuna \rightarrow \lnot Kills(u, Tuna)\lor \lnot \operatorname{Loves}(w,u)\end{equation}
+Combining \eqref{eq:21} and \eqref{eq:23}
+\begin{equation}\label{eq:25}\rightarrow \operatorname{Kills}(Jack, Tuna)\end{equation}
+Combining \eqref{eq:24} and \eqref{eq:25}
+\begin{equation}\label{eq:26}u/Jack \rightarrow \lnot Loves(w,Jack)\end{equation}
+Combining \eqref{eq:18} and \eqref{eq:20}
+\begin{equation}\label{eq:27}x/Jack, t/F(Jack) \rightarrow \lnot \operatorname{Animal}(F(Jack)) \lor \operatorname{Loves}(G(Jack),Jack)\end{equation}
+Combining \eqref{eq:18} and \eqref{eq:27}
+\begin{equation}\label{eq:28}x/Jack\rightarrow \operatorname{Loves}(G(Jack),Jack)\end{equation}
+Combining \eqref{eq:26} and \eqref{eq:28}
+\begin{equation}\label{eq:29}w/G(Jack)\Rightarrow \{\}\end{equation}
+So curiosity Killed the cat
+\section{Some comments on resolution}
+There might appear to be a mismatch between the undecidability of the validity problem for first order logic:
+\begin{center}
+\textit{“There is no computer program that computes whether any given first-order formula is valid; that is, is satisfied by all interpretations.”}
+\end{center}
+and the soundness and completeness of the Resolution proof system for first order logic:
+\begin{center}
+\textit{“If a first-order formula is valid then Resolution answers ‘yes’, and if Resolution answers ‘yes’ then the first-order formula is valid.”}	
+\end{center}
+However, this is not the case; for unlike in propositional logic Resolution in first-order logic might not halt when a formula is not valid. Resolution is sometimes said to be semi-decidable.\\
+\\
+The Resolution proof system lies at the heart of many modern-day theorem provers.
+
+
+
+
+
+\end{document}

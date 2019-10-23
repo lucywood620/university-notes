@@ -1,0 +1,89 @@
+\documentclass{article}[18pt]
+\usepackage{../../../../../format}
+\lhead{MCS - Logic and Discrete Structures}
+
+
+\begin{document}
+\begin{center}
+\underline{\huge More on resolution for Propositional Logic}
+\end{center}
+\section{Example 1}
+\begin{itemize}
+	\item Let $\varphi$ be the formula $\neg ( ( p \lor q ) \land ( \neg p \lor q ) \land ( p \lor \neg q ) \land ( \neg p \lor \neg q ) )$
+	\item Is $\varphi$ a theorem?
+	\item In order to prove this using resolution we negate $\varphi$ and put it in conjunctive normal form if necessary
+	\item So $\lnot \varphi$ is the formula $( p \lor q ) \land ( \neg p \lor q ) \land ( p \lor \neg q ) \land ( \neg p \lor \neg q )$ which is in conjunctive normal form already
+	\item We will now try to apply resolution on $\lnot\varphi$ until
+	\begin{itemize}
+		\item Either we infer the empty clause, which means that $\lnot \varphi$ is a contradiction, and hence $\varphi$ is a theorem or,
+		\item We do not infer the empty clause but at some point we do not find any new clauses either; in that case we can find a truth assignment that makes $\lnot\varphi$ true, and hence, $\varphi$ false, which means that $\varphi$ is not a theorem
+	\end{itemize}
+\end{itemize}
+Applying resolution:\\
+$p\lor q$\\
+$\lnot p \lor q$\\
+$p\lor \lnot q$\\
+$\lnot p\lor \lnot q$\\
+\\
+$q\lor q$ (1 and 2)\\
+$q\lor \lnot q$ (2 and 3)\\
+$\lnot q \lor \lnot q$ (3 and 4)\\
+$\varnothing$\\
+This implies that $\varphi$ is a theorem
+
+
+
+\section{Example 2}
+\begin{itemize}
+	\item Use resolution to prove that if
+	\begin{itemize}
+		\item "It is not raining or I have my umbrella" $\lnot r \lor u$
+		\item "I do not have my umbrella or I do not get wet" $\lnot u \lor \lnot w$
+		\item "It is raining or I do not get wet" $r \lor \lnot w$
+	\end{itemize}
+	then
+	\begin{itemize}
+		\item I do not get wet
+	\end{itemize}
+	\item A formula $\varphi\Rightarrow\psi$ is logically equivalent to $\lnot\varphi\lor\psi$
+	\begin{itemize}
+		\item So that the negation of our formula is $\varphi\land\lnot\psi$
+		\begin{itemize}
+			\item That is
+			$$(\lnot R\lor U)\land(\lnot U\lor \lnot W)\land (R\lor\lnot W)\land W$$
+		\end{itemize}
+	\end{itemize}
+\end{itemize}
+So we must apply resolution on clauses - it is already in cnf so is easy to do
+$$\lnot R\lor U, \lnot U\lor \lnot W,R\lor\lnot W, W$$
+$ $\\
+R - It is raining\\
+U - I have my umbrella\\
+W - I get Wet\\
+\\
+$\varphi \Rightarrow \psi$\\
+$\lnot \varphi \lor \psi$\\
+$\lnot(\lnot \varphi \lor \psi)$\\
+$\lnot\lnot \varphi \land \lnot \psi$\\
+$\varphi \land \lnot \psi$\\
+\\
+\\
+$W, R\lor\lnot W \Rightarrow R$\\
+$W, \lnot U\lor \lnot W \Rightarrow \lnot U$\\
+R is true, so not R is false, not U is true, so U is false. Is a theorem\\
+\\
+$u\lor \lnot W$ (1 and 3)\\
+$\lnot W \lor \lnot W \Rightarrow \lnot W$ (new 1 and 2) 
+
+
+
+\section{Example 3}
+Applying resolution to the following set of clauses
+$$a\lor b\lor c \qquad a\lor\lnot c\lor d \qquad \lnot a\lor e\lor f \qquad c\lor \lnot e\lor f \qquad c\lor d\lor \lnot f$$
+\begin{enumerate}
+	\item (1,3) $b\lor c\lor e\lor f$
+	\item (2,3) $\lnot c\lor d\lor e \lor f$
+	\item (4,n2) $\lnot d \lor f \lor \lnot f$
+\end{enumerate}
+
+\end{document}

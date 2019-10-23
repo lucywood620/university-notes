@@ -1,0 +1,46 @@
+\documentclass{article}[18pt]
+\usepackage{../../../../../format}
+\lhead{ADS - Rob Powell}
+
+
+\begin{document}
+\begin{center}
+\underline{\huge Practical Week 7}
+\end{center}
+\section{Maths Practice}
+\textit{Prove that $f(x)=a^x$ and $g(x)=\log_ax$ are inverses of each other}\\
+$a^{\log_ax}=x$\\
+$\log_a{a^x}=x$\\
+\textit{Express each of the following in terms of naural logarithms}
+$$\log_542=\dfrac{\ln 42}{\ln 5}$$
+$$\dfrac{5}{\log_210}=5\times \log_{10}2=\dfrac{5\ln 2}{\ln 10}$$
+$$\log_3\sqrt{e}=\dfrac{\ln \sqrt{e}}{\ln 3}=\dfrac{1}{2\ln 3}$$
+\textit{Use logarithm laws to simplify the following}
+$$\log_2xy-\log_2x^2=\log_2x+\log_2y-\log_2x-\log_2x=\log_2y-\log_2x$$
+$$\log_2\dfrac{8x^2}{y}+\log_22xy=\log_2 8x^2-\log_2y+1+\log_2x+\log_2x=4+4\log_2x-\log_2y$$
+$$\log_38xy^2-\log_327xy=\log_38+\log_3x+2\log_3y-\log_3 27-\log_3x-\log_3y=\log_38+3+\log_3y$$
+$$\log_4(xy)^3-\log_4xy=3\log_4x+3\log_4y-\log_4x-\log_4y=2\log_4x+2\log_4y$$
+$$\log_3 9x^4-\log_3 3x^2=2+4\log_3x-1-2\log_3 x=1+2\log_3x$$
+\textit{Prove $a^{\log_bn}=n^{\log_ba}$}
+$$a^{\log_bn}=n^{\log_ba}$$
+Take log a of both sides
+$$\log_a a^{\log_bn}=\log_a n^{\log_ba}$$
+Simplify both sides
+$$\log_bn=\log_ba\log_an$$
+$$\log_bn=\dfrac{\log a}{\log b}\times \dfrac{\log n}{\log a}$$
+$$\log_bn=\log_bn$$
+\textit{Solve each of the equations for x}
+$$100=50e^{-x} \Rightarrow 2=e^{-x} \Rightarrow \ln 2=-x \Rightarrow x=-\ln 2$$
+$$\frac{1}{4}=5^{2x-1} \Rightarrow \log_5 \frac{1}{4}=2x-1 \Rightarrow -\log_5 4=2x-1 \Rightarrow x=\dfrac{1-\log_5 4}{2}$$
+$$\ln(2x+5)=0 \Rightarrow e^0=2x+5 \Rightarrow -2=x$$
+$$\log_x6=\frac{1}{3}\Rightarrow x=6^3=216$$
+\textit{Try to prove, as formally, precisely and concisely the correctness of insertion sort as given above. By that I mean that regardless of what the input looks like, when the algorithm terminates then the corresponding numbers will be in sorted order. }\\
+\textbf{Base Case}\\
+When j=2, the sub array from 0 to j-1 consists of only one number and so is sorted\\
+\textbf{Induction step}\\
+On each iteration of j, the sub array from 0 to j has had one more number, which is of larger than all other numbers in that sub array added to the end of it, meaning that the sub array is in order.\\
+When j reaches the size of the list, the sub array is equal to the array, and so the list is sorted.\\
+When j is the size of the list, the program will then terminate, and so the numbers are sorted 
+
+
+\end{document}

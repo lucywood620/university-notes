@@ -1,0 +1,158 @@
+\documentclass{article}[18pt]
+\usepackage{../../../../../format}
+\lhead{CSys - Databases}
+
+
+\begin{document}
+\begin{center}
+\underline{\huge The relational data model}
+\end{center}
+\section{The relational data model}
+\begin{itemize}
+	\item DDL is too low level and not easily understandable by most users
+	\item We need a data model: A collection of intuitive concepts describing data, their relationships and constraints
+	\item Relational data model
+	\begin{itemize}
+		\item Relations between data are stored in tables
+		\item Based on the concept of mathematical relations
+		\item The most widely used data model (for structured data)
+	\end{itemize}
+	\item Intuitively in our data, every entity combines various attributes together
+	\item The schema of a relation - the description of a particular collection of data in the model
+	\item Let $A_1,A_2,...,A_n$ be a set of attributes that can be related
+	\item The $R(A_1,A_2,...,A_n)$ is the scheme of the relation R
+	\item In a relation schema the ordering of the attributes does not matter
+	\item A database has many entities, each with its own attributes
+	\item This information is decomposed into smaller pieces where every relation stores only one piece of the information
+	\item However there is data duplication where two customers have the same account, and null values are needed where data is not complete
+\end{itemize}
+\section{Relation Model Terminology}
+\begin{itemize}
+	\item \textbf{Relation} - A table
+	\item \textbf{Attribute} - A named column of a relation. Every attribute has a unique name
+	\item \textbf{Domain} - The set of allowable values of an attribute
+	\item \textbf{Tuple} - A row of a relation - every tuple has a concrete value for every attribute (not left empty, use NULL if no data)
+	\item \textbf{Cell} - The intersection of a row and a column
+	\item \textbf{Degree} - The number of attributes (every row stores as many values as the degree of the relation)
+	\item \textbf{Cardinality} - The number of tuples
+	\item \textbf{Normalized} - Appropriately structured (every cell has exactly one value, no repetitions of two identical rows)
+	\item \textbf{Relational Database} - A collection of normalised relations
+\end{itemize}
+\section{Instances of branch and staff relations}
+\begin{itemize}
+	\item NULL Value
+	\begin{itemize}
+		\item a special case of a cell entry
+		\item It represents an attribute value that is either currently unknown or not applicable
+		\item Not the same as 0
+		\item May or may not belong to the domain of the attribute
+	\end{itemize}
+\end{itemize}
+\section{Properties of relations}
+\begin{itemize}
+	\item The relation name is distinct from all other relation names in the relational schema
+	\item Each attribute within a relation has a distinct name
+	\item Values of an attribute are all from the same domain
+	\item Each cell of relation contains exactly one atomic value
+	\item Each tuple is distinct among the tuples of the relation
+	\item The ordering of the attributes has no significance
+	\item The ordering of tuples has no significance
+\end{itemize}
+\section{Keys}
+\begin{itemize}
+	\item How do we uniquely identify a tuple in a normalized table?
+	\begin{itemize}
+		\item attribute names are unique within a table
+		\item but two tuples may share attribute values
+	\end{itemize}
+	\item Every table must have some attributes, such as:
+	\begin{itemize}
+		\item Their value uniquely determines a tuple of the table
+		\item These attribute are the primary key of the table
+	\end{itemize}
+\end{itemize}
+\begin{itemize}
+	\item \textbf{Candidate key:} a minimal set of attributes whose values uniquely identify the tuples
+	\item \textbf{Primary key:} The candidate key selected to identify rows uniquely with the table
+	\item \textbf{Alternate key:} Those candidate keys not selected as primary key
+	\item \textbf{Simple key:} The key consists of only one attribute
+	\item \textbf{Composite key:} The key consists of only one several attributes
+\end{itemize}
+\section{Integrity constraints}
+\begin{itemize}
+\item So far we have seen \textbf{domain constraints} for the attributes
+\item Entity integrity - every attribute of a \textbf{primary key} can \textbf{not} be \textbf{NULL}
+\item Purpose of entity integrity
+\begin{itemize}
+	\item guarantees that each entity has a unique identifier
+	\item ensures that foreign key values can reference primary key values
+\end{itemize}
+\end{itemize}
+\section{Integrity constraints}
+\begin{itemize}
+\item Referential integrity
+\begin{itemize}
+\item a foreign key either matches the primary key it refers to or it is null
+\end{itemize}
+\item Purpose of referential integrity
+\begin{itemize}
+\item any reference between tables is valid (or it has not been set yet)
+\item Prevents deleting a row in a table B, if the primary key of B has a matching foreign key in another table A
+\end{itemize}
+\end{itemize}
+\section{Summary: Characteristics of a relational table}
+\begin{itemize}
+\item A relation is represented by a two dimensional table
+\item Each row (tuple) signifies a entity occurence
+\item No two rows can be identical (each row of the table is unique)
+\item Each column represents an attribute and has a distinct name
+\item The intersection of a row and column has a single value (atomic)
+\item All values in a column must be of the same type
+\item One (or more) attributes uniquely identify each row (primary key)
+\item Two tables can be dependent (the primary key is the foreign key of another table)
+\item The ordering of rows and columns does not matter
+\end{itemize}
+\section{Views}
+\begin{itemize}
+\item So far all relations we have seen
+\begin{itemize}
+\item Base relations
+\item Its tuples are \textbf{physically stored} in the database
+\end{itemize}
+\item A different type of relation: a view
+\begin{itemize}
+\item a virtual relation
+\item it does not exist physically in the database
+\end{itemize}
+\item The content of a view
+\begin{itemize}
+\item is derived from one (or more) base relations
+\item is computer upon request by a user, at the time of request
+\item changes when the underlying base relations change
+\end{itemize}
+\item Main use
+\begin{itemize}
+\item show customised information to every user
+\item computer dynamic quantities
+\end{itemize}
+\end{itemize}
+\section{Alternatives to the relational data model}
+\begin{itemize}
+\item Network data model
+\begin{itemize}
+\item records appear as nodes
+\item relationships appear as edges
+\end{itemize}
+
+\item Hierarchical data model
+\begin{itemize}
+\item Special case of the network data model, where the graph is a tree graph
+\item its structure mirrors parent child relationship
+\item limitations of the model e.g.
+\begin{itemize}
+\item deleting a parent
+\item adding a record without a parent
+\end{itemize}
+\end{itemize}
+\end{itemize}
+\end{document}

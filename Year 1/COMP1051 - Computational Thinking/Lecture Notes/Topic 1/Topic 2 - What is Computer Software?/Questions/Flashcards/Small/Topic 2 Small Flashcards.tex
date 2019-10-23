@@ -1,0 +1,113 @@
+\documentclass[grid,avery5371]{flashcards}
+\usepackage{amssymb}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{verse}
+\usepackage[version=3]{mhchem}
+\usepackage{graphicx}
+\settowidth{\versewidth}{It lies behind stars and under hills,}
+\addtolength{\versewidth}{2em}
+\usepackage{pgfplots}
+\geometry{headheight=12pt}
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0pt}
+\hyphenpenalty=100000
+
+\title{Conversion flashcards}
+\author{Sam Robbins}
+
+\cardbackstyle[\large]{plain}
+\cardfrontstyle[\large]{headings}
+%\cardbackstyle[\large]{headings}
+
+\begin{document}
+
+\begin{flashcard}[]{Briefly (and, necessarily, without being too precise) explain the difference between an algorithm and a program. Suppose we have an
+algorithm and wish to implement it in Python. How many different
+implementations are there of this algorithm? [5]}
+
+An algorithm is a sequence of precise instructions that can be applied to specific data items. A program is the implantation of the algorithm in a form that can be executed by a computer, or at least compiled to a form that can be executed by a computer. There are many different implementations of an algorithm as a program.
+\end{flashcard}
+
+\begin{flashcard}[]{Give 3 general properties any programming language should have. [3]}
+\normalsize
+\begin{itemize}
+\itemsep0em 
+
+\item Be easy to use, with its programs easy to read, write and understand
+\item Support abstraction so that adding new features and concepts should be possible
+\item Support testing, debugging and program verification
+\item Be inexpensive to use, in terms of execution time, memory usage and maintenance costs
+\end{itemize}
+\end{flashcard}
+
+\begin{flashcard}[]{Explain very briefly how a Prolog program computes. [4]}
+A Prolog program consists of a list of facts (atoms) and rules that can be applied to the facts. It then takes queries about the facts which it can answer using the atoms and the rules.
+
+\end{flashcard}
+
+\begin{flashcard}[]{Give an advantage of compilation over interpretation, and of interpretation over compilation. [2]}
+{\normalsize
+\begin{itemize}
+\itemsep-0.5em 
+
+\item Compiled programs have faster execution.
+\item When a program is compiled it can be optimised at the same time, this can’t be done through interpretation.
+\item Interpreted programs use memory better as only a few instructions need to be stored at once.
+
+\end{itemize}}
+\end{flashcard}
+
+\begin{flashcard}[]{In compilation, over 50\% of the time taken can be spent on lexical
+analysis; that is, character handling. In moving from a program as a
+string of symbols to a token stream, which algebraic construction is
+usually used to define tokens? [2]}
+Regular Expressions
+\end{flashcard}
+
+
+\begin{flashcard}[]{Give a regular expression that denotes the set of strings over the alphabet
+\{a, b, c\} consisting of strings with the property that there is always at most one c. [5]}
+$((a|b)*|c(a|b)*)|(a|b)* $
+\end{flashcard}
+
+\begin{flashcard}[]{Give a regular expression that denotes the set of strings over the alphabet
+\{a, b\} consisting of strings with the property that any a must always be followed by bb. [7]}
+$(b|abb)*$
+\end{flashcard}
+
+\begin{flashcard}[]{Define carefully a finite state machine and explain how one is used to
+accept a set of strings. [8]}
+$M=(\Sigma, Q,\delta:Q \times \Sigma \rightarrow Q, q_0 \in Q, F)$\\
+Where
+\begin{itemize}
+\item $\Sigma$ is some finite alphabet
+\item Q is some finite set of \textbf{states} with \textbf{initial state} $q_0$ and a set of \textbf{final states} F $\subseteq Q$
+\item $\delta: Q\times \Sigma \rightarrow Q$ is the \textbf{transition function}
+\end{itemize}
+
+
+\end{flashcard}
+
+
+\begin{flashcard}[]{What is the fundamental principle of the research area known as ubiquitous computing? [2]}
+The integration of computers and software into everyday objects and activities so that we can control remote aspects of our lives, mostly through RFID.
+\end{flashcard}
+
+\begin{flashcard}[]{Give two illustrations of principles of Computational Thinking in the context of software. [2]}
+{\normalsize \textbf{Green Computing}:An area of computer science involving energy conservation within the world of information technology. This involves writing the main unit of resource is energy expended.\\
+\textbf{Parallel processing}: Certain kinds of problems can be conveniently represented as multiple communicating threads which help to structure code in a more modular manner, e.g., by modelling user interface components as separate threads.}
+
+\end{flashcard}
+
+\begin{flashcard}[]{What is the relationship between regular expressions and finite state machines? [2]}
+A set of strings is represented by a regular expression if, and
+only if, it is accepted by a finite state machine
+
+\end{flashcard}
+
+
+
+\end{document}

@@ -1,0 +1,84 @@
+\documentclass{article}[18pt]
+\usepackage{../../../../format}
+\lhead{Programming}
+\usepackage{listings}
+\usepackage{courier}
+
+
+\begin{document}
+\begin{center}
+\underline{\huge Version Control and Git}
+\end{center}
+Linear history - Sequential history of saving on top of a file, when working alone\\
+Multiple authors - Document sent to multiple people, each of who make edits, forming a tree (no cycles, directed edges)\\
+Merging changes - Merging two different versions of an original document into one document
+\section{Version control software}
+\begin{itemize}
+\item RCS (Revision control system) - in order to save space, only stored difference between files, rather than the whole files. Stores latest versions, and stores diffs between previous versions
+\item CVS (Concurrent Versions System) - Managed under RCS, manages collections of files
+\item Microsoft word track changes
+\item Subversion 
+\item git - Doesn't use diff and patch
+\end{itemize}
+\section{All about git}
+RCS was designed to be compact, git is designed to be fast
+\begin{itemize}
+\item Distributed version control system - no central repository of anything
+\item Developed by Linus Torvalds and others to manage the linux kernel
+\item Designed to be fast
+\item Very widely used in academia and industry
+\item Stores every version of every file produced
+\end{itemize}
+\subsection{Git under the hood}
+\begin{itemize}
+\item Different from earlier systems such as RCS - no diffs
+\item Originally developed under Linux, but available elsewhere
+\item No central repository, but can synchronise with remotes
+\item Cloud hosted repository servers: github etc
+\end{itemize}
+\subsection{Key concepts in git}
+\begin{itemize}
+\item A \textbf{file} (in a path)
+\item A \textbf{commit}: a snapshot of a collection of files at a particular time
+\item A \textbf{branch}: A linear sequence of commits - always a previous version on a branch, and relation known
+\item A \textbf{repository}: (possibly) many branches of a project
+\item A \textbf{remote}: another place where a repository is stored
+\end{itemize}
+\subsection{Key commands in git}
+\begin{lstlisting}[mathescape=true]
+git init
+git add
+git status
+git commit
+git push
+\end{lstlisting}
+\subsubsection{git init}
+Creates a directory \texttt{.git} where everything is stored. You may also want to do \texttt{git config} at this stage. Think about adding a \texttt{.gitignore} file
+\subsubsection{git add}
+Puts current working version of a file into the staging area (area for all files to be committed, copy not cut)\\
+Preparing for a commit\\
+Check what will be committed with git status
+\subsubsection{git commit}
+Creates a new commit in the git branch\\
+Makes a commit based on currently staged files\\
+Will start an editor (\texttt{git config})\\
+Consider \texttt{git commit -m "message"} to avoid editor
+\subsubsection{git push}
+Pushes a branch to a remote repository\\
+\texttt{git push origin master}\\
+origin defined by \texttt{git remote add origin} or \texttt{git clone}
+\section{Using git}
+To make a git folder, either use git init to start a new repo, or git clone to copy a repo from a remote repository.\\
+\\
+Git add adds the files you want to commit to staging\\
+\\
+Git commit will move the files from the staging area to the head of one of the branches in the repository.\\
+\\
+Git push moves the files into the remote repository\\
+\\
+Git add does not also commit as there are some changed files that you do not want to commit to the repository.\\
+\\
+To move a repo to github, create an empty repository and set the remote.
+
+
+\end{document}

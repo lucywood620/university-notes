@@ -1,0 +1,54 @@
+# Enter assembler code here
+#
+# To add comments begin lines with #
+# Code lines have 3 entries separated by tabs
+# > First an optional label,
+# > second an instruction mnemonic, and 
+# > third an address label if required.
+#
+# Valid mnemonics are:
+# HLT, ADD, SUB, STO, LDA,
+# BR, BRZ, BRP, IN, OUT, DAT
+	IN
+	STO	ione	
+	IN	
+	STO	itwo
+	LDA	itwo
+	SUB	ione
+	BRP	onesm
+	LDA	itwo
+	STO	small
+	LDA	ione
+	STO	large
+	BR	calc
+onesm	LDA	ione
+	STO	small
+	LDA	itwo
+	STO	large	
+calc	LDA	large
+calc2	SUB	small
+	BRZ	done
+	BRP	store
+	LDA	small
+	STO	large
+	LDA	result
+	STO	small
+	LDA	large
+store	STO	result
+	BR	calc2
+done	LDA	result	
+	OUT	large
+
+ione	DAT	095	
+itwo	DAT	096
+small	DAT	097
+large	DAT	098
+result	DAT	099
+
+
+
+
+
+
+
+

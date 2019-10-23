@@ -1,0 +1,263 @@
+\documentclass{article}[18pt]
+\usepackage{../../../../format}
+\lhead{Algorithms and Data Structures}
+\lstset{language=Python,
+    basicstyle=\ttfamily,
+    keywordstyle=\bfseries,
+    showstringspaces=false,
+    morekeywords={if, else, then, print, end, for, do, while},
+    tabsize=4
+}
+
+
+\begin{document}
+\begin{center}
+\underline{\huge Stacks and Queues}
+\end{center}
+\section{Syntax Checking}
+How can we check whether the syntax is correct?\\
+\texttt{public void add( int idx, AnyType x)
+\{ if( theItems.length == size( ) )
+ensureCapacity( size ( ) * 2 + 1); for( int
+i=theSize; i > idx; i- ) theItems[ i ] =
+theItems[ i - 1 ]; theItems[ idx ] = x;
+theSize++; \}  }\\
+\\
+Check that all opened brackets are closed as part of checking that the syntax is correct\\
+\\
+A stack is good for the problem of bracket checking as the bracket closed should match with the last opened bracket.
+\begin{lstlisting}[mathescape=true]
+input B, a sequence of brackets
+output accept or reject
+
+stack S
+for b in B
+	if b is an open bracket then
+		S.push(b)
+	end if	
+	
+	if b is a close bracket then
+		b'=S.pop()
+		if b$\neq$b' don't match then
+			reject
+if S.isEmpty is false then
+	reject
+accept
+\end{lstlisting}
+Requirements
+\begin{itemize}
+\item Every open bracket must be closed
+\item Each close bracket matches the last open bracket that has not been closed
+\end{itemize}
+\section{Stacks}
+\begin{itemize}
+\item A stack is a collection of objects that are inserted and removed according to the \textbf{last-in-first-out} (LIFO) principle
+\item Objects can be inserted into a stack at any time, but only the most recently inserted object (the \textbf{last}) can be removed at any time
+\end{itemize}
+\subsection{Methods}
+A stack supports the following methods
+\begin{itemize}
+\item \textbf{push(e)}: Insert element e at the top of the stack
+\item \textbf{pop}: Remove and return the top element of the stack; an error occurs if the stack is empty
+\end{itemize}
+And possibly also:
+\begin{itemize}
+\item \textbf{size}: Return the number of elements in the stack
+\item \textbf{isEmpty}: Return a Boolean indicating if the stack is empty
+\item \textbf{top}: Return the top element in the stack, without removing it; an error occurs if the stack is empty
+\end{itemize}
+\subsection{Example}
+\textit{What are the effects of the following on an initially empty stack? What is the output of each and what are the contents of the stack?}
+\begin{itemize}
+\item push(5) - 5
+\item push(3) - 3,5
+\item pop - 5
+\item push(7) - 7,5
+\item pop - 5
+\item top -5
+\item pop - 
+\item pop - ERROR
+\item isEmpty - True
+\end{itemize}
+\subsection{Implementation using arrays}
+\begin{itemize}
+\item In an array based implementation, the stack consists of an N-element array S, and an integer variable t that gives the top element of the stack
+\item We initialise t to -1, and we use this value for t to identify an empty stack. The size of the stack is t+1
+\end{itemize}
+\subsection{Methods}
+\begin{lstlisting}[mathescape=true, language=Python]
+# How do you find the find the size of the stack
+size
+	return t+1
+\end{lstlisting}
+
+\begin{lstlisting}[mathescape=true, language=Python]
+# How do you determine if the stack is empty
+isEmpty
+	if t<0
+		return True
+	else
+		return False
+\end{lstlisting}
+\begin{lstlisting}[mathescape=true, language=Python]
+# Return the top element of the stack
+top
+	if isEmpty then
+		throw a EmptyStackException
+	end if
+	return S[i]
+\end{lstlisting}
+\begin{lstlisting}[mathescape=true, language=Python]
+# Add an element to the stack
+push(e)
+	# If size = N then the stack is full
+	if size = N then
+		throw a FullStackException
+	end if
+	t=t+1
+	S[t]=e
+\end{lstlisting}
+\begin{lstlisting}[mathescape=true]
+# Remove an element from the stack
+pop()
+if isEmpty then
+	throw a EmptyStackException
+end if
+e = S[t]
+S[t] = NULL
+t = t - 1
+return e
+\end{lstlisting}
+\subsection{Implementation using arrays}
+\begin{itemize}
+\item The array based stack implementation is time efficient. The time taken by all methods does not depend on the size of the stack
+\item However, the fixed size N of the array can be a serious limitation:
+\begin{itemize}
+\item If the size of the stack is much less than the size of the array, we waste memory
+\item If the size of the stack exceeds the size of the array, the implementation will generate an exception
+\end{itemize}
+\item The array based implementation of the stack has fixed capacity
+\end{itemize}
+\textit{How could you implement the stack using a linked list?}\\
+The easiest way is for the top of the stack to be at the head of the list, as it is better to insert and remove data from here
+
+
+
+
+\section{Queues}
+\begin{itemize}
+\item A \textbf{queue} is a collection of objects that are inserted and removed according to the \textbf{first-in-first-out} principle
+\item Element access and deletion are restricted to the first element in the sequence, which is called the \textbf{front} of the queue
+\item Element insertion is restricted to the end of the sequence, which is called the \textbf{rear} of the queue
+\end{itemize}
+\subsection{Methods}
+A queue supports the following methods
+\begin{itemize}
+\item \textbf{enqueue(e)}: Insert element e at the rear of the queue
+\item \textbf{dequeue}: Remove and return from the queue the element at the front; an error occurs if the queue is empty
+\end{itemize}
+And possibly also:
+\begin{itemize}
+\item \textbf{size}: Return the number of elements in the queue
+\item \textbf{isEmpty}: Return a boolean indicating if the queue is empty
+\item \textbf{front}: Return the front element of the queue, without removing it; an error occurs if the queue is empty
+\end{itemize}
+\subsection{Example}
+\textit{What are the effects of the following on an initially empty queue? What is the output of each and what are the contents of the queue?}
+\begin{itemize}
+\item enqueue(5) - [5]
+\item enqueue(3) - [3,5]
+\item dequeue - [3]
+\item enqueue(7) - [7,3]
+\item dequeue - [7]
+\item front - Output 7
+\item dequeue - []
+\item dequeue - ERROR
+\item isEmpty - True
+\end{itemize}
+\subsection{Implementation using arrays}
+\textit{How can we implement a queue using an array Q of size N?}
+\begin{itemize}
+\item We could put the front of the queue at Q[0] and let the queue grow from there
+\item This is not efficient. It requires moving all the elements forward one array cell each time we perform a dequeue operation .
+\item Instead, we use two variables f and r which have the following meaning:
+\begin{itemize}
+\item f is an index to the cell of Q storing the front of the queue, unless the queue is empty, in which case f=r
+\item r is an index to the next available cell in Q, that is, the cell after the rear of Q, if Q is not empty
+\end{itemize}
+\item Initially we assign f=r=0, indicating that the queue is empty
+\item After each enqueue operation we increment r. After each dequeue operation we increment f
+\item r is incremented after each enqueue operation and never decremented. After N enqueue operations we would get an array-out-of-bounds error. So something is done when r=0
+\item To avoid this problem, we let r and f \textbf{wrap around} the end of Q, by using modulo N  arithmetic on them
+\end{itemize}
+\subsection{Methods}
+\subsubsection{Size}
+\begin{lstlisting}[mathescape=true]
+return (N-f+r) mod N
+# This allows for loop around as when the number gets bigger than N 
+# it will return the number into the LHS the array goes
+\end{lstlisting}
+\subsubsection{isEmpty}
+\begin{lstlisting}[mathescape=true]
+return (f=r)
+\end{lstlisting}
+\subsubsection{Front}
+\begin{lstlisting}[mathescape=true]
+if isEmpty then
+	throw a EmptyQueueException
+end if
+\end{lstlisting}
+\subsubsection{enqueue(e)}
+\begin{lstlisting}[mathescape=true]
+if size=N-1 then
+	throw a FullQueueException
+end if
+Q[r]=e
+r=r+1 mod N
+\end{lstlisting}
+Plus 1 so that don't use last cell as f=r and the queue would be empty, even though it is full
+\subsubsection{Dequeue}
+\begin{lstlisting}[mathescape=true]
+if isEmpty then
+	throw a EmptyQueueException
+end if
+temp=Q[f]
+Q[f]=NULL
+f=f+1 mod N
+return temp
+\end{lstlisting}
+
+
+
+\subsection{Implementation using arrays}
+\begin{itemize}
+\item If the size of the queue is N, then f=r and the isEmpty method returns true, even though the queue is not empty
+\item We avoid this problem by keeping the maximum number of elements that can be stored in the queue to N-1. See the FullQueueException in the enqueue algorithm
+\item The array based implementation of the queue is time efficient. All methods run in constant time
+\item Similarly to the array based implementation of the stack, the capacity of array based implementation of array based implementation of the queue is fixed
+\item What if we used linked list implementation instead? 
+\begin{itemize}
+\item Put in data with each element linked together, front of queue at head of list, rear of queue at tail of list
+\item To take something from the front of the queue, update the head to the next element in the queue
+\item To add new data to the queue, create a new node, and point the tail at that, and point the new node to the previously added node
+\end{itemize}
+
+\section{More}
+\begin{lstlisting}[mathescape=true]
+input integer k
+output binary representation of k
+stack S
+while k>0
+	S.push (remainder of k/2)
+	k=k/2
+while S isEmpty=False
+	S.pop()
+
+\end{lstlisting}
+\end{itemize}
+
+
+
+
+
+\end{document}

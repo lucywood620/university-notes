@@ -1,0 +1,271 @@
+\documentclass{article}[18pt]
+\usepackage{../../../../../format}
+\lhead{ADS}
+
+
+
+\begin{document}
+\begin{center}
+\underline{\huge ADS Part 3 - Slides}
+\end{center}
+\section{Sorting}
+\subsection{General lower bound for comparison based sorting}
+For any comparison based sorting algorithm $\mathcal{A}$ and any $n\in \mathbb{N}$ large enough there exists an input of length n that requires $\mathcal{A}$ to perform $\Omega(n\log n)$ comparisons
+\subsection{Bucket Sort}
+\begin{itemize}
+	\item How/why does it work
+	\begin{itemize}
+		\item Puts elements with key i into the ith bucket, then empties one bucket after another
+	\end{itemize}
+	\item What is the running time
+	\begin{itemize}
+		\item Running time is $\mathcal{O}(n+k)$ so if k is small the running time is $o(n\log n)$
+	\end{itemize}
+	\item What are the assumptions?
+	\item Do they "beat" the lower bound
+	\begin{itemize}
+		\item Yes as bucket sort doesn't do any comparisons
+	\end{itemize}
+\end{itemize}
+\subsection{Radix Sort}
+\begin{itemize}
+	\item How/why does it work
+	\begin{itemize}
+		\item Like bucket sort, but looks at values "one level below", reduces number of buckets needed
+	\end{itemize}
+	\item What is the running time
+	\begin{itemize}
+		\item $\Theta(d\cdot n)$ or $\Theta(n\cdot \log K)$
+	\end{itemize}
+	\item What are the assumptions
+	\item Does it "beat" the lower bound
+	\begin{itemize}
+		\item Yes, doesn't do comparisons
+	\end{itemize}
+\end{itemize}
+\section{Binary Search}
+\begin{itemize}
+	\item What does it do
+	\begin{itemize}
+		\item Finds an element in a sorted list
+	\end{itemize}
+	\item How does it work
+	\begin{itemize}
+		\item Looks at the median, if the element is smaller, look at the left sublist, if bigger the right, recursively call on sublists until the median is the element you want
+	\end{itemize}
+	\item How long does it take
+	\begin{itemize}
+		\item $\mathcal{O}(\log n)$
+	\end{itemize}
+	\item How is it analysed
+	\begin{itemize}
+		\item $T(n)=T(n/2)+\mathcal{O}(1)=\mathcal{O}(\log n)$
+	\end{itemize}
+\end{itemize}
+\section{Selection}
+\subsection{QuickSelect}
+\begin{itemize}
+	\item What does it do
+	\begin{itemize}
+		\item Finds an element in an unsorted list
+	\end{itemize}
+	\item How does it work
+	\begin{itemize}
+		\item Same as quicksort, choosing a pivot
+		\item Sublists discounted if they are known to not include the element to be found (either bigger/smaller than the pivot)
+	\end{itemize}
+	\item How long does it take
+	\begin{itemize}
+		\item In worst case $\Theta(n^2)$
+		\item Choose a random pivot and it will have the expectation of taking $\mathcal{O}(n)$
+	\end{itemize}
+	\item How is it analysed
+	\begin{itemize}
+		\item $T(n)=T(n-1)+\mathcal{O}(n) \Rightarrow T(n)=\Theta(n^2)$
+	\end{itemize}
+\end{itemize}
+\subsection{Median-of-Medians}
+\begin{itemize}
+	\item What does it do
+	\begin{itemize}
+		\item Search for an element in an unsorted list
+	\end{itemize}
+	\item How does it work
+	\begin{enumerate}
+		\setcounter{enumi}{-1}
+		\item If length(A)$\leqslant 5$ then sort and return ith smallest
+		\item Divide n elements into $\floor{n/5}$ groups of 5 elements each, plus at most one group containing the remaining $n\mod 5$ elements
+		\item Find median of each of the $\ceil{n/5}$ groups by sorting each one, and then picking median from sorted group elements
+		\item Call select recursively on set of $\ceil{n/5}$ medians found above, giving median-of-medians, x
+		\item Partition entire input around x. Let k be \# of elements on low side plus one (simply count after partitioning)
+		\begin{itemize}
+			\item x is the kth smallest element
+			\item there are n-k elements on high side of partition
+		\end{itemize} 
+		\item if i=k, return x. Otherwise use \textbf{select} recursively to find ith smallest element on low side if $i<k$, or (i-k)th smallest on high side if $i>k$
+	\end{enumerate}
+	\item How long does it take
+	\begin{itemize}
+		\item $\mathcal{O}(n)$
+	\end{itemize}
+	\item How is is analysed
+	\begin{itemize}
+		\item This is horrible
+	\end{itemize}
+\subsection{Comparison}
+\begin{itemize}
+	\item QuickSelect is singly recursive, so less work in each iteration than Median of Medians
+	\item QuickSelect can have more iterations than Median of Medians
+	\item QuickSelect used when bad behaviour is tolerable if undesirable
+	\item Median of Medians is used when guaranteed good behaviour is needed
+\end{itemize}
+\section{Binary Search Trees}
+\begin{itemize}
+	\item What are they
+	\begin{itemize}
+		\item No node has more than two children
+		\item A tree
+	\end{itemize}
+	\item Properties
+	\begin{itemize}
+		\item All elements in left sub tree "smaller" than v
+		\item All elements in right sub tree "bigger" than v
+	\end{itemize}
+	\item Standard Operations
+	\begin{itemize}
+		\item Insertion
+		\begin{itemize}
+			\item Insert at the root
+			\item Keep going down the tree until the correct location has been found
+		\end{itemize}
+		\item Search
+		\begin{itemize}
+			\item Call at the root
+			\item If want smaller, go left
+			\item Otherwise, go right
+		\end{itemize}
+		\item Deletion
+		\begin{itemize}
+			\item If a leaf, remove it
+			\item If it has one child remove and replace with the child
+			\item If two children
+			\begin{itemize}
+				\item Find smallest node v that's bigger
+				\item Copy v's data into u
+				\item Delete v
+			\end{itemize}
+		\end{itemize}
+	\end{itemize}
+	\item Problems
+\end{itemize}
+\end{itemize}
+\section{RedBlack Trees}
+\begin{itemize}
+	\item What's the point
+	\begin{itemize}
+		\item Ensure that a BST is balanced
+		\item All BST operations are $\mathcal{O}(h)$, where h is the height of the tree, so want to keep that as small as possible
+	\end{itemize}
+	\item What are they
+	\begin{itemize}
+		\item Every node is either red or black
+		\item The root is black
+		\item Every leaf (\texttt{NULL}) is black
+		\item Red nodes have black children
+		\item For all nodes, all paths from node to descendant leaves contain the same number of black nodes
+	\end{itemize}
+	\item Key property
+	\begin{itemize}
+		\item A red-black tree with n internal nodes has height at most $2\log(n+1)$
+	\end{itemize}
+\end{itemize}
+\section{Heaps}
+\begin{itemize}
+	\item What are they
+	\begin{itemize}
+		\item Trees typically assumed to be stored in a flat array
+	\end{itemize}
+	\item Min-heap vs max-heap
+	\begin{itemize}
+		\item MaxHeap - For all nodes v in the tree \texttt{v.parent.data >= v.data}
+		\item MinHeap - For all nodes v in the tree \texttt{v.parent.data <= v.data}
+	\end{itemize}
+	\item Heap Property
+	\begin{itemize}
+		\item A[v.parent.index]>= A[v.index]
+	\end{itemize}
+	\item Representation tree vs array
+	\begin{itemize}
+		\item The root is in A[1]
+		\item parent(i)=A[i/2] - integer division, rounds down
+		\item left(i)=A[2i]
+		\item right(i)=A[2i+1]
+	\end{itemize}
+	\item Heapify (why? how? how long?)
+	\begin{itemize}
+		\item Maintains heap property
+		\item Starting at the root, identify largest current node v and its children
+		\item Suppose largest element is in w
+		\item if $w\neq v$
+		\begin{itemize}
+			\item Swap A[w] and A[v]
+			\item Recurse into w (contains now what root contained previously)
+		\end{itemize}
+		\item Runs linear in height of tree $\mathcal{O}(\log n)$
+	\end{itemize}
+	\item BuildHeap (why? how? how long?)
+	\begin{itemize}
+		\item Initially build heap
+		\item Call heapify on all nodes
+		\item Runs in $\mathcal{O}(n)$
+	\end{itemize}
+	\item HeapSort (why? how? how long?)
+	\begin{itemize}
+		\item Call buildheap on unsorted data
+		\item Repeatedly call HeapExtractMin until empty
+		\item Runs in time $\mathcal{O}(n)+n\cdot\mathcal{O}(\log n)=\mathcal{O}(n\log n)$
+	\end{itemize}
+\end{itemize}
+\section{Lower bounds}
+\begin{itemize}
+	\item What's the point
+	\begin{itemize}
+		\item Can know when an algorithm optimally solves a problem
+	\end{itemize}
+	\item Decision trees
+	\begin{itemize}
+		\item What are they?
+		\begin{itemize}
+			\item A full binary tree 
+			\item Represents comparisons between elements performed by particular algorithm run on particular (size of) input
+		\end{itemize}
+		\item Proof for comparison based sorting
+		\begin{itemize}
+			\item Sufficient to determine minimum height of a decision tree in which each permutation appears as a leaf
+			\item Consider decision tree of height h with $\ell$ leaves corresponding to a comparison sort on n elements
+			\item Each of the $n!$ permutations of input appears as some leaf: $\ell\geqslant n!$
+			\item Binary tree of height h has at most $2^h$ leaves $\ell\leqslant 2^h$
+			\item Together $n!\leqslant \ell \leqslant 2^h$
+		\end{itemize}
+	\end{itemize}
+	\item Adversaries
+	\begin{itemize}
+		\item What are they
+		\begin{itemize}
+			\item A second algorithm intercepting access to input
+			\item Gives answers so that there's always a consistent input
+			\item Tries to make original algorithm delay a decision by dynamically constructing a bad input for it
+			\item Doesn't know what original algorithm will do in the future, must work for any original algorithm
+		\end{itemize}
+		\item Proof for finding max
+		\begin{itemize}
+			\item After $\leqslant n-2$ comparisons, $\geqslant$ 2 elements never lost (a comp)
+			\begin{itemize}
+				\item Adversary can make any of them max and be consistent
+				\item Not enough information for algorithm to make a decision
+			\end{itemize}
+			\item Hence algorithm needs to make at least n-1 comparisons
+		\end{itemize}
+	\end{itemize}
+\end{itemize}
+\end{document}

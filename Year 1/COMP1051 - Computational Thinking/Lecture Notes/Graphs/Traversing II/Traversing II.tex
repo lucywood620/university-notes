@@ -1,0 +1,123 @@
+\documentclass{article}[18pt]
+\usepackage{../../../../../format}
+\lhead{CT - Graphs}
+\lstset{language=C,
+	basicstyle=\ttfamily,
+	keywordstyle=\bfseries,
+	showstringspaces=false,
+	morekeywords={if, else, then, print, end, for, do, while},
+	tabsize=4,
+	mathescape=true,
+	escapechar=£,
+	numbers=left,
+	stepnumber=1,
+}
+
+\usepackage{caption}
+\DeclareCaptionFont{white}{\color{white}}
+\DeclareCaptionFormat{listing}{\colorbox{gray}{\parbox{\textwidth}{#1#2#3}}}
+\captionsetup[lstlisting]{format=listing,labelfont=white,textfont=white}
+
+\begin{document}
+\begin{center}
+\underline{\huge Graph Traversing II}
+\end{center}
+\section{Graph Traversing}
+Two main approaches for graph exploration:
+\begin{itemize}
+	\item Breadth-First Search (BFS)
+	\begin{itemize}
+		\item Search in \textbf{breadth}
+		\item layer by layer
+	\end{itemize}
+	\item Depth-First Search
+	\begin{itemize}
+		\item Search in \textbf{depth}
+		\item dig deeper, until not possible any more
+	\end{itemize}
+\end{itemize}
+\begin{itemize}
+	\item DFS is \textbf{not} appropriate for shortest paths
+	\begin{itemize}
+		\item We may reach the target vertex b via a \textbf{very long} path, as we just "dig deeper"
+	\end{itemize}
+	\item Both BFS and DFS
+	\begin{itemize}
+		\item Appropriate for graph exploration
+		\item Can list all reachable vertices from a start vertex a
+		\item very fast (linear time)
+	\end{itemize}
+\end{itemize}
+\section{A generic search algorithm}
+\begin{lstlisting}[caption=Generic Graph Search]
+reachable[a]=1	£\hfill£ //Initialisation
+S={a}£\hfill£	//initialisation; set of vertices, from which we continue exploration
+for i=1 to n£\hfill£	//Iterate until no more reachable vertices
+	choose a vertex $u\in S$£\hfill£	//the crucial choice of the search
+	print u£\hfill£	// u is the next vertex in the output list
+	for each vertex $v\in Adj[u]$
+		if reachable[v]==0 then £\hfill£	//We found a new vertex v to reach
+			reachable[v]=1£\hfill£ 	//"mark" v as reached
+			$S=S\cup \{v\}$£\hfill£	//add v to the list of reachable vertices
+\end{lstlisting}
+\begin{itemize}
+	\item The set S changed dynamically
+	\item BFS and DFS have different "policy" for the choice at line 4
+	\item BFS prefers vertices "closer to a"
+	\item DFS prefers vertices that are always "one step further"
+\end{itemize}
+\section{The policy of BFS}
+\begin{itemize}
+	\item The policy of BFS
+	\begin{itemize}
+		\item Remove the element that has been \textbf{longer in S}
+		\item a First-In-First-Out (FIFO) policy
+	\end{itemize}
+	\item This data structure is called a queue
+	\item In other words
+	\begin{itemize}
+		\item Add new vertices at the end of the queue
+		\item remove vertices from the beginning of the queue
+		\item first process vertices that are closer to the start vertex
+	\end{itemize}
+\end{itemize}
+\section{The policy of DFS}
+\begin{itemize}
+	\item The policy of DFS:
+	\begin{itemize}
+		\item Remove the element that has been shorter S
+		\item a Last-In-First-Out (LIFO) policy
+	\end{itemize}
+	\item This data structure is called a "stack"
+	\item In other words:
+	\begin{itemize}
+		\item add new vertices at the end (top) of the stack
+		\item remove vertices from the end(top) of the stack
+		\item first process vertices that always "one step further"
+	\end{itemize}
+\end{itemize}
+\section{Longest paths}
+Computing a Longest path is NP complete\\
+\\
+Intuitively:
+\begin{itemize}
+	\item vertices are balls
+	\item edges are strings tight on the balls
+\end{itemize}
+Shortest path problem:
+\begin{itemize}
+	\item Pull firmly two specific balls away from each
+	\item the length of the string between then is their distance in the graph
+\end{itemize}
+Longest path problem:
+\begin{itemize}
+	\item You need to investigate all (possibly "strange") paths between the two balls through the net of strings
+	\item which can be very complex
+\end{itemize}
+However:
+\begin{itemize}
+	\item If the graph has no cycles, then it is easy
+	\item such graphs are called "trees"
+\end{itemize}
+
+\end{document}

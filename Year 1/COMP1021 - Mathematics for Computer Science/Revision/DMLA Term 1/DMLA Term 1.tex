@@ -1,0 +1,216 @@
+\documentclass{article}[18pt]
+\usepackage{../../../../format}
+\lhead{MCS}
+
+
+\begin{document}
+\begin{center}
+\underline{\huge DMLA Term 1}
+\end{center}
+\section{Mathematical Induction}
+Step 1 (\textbf{Basis Step}): Check that $S(n)$ is true for $n=j$; If this is not the case, then the statement cannot be true. If $S(j)$ is true, then proceed to Step 2\\
+Step 2 (\textbf{Induction Step}): Prove the following \textbf{conditional} statement. If $S(n)$ holds for a fixed value $n=k\geqslant j$, then it also holds for $n=k+1$
+\section{Basic Counting Principles}
+\subsection{The product rule}
+If a procedure can be broken down into a sequence of 2 tasks, with $n_1$ ways of doing the 1st task and $n_2$ ways of doing the second, then there are $n_1\times n_2$ ways to do the procedure
+\subsection{The sum rule}
+If the task can be done in either one of $n_1$ ways or in one of $n_2$ ways, where the two sets are distinct, there are $n_1+n_2$ ways to do the task
+\subsection{Permutations}
+\textbf{Permutation} - A set of distinct objects in an ordered arrangement of these objects\\
+\textbf{r-permutation} - An ordered arrangement of r elements of a set of at least r distinct objects
+$$P(n,r)=\dfrac{n!}{(n-r)!}$$
+For any set of n distinct objects, there are $n!$ permutations of the set
+\subsection{Combinations}
+\textbf{r-combination} - An unordered selection of r elements from a set of at least r elements
+$$C(n,r)=\dfrac{n!}{r!(n-r)!}$$
+\section{Basic Counting, Binomial Coefficients}
+\subsection{Binomial Coefficients}
+The number of r-combinations of a set with n distinct elements (with $r\leqslant n$) is denoted by $C(n,r)$. It is also denoted by
+$$\binom{n}{r}$$
+\textbf{Pascal's identity}
+$$\binom{n+1}{k}=\binom{n}{k+1}+\binom{n}{k}$$
+\subsection{Binomial Theorem}
+Let x and y be variables, and let n be a nonnegative integer.
+$$
+\begin{array}{c}{(x+y)^{n}=\left( \begin{array}{c}{n} \\ {0}\end{array}\right) x^{n}+\left( \begin{array}{c}{n} \\ {1}\end{array}\right) x^{n-1} y+\left( \begin{array}{c}{n} \\ {2}\end{array}\right) x^{n-2} y^{2}+\ldots+} \\ {+\left( \begin{array}{c}{n} \\ {n-2}\end{array}\right) x^{2} y^{n-2}+\left( \begin{array}{c}{n} \\ {n-1}\end{array}\right) x y^{n-1}+\left( \begin{array}{c}{n} \\ {n}\end{array}\right) y^{n}}\end{array}
+$$
+\subsection{Permutations with indistinguishable objects}
+The number of different permutations of n objects, of with there are $n_k$ indistinguishable objects of type $k$ is
+$$\dfrac{n!}{n_1!n_2!...n_k!}$$
+\subsection{Combinations with Indistinguishable Objects}
+In order to use this, use the stars and bars method, where each group is separated by bars, and the result is $C(Stars+Bars,Bars)$
+\section{Intro to Discrete Probability}
+\subsection{Sample space, events and probability}
+\textbf{Experiment} - A procedure that yields one of a given set of possible outcomes\\
+\textbf{Sample Space} - The set of possible outcomes\\
+\textbf{Event} = A subset of the sample space\\
+\\
+If S is a finite sample space of equally likely outcomes, and E is the event in it, then
+$$p(E)=\dfrac{|E|}{|S|}$$
+\subsection{Probability of combinations of events}
+For events $E_1,E_2$ in a sample space S
+\begin{itemize}
+	\item $E_1\cup E_2$ is the event if at least one of $E_1$ and $E_2$
+	\item Let $E_1\cap E_2$ denote the event that occurs if both $E_1$ and $E_2$ occur
+\end{itemize}
+$$p(E_1\cup E_2)=\dfrac{|E_1\cup E_2|}{|S|}=\dfrac{|E_1|+|E_2|-|E_1\cap E_2|}{|S|}=p(E_1)+p(E_2)-p(E_1\cap E_2)$$
+\section{Conditional Probability, Bernoulli Trials}
+\subsection{Conditional Probability}
+Let E and F be events and let $p(F)>0$. The conditional probability of E given F is:
+$$p(E|F)=\dfrac{p(E\cap F)}{p(F)}$$
+\subsection{Independence}
+The events E and F are independent if either
+$$p(E\cap F)=p(E)p(F)$$
+$$p(E)=p(E|F)$$
+\subsection{Bernoulli Trials}
+\begin{itemize}
+	\item This is an experiment with two possible outcomes, success and failure
+	\item The corresponding probabilities are denoted p and q
+	\item It is useful to determine the probability of k successes in n mutually independent Bernoulli trials
+\end{itemize}
+The probability of exactly k successes in n independent Bernoulli trials, with probability of success p and probability of failure $q=1-p$ is
+$$b(k;n;p)=C(n,k)\cdot p^k\cdot q^{n-k}$$
+\begin{itemize}
+	\item When n independent trials are carried out, the outcome is a tuple $(t_1,...,t_n)$ where each $t_i$ is either success or failure
+	\item There are $C(n,k)$ ways to have exactly k successes
+	\item The probability of each of the ways is $p^k\cdot q^{n-k}$ (because of independence)
+	\item Since no two ways can occur together, the overall probability is as in the theorem
+\end{itemize}
+The binomial distribution
+\begin{itemize}
+	\item For a fixed n and p, assign the number $b(k;n;p)$ to the event "k successes"
+	\item We have $0\leqslant b(k;n;p)\leqslant 1$ for each k, and
+	$$
+	b(0 ; n, p)+b(1 ; n, p)+\ldots+b(n ; n, p)=\sum_{k=0}^{n} C(n, k) p^{k} q^{n-k}=(p+q)^{n}=1
+	$$
+\end{itemize}
+\section{Bayes' Theorem, random variables}
+\subsection{Bayes' Theorem}
+Let E and F be events in sample space S such that $p(E)\neq 0$ and $p(F)\neq 0$. Then
+$$
+p(F | E)=\frac{p(E | F) p(F)}{p(E | F) p(F)+p(E | \overline{F}) p(\overline{F})}
+$$
+\subsection{Random Variables}
+\textbf{Random Variable} - A function from the sample space of an experiment to the real numbers\\
+\\
+\textbf{Distribution of a random variable} - With the random variable X on a sample space S is the set of pairs $(r,p(X=r))$ for all values $r\in X(S)$, where $p(x=r)$ is the probability that X takes value r
+\subsection{Expected Value}
+The expected value of a random variable X on a sample space S with possible outcomes $s_1,...,s_n$ is equal to
+$$
+E(X)=\sum_{i=1}^{n} p\left(s_{i}\right) X\left(s_{i}\right)
+$$
+\subsection{Linearity of expectation}
+If $X_i, i=1,...,n$ are random variables on a sample space S, and a and b are real numbers then
+\begin{itemize}
+	\item $E\left(X_{1}+X_{2}+\ldots+X_{n}\right)=E\left(X_{1}\right)+E\left(X_{2}\right)+\ldots+E\left(X_{n}\right)$
+	\item $E(a X+b)=a E(X)+b$
+\end{itemize}
+\subsection{Variance and standard deviation}
+Let X be a random variable on a sample space S. The variance of X is given by
+$$
+V(X)=\sum_{i=1}^{n}\left(X\left(s_{i}\right)-E(X)\right)^{2} \cdot p\left(s_{i}\right)
+$$
+The standard deviation of X, denoted $\sigma(X)$, is defined as $\sqrt{V(X)}$\\
+If X is a random variable then $V(X)=E\left(X^{2}\right)-E(X)^{2}$
+\subsection{Chebyshev's Inequality}
+Let X be a random variable on a sample space S with probability distribution p. If $r>0$ is a real number then
+\[
+p(|X(s)-E(X)| \geq r) \leq V(X) / r^{2}
+\]
+In words, the probability that a random variable is far from its expectation by at least r is not greater than the variance divided by $r^2$
+\subsection{Markov's inequality}
+Let X be a random variable on a sample space S with $X(s)\geqslant 0$ for all s. Then, for any real number $a>0$
+\[
+p(X(s) \geq a) \leq E(X) / a
+\]
+\section{The basics of graph theory}
+\subsection{Formal definitions}
+A graph G is a pair $(V(G),E(G))$ where $V(G)$ is a nonempty set of vertices (or nodes) and $E(G)$ is a set of unordered pairs $\{u,v\}$ with $u,v\in V(G)$ and $u\neq v$, called the edges of G
+\subsection{Types of graphs}
+\begin{itemize}
+	\item Directed graphs (digraphs) - edges can have directions
+	\item Multigraphs - Multiple edges allowed between two vertices
+	\item Pseudographs - edges of the form uu, called loops, are allowed
+	\item Vertex or edge weighted graphs - vertices and/or edges can have weights
+\end{itemize}
+\subsection{Terminology}
+Let G be a graph and $uv$ an edge in it. Then
+\begin{itemize}
+	\item u and v are called endpoints of the edge uv
+	\item u and v are called neighbours or adjacent vertices
+	\item uv is said to be incident to u(and v)
+	\item if vw is an edge and $w\neq u$ then uv and vw are called adjacent
+\end{itemize}
+Let $G=(V,E)$ be a graph. The neighbourhood of a vertex $v\in V$, notation $N(v)$, is the set of neighbours of v, i.e. $N(v)=\{u\in V|uv\in E\}$\\
+The degree of a vertex $v\in V$, notation $\operatorname{deg}(v)$, is the number of neighbours of v\\
+With $\delta(G)$ or $\delta$ we denote the smallest degree in G, and with $\Delta(G)$ or $\Delta$ the largest degree\\
+A vertex with degree 0 will be called an isolated vertex\\
+A vertex with degree 1 an end vertex or a pendant vertex\\
+\\
+A subgraph $G'=(V',E')$ of $G=(V,E)$ is a graph with $V'\subseteq V$ and $E'\subseteq E$; this subgraph is called proper if $G'\neq G$ and spanning if $V'=V$
+\subsection{Handshaking lemma}
+Let $G=(V,E)$ be a graph. Then \(\sum_{v \in V} \operatorname{deg}(v)=2|E|\)
+\subsection{Graph classes}
+\begin{itemize}
+	\item $P_n$ is a path on n vertices for some integer $n\geqslant 1$
+	\item $C_n$ is a cycle on n vertices for some integer $n\geqslant 3$
+	\item $K_{p,q}$ is called a complete bipartite graph. Any subgraph of a $K_{p,q}$ is called a bipartite graph
+	\item $K_n$ is a complete bipartite graph and contains all the possible edges between pairs of vertices1
+\end{itemize}
+\section{Paths, Cycles, Connectivity}
+\subsection{Walks, paths, cycles and distances}
+\textbf{Walk} - A sequence of edges \\
+\textbf{Path} - A walk where all vertices are distinct\\
+\textbf{Circuit/Closed walk} - A walk where the start vertex is the same as the last vertex\\
+\textbf{Cycle} - A closed walk where all vertices are distinct apart from the first and last\\
+\textbf{Directed Graph} - A graph where ea ch edge is directed to the next\\
+\textbf{Length} - The number of edges in a path or cycle\\
+\textbf{Distance} - The length of the shortest path between two vertices if a path exists, and $\infty$ otherwise\\
+\textbf{Diameter} - The largest distance between two vertices in a graph
+\subsection{Strong Connectivity}
+\textbf{Weakly connected} - The graph obtained from the digraph G forgetting directions is connected\\
+\textbf{Strongly connected} - Any two distinct vertices are connected by directed paths in both directions\\
+\textbf{Strongly connected component} - A maximal strongly connected subgraph of G
+\section{Paths, Cycles, Trees}
+\subsection{Eulerian Circuits}
+\textit{A connected graph with at least two vertices has an Eulerian circuit iff each of its vertices has an even degree}
+\subsection{Travelling Salesman Problem}
+Given a graph G with set V of vertices ($|V|=n$) and set E of edges
+\begin{itemize}
+	\item For each vertex v, create a city $c_v$
+	\item For each pair of distinct $u,v\in V$, set $d(c_u,c_v)=1$ if $uv=E$ and $d(c_u,c_v)=2$ otherwise  
+\end{itemize}
+Then detecting a Hamiltonian cycle in G can be viewed as TSP:
+\begin{itemize}
+	\item If G has a Hamiltonian cycle then the cycle is a route of cost exactly $n$
+	\item If there is a route of cost n then it can't use pairs with cost 2 and so goes through edges of G and hence is a Hamiltonian cycle
+\end{itemize}
+\subsection{Trees}
+\textbf{Forest} - An acyclic graph (graph without cycles)
+\textbf{Tree} - A connected forest
+\subsection{Spanning trees}
+A subgraph $G'=(V',E')$ of a graph $G=(V,E)$ is spanning if $V'=V$\\
+\textit{Every connected graph contains a spanning tree, i.e. a spanning subgraph that is a tree}
+\subsection{Leaves in trees}
+A leaf in a tree is a vertex of degree 1
+\begin{center}
+	\textit{Every tree on at least 2 vertices contains a leaf}
+\end{center}
+\subsection{Edges of trees}
+\begin{center}
+	\textit{A connected graph on n vertices is a tree iff it has n-1 edges}
+\end{center}
+\subsection{Paths in trees}
+\begin{center}
+	\textit{Let T be a tree and $u,v\in V(T)$ with $u\neq v$ then there is a unique path in T between u and v}
+\end{center}
+\subsection{Rooted trees}
+\textbf{Rooted tree} - A tree in which one vertex is fixed as the root and every edge is directed away from this root\\
+Let v be a vertex in a rooted tree T
+\begin{itemize}
+	\item The neighbours of v in the next level are called the children of v
+	\item The unique neighbour of v in the previous level (if v is not the root) is called the parent of v
+	\item If v has no children then it is called a left of T
+	\item If v has children, then it is an internal vertex
+\end{itemize}
+\end{document}

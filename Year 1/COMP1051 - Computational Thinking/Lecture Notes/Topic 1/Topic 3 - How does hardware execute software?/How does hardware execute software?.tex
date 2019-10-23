@@ -1,0 +1,276 @@
+\documentclass{article}[18pt]
+\usepackage{../../../../format}
+\lhead{Computational Thinking}
+\begin{document}
+
+\begin{center}
+\underline{\huge How does hardware execute software?}
+\end{center}
+\section{Timeline}
+\begin{itemize}
+\item Analytical engine
+\item Punch Cards
+\item Cloud Computing
+\item DNA Computing
+\end{itemize}
+\section{ISA}
+The ISA is the interface between the hardware and software
+\begin{itemize}
+\item The view the programmer has of hardware
+\item Includes everything programmers need to know to program the processor
+\end{itemize}
+The ISA includes
+\begin{itemize}
+\item Organisation/structure of programmable storage
+\item Instruction sets and formats
+\item Modes of addressing and accessing data items within memory
+\end{itemize}
+A primary component of the ISA is its \textbf{assembly language}
+\begin{itemize}
+\item High level language is compiled into assembly language
+\item Assembly language instructions are very low level and go on to be implemented as machine code
+\end{itemize}
+\section{Our processor}
+We'll take a much simplified look at the MIPS ISA (Each one individual for brand/processor)\\
+Let us assume that:
+\begin{itemize}
+\item 4Gb memory has $2^{32}$ memory locations
+\item Words 4 bytes long
+\item When we request memory, the contents of the locations m,m+1,m+2 and m+3 are returned
+\item There are 32-bit registers names \$zero (which always holds 0), \$s1, \$s2...,\$s7
+\item Every assembly language is 32 bits wide such as: - insert from slides
+\begin{itemize}
+\item Load some value from memory, for use (lw) in brackets means take the value out, \$s1 is the location to store the data [lw \$s1, (\$s2]
+\item Addition \$s1 takes the value of \$s2 plus the number x
+\item Branch to move around in memory \texttt{beq \$s1, \$s2, \$s3}
+\item Jump to a particular memory location
+\end{itemize}
+\item We can substitute different registers in these instructions (register $\approx$ accumulator in VN architecture)
+\end{itemize}
+\section{A simple searching program}
+\begin{itemize}
+\item Program finds the maximum value given in the array
+\item A C compiler converts it into assembly language
+\end{itemize}
+\section{Assembly language in action}
+\begin{itemize}
+\item Set program counter to 0
+\item Use fetch-decode-fetch-execute method
+\item Initially PC0, lw s1,(s2). Look at 44, fetch data from there
+\item Iterate program counter
+\item PC4, fetch memory, add 1 to s3 and store back
+\item PC8, look at registers s3 and s4. Update PC to 40 if equal, do nothing if else
+\item PC12, add 4 to s2 and store back in s2
+\item PC16, load data from s2 and store in s5
+\item PC20, if s1 is less than s5, set s6 to 1
+\item PC24, Has found new bigger number
+\item PC28
+\item PC32
+\item PC36, jump to memory cell 8
+\end{itemize}
+\section{Assembly to machine code}
+\begin{itemize}
+\item MIPS to machine code
+\item 3 types of ins
+\begin{itemize}
+\item Data transfers
+\item Registers
+\item Jumps
+\end{itemize}
+\item MIPS has 32 registers
+\item Registers encoded to 5 bits
+\end{itemize}
+\subsection{I type instructions}
+An I type instruction has the following format:\\
+Add diagram\\
+\begin{itemize}
+\item Take 1 input register that can vary as their inputs
+\item Each instruction has a different op code
+\item 5 bits for each of source and destination
+\item 16 bits for address - tricks used to address 32 bit addresses
+\end{itemize}
+Types:
+\begin{itemize}
+\item Add
+\item Branch
+\item Load memory location
+\end{itemize}
+\subsection{R type instruction}
+Two input instructions\\
+Examples:
+\begin{itemize}
+\item Addition
+\item Set less than
+\end{itemize}
+Structure
+\begin{itemize}
+\item op code all zeros
+\item Last 6 bits determine function
+\item shift for logical operations
+\end{itemize}
+\subsection{J type operation}
+Jumps
+\begin{itemize}
+\item 6 bit op code
+\item Address (26) says where to jump to
+\end{itemize}
+\section{Overview}
+\begin{enumerate}
+
+\item Start with source code
+\item Do compilation
+\item Turn to assembly
+\item Machine code
+\item Voltages
+
+\end{enumerate}
+\begin{itemize}
+\item Machine code sometimes written in hexadecimal to make it easier to read and write
+\end{itemize}
+\newpage
+\begin{center}
+	\underline{\huge Operating Systems}
+\end{center}
+\section{Intro}
+\begin{itemize}
+	\item Operating system manages the hardware for you
+	\begin{itemize}
+		\item Provides interface between applications and hardware
+	\end{itemize}
+	
+	\item Abstracts the hardware for applications
+	\begin{itemize}
+		\item Deals with system calls
+		\item Provides data security
+	\end{itemize}
+	
+	\item OS \textbf{kernel}
+	\begin{itemize}
+		\item Main part of the OS
+		\item Loaded at boot time
+		\item Has total control of the CPU
+	\end{itemize}
+	
+	\item Main functions
+	\begin{itemize}
+		\item Virtualization - Hides complexity away, for looking at disks etc
+		\item Starts/Stops programs, allocating and deallocating memory, suspend execution
+		\item Handles IO - interrupts 
+		\item Maintains file system - access restrictions
+		\item Deals with networking and provides security
+		\item Facilitates error handling and recovery
+	\end{itemize}
+\end{itemize}
+\section{IO}
+IO devices
+\begin{itemize}
+	\item Hard disks
+	\item GPU
+\end{itemize}
+Bus:
+\begin{itemize}
+	\item Lines of communication (wires)
+	\item Cheap and versatile but very slow in comparison to the CPU, leading to a bottleneck
+\end{itemize}
+OS helps alleviate the bottleneck
+Interrupts:
+\begin{itemize}
+	\item CPU instructs device and continues with other tasks
+	\item When device finishes it raises an interrupt on a bus time
+\end{itemize}
+\section{Processes}
+\textbf{Process} - A program in execution
+\begin{itemize}
+	\item Not a program on the disk
+	\item Multiple processes (maybe from the same program)
+\end{itemize}
+Process = threads + address space (allocated memory)
+\begin{itemize}
+	\item \textbf{Thread} - A sequence of instructions in a sequential execution context
+	\item \textbf{Address space} - Memory locations a process can R/W to/from
+\end{itemize}
+Muliple threads or processes need to
+\begin{itemize}
+	\item Communicate and synchronize
+\end{itemize}
+Mutual exclusion
+\begin{itemize}
+	\item Two threads want to do the same thing
+	\begin{itemize}
+		\item Thread 1 completes before thread 2 starts
+		
+		\item Thread 1 and thread 2 interleave (run at the same time)
+		\begin{itemize}
+			\item Thread 1 reads value of c and adds 1
+			\item Thread 2 reads value of c (still 0) and adds 1
+			\item Thread 1 writes value to memory
+			\item Thread 2 writes value to memory
+			\item In this method c=1, however with the previous method c was 2
+		\end{itemize}
+		\item Each thread needs to acquire the \textbf{critical section} of access to c (can't read a data until other thread has checked back in)
+	\end{itemize}
+\end{itemize}
+\section{Virtual memory}
+\begin{itemize}
+	\item Many processes means a lot of RAM is required, but often there is not enough
+	\item Virtual memory
+	\begin{itemize}
+		\item Uses all the available memory to run processes
+		\begin{itemize}
+			\item Pages memory out to the hard disk
+			\begin{itemize}
+				\item Keeps a longer address list, as can now use storage, this is slower, but necessary
+				\item Where allocated depends on priority
+				\item 
+			\end{itemize}
+		\end{itemize}
+	\end{itemize}
+	\item Each sole process things it has
+	\begin{itemize}
+		\item Sole access to CPU
+		\item Sole access to its address space
+	\end{itemize}
+	
+	But
+	\begin{itemize}
+		\item It time shares CPU access
+		\item Its physical access might reside on disk
+	\end{itemize}
+	More
+	\begin{itemize}
+		\item Multiple processes share CPU and memory, time divided amongst processes
+	\end{itemize}
+\end{itemize}
+
+\section{Process life cycle}
+\begin{itemize}
+	\item New: process being created
+	\item Ready: not on CPU, but ready to run (put in queue)
+	\item Running: process executing on CPU
+	\item Blocked: Waiting on an event (sit in blocked que)
+	\item exit: process finished
+\end{itemize}
+State transitions:
+\begin{itemize}
+	\item admit: Add to queue
+	\item dispatch: Scheduler gives cpu to runnable process
+	\item timeout/yield  - running process gives up cpu
+	\item event-wait: process waiting for
+	\item event: event occurs; wake up process
+	\item release: process terminates; release resources
+\end{itemize}
+\section{Process control block}
+\begin{itemize}
+	\item Each process has unique id and state in the FSM they are, also extra info with scheduling, program counter, other CPU registers, management info (where the data was stored), various other information
+	\item Links to prev/next control blocks
+\end{itemize}
+\section{Context swiching}
+\begin{itemize}
+	\item What do when switching processes
+	\item Sto state A
+	\item Restore state B
+	\item Run
+	\item Sto B
+	\item Loa A
+\end{itemize}
+\end{document}

@@ -1,0 +1,426 @@
+\documentclass{article}[18pt]
+\usepackage{../../../../format}
+\lhead{CSys}
+
+
+\begin{document}
+\begin{center}
+\underline{\huge Operating Systems}
+\end{center}
+\section{Introduction to Operating Systems}
+\textbf{Operating Systems} - A program that acts as an intermediary between a user and the hardware\\
+\\
+Goals of an operating system:
+\begin{itemize}
+	\item Execute user programs
+	\item Make solving user problems easier
+	\item Make the computer system convenient to use
+	\item Use the resources of the system fairly and efficiently
+\end{itemize}
+An operating system is a:
+\begin{itemize}
+	\item Resource allocator - Responsible for the management of the computer system resources
+	\item Control program - Controls the execution of user programs and operation of I/O resources
+	\item Kernel - The one program that runs all the time
+\end{itemize}
+\subsection{Processes}
+\textbf{Process} - A unit of execution\\
+\\
+The operating system is responsible for process management including:
+\begin{itemize}
+	\item Process creation and deletion
+	\item Process holding and resuming
+	\item Mechanisms for process synchronization
+\end{itemize}
+A process includes:
+\begin{itemize}
+	\item Code: text selection
+	\item Current activity, represented by the program counter and the contents of the CPU's registers
+	\item Data stack: temporary data such as local variables
+	\item Data section: Global variables
+	\item Heap: Memory allocated while the process is running
+\end{itemize}
+Information about the process is represented by a PCB including:
+\begin{itemize}
+	\item Unique identifier
+	\item State
+	\item CPU utilization
+	\item CPU scheduling
+	\item Memory usage
+	\item Other information
+\end{itemize}
+Process states:
+\begin{itemize}
+	\item New - The process being created
+	\item Running - Instructions being executed
+	\item Waiting - Process waiting for some event to occur
+	\item Ready - Process ready to be dispatched
+	\item Terminated - Process completed execution
+\end{itemize}
+\begin{center}
+	\includegraphics[scale=0.7]{"Process State"}
+\end{center}
+\subsection{Process Creation}
+A new process, as a parent process, can create a number of child processes, which, in turn create other processes, forming a tree of processes\\
+\\
+Resource sharing: three possible cases
+\begin{itemize}
+	\item The parent and child processes share all resources
+	\item The child process shares a subset of parent's resources
+	\item The parent and child processes share no resources
+\end{itemize}
+Execution: two possible cases:
+\begin{itemize}
+	\item The parent and child execute concurrently
+	\item The parent waits until the child terminates
+\end{itemize}
+\subsection{Process Termination}
+The process executes its last statement and asks the operating system to delete it:
+\begin{itemize}
+	\item Outputs data from the child's process to parent
+	\item The child process's resources are de-allocated by operating system
+\end{itemize}
+The parent process may terminate execution of child processes if:
+\begin{itemize}
+	\item The child process has exceeded its allocated resources
+	\item The task assigned to child is no longer required
+	\item The parent is itself terminating (cascade termination)
+\end{itemize}
+\subsection{The Kernel}
+Aims to provide an environment in which processes can exist.\\
+\\
+Four essential components:
+\begin{itemize}
+	\item Privileged instruction set
+	\item Interrupt mechanism
+	\item Memory protection
+	\item Real-time clock
+\end{itemize}
+The kernel consists of:
+\begin{itemize}
+	\item The first-level interrupt handler: to manage interrupts
+	\item The dispatcher: to switch the CPU between processes
+	\item Intra operating system communications
+\end{itemize}
+\subsection{Interrupts}
+Interrupt - A signal from either hardware or software of an event that will cause a change of process, for example
+\begin{itemize}
+	\item Hardware - Triggers an interrupt by sending a signal to the CPU 
+	\item Software - Triggers an interrupt by executing a system call for some action by the operating system
+\end{itemize}
+Interrupt Routines - OS routines that execute whenever an interrupt occurs
+\subsection{First Level Interrupt handler}
+The function of the FLIH is to:
+\begin{itemize}
+	\item Determine the source of the interrupt (prioritise)
+	\item Initiate servicing of the interrupt (selection of suitable process of the dispatcher)
+\end{itemize}
+\subsection{Privileged instructions}
+Some instructions must be accessible only to the operating system: privileged instruction set\\
+\\
+Privileged instructions include functions as:
+\begin{itemize}
+	\item Managing interrupts
+	\item Performing I/O
+	\item Halting a process
+\end{itemize}
+\subsection{Dual Mode}
+Aim: To distinguish between execution of an operating system code and user-defined code. We do not let the user execute instructions that would cause harm.\\
+Two modes:
+\begin{itemize}
+	\item User mode
+	\item Kernel mode
+\end{itemize}
+Switching from user mode to kernel mode occurs when:
+\begin{itemize}
+	\item A user process calls on the operating system to execute a function needing a privileged instruction (system call)
+	\item An interrupt occurs (hardware)
+	\item An error condition occurs in a user process (software)
+	\item An attempt is made to execute a privileged instruction while in user mode
+\end{itemize} 
+The dispatcher
+\begin{itemize}
+	\item Assigns processing resource for processes
+	\item Is later initiated when
+	\begin{itemize}
+		\item A current process cannot continue
+		\item The CPU may be better used elsewhere, for instance:
+		\begin{itemize}
+			\item After an interrupt changes a process state
+			\item After a system call which results in the current process not being able to continue
+			\item After an error which causes a process to suspend
+		\end{itemize}
+	\end{itemize}
+\end{itemize}
+\section{Process Management}
+\textbf{Independent process} - Cannot affect or be affected by the execution of other processes\\
+\textbf{Co-operating processes} - Can affect or be affected by the execution of another process
+\subsection{Multiprogramming}
+Advantages of multiprogramming:
+\begin{itemize}
+	\item Computation speed-up - if there are multiple CPUs and/or cores
+	\item Convenience  - Single user wants to run many tasks
+	\item Information sharing - For example shared files
+	\item Modularity - Programming
+\end{itemize}
+The aim of multiprogramming is to maximise CPU utilisation\\
+With multiprogramming several memory are kept in memory concurrently\\
+Use CPU scheduling to fit them so the CPU is always in use
+\subsection{Schedulers}
+\textbf{Long term scheduler} - Selects processes to be brought into the ready queue\\
+\textbf{Medium term scheduler} - Removes process from active contention for the CPU by swapping processes in and out of the ready queue\\
+\textbf{Short term scheduler} - Selects the process to be executed next and allocated to the CPU
+\subsection{Scheduling Algorithms}
+There are a number of different algorithms including:
+\begin{itemize}
+	\item First Come, First Served
+	\begin{itemize}
+		\item Just put them in a queue as they turn up
+	\end{itemize}
+	\item Shortest Job First
+	\begin{itemize}
+		\item A priority queue with the length of the job as the priority
+	\end{itemize}
+	\item Shortest Remaining Time First
+	\begin{itemize}
+		\item A pre-emptive version of SJF, if a new process arrives with time less than the remaining time of the process currently running, then pre-empt it
+	\end{itemize}
+	\item Priority (with or without pre-empting)
+	\item Priority (with or without ageing)
+	\item Round-Robin
+	\begin{itemize}
+		\item Give each a time slice unless they finish early, rotate FCFS
+		\item If using priority, if two processes compete for the back of the queue, the higher priority goes first
+	\end{itemize}
+	\item Multilevel queue/feedback queue
+\end{itemize}
+\subsection{Priority Scheduling}
+Some algorithms use priority for scheduling\\
+\\
+The problem with this is starvation - The low priority process may never execute\\
+The solution to this is ageing - As time progresses increase the priority of the process\\
+\\
+\textbf{Multilevel queue scheduling} - Processes are partitioned into different queues, which have different (performance) requirements\\
+\\
+This has a problem that a process stays in the same queue regardless of adapting requirements\\
+Feedback queues are used to solve this problem, allowing processes to proceed between queues, this is difficult to implement.
+\begin{itemize}
+	\item The ready queue is partitioned into separate queues (for example foreground and background)
+	\item Each queue has its own scheduling algorithm
+	\item Scheduling must then be undertaken between queues:
+	\begin{itemize}
+		\item Fixed priority scheduling
+		\item Time slice - each queue gets a certain amount of CPU time which it can schedule amongst its processes
+	\end{itemize}
+\end{itemize}
+\subsection{Threads}
+\textbf{Thread} - A basic unit of CPU utilization\\
+A thread shares some attributes with its peer threads (the same process) but may execute different code\\
+\\
+The benefit of using threading includes the following:
+\begin{itemize}
+	\item Responsiveness: The process continues running even if part of it is blocked or performing a lengthy operation
+	\item Resource sharing: threads share the resources of their common process
+	\item Economy: Allocating memory and resources for process creation is costly
+	\item Multiprocessor architectures: a single threaded process can only run on one processor
+	\item Performance: Cooperation of multiple threads in same job delivers higher throughput and improved performance
+\end{itemize}
+\subsubsection{Multithreading models}
+Many to one:
+\begin{itemize}
+	\item Many user application threads to one kernel thread
+	\item Programmer controls the number of application threads
+\end{itemize}
+One to one:
+\begin{itemize}
+	\item One user application to one kernel thread
+\end{itemize}
+Many-to-many
+\begin{itemize}
+	\item N user application threads to $\leqslant N$ kernel threads
+	\item Defined by the capabilities of the operating system
+\end{itemize}
+\section{Memory Management: Main Memory and Virtual Memory}
+\subsection{Types of Memory}
+Memory comes in many types:
+\begin{itemize}
+	\item Cache memory/ CPU cache
+	\item Main memory (e.g. RAM)
+	\item Storage memory
+	\item Virtual memory
+\end{itemize}
+\subsection{Logical/Physical Addressing}
+\textbf{Logical address} - An address created by the CPU\\
+\textbf{Physical address} - An address on the physical memory\\
+\textbf{Memory Management Unit (MMU)} - Automatically translates virtual addresses to physical addresses
+A user (application) program deals with logical addresses and never knows the real physical addresses
+\subsection{Memory Partitioning}
+Main memory is usually split into two partitions:
+\begin{itemize}
+	\item Kernel processes
+	\item User processes
+\end{itemize}
+Each partition is contained in a single contiguous section of memory
+\subsection{Contiguous Allocation}
+\textbf{Hole} - Block of available memory\\
+When a process arrives, it is allocated memory from a hole large enough to accommodate it
+\subsection{Memory Hole Allocation}
+There are a variety of strategies to satisfy a request from a list of free holes
+\begin{itemize}
+	\item First fit - first hole big enough
+	\item Best fit - smallest hole big enough
+	\item Worst fit - largest hole
+\end{itemize}
+First fit is fast and best fit is efficient
+\subsection{Fragmentation}
+\textbf{External fragmentation} - Memory space able to satisfy a request but not contiguous\\
+\textbf{Compaction} - Shuffle memory contents to place all free memory in one block\\
+\textbf{Internal fragmentation} - Memory allocated successfully but may be slightly larger than the requested amount of memory (due to blocks being powers of 2)
+\subsection{Paging}
+\textbf{Frames} - Fixed size blocks of physical memory\\
+\textbf{Pages} - Blocks of logical memory\\
+\textbf{Paging} - Finding the number of free frames needed to load the program\\
+\textbf{Page table} - Maps logical and physical addresses
+\subsection{Address translation scheme}
+The logical address generated by the CPU is divided into:
+\begin{itemize}
+	\item Page number (p): used as an index into a page table which contains the base address of each page in physical memory
+	\item Page offset (d): combined with base address to define the physical memory address that is sent to the memory unit
+\end{itemize}
+\subsection{Protection}
+Memory protection implemented by associating protection bit with each frame\\
+\\
+A valid-invalid bit is attached to each entry in the page table:
+\begin{itemize}
+	\item Valid indicates that the associated page is in the process' logical address space, and is thus a legal page
+\end{itemize}
+\subsection{Virtual memory}
+\textbf{Virtual memory} - The capability of the operating system that enable programs to address more memory locations than are actually provided in main memory
+\subsection{Demand paging}
+Bring a page into memory only when it is required by the process during its execution
+\subsection{A Process's Page Table}
+\begin{itemize}
+	\item When reference is made to a page's address
+	\begin{itemize}
+		\item Invalid reference $\rightarrow$ abort
+		\item Not in memory $\rightarrow$ bring into memory
+	\end{itemize}
+	\item A valid/invalid bit is associated with each process's page table entry to indicate if the page is already in memory
+	\begin{itemize}
+		\item 1 $\rightarrow$ in memory
+		\item $0 \rightarrow$ not in memory
+	\end{itemize}
+	\item Address translation
+	\begin{itemize}
+		\item When valid/invalid bit in page table entry is 0 $\rightarrow$ page fault trap
+	\end{itemize}
+	\item Initially the valid/invalid bit is set to 0 on all entries
+\end{itemize}
+\subsection{Handling Page Fault Traps}
+If there is a page fault trap
+\begin{itemize}
+	\item Identify a free frame from the free frame list
+	\item Read the page into the identified frame
+	\item Update the process's page table
+	\item Restart the instruction interrupted by the page fault trap
+\end{itemize}
+If there is no free frame then page replacement needs to be used\\
+\textbf{Page replacement} - Find some page in memory, but not really in use, and swap it out
+\subsection{Page replacement algorithms}
+\subsubsection{Belady's Anomaly}
+This is that for some page fault algorithms, the page fault rate my increase as the number of allocated frames increases
+\subsubsection{Optimal Algorithm}
+Replace the page that will not be needed for the longest time\\
+This is impossible to implement as it would need you to know the future
+\subsubsection{Least Recently used}
+\begin{itemize}
+	\item Associate with each page the time of its last use
+	\item Page to replace: Page that has not been used for the longest period of time
+	\item This will never exhibit Belady's Anomaly as the pages of smaller frames are always a subset of pages for larger frames
+\end{itemize}
+This has an approximation with an additional reference bit:
+\begin{itemize}
+	\item When a page is referenced set to 1
+	\item Replace one of the pages with the bit set to 0
+	\item Replace a random page when none are set to 0
+\end{itemize}
+Another approximation is the second chance algorithm:
+\begin{itemize}
+	\item A circular FIFO queue
+	\item When a page enters main memory it joins the tail of the queue and has reference bit set to 1
+	\item When a victim page needs selecting
+	\begin{itemize}
+		\item Start at the head of the queue
+		\item If the reference page is 0 select it as the victim page
+		\item If the page reference is 1, change it to 0 and move on to the next page
+	\end{itemize}
+\end{itemize}
+\subsection{Allocation of frames}
+Global replacement - Select a replacement frame from the set of all frames, one process can take a frame from another\\
+Local replacement  - Select from only the process' own set of allocated frames\\
+Fixed allocation - Give a set of frames at the start of the process\\
+Priority allocation - Get the replacement frame from a process with a lower priority
+\subsection{Thrashing}
+This occurs when a process spends more time paging than doing actual work
+\subsection{Prepaging}
+\textbf{Prepaging} - Page into memory at one time all the pages that will be needed\\
+This should prevent thrashing, but we need to evaluate the cost of prepaging
+\subsection{Page-Fault Frequency Scheme}
+\begin{itemize}
+	\item Establish an acceptable page fault rate
+	\item If too low then take frames away
+	\item If too high give frames 
+\end{itemize}
+\section{Mass-Storage Systems}
+\textbf{Transfer rate} - Rate of data flow between drive and computer\\
+\textbf{Positioning time} - Time to move disk arm to desired cylinder (\textbf{seek time}) and time for desired sector to rotate under the disk head (\textbf{rotational latency})\\
+\textbf{Head crash} - Head makes contact with disk surface\\
+\\
+Access Latency=Average access time=Average seek time + average latency\\
+Average I/O time=average access time +(amount to transfer/transfer rate)+controller overhead 
+\subsection{Disk scheduling algorithms}
+\subsubsection{First come first served}
+Just move through the list
+\subsubsection{Shortest Seek Time First}
+Selects the request with the minimum seek time from the current head position
+May cause starvation of some requests
+\subsubsection{SCAN}
+Start at one end of the disk and move to the end of the disk servicing requests, then reverse and continue servicing
+\subsubsection{C-SCAN}
+Like SCAN, but doesn't service requests on the way back
+\subsubsection{C-LOOK}
+Arm only does as far as the last request in each direction
+\subsection{Disk management}
+\textbf{Low level formatting} - Dividing a disk into sectors that the disk controller can read and write\\
+\textbf{Partition} - Dividing a disk into one or more groups of cylinders, each treated as a logical disk\\
+\textbf{Logical Formatting} - Making a file system\\
+\textbf{Cluster} - A group of blocks\\
+\textbf{Bootstrap loader} - A program stored in boot blocks of boot partition
+\subsection{Swap-space management}
+\textbf{Swap-space} - Virtual memory uses disk space as an extension of main memory\\
+Swap space can be carved out of the normal file system, but is usually in a separate partition\\
+\subsection{RAID}
+RAID - Using multiple disk drives to provide reliability via redundancy \\
+Increases mean time to failure\\
+Striping - Using a group of disks as one storage unit
+\section{File-System Interface}
+File - Contiguous logical address space
+\subsection{File locking}
+File locks can exist either shared for many processes (used when reading) or exclusive lock (used when writing)
+File locks can be:
+\begin{itemize}
+	\item Mandatory - Access denied depending on locks held
+	\item Advisory - Process find status of locks and decide what to do
+\end{itemize}
+\section{File System Implementation}
+\textbf{File control block} - Storage structure consisting of information about a file\\
+\textbf{Device driver} - Controls the physical device\\
+\textbf{Boot control block} - Contains info needed by system to boot OS from that volume\\
+\textbf{Virtual File system} - A way to provide an object oriented way of implementing file systems\\
+\textbf{Linear List} - List of file names with pointer to the data blocks\\
+\textbf{Hash Table} - Linear list with file data structure\\
+\textbf{Collisions} - Situations where two file names hash to the same location\\
+\textbf{Contiguous Allocation} - Each file occupies a set of contiguous blocks\\
+\textbf{Extent} - Contiguous chunk of blocks\\
+\textbf{Indexed allocation} - Each file has its own index block(s) of pointers to its data blocks
+\end{document}

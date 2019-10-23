@@ -1,0 +1,70 @@
+\documentclass{article}[18pt]
+\usepackage{../../../../format}
+\usepackage{listings}
+\lhead{Algorithms and Data Structures}
+\lstset{language=python,
+	basicstyle=\ttfamily,
+	keywordstyle=\bfseries,
+	showstringspaces=false,
+	tabsize=4,
+	mathescape=true
+}
+
+
+\begin{document}
+\begin{center}
+\underline{\huge Practical 5}
+\end{center}
+\section{Question 1}
+\begin{tabular}{|c|c|c|c|c|c|c|c|c|c|}
+	\hline 
+	0 & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 & 9 \\ 
+	\hline 
+	&  &  & Sandy &  &  &  & George & Alan & Amy \\ 
+	\hline 
+\end{tabular} 
+\section{Question 2}
+A function indexing at 0 is not as good as indexing as one because there would be a disproportionate number of names at index 0 because any name including an a would be at that index.
+\section{Question 3}
+\begin{lstlisting}
+def hash(d):
+	#initialize table
+	table = ["-"]*13
+	#now you do the rest
+	for item in d:
+		itemsto=item
+		if item in table:
+			continue
+		if '-' not in table:
+			break
+		while(True):
+			index=itemsto%13
+				if table[index]=='-':
+					table[index]=item
+					break
+				else:
+					itemsto+=1
+	return(table)	
+\end{lstlisting}
+
+\section{Question 4}
+\lstset{morekeywords={if, else, then, print, end, for, do, while}}
+\begin{lstlisting}
+modulus(m,n)
+	if m<n then
+		return m
+	else
+		return modulus(m-n,n)
+	end if
+\end{lstlisting}
+\section{Question 5}
+\begin{lstlisting}
+DigitSum(n)
+if length(n)=1 then
+	return n
+else
+	return n mod 10 + digitsum(n/10)
+end if
+\end{lstlisting}
+For any number n, doing n mod 10 will provide the last number in the number. Then by calling digitsum(n/10) as pseudocode floors all decimal numbers, n/10 will be the number, excuding the last digit.
+\end{document}

@@ -1,0 +1,306 @@
+\documentclass{article}[18pt]
+\usepackage{../../../../format}
+\lhead{ADS}
+\lstset{language=Python,
+	basicstyle=\ttfamily,
+	keywordstyle=\bfseries,
+	showstringspaces=false,
+	morekeywords={if, else, then, print, end, for, do, while},
+	tabsize=4,
+	mathescape=true,
+	numbers=left,
+	stepnumber=1,
+}
+\usepackage{caption}
+\DeclareCaptionFont{white}{\color{white}}
+\DeclareCaptionFormat{listing}{\colorbox{gray}{\parbox{\textwidth}{#1#2#3}}}
+\captionsetup[lstlisting]{format=listing,labelfont=white,textfont=white}
+\begin{document}
+\begin{center}
+\underline{\huge Part 2}
+\end{center}
+\section{Recap}
+\textbf{Degree of a polynomial} - The highest power in the polynomial\\
+\textbf{Monotonic} - Always going in one direction (either increasing or decreasing)
+\subsection{Logarithms}
+\[
+\log _{a} x y=\log _{a} x+\log _{a} y
+\]
+\[
+\log _{a} \frac{x}{y}=\log _{a} x-\log _{a} y
+\]
+\[
+\log _{a} x^{s}=s \cdot \log _{a} x
+\]
+\[
+\log _{a} x=\frac{\log _{b} x}{\log _{b} a}
+\]
+\section{Asymptotics}
+\textbf{Time complexity} - Expressed in terms of the number of basic operations used by the algorithm when the input has a particular size\\
+\textbf{Worst-Case time complexity} - Expressed in terms of the largest number of basic operations used by the algorithm when the input has a particular size
+\subsection{Big-O}
+Let f(x) and g(x) be functions from the set of integers or the set of real numbers to the set of real numbers. We say that f(x) is $\mathcal{O}(g(x))$ if there are constants C and k such that
+\[
+|f(x)| \leq C \cdot|g(x)|
+\]
+whenever $x\geqslant k$\\
+\\
+The constants C and k in the definition of big-$\mathcal{O}$ notation are called witnesses to the relationship $f(x)$ is $\mathcal{O}(g(x))$
+\subsubsection{Example}
+\textit{Let $f(x)=x^2+2x+1$. Then $f(x)=\mathcal{O}(x^2)$}\\
+\\
+For $x\geqslant 1$, we have $1\leqslant x \leqslant x^2$. That gives
+\[
+f(x)=x^{2}+2 x+1 \leq x^{2}+2 x^{2}+x^{2}=4 x^{2}
+\]
+for $x\geqslant 1$. Because the above inequality holds for every positive $x\geqslant 1$, using $k=1$ and $C=4$ as witnesses, we get
+\[
+f(x) \leq C \cdot x^{2}
+\]
+for every $x\geqslant k$
+\subsubsection{Example 2}
+\textit{Let $f(x)=3^x$. Then $f(x)$ is not $\mathcal{O}(2^x)$ }\\
+Assume that there are constants k and C such that $3^x\leqslant C\cdot 2^x$ when $x\geqslant k$. Then
+\[
+\left(\frac{3}{2}\right)^{x} \leq C
+\]
+when $x\geqslant k$\\
+\\
+But any exponential function $a^x$ grows monotonically whenever $a\geqslant 1$; a contradiction
+\subsubsection{Sum and Product Rules}
+\textbf{The sum rule}
+\[
+\text { If } f_{1}(x) \text { is } O\left(g_{1}(x)\right) \text { and } f_{2}(x) \text { is } O\left(g_{2}(x)\right), \text { then } f_{1}(x)+f_{2}(x) \text { is } O\left(\max \left\{\left|g_{1}(x)\right|,\left|g_{2}(x)\right|\right\}\right)
+\]
+\textbf{The product rule}
+\[
+\text { If } f_{1}(x) \text { is } O\left(g_{1}(x)\right) \text { and } f_{2}(x) \text { is } O\left(g_{2}(x)\right), \text { then } f_{1}(x) \cdot f_{2}(x) \text { is } O\left(g_{1}(x) \cdot g_{2}(x)\right)
+\]
+\subsection{Big-Omega}
+Let $f(x)$ and $g(x)$ be functions from the set of real numbers to the set of real numbers. We say that $f(x)$ is $\Omega(g(x))$ if there are positive constants C and k such that
+\[
+|f(x)| \geq C \cdot|g(x)|
+\]
+whenever $x>k$. Note that this implies that $f(x)$ is $\Omega(g(x))$ iff $g(x)$ is $\mathcal{O}(f(x))$
+\subsection{Theta}
+Let $f(x)$ and $g(x)$ be functions from the set of real numbers to the set of real numbers. We say that $f(x)$ is $\Theta(g(x))$ if $f(x)$ is $\mathcal{O}(g(x))$ and $f(x)$ is $\Omega(g(x))$\\
+\\
+This is the equivalent to saying that $f(x)$ is $\Theta(g(x))$ if $f(x)$ is $\mathcal{O}(g(x))$ and $g(x)$ is $\mathcal{O}(f(x))$
+\subsection{Little-o}
+Let $f(x)$ and $g(x)$ be functions from the set of real numbers to the set of real numbers. We say that $f(x)$ is $o(g(x))$ when
+\[
+\lim _{x \rightarrow \infty} \frac{f(x)}{g(x)}=0
+\]
+The definition without the limit is
+\[
+o(g)=\{f : \mathbb{N} \rightarrow \mathbb{N} | \forall C>0 \exists k>0 : C \cdot f(n)<g(n) \forall n \geq k\}
+\]
+This shows that $f(x)$ is $o(g(x))$ implies $f(x)$ is $\mathcal{O}(g(x))$
+\subsubsection{Sublinear functions}
+A function is called sublinear if it grows slower than a linear function. With little-o notation, we can express this as\\
+\\
+A function $f(x)$ is called sublinear if $f(x)$ is $o(x)$, so if
+\[
+\lim _{x \rightarrow \infty} \frac{f(x)}{x}=0
+\]
+\subsection{Little-omega}
+$\omega$ is to o what $\Omega$ is to $\mathcal{O}$
+\[
+f=\omega(g) \quad \Leftrightarrow \quad g=o(f)
+\]
+or
+\[
+\omega(g)=\{f : \mathbb{N} \rightarrow \mathbb{N} | \forall C>0 \exists k>0 : f(n)>C \cdot g(n) \forall n \geq k\}
+\]
+\subsection{General Rules}
+$$ \text { If } f _ { 1 } ( x ) \text { is } o ( g ( x ) ) \text { and } f _ { 2 } ( x ) \text { is o } ( g ( x ) ) , \text { then } f _ { 1 } ( x ) + f _ { 2 } ( x ) \text { is }  { o ( g ( x ) ) . }$$
+$$ { \text { If } f _ { 1 } ( x ) \text { is } O ( g ( x ) ) \text { and } f _ { 2 } ( x ) \text { is o } ( g ( x ) ) , \text { then } f _ { 1 } ( x ) + f _ { 2 } ( x ) \text { is } } { O ( g ( x ) ) . } $$
+\begin{center}
+	If $f _ { 1 } ( x ) \) is \( \Theta ( g ( x ) ) \) and \( f _ { 2 } ( x ) \) is o \( ( g ( x ) ) , \) then \( f _ { 1 } ( x ) + f _ { 2 } ( x ) \) is
+	\( \Theta ( g ( x ) ) .$
+\end{center}
+
+Equivalent to $\leqslant$
+$$\mathcal { O } ( g ) = \{ f : \mathbb{ N } \rightarrow \mathbb{ N } | \textcolor{blue}{\exists} C , k > 0 : \mathbf{f ( n ) \leq C \cdot g ( n )} \forall n \geq k \}$$
+Equivalent to $\geqslant$
+$$\Omega ( g ) = \{ f :  \mathbb{ N } \rightarrow \mathbb{ N } | \textcolor{blue}{\exists} C , k > 0 :\mathbf{ f ( n ) \geq C \cdot g ( n )} \forall n \geq k \}$$
+Equivalent to =
+$$\Theta ( g ) = \left\{ f : \mathbb{ N } \rightarrow \mathbb{ N } | \textcolor{blue}{\exists} C _ { \mathbf { 1 } } , C _ { 2 } , k > 0 : \mathbf{\quad C _ { \mathbf { 1 } } \cdot g ( n ) \leq f ( n ) \leq C _ { 2 } \cdot g ( n )} \forall n \geq k \right\}$$
+Equivalent to $<$
+$$o ( g ) = \{ f : \mathbb{ N } \rightarrow \mathbb{ N } | \textcolor{red}{\forall} C > 0 \exists k > 0 : \mathbf{C \cdot f ( n ) < g ( n )} \forall n \geq k \}$$
+Equivalent to $>$
+$$\omega ( g ) = \{ f : \mathbb{ N } \rightarrow \mathbb{ N } | \textcolor{red}{\forall} C > 0 \exists k > 0 : \mathbf{f ( n ) > C \cdot g ( n )} \forall n \geq k \}$$
+\section{Sorting}
+\subsection{Insertion Sort}
+\begin{lstlisting}[caption={InsertionSort $(a_1\ldots,a_n\in \mathbb{R}, n\geqslant 2)$}]
+for j=2 to n do
+	$x=a_j$
+	i=j-1
+	while i>0 and $a_i>x$ do
+		$a_{i+1}=a_i$
+		i=i-1
+	end while
+	$a_{i+1}=x$
+end for
+\end{lstlisting}
+We know:
+\begin{itemize}
+	\item When j has a certain value, it inserts the j-th element into already sorted sequence $a_1,\ldots, a_{j-1}$
+	\item Can be proved  by using invariant "after jth iteration first j+1 elements are in order"
+	\item Running time between $n-1$ and $\dfrac{n(n-1)}{2}$ - worst case $\mathcal{O}(n^2)$
+\end{itemize}
+\subsection{Selection sort}
+\begin{lstlisting}[caption={SelectionSort $(a_1,...,a_n\in \mathbb{R}, n\geqslant 2)$}]
+for i=1 to n-1 do
+	elem = $a_i$
+	pos = i
+	for j=i+1 to n do
+		if $a_j$<elem then
+			elem=$a_j$
+			pos=j
+		end if
+	end for
+	swap $a_i$ and $a_{pos}$
+end for			
+\end{lstlisting}
+How does it work?\\
+Invariant: after ith iteration positions 1,...,i contain the overall i many smallest elements in order\\
+Not necessarily the first i elements (as it was in InsertionSort)\\
+In the ith iteration of outer loop, we search the ith smallest element in remainder (positions $i_1,...,n$) of input and swap it into position i
+\begin{itemize}
+	\item elem keeps track of current idea of \textbf{value} ith smalllest element
+	\item pos keeps track of the current idea of \textbf{position} of ith smallest element
+\end{itemize}
+Time complexity:
+\[
+\begin{aligned} \sum_{i=1}^{n-1} \sum_{j=i+1}^{n} 1 &=\sum_{i=1}^{n-1}(n-i) \\ &=\left(\sum_{i=1}^{n-1} n\right)-\left(\sum_{i=1}^{n-1} i\right) \\ &= (n-1)\cdot n-\dfrac{n(n-1)}{2}\\ &=\frac{n(n-1)}{2} \\ &=O\left(n^{2}\right) \end{aligned}
+\]
+\subsection{Bubble sort}
+\begin{lstlisting}[caption={BubbleSort-1 $(a_1,...,a_n\in \mathbb{R}, n\geqslant 2)$}]
+for i=1 to n-2 do
+	for j=1 to n-1 do
+		if $a_j>a_{j+1}$ then
+			swap $a_j$ and $a_{j+1}$
+		end if
+	end for
+end for		
+\end{lstlisting}
+This can be improved by keeping track of whether or not an element was swapped
+\begin{lstlisting}[caption={BubbleSort-1 $(a_1,...,a_n\in \mathbb{R}, n\geqslant 2)$}]
+for i=1 to n-1 do
+	swaps=0
+	for j=1 to n-1 do
+		if $a_j>a_{j+1}$ then
+			swap $a_j$ and $a_{j+1}$
+			swaps=swaps+1
+		end if
+	end for
+	if swaps ==0 then
+		break
+	end if
+end for		
+\end{lstlisting}
+\textbf{Proof of correctness}\\
+A sequence $(a_1,...,a_n)$ is sorted if for every adjacent pair $a_i,a_{i+1}$ we have $a_i\leqslant a_{i+1}$\\
+Bubble sort achieves just that\\
+\\
+\textbf{Time complexity}
+\[
+\begin{aligned} \sum_{i=1}^{n-1} \sum_{j=1}^{n-1} 1 &=\sum_{i=1}^{n-1}(n-1) \\ &=(n-1)^{2}=O\left(n^{2}\right) \end{aligned}
+\]
+\subsection{Mergesort}
+\begin{lstlisting}[caption={list MergeSort (list m)}]
+if length(m) $\leqslant$ 1 then
+	return m
+end if
+int middle = length(m) / 2
+list left, right, leftsorted, rightsorted
+left = m[1..middle]
+right = m[middle+1..length(m)]
+leftsorted = MergeSort(left)
+rightsorted = MergeSort(right)
+return Merge(leftsorted, rightsorted)
+\end{lstlisting}
+There is then the merge function:
+\begin{lstlisting}[caption={list MergeSort (list left, list right)}]
+list result
+while length(left)>0 or length(right)>0 do
+	if length(left)>0 and length(right)>0 then
+		if first(left) $\leqslant$ first(right) then
+			append first(left) to result
+			left = rest(left)
+		else
+		#Keeping extra copies of the data in the result array
+			append first(right) to result
+			right = rest(right)
+		end if
+	else if length(left)>0 then
+		append left to result
+		left = empty list
+	else 	# Length(right) $>$ 0
+		append right to result
+		right = empty list
+	end if
+end while
+return result
+\end{lstlisting}
+\subsection{Quicksort}
+\begin{lstlisting}[caption={QuickSort(int {$A[1..n]$}, int left, int right)}]
+if (left<right) then
+	#rearrange/partition in place
+	#return value "pivot" is index of pivot element in A[] after partitioning
+	pivot=Partition(A,left,right)
+	#Now:
+	#Everything in A[left...pivot-1] is smaller than pivot
+	#Everything in A[pivot+1..right] is bigger than pivot
+	QuickSort (A,left,pivot-1)
+	QuickSort(A,pivot_1,right)
+end if
+\end{lstlisting}
+An example of the partition function is
+\begin{lstlisting}[caption={int Partition({$A[1...n]$}, int left, int right)}]
+int x =A[right]
+int i=left-1
+for j=left to right-1 do
+	if A[j]<x then
+		i=i+1
+		swap A[i] and A[j]
+	end if
+end for
+swap A[i+1] and A[right]
+return i+1
+\end{lstlisting}
+\section{Recurrences}
+\subsection{Induction}
+Basically:
+\begin{itemize}
+	\item "guess" correct solution (good job all sorting algorithms are n log n)
+	\item verify base case(s) and step
+\end{itemize}
+Consider the recurrence for merge sort:
+\[
+T(n) \leq \left\{\begin{array}{ll}{d} & {\text { if } n \leq c, \text { for constants } c, d>0} \\ {2 \cdot T(n / 2)+a \cdot n} & {\text { otherwise }}\end{array}\right.
+\]
+To get the base case, do as follows:
+\[
+d \leq \alpha n \log _{2} n \leq \alpha c \log _{2} c \quad \Leftrightarrow \quad \alpha \geq \frac{d}{c \log _{2} c}
+\]
+As for the inductive step, plug the guess in
+\[
+\begin{array}{l}{T(n) \leq 2 T(n / 2)+a n} \\ {T(n) \leq 2 \alpha \frac{n}{2} \log _{2} \frac{n}{2}+a n} \\ {T(n) \leq 2 \alpha \frac{n}{2}\left(\log _{2}(n)-\log _{2}(2)\right)+a n} \\ {T(n) \leq 2 \alpha \frac{n}{2}\left(\log _{2}(n)-1\right)+a n} \\ {T(n) \leq \alpha n\left(\log _{2}(n)-1\right)+a n} \\ {T(n) \leq \alpha n \log _{2}(n)-\alpha n+a n} \\ {T(n) \leq \alpha n \log _{2} n \quad \text { if } \alpha n \geq a n \Leftrightarrow \alpha \geq a}\end{array}
+\]
+The requirement that $\alpha\geqslant a$ suggests there isn't much room for (asymptotic) improvement, as both are constants
+\subsection{Iterative substitution}
+Expand the recurrence
+\[
+\begin{aligned} T(n) & \leq 2 T(n / 2)+a n \\ & \leq 2(2 T(n / 4)+a n / 2)+a n=4 T(n / 4)+a n+a n \\ &=4 T(n / 4)+2 a n \leq 4(2 T(n / 8)+a n / 4)+2 a n \\ &=8 T(n / 8)+a n+2 a n=8 T(n / 8)+3 a n \\ & \leq 8(2 T(n / 16)+a n / 8)+3 a n=16 T(n / 16)+a n+3 a n \\ &=16 T(n / 16)+4 a n \end{aligned}
+\]
+\subsection{Master Theorem}
+This can be used to solve recurrences of the form:
+\[
+T(n)=a T(n / b)+f(n)
+\]
+for $a\geqslant 1$ and $b\geq 1$\\
+\\
+There are 3 cases, but rob says he'll give you them
+\end{document}

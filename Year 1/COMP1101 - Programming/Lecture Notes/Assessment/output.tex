@@ -1,0 +1,292 @@
+\PassOptionsToPackage{unicode=true}{hyperref} % options for packages loaded elsewhere
+\PassOptionsToPackage{hyphens}{url}
+%
+\documentclass[]{article}
+\usepackage{lmodern}
+\usepackage{amssymb,amsmath}
+\usepackage{ifxetex,ifluatex}
+\usepackage{fixltx2e} % provides \textsubscript
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provides euro and other symbols
+\else % if luatex or xelatex
+  \usepackage{unicode-math}
+  \defaultfontfeatures{Ligatures=TeX,Scale=MatchLowercase}
+\fi
+% use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+% use microtype if available
+\IfFileExists{microtype.sty}{%
+\usepackage[]{microtype}
+\UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\IfFileExists{parskip.sty}{%
+\usepackage{parskip}
+}{% else
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{6pt plus 2pt minus 1pt}
+}
+\usepackage{hyperref}
+\hypersetup{
+            pdfborder={0 0 0},
+            breaklinks=true}
+\urlstyle{same}  % don't use monospace font for urls
+\setlength{\emergencystretch}{3em}  % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{0}
+% Redefines (sub)paragraphs to behave more like sections
+\ifx\paragraph\undefined\else
+\let\oldparagraph\paragraph
+\renewcommand{\paragraph}[1]{\oldparagraph{#1}\mbox{}}
+\fi
+\ifx\subparagraph\undefined\else
+\let\oldsubparagraph\subparagraph
+\renewcommand{\subparagraph}[1]{\oldsubparagraph{#1}\mbox{}}
+\fi
+
+% set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+
+
+\date{}
+
+\begin{document}
+
+\hypertarget{comp1101-programming-summative-assessment-1-draft}{%
+\section{COMP1101 Programming Summative Assessment 1
+(DRAFT)}\label{comp1101-programming-summative-assessment-1-draft}}
+
+\begin{center}\rule{0.5\linewidth}{\linethickness}\end{center}
+
+\hypertarget{term-1-programming-exercise-outline}{%
+\subsection{Term 1 Programming Exercise
+Outline}\label{term-1-programming-exercise-outline}}
+
+\begin{itemize}
+\tightlist
+\item
+  Submission by 14:00 Thursday 17/1/2019
+\item
+  Return by 14/2/2019
+\item
+  Contributes 35\% of module marks
+\item
+  Includes peer review feedback which you will be allocated
+\item
+  Peer reviews need to be submitted by 14:00 31/1/2019
+\item
+  Quality of your peer reviews contribute 5\% to your module mark
+\end{itemize}
+
+\begin{center}\rule{0.5\linewidth}{\linethickness}\end{center}
+
+\hypertarget{subject-specific-knowledge}{%
+\subsection{Subject-specific
+Knowledge}\label{subject-specific-knowledge}}
+
+\begin{itemize}
+\tightlist
+\item
+  Interaction between JavaScript progams and the Document Object Model
+  (DOM)
+\item
+  Using control statements to loop and make decisions.
+\item
+  An understanding of the nature of imperative programming in the
+  object-oriented style.
+\item
+  A knowledge and understanding of good programming practice (for
+  example, reuse, documentation and style)
+\end{itemize}
+
+\begin{center}\rule{0.5\linewidth}{\linethickness}\end{center}
+
+\hypertarget{key-skills}{%
+\subsection{Key Skills}\label{key-skills}}
+
+\begin{itemize}
+\tightlist
+\item
+  an ability to recognise and apply the principles of abstraction and
+  modelling
+\end{itemize}
+
+\begin{center}\rule{0.5\linewidth}{\linethickness}\end{center}
+
+\hypertarget{tasks}{%
+\subsection{Tasks}\label{tasks}}
+
+\begin{itemize}
+\tightlist
+\item
+  Fork https://github.com/stevenaeola/Durham-p5-lib
+\item
+  Choose a sketch from
+  \href{https://www.openprocessing.org/}{openprocessing.org}
+\item
+  Put the original sketch code into a subdirectory of the repository
+\item
+  Adapt it into a reusable component using JavaScript classes
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Appropriate constructor
+  \item
+    Get and set methods for properties
+  \item
+    \texttt{draw} method with optional p5.Renderer as parameter
+  \end{itemize}
+\end{itemize}
+
+--
+
+\begin{itemize}
+\tightlist
+\item
+  Build an example page with properties controlled by form controls
+\item
+  Write documentation of your code using
+  \href{https://guides.github.com/features/mastering-markdown/}{Markdown}
+\end{itemize}
+
+\begin{center}\rule{0.5\linewidth}{\linethickness}\end{center}
+
+\hypertarget{submission}{%
+\subsection{Submission}\label{submission}}
+
+\begin{itemize}
+\tightlist
+\item
+  Submit via duo a link to a github (or other git) repository containing
+  your code and documentation
+\item
+  Make repository public on submission
+\item
+  Make a pull request to https://github.com/stevenaeola/Durham-p5-lib
+  with your new component
+\end{itemize}
+
+\begin{center}\rule{0.5\linewidth}{\linethickness}\end{center}
+
+\hypertarget{marking-criteria}{%
+\subsection{Marking Criteria}\label{marking-criteria}}
+
+Weighted equally
+
+\begin{itemize}
+\tightlist
+\item
+  Usability of code
+\item
+  Development of original
+\item
+  Quality of example
+\item
+  Quality of documentation
+\item
+  Code quality and management
+\end{itemize}
+
+\begin{center}\rule{0.5\linewidth}{\linethickness}\end{center}
+
+\hypertarget{usability-of-code}{%
+\subsection{Usability of code}\label{usability-of-code}}
+
+\begin{itemize}
+\tightlist
+\item
+  Appropriate parameterisation including defaults
+\item
+  Encapsulation (private fields where appropriate)
+\item
+  Useful methods including \texttt{draw}
+\end{itemize}
+
+\begin{center}\rule{0.5\linewidth}{\linethickness}\end{center}
+
+\hypertarget{development-of-original}{%
+\subsection{Development of original}\label{development-of-original}}
+
+\begin{itemize}
+\tightlist
+\item
+  Original code included in initial commit
+\item
+  Work done in refactoring code to class
+\item
+  Work done in useful parameterisation
+\item
+  Work done in extending scope
+\end{itemize}
+
+\begin{center}\rule{0.5\linewidth}{\linethickness}\end{center}
+
+\hypertarget{quality-of-example}{%
+\subsection{Quality of example}\label{quality-of-example}}
+
+\begin{itemize}
+\tightlist
+\item
+  HTML page is valid
+\item
+  Appropriate on-page instructions
+\item
+  Appropriate on-page controls (form)
+\end{itemize}
+
+\begin{center}\rule{0.5\linewidth}{\linethickness}\end{center}
+
+\hypertarget{quality-of-documentation}{%
+\subsection{Quality of documentation}\label{quality-of-documentation}}
+
+\begin{itemize}
+\tightlist
+\item
+  All methods and parameters explained (including constructor)
+\item
+  Explanation of example
+\item
+  Source of initial code acknowledged (including licence)
+\end{itemize}
+
+\begin{center}\rule{0.5\linewidth}{\linethickness}\end{center}
+
+\hypertarget{code-quality-eslint}{%
+\subsection{Code quality: ESLint}\label{code-quality-eslint}}
+
+Apply rules from
+\href{https://eslint.org/docs/rules/}{eslint.org/docs/rules/}:
+
+\begin{itemize}
+\tightlist
+\item
+  Possible Errors
+\item
+  Best Practices
+\item
+  Variables
+\item
+  Stylistic Issues
+\item
+  ECMAScript 6
+\end{itemize}
+
+\begin{center}\rule{0.5\linewidth}{\linethickness}\end{center}
+
+\hypertarget{code-management-git}{%
+\subsection{Code management: git}\label{code-management-git}}
+
+\begin{itemize}
+\tightlist
+\item
+  Appropriate commits including comments
+\item
+  Consistent development trajectory
+\end{itemize}
+
+\end{document}

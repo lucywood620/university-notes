@@ -1,0 +1,86 @@
+\documentclass{article}[18pt]
+\usepackage{../../../../format}
+\lhead{Algorithms and Data Structures}
+\lstset{language=C,
+    basicstyle=\ttfamily,
+    keywordstyle=\bfseries,
+    showstringspaces=false,
+    morekeywords={if, else, then, print, end, for, do, while,next,prev},
+    tabsize=4
+}
+
+\begin{document}
+\begin{center}
+\underline{\huge Practical 2}
+\end{center}
+\section{Question 1}
+\begin{lstlisting}[mathescape=true]
+node N
+list L
+insert node V	
+P=N.prev
+P.next=V
+N.prev=V
+V.next=N
+V.prev=P
+
+\end{lstlisting}
+
+\section{Question 2}
+Output the number of times the given integer k appears in the list
+\section{Question 3}
+\begin{lstlisting}[mathescape=true]
+input array H
+input E=[newscore, newname]
+while H[i] $\leqslant$ newscore
+	i=i+1
+	
+while H[x]$\neq$ NULL
+	x=x+1
+while x $\geqslant$ i
+	H[x]=H[x-1]
+	x=x-1
+H[i]=E		
+		
+\end{lstlisting}
+\section{Question 4}
+\begin{lstlisting}[mathescape=true]
+pointer1 = List.head
+pointer2=List.prev
+while pointer1$\neq$ pointer2 do
+	pointer1=pointer1.next
+	pointer2.pointer2.prev
+print pointer1.data
+
+\end{lstlisting}
+\section{Question 5}
+\subsection{a}
+A 2D array could be used, so that any reference, for example A[1][2], would be the meeting of player 1 and player 2
+\newpage
+\subsection{b}
+\begin{lstlisting}[mathescape=true]
+array A
+array player
+int win = 1
+if player[a] meets player[b]
+	A[a][b]=1
+	A[b][a]=1
+for i in array[a][i] do
+	if i=0 then
+		win=0
+if win=1 then
+	print(player[a],"has won")
+win=1
+for i in array[b][i] do
+	if i=0 then
+		win=0
+if win=1 then
+	print(player[b],"has won")
+win=1
+
+\end{lstlisting}
+
+
+
+
+\end{document}

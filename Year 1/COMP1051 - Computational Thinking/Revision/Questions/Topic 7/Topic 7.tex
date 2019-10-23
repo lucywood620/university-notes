@@ -1,0 +1,196 @@
+\documentclass[addpoints]{exam}
+\usepackage{amssymb}
+\usepackage{listings}
+\usepackage{pxfonts}
+\usepackage{xcolor}
+\lstset{language=Python,
+	basicstyle=\ttfamily,
+	keywordstyle=\bfseries,
+	showstringspaces=false,
+	morekeywords={if, else, then, print, end, for, do, while},
+	tabsize=4,
+	mathescape=true,
+	moredelim=**[is][\color{red}]{@}{@},
+}
+
+\pagestyle{headandfoot}
+\firstpageheadrule
+\runningheadrule
+\firstpageheader{CT - Topic 7}{}{Sam Robbins}
+\runningheader{CT - Topic 7}{How can we measure how good an algorithm is?}{Sam Robbins}
+\firstpagefooter{}{}{}
+\runningfooter{}{}{}
+\renewcommand{\solutiontitle}{\noindent\textbf{Solution:}\par\noindent}
+
+
+\printanswers
+\usepackage{graphicx}
+\marksnotpoints
+\bracketedpoints
+\pointsdroppedatright
+\pointsinrightmargin
+\begin{document}
+\begin{center}
+	\underline{\huge How can we measure how good an algorithm is?}
+\end{center}
+\begin{questions}
+\question[2]Give two different resources used by an algorithm that we might measure?
+\begin{solution}[2in]
+	\begin{itemize}
+		\item Time
+		\item Memory
+	\end{itemize}
+\end{solution}
+
+\question[2]Why do we usually measure the time taken by an algorithm rather than
+the time taken by an implementation of an algorithm?
+\begin{solution}[2in]
+	\begin{itemize}
+		\item Not affected by language
+		\item Not affected by hardware
+	\end{itemize}
+\end{solution}
+
+\question[3]What are the basic general principles behind measuring the time taken
+by some algorithm, expressed using pseudo-code, on some particular
+input?
+\begin{solution}[2in]
+	It allows you to be language independent and not rely on features implemented in a specific programming language
+\end{solution}
+
+\question[2]In pseudo-code we assume that any ‘basic’ instruction takes c units of
+time to execute. What is this constant c supposed to reflect?
+\begin{solution}[2in]
+	The time to do one operation on a given processor
+\end{solution}
+
+\question[4]What is the worst-case time complexity of an algorithm? Why is it
+expressed as a function on the natural numbers? 
+\begin{solution}[2in]
+	\begin{itemize}
+		\item Can't give a fixed number as a bigger input will always take more time
+		\item The greatest amount of time that an algorithm will take for an input
+		\item How the function reacts as the input increases
+	\end{itemize}
+\end{solution}
+
+\question[2]Define precisely what we mean when we say that two functions $f(n):\mathbb{N}\rightarrow\mathbb{N}$ and $g(n):\mathbb{N}\rightarrow\mathbb{N}$ are such that $f=\mathcal{O}(g)$
+\begin{solution}[2in]
+	There exists $n_0\in \mathbb{N}$ and $k\in Q$ such that $f(n)\leqslant k\cdot g(n)$ wherever $n\geqslant n_0$
+\end{solution}
+
+\question[6]Consider the following functions:
+\begin{itemize}
+	\item $f_1(n)=345n^2-n+1$
+	\item $f_2(n)=n^4-n^2$
+	\item $f_3(n)=\frac{2^n}{1000}$
+	\item $f_4(n)=10n^2\log(n)$
+\end{itemize}
+For each pair of functions $f_i$ and $f_j$, where $i\neq j$, say whether $f_i=\mathcal{O}(f_j)$
+\begin{solution}[2in]
+	$$f_1=\mathcal{O}(f_2)$$
+	$$f_1=\mathcal{O}(f_3)$$
+	$$f_1\neq \mathcal{O}(f_4)$$
+	
+	$$f_2\neq \mathcal{O}(f_1)$$
+	$$f_2=\mathcal{O}(f_3)$$
+	$$f_2\neq\mathcal{O}(f_4)$$
+	
+	$$f_3\neq\mathcal{O}(f_1)$$
+	$$f_3\neq\mathcal{O}(f_2)$$
+	$$f_3\neq\mathcal{O}(f_4)$$
+	
+	$$f_4\neq\mathcal{O}(f_1)$$
+	$$f_4=\mathcal{O}(f_2)$$
+	$$f_4=\mathcal{O}(f_3)$$
+	
+\end{solution}
+
+
+\question[4]Suppose that you had two algorithms to solve some problem that had
+time complexities $\mathcal{O}(n^3)$ and $\mathcal{O}(n^2)$ and two computers, one of which
+was 100 times faster than the other. Suppose also that you could only
+run the slower algorithm on the fast machine and the faster algorithm
+on the slower machine. Say which configuration you would choose to
+solve your problem and why
+\begin{solution}[2in]
+	$n^3$ will overtake $n^2$ and will take longer to run. For small inputs $n^3$ might be faster, but for large values $n^2$ will be faster, even on the slower machine
+\end{solution}
+
+\question[4]
+Define precisely what we mean when we say that two functions $f(n):\mathbb{N}\rightarrow\mathbb{N}$ and $g(n):\mathbb{N}\rightarrow\mathbb{N}$ are such that $f=\Omega(g)$ What does it mean in practice if we say that any algorithm solving the sorting problem has time complexity $\Omega(n\log n)$?
+\begin{solution}[2in]
+	If there exists $n_0\in \mathbb{N}$ and $k\in Q$ such that $f(n)\geqslant k\cdot g(n)$ wherever $n\geqslant n_0$. The algorithm takes at least $n\log n$ steps
+\end{solution}
+
+\question[4]Define precisely what we mean when we say that two functions $f(n):\mathbb{N}\rightarrow\mathbb{N}$ and $g(n):\mathbb{N}\rightarrow\mathbb{N}$ are such that $f=\Theta(g)$. What does it mean in practice if we say that solving the sorting problem has time complexity $\Theta(n\log n)$
+\begin{solution}[2in]
+	$f=\mathcal{O}(g)$ and $f=\Omega(g)$\\
+	For all values of n, the time taken will scale with $n\log n$
+\end{solution}
+
+\question[5]The algorithm Bubble-sort is as follows:
+\begin{lstlisting}
+change = true
+WHILE change == true:
+change = false
+i = 0
+WHILE i < n - 1:
+IF A[i] > A[i + 1]:
+swap the numbers in A[i] and A[i + 1]
+change = true
+i = i + 1
+output A
+\end{lstlisting}
+What is the time complexity of bubble-sort? (you should explain your answer)
+\begin{solution}[2in]
+	\begin{itemize}
+		\item The inner while loop will loop n-1 times
+		\item The outer loop will loop n-1 times before no swaps happen
+		\item $\mathcal{O}((n-1)n+n)=\mathcal{O}(n^2)$
+		\item Best case $\Omega(n)$
+	\end{itemize}
+\end{solution}
+
+\question[6]The algorithm Selection-sort is as follows:
+\begin{lstlisting}
+pass = 0
+WHILE pass < n - 1:
+x = A[pass]
+i = pass + 1
+WHILE i $\leqslant$ n - 1:
+IF A[i] < x:
+swap x and A[i]
+i = i + 1
+A[pass] = x
+pass = pass + 1
+output A
+\end{lstlisting}
+What is the time complexity of Selection-sort? (You should explain your answer)
+\begin{solution}[2in]
+	\begin{itemize}
+		\item Assuming all instructions take constant time
+		\item The dominating loop is n-1 of the outer while loop
+		\item The inner while loop runs n-1 times
+		\item So the complexity is $(n-1)(n-1)+n$ which is $\mathcal{O}(n^2)$
+	\end{itemize}
+\end{solution}
+
+\question[2]Briefly explain the primary focus of the research area known as algorithm engineering.
+\begin{solution}[2in]
+	Want fast or memory efficient algorithms, depending on the available resources
+\end{solution}
+
+
+
+\end{questions}
+
+	
+	
+	
+	
+\end{document}
+
+
+
+

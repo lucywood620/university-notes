@@ -8,16 +8,165 @@
 \underline{\huge A* Search}
 \end{center}
 \section{A* Search Completeness}
-\textbf{Theorem 1}
+\textbf{Theorem 1}:\\
 If
 \begin{itemize}
 	\item There is a fixed $\epsilon>0$ such that all step costs exceed $\epsilon$
 	\item The branching factor is bounded by b
 \end{itemize}
-Then A* search is complete (terminates having found a goal-node if there is one)
-
-
-
-
-
+Then A* search is complete (terminates having found a goal-node if there is one)\\
+\\
+\textbf{Proof}:\\
+Suppose that there is a goal-node but A* search doesn't find it
+\begin{itemize}
+	\item So, A* search does not terminate having found a goal-node
+	\item So, A* search terminates without finding a goal-node or A* does not terminate
+\end{itemize}
+Case (a): suppose A* search terminates without finding a goal-node (which exists by assumption)
+\begin{itemize}
+	\item So, the search tree is finite and every goal has been expanded
+	\item So, some goal-node must have been on the fringe so that it has minimal f-value at some point
+\end{itemize}
+Case (b): suppose A* search does not terminate
+\begin{itemize}
+	\item some nodes are expanded - having been on the fringe
+	\item some nodes might be placed on the fringe but not expanded
+	\item some nodes might never be placed on the fringe, so they are not expanded
+\end{itemize}
+In particular, every goal-node is
+\begin{itemize}
+	\item either never placed on the fringe, or
+	\item is placed on the fringe but remains there throughout - it can't be a node of minimal f value from amongst the fringe nodes
+\end{itemize}
+Let's pause the main proof for a moment and prove a useful lemma\\
+\\
+Lemma 2: Let $\delta>0$ be any chosen value. There are only finitely many nodes of the search tree with f-value at most $\delta$\\
+\\
+Proof: 
+\begin{itemize}
+	\item Let z be any node in the search tree, of depth d, say
+	\item The cost $g(z)$ of the path from root to z is no less that $d_\epsilon$ (every step cost is at least $\epsilon$, by assumption)
+	\item Hence, $f(z)=g(z)+h(z)\geqslant d_\epsilon + h(z) \geqslant d_\epsilon$
+	\item If $f(z)\leqslant \delta$, then $d_\epsilon \leqslant \delta$; that is, $d\leqslant \delta \backslash \epsilon$
+	\item So, all nodes z for which $f(z)\leqslant \delta$ have depth at most $\delta \backslash \epsilon$
+	\item But as the branching factor is bounded by b, there are finitely many nodes of depth $\delta \backslash \epsilon$ and so also f-value at most $\delta$
+\end{itemize}
+Recall we are in case (b)
+\begin{itemize}
+	\item Suppose A* search does not terminate
+\end{itemize}
+Suppose there is a non-goal-node z that is not expanded where the search tree path p from z to the root doesn't contain a goal-node
+\begin{itemize}
+	\item We may assume that all nodes on p from the root to z are expanded. If not then just take z to be the closest node to the root on this path p that is not expanded (z must be a non-goal-node as no goal-node lies on the path p)
+\end{itemize}
+As the parent of p is expanded, z appears on the fringe at some point\\
+As z is not expanded
+\begin{itemize}
+	\item When z is placed on the fringe, it does not have minimal f-value from amongst the fringe nodes and is such thereafter
+\end{itemize}
+By lemma 2, there are finitely many search tree nodes with f-value at most f(z)
+\begin{itemize}
+	\item So, at some point z will have minimal f-value from amongst the fringe nodes and so be expanded
+\end{itemize}
+Hence, every non-goal-node z where path from the root to z does not contain a goal-node is necessarily expanded\\
+\\
+\\
+Let w be a goal-node so that the path from the root to w contains only non-goal-nodes\\
+By above, every node of this path is expanded, so at some point w will appear on the fringe\\
+But by lemma 2 with the value f(w)
+\begin{itemize}
+	\item There are finitely many search tree nodes with f-value at most f(w)
+	\item So, at some point w will have minimal f-value from amongst the fringe nodes
+\end{itemize}
+So the A* search algorithm terminates\\
+\\
+So, neither case(a) or case(b) holds
+\begin{itemize}
+	\item Which means our very first assumption "Suppose that there is a goal-node but A* search doesn't find it" does not hold
+\end{itemize}
+Hence, if there is a goal-node then A* search will find it, assuming a bounded branching factor and a lower bound on step-costs
+\section{A* search optimality}
+\begin{defin}[Admissible heuristic]
+The value $h(z)$ of any node z in the search tree is always at most the cost of a minimal cost path from z to a goal-node
+\end{defin}
+In "geographic" problems, not that the straight-line distance between two locations is an admissible heuristic\\
+\\
+\textbf{Theorem 3}:\\
+If the heuristic function h is admissible and A* search terminates through finding a goal-node then we always obtain an optimal solution\\
+\\
+\textbf{Proof}\\
+Suppose that A* search terminates because a goal-node w appears on the fringe with minimal f-value
+\begin{itemize}
+	\item but where the value f(w) is strictly greater than the cost c* of an optimal path to some goal-node
+\end{itemize}
+In particular, at termination every other fringe node z is such that $f(z)\geqslant f(w)$\\
+Also at termination, at least one node on the fringe, call it z*, is on an optimal path in the search tree to some "optimal" goal-node W*
+\begin{itemize}
+	\item So we have $f(w*)=g(w*)+h(w*)=g(w*)=c*$
+\end{itemize}
+Note that no goal-node appears "above" the fringe\\
+\\
+The optimal path in the search tree from the root to w* is formed by
+\begin{itemize}
+	\item a path from the root to z* of cost g(z*)
+	\item followed by a path from z* to w* of cost c, say. So c*=g(z*)+c
+\end{itemize}
+As our heuristic is admissible
+\begin{itemize}
+	\item h(z*)$\leqslant$ c\\
+	and so
+	\item $f(z*)=g(z*)+h(z*)\leqslant g(z) +c =c*$
+\end{itemize}
+But at termination
+\begin{itemize}
+	\item w was a node of minimal f-value on the fringe, with $f(w)>c*$
+	\item z* was on the fringe with $f(z*)\leqslant c*$
+\end{itemize}
+Hence, if A* search terminates through finding a goal-node then we always obtain an optimal solution - assuming that h is admissible
+\section{A* search optimally efficient}
+Not only is A* search complete and optimal (under our reasonable conditions) but A* search can be forced to be optimally efficient
+\begin{itemize}
+	\item Every complete and optimal "search-tree-path-extended-from-root" algorithm necessarily expands all nodes whose f-value is less than the optimal path-cost c* (plus maybe some of f-value c*)
+	\begin{itemize}
+		\item i.e., the nodes expanded by A* search (plus maybe some of f-value c*)
+	\end{itemize}
+\end{itemize}
+A heuristic function h is a \textbf{consistent} heuristic if:
+\begin{itemize}
+	\item for every node z in the search tree and for every child node z' of z
+	\begin{itemize}
+		\item the step-cost c of the transition from z to z' is such that $h(z)\leqslant c+h(z')$
+	\end{itemize}
+\end{itemize}
+\textbf{Theorem 4}:\\
+If:
+\begin{itemize}
+	\item h is consistent
+	\item there is a fixed $\epsilon >0$ such that all step-costs exceed $\epsilon$
+	\item the branching factor is bounded by b
+\end{itemize}
+Then A* search is optimally efficient
+\section{Practical limitations of A* search}
+Whilst out A* search is complete, optimal and optimally efficient, it turns out that in practice there are still exponentially-many (in the depth of an optimal goal-node) nodes under the potential expansion in many fringes\\
+\\
+The potentially exponential sizes of fringes, allied with the fact that all fringe nodes must be stored in memory, means that A* search is memory-demanding\\
+\\
+The error in the heuristic function has a significant impact on A* search
+\begin{itemize}
+	\item Unless the error in the heuristic function h is such that
+	$$|h(z)-h*(z)|=\mathcal{O}(\log(h*(z)))$$
+	where $h*(z)$ is the true optimal cost of getting from node z to a goal-node
+	\begin{itemize}
+		\item there can be an exponential number of nodes for potential expansion
+	\end{itemize}
+\end{itemize}
+We can use DFS+iterative deepening to "implement" A* search as IDA*
+\begin{itemize}
+	\item do a DFS but so that no node with f-value above some threshold is expanded
+	\item if no goal-node is found then increase the threshold and repeat
+	\begin{itemize}
+		\item otherwise, if a goal-node z is found then set the threshold to f(z), repeat a DFS, and return the goal-node found with minimal f-value
+	\end{itemize}
+\end{itemize}
+IDA* is complete and optimal under the conditions of Theorem 4
 \end{document}

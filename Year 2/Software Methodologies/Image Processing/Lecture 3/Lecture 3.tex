@@ -29,13 +29,20 @@ Evaluation methodology: perceived quality of results\\
 \\
 Common poor image characteristics: poor lighting and noise
 \section{Dynamic range}
-The \textbf{range of a sensor} is the set of all possible intensity values of the images it captures\\
-\\
-A good image should utilise the full (or most of the) sensor's range\\
-\\
-Dynamic range of a sensor, display or image, is the largest (possible) signal value divided by the smallest (possible) signal value\\
-\\
+\begin{defin}[Range of a sensor]
+The set of all possible intensity values of the images it captures
+\end{defin}
+A good image should utilise the full (or most of the) sensor's range
+\begin{defin}[Dynamic range of a sensor]
+The largest (possible) signal value divided by the smallest (possible) signal value
+\end{defin}
 Increasing the dynamic range improves contrast
+\section{Conventions}
+Pixels can either be represented as:
+\begin{itemize}
+	\item Floats from 0 to 1
+	\item Integers from 0 to 255
+\end{itemize}
 \section{Logarithmic transform}
 The logarithmic transform replaces each pixel value with its logarithm
 \[
@@ -46,7 +53,6 @@ In practice, we control the range using the function:
 I_{\text {output}}(i, j)=c \cdot \log \left[1+\left(e^{\sigma}-1\right) I_{\text {input}}(i, j)\right]
 \]
 with scaling parameters $\sigma$ and c
-\section{Logarithmic transform}
 $\sigma$ controls the range of values onto which the logarithmic function is applied\\
 \\
 c normalises the output to the range [0,255]. That is,

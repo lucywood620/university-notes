@@ -9,7 +9,7 @@
 \hypersetup{colorlinks,linkcolor=,urlcolor=blue}
 \usetikzlibrary{shapes.misc}
 \usetikzlibrary{shapes.geometric, arrows, positioning}
-
+\usepackage{minted}
 \title{Systems Programming --- Lecture 3:\\
 Data types, \texttt{struct}s and \texttt{union}s}
 \author{Dr Konrad Dabrowski\\
@@ -78,14 +78,14 @@ Data types, \texttt{struct}s and \texttt{union}s}
 
 
 \section{Recap -- Conditional compilation for debugging}
-\begin{Verbatim}
+\begin{minted}{c}
 #define MY_DEBUG // define an identifier
 
 #ifdef MY_DEBUG
 	assert( i > 0 );
 	printf( "i is  %d  \n",  i );
 #endif
-\end{Verbatim}
+\end{minted}
 
 \begin{itemize}
 \item This allows the inclusion of your debugging code only when \verb!MY_DEBUG! is defined
@@ -103,38 +103,42 @@ Data types, \texttt{struct}s and \texttt{union}s}
 \verb!#define! \emph{identifier}\verb!(! $x_1$ \verb!,! $x_2$ \verb!,! \ldots \verb!,! $x_n$ \verb!)! \emph{replacement-list}
 \begin{itemize}
 \item $x_1$ \verb!,! $x_2$ \verb!,! \ldots \verb!,! $x_n$ are the macro's parameters
-\item e.g. \verb!#define ADD(a,b) a+b!
+\item e.g. \mintinline{c}{#define ADD(a,b) a+b}
 \item The parameters may appear as many times as desired in the replacement list
 \item N.B. There must be no space between the macro name and the left parenthesis
 \item If space is left, the pre-processor will treat \verb!(!$x_1$ \verb!,! $x_2$ \verb!,! \ldots \verb!,! $x_n$\verb!)!  as part of the replacement list
 \end{itemize}
 
 
+Compact if statement
+\begin{minted}{c}
+a?b:c
+\end{minted}
+If a then b, if not then c
 
-\section{Parameterised macro definitions}
 \begin{itemize}
 \item Examples of parameterized macros:
-\begin{Verbatim}
+\begin{minted}{c}
 	#define MAX(x,y)   ((x)>(y)?(x):(y))
 	#define IS_EVEN(n) ((n)%2==0)
-\end{Verbatim}
+\end{minted}
 
 \item Invocations of these macros:
-\begin{Verbatim}
+\begin{minted}{c}
 	i = MAX(j+k, m-n);
 	if (IS_EVEN(i)) i++;
-\end{Verbatim}
+\end{minted}
 
 \item The same lines after macro replacement:
-\begin{Verbatim}
+\begin{minted}{c}
 	i = ((j+k)>(m-n)?(j+k):(m-n));
 	if (((i)%2==0)) i++;
-\end{Verbatim}
+\end{minted}
 \end{itemize}
 
 
 
-\section{Parameterised macro definitions}
+
 \begin{itemize}
 \item Using a parameterized macro instead of a true function has a couple of advantages:
 
@@ -144,9 +148,6 @@ Data types, \texttt{struct}s and \texttt{union}s}
 \end{itemize}
 \end{itemize}
 
-
-
-\section{Parameterised macro definitions}
 \begin{itemize}
 \item Potential disadvantages:
 \begin{itemize}
@@ -155,6 +156,10 @@ When a C function is called, the compiler checks each argument to see if it has 
 \item They work as direct substitutions in your code. \emph{Always use brackets to fullest extent possible}
 \begin{itemize}
 \item e.g. \verb!#define DOUBLE(x) 2*x!  might not do what you expect. Why not?
+\begin{itemize}
+	\item \mintinline{c}{DOUBLE(a+b)} would become \mintinline{c}{2*a+b}
+	\item Use double brackets around x
+\end{itemize}
 \end{itemize}
 \end{itemize}
 \end{itemize}
@@ -189,74 +194,57 @@ When a C function is called, the compiler checks each argument to see if it has 
 \end{itemize}
 
 
-
-\section{Recap (Lecture 2) -- Iteration statements}
-C provides three iteration statements:
+\section{Functions in C}
+\subsection{Declaration}
 \begin{itemize}
-\item The \verb!while! statement is used for loops whose controlling expression is tested before the loop body is executed
-\begin{verbatim}
-while (a > 100) {...}
-\end{verbatim}
-\item The \verb!do! statement is used if the expression is tested after the loop body is executed
-\begin{verbatim}
-do {...} while (a > 100);
-\end{verbatim}
-\item The \verb!for! statement is convenient for loops that increment or decrement a counting variable
-\begin{verbatim}
-for (a = 199; a > 100; a = a - 1) {...}
-\end{verbatim}
-\item If the expression is true (has a non-zero value), the loop continues to execute
-\end{itemize}
-
-
-
-\section{Functions in C -- declaration}
-\begin{itemize}
-\item Functions encapsulate code in a convenient way
+\item Functions encapsulate code conveniently 
 \item Analogous to methods in an O-O language
 
 \item Functions can be \emph{declared} before they are defined, as a function declaration:
 
-\begin{verbatim}
+\begin{minted}{c}
   return-type function-name ( parameters );
-\end{verbatim}
+\end{minted}
 
 \item e.g. to calculate  \verb!base! raised to the power \verb!n! 
 
-\begin{verbatim}
-  int power( int base, int n );
-\end{verbatim}
+\begin{minted}{c}
+int power( int base, int n );
+\end{minted}
+\begin{minted}{c}
+void foo();
+\end{minted}
 
 \item Often we put these in a header file (\verb!.h!)
 \end{itemize}
 
 
 
-\section{Functions in C - definition}
+\subsection{Definition}
 \begin{itemize}
 \item Functions can be defined anywhere in a program file, if the declaration precedes use of the function
 
-\begin{verbatim}
+\begin{minted}{c}
   int power( int base, int n ) {
     int p;
     for ( p = 1; n > 0; n-- )
       p = p * base;
     return p;
   }
-\end{verbatim}
+\end{minted}
 \end{itemize}
 
 
 
 
 
-\section{Functions in C -- call by value}
+\subsection{Call by value}
 \begin{itemize}
 \item Function parameters in C are passed using a call by value semantic
 
-\begin{verbatim}
+\begin{minted}{c}
   result = power(x, y);
-\end{verbatim}
+\end{minted}
 
 \item Here when \verb!x! and \verb!y! are passed through to \verb!power()!, the values of \verb!x! \& \verb!y! are copied to the \verb!base! and \verb!n! variables in the function
 
@@ -267,7 +255,7 @@ for (a = 199; a > 100; a = a - 1) {...}
 
 
 \section{What are \texttt{x} and \texttt{y}?}
-\begin{verbatim}
+\begin{minted}{c}
 #include <stdio.h>
 void swap(int a, int b);
 
@@ -283,53 +271,41 @@ void swap(int a, int b) {
   a = b;
   b = temp;
 }
-\end{verbatim}
+\end{minted}
+x=8, y=44 as it has passed by value
 
 
 
 \section{What does this code output?}
-\begin{verbatim}
+\begin{minted}{c}
 #include<stdio.h>
 #define TRIPLE(a) 3*a
 int main()
 {
   int x=1;
   int y=0, z=0;
-  printf("%d\n",TRIPLE(y+x));
+  printf("%d\n",TRIPLE(y+x)); //print 1
   x *= 1 + 2;
-  printf("%d\n",x);
+  printf("%d\n",x); //print 3
   x = y == z;
-  printf("%d\n",x);
+  printf("%d\n",x); //print 1
   x += y = z = 4;
-  printf("%d\n",x);
+  printf("%d\n",x); //print 5
   return 0;
 }
-\end{verbatim}
-
-
-
-\section{Course details}
-\begin{itemize}
-\item Intro, HelloWorld, Compiling, Pre-processor
-\item Control flow and functions
-\item Data types, structs and unions
-\item Memory access using pointers
-\item Dynamic memory management
-\item Scope of variables and recursive functions
-\item Large programs and external libraries
-\item Debugging
-\item UNIX/Linux and C
-\item C++
-\end{itemize}
-
-
+\end{minted}
 
 \section{Variables}
-\begin{itemize}
-\item Variables and constants are the basic data objects manipulated by a program
-\item \emph{Declarations:} declare the variables used, their type and possibly initial value also
-\item \emph{Expressions:} combine variables and constants to form new values
-\end{itemize}
+\begin{defin}[Variables and constants]
+The basic data objects manipulated by a program	
+\end{defin}
+\begin{defin}[Declarations]
+Declare the variables used, their type and possibly initial value also
+\end{defin}
+\begin{defin}[Expressions]
+Combine variables and constants to form new values
+\end{defin}
+
 
 
 
@@ -345,7 +321,7 @@ int main()
 \item \verb!long long!: an integer type, represents very large whole numbers (C99 onwards)
 \item \verb!float!: single precision floating point number
 \item \verb!double!: double precision floating point number
-\item \verb!long double!: extended precision floating point number
+\item \verb!long double!: extended precision floating point number (whatever the CPU has to handle doubles)
 \item a few others 
 \end{itemize}
 
@@ -385,12 +361,12 @@ int main()
 \verb!unsigned char! & 8 bits (1 byte) integer\\
 & [0,255]\\
 \end{tabular}
+\item By default integers will be signed, char varies between computers
 \item the files \verb!<limits.h>! and \verb!<float.h>! specify what limits apply on a given system
 \item they are system and architecture dependent
 \end{itemize}
-
-
-
+\section{Overflow}
+Anything crazy can happen when you overflow or underflow, so don't do it
 \section{Constants}
 \begin{tabular}{ll}
 \verb!1234! & \verb!int! constant\\
@@ -403,10 +379,10 @@ int main()
 \verb!037! & octal (base 8) constant = decimal \verb!31!\\
 \verb!0x1F! & hexadecimal constant (base 16) = \verb!31! decimal
 \end{tabular}
+% He got up to here
 
 
-
-\section{Character constants}
+\subsection{Character constants}
 \begin{itemize}
 \item These are integer values that are written as a character in single quotes
 \item e.g. \verb!'0'! = \verb!48! in the ASCII  character set
@@ -420,34 +396,34 @@ int main()
 \end{tabular}
 
 \item Example:
-\begin{verbatim}
+\begin{minted}{c}
 #define BELL '\a'
-\end{verbatim}
+\end{minted}
 
 \item On UNIX, you can run the \verb!man ascii! command for more information. (Press \verb!q! to exit.)
 \end{itemize}
 
 
 
-\section{String constants}
+\subsection{String constants}
 \begin{itemize}
 \item These are zero or more characters in double quotes
 \item Technically this is an array of chars \emph{and} it has a \verb!NULL! character at the end of the string \verb!'\0'!
-\begin{verbatim}
+\begin{minted}{c}
 char a[]="Hello";
 char a[]={'H','e','l','l','o','\0'};
-\end{verbatim}
+\end{minted}
 \item This means that:
 \verb!'x'! is not the same as \verb!"x"! (i.e. \verb!{'x','\0'}!)
 
-\begin{verbatim}
+\begin{minted}{c}
 #include<string.h>
 char a[]="x";
 char b='x';
 strlen(a) = 1 // returns number of characters
 sizeof(b) = 1 // returns number of bytes
 sizeof(a) = 2
-\end{verbatim}
+\end{minted}
 \end{itemize}
 
 
@@ -459,16 +435,13 @@ sizeof(a) = 2
 \item A variable that stores the suit of a playing card should have only four potential values: ``clubs'', ``diamonds'', ``hearts'', and ``spades''
 \end{itemize}
 
-
-
-\section{Enumerations}
 \begin{itemize}
 \item A ``suit'' variable can be declared as an integer, with a set of codes that represent the possible values of the variable:
-\begin{verbatim}
+\begin{minted}{c}
 int s; /* s will store a suit */
 ...
 s = 2; /* 2 represents "hearts" */
-\end{verbatim}
+\end{minted}
 
 \item Problems with this technique:
 \begin{itemize}
@@ -476,31 +449,23 @@ s = 2; /* 2 represents "hearts" */
 \item The significance of \verb!2! isn't apparent
 \end{itemize}
 \end{itemize}
-
-
-
-\section{Enumerations}
 \begin{itemize}
 \item Using macros to define a suit ``type'' and names for the various suits is a step in the right direction:
-\begin{verbatim}
+\begin{minted}{c}
 #define SUIT     int
 #define CLUBS    0
 #define DIAMONDS 1
 #define HEARTS   2
 #define SPADES   3
-\end{verbatim}
+\end{minted}
 
 \item An updated version of the previous example:
-\begin{verbatim}
+\begin{minted}{c}
 SUIT s;
 ...
 s = HEARTS;
-\end{verbatim}
+\end{minted}
 \end{itemize}
-
-
-
-\section{Enumerations}
 \begin{itemize}
 \item Problems with this technique:
 \begin{itemize}
@@ -511,10 +476,6 @@ s = HEARTS;
 \item The names \verb!CLUBS!, \verb!DIAMONDS!, \verb!HEARTS! and \verb!SPADES! will be removed by the preprocessor, so they won't be available during debugging
 \end{itemize}
 \end{itemize}
-
-
-
-\section{Enumerations}
 \begin{itemize}
 \item C provides a special kind of type designed specifically for variables that have a small number of possible values
 
@@ -523,22 +484,17 @@ s = HEARTS;
 \item Each value must have a name (an enumeration constant)
 \end{itemize}
 
-
-
-\section{Enumerations}
 \begin{itemize}
 \item Enumerations are declared like this:
-\begin{verbatim}
+\begin{minted}{c}
 enum {CLUBS, DIAMONDS, HEARTS, SPADES} s1, s2;
-\end{verbatim}
+\end{minted}
 \item The names of the constants must  be different from other identifiers declared in the enclosing scope
 \item Enumeration constants are similar to \verb!#define! constants directive, but not equivalent
 \item If an enumeration is declared inside a function, its constants won't be visible outside the function
 \end{itemize}
 
 
-
-\section{Enumerations}
 \begin{itemize}
 \item Behind the scenes, C treats enumeration variables and constants as integers
 
@@ -547,37 +503,35 @@ enum {CLUBS, DIAMONDS, HEARTS, SPADES} s1, s2;
 \item In the suit enumeration, \verb!CLUBS!, \verb!DIAMONDS!, \verb!HEARTS! and \verb!SPADES! represent \verb!0!, \verb!1!, \verb!2! and \verb!3!, respectively
 \end{itemize}
 
-
-
-\section{Enumerations as Integers}
+\subsection{Enumerations as Integers}
 \begin{itemize}
 \item The programmer can choose different values for enumeration constants:
-\begin{verbatim}
+\begin{minted}{c}
 enum suit {CLUBS = 1, DIAMONDS = 2, HEARTS = 3,
   SPADES = 4};
-\end{verbatim}
+\end{minted}
 
 \item The values of enumeration constants may be arbitrary integers, listed in no particular order:
-\begin{verbatim}
+\begin{minted}{c}
 enum dept {RESEARCH = 20, PRODUCTION = 10,
   SALES = 25};
-\end{verbatim}
+\end{minted}
 
 \item It's even legal for two or more enumeration constants to have the same value
 \end{itemize}
 
 
 
-\section{Enumerations as Integers}
+
 \begin{itemize}
 \item When no value is specified for an enumeration constant, its value is one greater than the value of the previous constant
 \item The first enumeration constant has the value \verb!0! by default
 
 \item Example:
-\begin{verbatim}
+\begin{minted}{c}
 enum EGA_colors {BLACK, LT_GRAY = 7, DK_GRAY,
   WHITE = 15};
-\end{verbatim}
+\end{minted}
 \item \verb!BLACK! has the value \verb!0!, \verb!LT_GRAY! is \verb!7!, \verb!DK_GRAY! is \verb!8! and \verb!WHITE! is \verb!15!
 \end{itemize}
 
@@ -603,12 +557,12 @@ enum EGA_colors {BLACK, LT_GRAY = 7, DK_GRAY,
 
 \item Declares template for a point
 
-\begin{verbatim}
+\begin{minted}{c}
 struct point {
   int x;
   int y;
 };
-\end{verbatim}
+\end{minted}
 
 \item With members \verb!x! and \verb!y!
 \end{itemize}
@@ -616,40 +570,40 @@ struct point {
 
 
 \section{Structures}
-\begin{verbatim}
+\begin{minted}{c}
 struct point {
   int x;
   int y;
 };
-\end{verbatim}
+\end{minted}
 
 \begin{itemize}
 \item Create an instance of the point data structure:
-\begin{verbatim}
+\begin{minted}{c}
 struct point a_point;
-\end{verbatim}
+\end{minted}
 
 \item Initialise a \verb!struct!:
-\begin{verbatim}
+\begin{minted}{c}
 struct point a_point = {5, 6};
-\end{verbatim}
+\end{minted}
 
 \item Access to variable members of the structure:
-\begin{verbatim}
+\begin{minted}{c}
 a_point.x = 4;
 a_point.y = 3;
-\end{verbatim}
+\end{minted}
 \end{itemize}
 
 
 
 \section{Structure and scope}
-\begin{verbatim}
+\begin{minted}{c}
 struct point {
   int x;
   int y;
 };
-\end{verbatim}
+\end{minted}
 
 \begin{itemize}
 \item Each structure represents a new scope
@@ -667,9 +621,9 @@ struct point {
 \item It takes precedence over nearly all other operators
 \item Example:
 
-\begin{verbatim}
+\begin{minted}{c}
 z = 20*a_point.x;
-\end{verbatim}
+\end{minted}
 
 \item The \verb!.! operator takes precedence over the \verb!*! operator
 \end{itemize}
@@ -679,9 +633,9 @@ z = 20*a_point.x;
 \section{Assignment of structures}
 \begin{itemize}
 \item The other major structure operation is assignment:
-\begin{verbatim}
+\begin{minted}{c}
 point2 = point1;
-\end{verbatim}
+\end{minted}
 
 \item The effect of this statement is to copy \verb!point1.x! into \verb!point2.x!, \verb!point1.y! into \verb!point2.y! and so on
 
@@ -694,22 +648,22 @@ point2 = point1;
 \section{Nested structures}
 \begin{itemize}
 \item Declare a template for a rect(angle)
-\begin{verbatim}
+\begin{minted}{c}
 struct rect{
   struct point pt1;
   struct point pt2;
 };
-\end{verbatim}
+\end{minted}
 
 \item Create an instance of the point data structure:
-\begin{verbatim}
+\begin{minted}{c}
 struct rect a_window;
-\end{verbatim}
+\end{minted}
 
 \item Access to variable members of the structure:
-\begin{verbatim}
+\begin{minted}{c}
 a_window.pt1.x = 4;
-\end{verbatim}
+\end{minted}
 
 \item What is the \verb!sizeof(a_window)!?
 \end{itemize}
@@ -728,13 +682,13 @@ a_window.pt1.x = 4;
 
 
 
-\section{Unions -- memory use}
+\subsection{Memory use}
 \begin{itemize}
 \item The structure \verb!s! and the union \verb!u! differ in just one way
 \item The members of \verb!s! are stored at different addresses in memory
 \item The members of \verb!u! are stored at the same address
 
-\begin{verbatim}
+\begin{minted}{c}
 union {
   int i;
   double d;
@@ -744,18 +698,18 @@ struct {
   int i;
   double d;
 } s;
-\end{verbatim}
+\end{minted}
 \end{itemize}
 
 
 
-\section{Unions -- accessing members}
+\subsection{Accessing members}
 \begin{itemize}
 \item Members of a union are accessed in the same way as members of a structure:
-\begin{verbatim}
+\begin{minted}{c}
 u.i = 82;
 u.d = 74.8;
-\end{verbatim}
+\end{minted}
 \item Changing one member of a union alters any value previously stored in any of the other members
 \item Storing a value in \verb!u.d! causes any value previously stored in \verb!u.i! to be lost
 \item Changing \verb!u.i! corrupts \verb!u.d!
@@ -763,7 +717,7 @@ u.d = 74.8;
 
 
 
-\section{Unions -- properties}
+\subsection{Properties}
 \begin{itemize}
 \item The properties of unions are almost identical to the properties of structures
 
@@ -772,36 +726,36 @@ u.d = 74.8;
 
 
 
-\section{Unions -- initialisation}
+\subsection{Initialisation}
 \begin{itemize}
 \item By default, only the first member of a union can be given an initial value
 \item How to initialize the i member of u to 0:
-\begin{verbatim}
+\begin{minted}{c}
 union {
   int i;
   double d;
 } u = {0};
-\end{verbatim}
+\end{minted}
 \end{itemize}
 
 
 
-\section{Unions -- designated initialisers}
+\subsection{Designated initialisers}
 \begin{itemize}
 \item Designated initializers can also be used with unions
 \item A designated initializer allows us to specify which member of a union should be initialized:
-\begin{verbatim}
+\begin{minted}{c}
 union {
   int i;
   double d;
 } u = {.d = 10.0};
-\end{verbatim}
+\end{minted}
 \item Only one member can be initialized, but it doesn't have to be the first one
 \end{itemize}
 
 
 
-\section{Unions -- for space saving}
+\subsection{For space saving}
 \begin{itemize}
 \item Unions can be used to save space in structures
 \item Suppose that we're designing a structure that will contain information about an item that's sold through a gift catalog
@@ -813,12 +767,9 @@ Shirts: & Design, colors available, sizes available\\
 \end{tabular}
 \end{itemize}
 
-
-
-\section{Unions -- for space saving}
 \begin{itemize}
 \item A first attempt at designing the \verb!catalog_item! using \verb!struct!:
-\begin{verbatim}
+\begin{minted}{c}
 struct s_catalog_item {
   int stock_number;
   double price;
@@ -830,12 +781,12 @@ struct s_catalog_item {
   int colors;
   int sizes;
 };
-\end{verbatim}
+\end{minted}
 \end{itemize}
 
 
 
-\begin{Verbatim}
+\begin{minted}{c}
 struct u_catalog_item {
   int stock_number;
   double price;
@@ -856,14 +807,14 @@ struct u_catalog_item {
     } shirt;
   } item;
 };
-\end{Verbatim}
+\end{minted}
 
 
 
-\section{Unions -- accessing nested structure}
+\subsection{Accessing nested structure}
 \begin{itemize}
 \item This nesting of unions does make accessing the struct fields a little more complex: 
-\begin{verbatim}
+\begin{minted}{c}
 struct s_catalog_item  c; 
 
 c.title
@@ -871,7 +822,7 @@ c.title
 struct u_catalog_item c;
 
 c.item.book.title
-\end{verbatim}
+\end{minted}
 \end{itemize}
 
 
@@ -881,7 +832,7 @@ c.item.book.title
 \item Enumerations can be used to mark which member of a union was the last to be assigned
 
 \item In the number structure, we can make a kind member an enumeration instead of an \verb!int!:
-\begin{verbatim}
+\begin{minted}{c}
 struct number {
   enum {INT_KIND, DOUBLE_KIND} kind;
   union {
@@ -889,13 +840,11 @@ struct number {
     double d;
   } u;
 };
-\end{verbatim}
+\end{minted}
 \end{itemize}
 
 
-
-\section{Using Enumerations to Declare ``Tag Fields''}
-\begin{verbatim}
+\begin{minted}{c}
 struct number a_number ={INT_KIND, {10}};
 
 if (a_number.kind == INT_KIND)
@@ -908,19 +857,19 @@ a_number.u.d = 150.03;
 if (a_number.kind == DOUBLE_KIND)
   printf("a_number is %d value %6.3f \n", 
      a_number.kind, a_number.u.d );
-\end{verbatim}
+\end{minted}
 
 
 
 \section{Creating new types}
 \begin{itemize}
 \item \verb!typedef! can be used to assign names to types
-\begin{verbatim}
+\begin{minted}{c}
 typedef unsigned char byte;
 byte b1 = 12;
-\end{verbatim}
+\end{minted}
 \item You can use this with \verb!struct!s and \verb!union!s too
-\begin{verbatim}
+\begin{minted}{c}
 typedef struct coords {
   int x;
   int y;
@@ -932,7 +881,7 @@ typedef union id_thing {
   double d;
 } number;
 number n = {.d =10.0};
-\end{verbatim}
+\end{minted}
 \end{itemize}
 
 

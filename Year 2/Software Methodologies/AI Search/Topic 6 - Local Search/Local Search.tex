@@ -1,0 +1,193 @@
+\documentclass{article}[18pt]
+\usepackage{../../../../format}
+\lhead{Software Methodologies - AI Search}
+\lstset{language=C,
+	basicstyle=\ttfamily,
+	keywordstyle=\bfseries,
+	showstringspaces=false,
+	morekeywords={if, else, then, print, end, for, do, while},
+	tabsize=4,
+	mathescape=true,
+	escapechar=£,
+	numbers=left,
+	stepnumber=1,
+}
+
+\usepackage{caption}
+\DeclareCaptionFont{white}{\color{white}}
+\DeclareCaptionFormat{listing}{\colorbox{gray}{\parbox{\textwidth}{#1#2#3}}}
+\captionsetup[lstlisting]{format=listing,labelfont=white,textfont=white}
+
+\begin{document}
+\begin{center}
+\underline{\huge Local Search}
+\end{center}
+Often in search problem the path to a goal state is of no consequence, it is the goal state itself that is the concern. For example in the 8-Queens problem it is the final configuration that is required\\
+\\
+AI search version:
+\begin{itemize}
+	\item Given a configuration of queens
+	\begin{itemize}
+		\item One in each column
+	\end{itemize}
+	\item Move each queen in its column
+	\item So that a configuration of non-attacking queens is obtained
+\end{itemize}
+Such problems are abundant in real life
+\begin{itemize}
+	\item in the scheduling of computational jobs
+	\item in facility floor layout
+	\item in automatic programming
+\end{itemize}
+If the path to a solution is of no consequence then local search algorithms
+\begin{itemize}
+	\item Using only the current state and moving only to successors of that state
+	\item Might be better employed than "global path-based" search methods
+\end{itemize}
+Local searches often have two advantages
+\begin{itemize}
+	\item They use very little memory - having only to remember the current state
+	\item They often give reasonable solutions in very large state spaced - where more systematic search algorithms are unsuitable
+\end{itemize}
+\begin{defin}["Local state-based" search problem]
+Consists of:
+\begin{itemize}
+	\item State space
+	\begin{itemize}
+		\item States; state-to-state transitions; initial state
+	\end{itemize}
+	\item Objective function f
+\end{itemize}
+\end{defin}
+Local search algorithms are useful for solving optimisation problems
+\begin{itemize}
+	\item Aim is to find an optimal state according to some objective function defined on the states
+\end{itemize}
+A local search algorithm is optimal if:
+\begin{itemize}
+	\item Whenever it finds a solution then it is a global minimum/maximum
+\end{itemize}
+\section{Hill-climbing search}
+Hill climbing:
+\begin{itemize}
+	\item Iteratively move to a better successor state
+	\begin{itemize}
+		\item i.e., a successor state whose (objective function) f-value is higher until no such successor state exists when the algorithm terminates
+	\end{itemize}
+\end{itemize}
+\begin{lstlisting}[caption=Hill-climbing]
+current=initial state
+loop do
+	successor=sucessor of current with highest f-value
+	if fsuccessor $\leqslant$ f(current) then return current
+	else current = successor
+\end{lstlisting}
+Notes:
+\begin{itemize}
+	\item Hill-climbing doesn't look beyond the immediate neighbourhood
+	\item Can get stuck in maxima/minima
+\end{itemize}
+\section{Hill-climbing with the 8-Queens Problem}
+Local search algorithms include global information within the state\\
+\\
+For the 8-Queens Problem this amounts to each state being a description of exactly where each queen is currently located
+\begin{itemize}
+	\item The transition function details all states obtained by moving a single queen to another square within the same column
+	\begin{itemize}
+		\item so each state has $8\times 7=56$ successors
+	\end{itemize}
+	\item The objective function f(to be minimized) is the number of pairs of queens that are mutually attacking each other
+\end{itemize}
+\section{Exiting local maxima/minima - simulated annealing}
+Essential to this algorithm is a schedule which dictates the "rate of cooling"
+\begin{itemize}
+	\item the schedule is a list which details the temperature at any given time
+\end{itemize}
+The algorithm iteratively performs a local search from the current state X until the temperature drops to 0 at which point the algorithm halts\\
+\\
+A potential successor state Y in an interaction is chosen at random
+\begin{itemize}
+	\item if $\Delta E=f(Y)-f(X)\geqslant 0$ then Y becomes the current state (f is the objective function that we are trying to maximise)
+\end{itemize}
+However
+\begin{itemize}
+	\item If $\Delta E<0$ then there is a chance that the successor state Y might still be chosen to become the current state (enables us to get out of local maxima)
+\end{itemize}
+\section{Simulated Annealing}
+The probability that Y becomes the current state depends on
+\begin{itemize}
+	\item T - the current temperature
+	\item $\Delta E$ - the difference between the two objective values
+\end{itemize}
+In essence
+\begin{itemize}
+	\item The "cooler" the temperature T, the less likely it is that Y is chosen
+	\item The smaller the different $\Delta E$, the less likely it is that Y is chosen
+	\begin{itemize}
+		\item Note that $\Delta E$ is negative, so what we are saying is the worse the value f(Y) in comparison to f(X) the less likely that Y is chosen
+	\end{itemize}
+\end{itemize}
+These intuitive directions are encapsulated in the probability function
+$$e^{\Delta E/T}=1/e^{|\Delta E|/T}$$
+A commonly used "cooling schedule"
+\begin{itemize}
+	\item schedule[1] is user defined and schedule[t]=schedule[t-1]/$\beta$ where $\beta$ is user-defined
+\end{itemize}
+\begin{lstlisting}[caption=Simulated-annealing]
+current=initial state
+for t=1 to $\infty$ do
+	T[schedule[t]
+	if T$\leqslant \epsilon$ then
+		return current
+	else
+		choose a successor state succ of current at random
+		$\Delta$E=f(succ)-f(current)
+		if $\Delta R\geqslant 0$ then
+			current=succ
+		else
+			current=succ only with probability $e^{\Delta E/T}$
+\end{lstlisting}
+\section{Genetic algorithms}
+A genetic algorithm to solve a ("state-based search") problem
+\begin{itemize}
+	\item starts with a randomly generated population of individuals, each with individual
+	\begin{itemize}
+		\item ordinarily represented as a string of symbols
+		\item encoding a particular solution to the underlying problem
+	\end{itemize}
+\end{itemize}
+Each (potential) individual in the population is rated according to a fitness function
+\begin{itemize}
+	\item measures how "good" an individual is (as a solution to the underlying problem)
+\end{itemize}
+In the 8-Queens Problem, for example
+\begin{itemize}
+	\item an individual might represent a configuration of queens and be a string of digits from \{1,2,...,8\} of length 8
+	\begin{itemize}
+		\item the first digit details the location of the first queen in the first queen in the first column, the second the location of the second queen in the second column, etc.
+	\end{itemize}
+	\item The fitness of an individual is the number of pairs of non-attacking queens in the configuration
+\end{itemize}
+Having generated an initial population P at random
+\begin{itemize}
+	\item We iteratively generate a new population newP from the current one P until some appropriate terminating condition is met
+	\begin{itemize}
+		\item e.g., an individual in the population is "fit enough" or the number of iterations has hit some bound
+	\end{itemize}
+\end{itemize}
+Each iteration consists of the following process repeated |P| times
+\begin{itemize}
+	\item randomly select two individuals X and Y from the current population P
+	\begin{itemize}
+		\item so that "fitter" individuals are more likely to be selected
+	\end{itemize}
+	\item from X and Y, reproduce a child Z
+	\item with a small probability mutate the child Z
+	\begin{itemize}
+		\item by e.g. replacing one randomly-chosen symbol in the string with some randomly-chosen symbol
+	\end{itemize}
+	\item Add the child Z to the new population newP
+	\item So, after this iteration, we have that |newP|=|P|
+	\item The current population P is now replaced with the new population newP and the next iteration begins
+\end{itemize}
+\end{document}

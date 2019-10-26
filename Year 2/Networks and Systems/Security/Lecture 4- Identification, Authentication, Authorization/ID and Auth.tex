@@ -16,15 +16,18 @@ Access to the resources:
 	\item Grant access
 \end{itemize}
 \section{Identification}
-\textbf{Subject} - An active entity within a system (physical person, script, etc)\\
-\textbf{Principal} - An entity that can be granted access (represented by a username, userid, pin etc)\\
-\\
+\begin{defin}[Subject]
+An active entity within a system (physical person, script, etc)	
+\end{defin}
+\begin{defin}[Principal]
+An entity that can be granted access (represented by a username, userid, pin etc
+\end{defin}
 The subject identifies itself to the system as a principal
 \section{Authentication}
-The system verifies the identity of the user\\
-\\
-\textbf{Object} - Resource that some principals may access or use\\
-\\
+The system verifies the identity of the user
+\begin{defin}[Object]
+Resource that some principals may access or use
+\end{defin}
 The system checks that the principal has the permissions to access an object
 \section{Credentials}
 \begin{itemize}
@@ -104,5 +107,69 @@ Most common ZKPP approach: Challenge-response auth:
 	\item Client send response back to server
 	\item Server compare the response with hash(nonce+stored password)
 \end{itemize}
-
+\section{Example: EMV Payment}
+\begin{itemize}
+	\item Standard used for all credit cards
+	\item EMV standard: Initially written in 1993
+	\item Over 3600 pages of protocol specification
+	\item Requirements varies from bank to bank
+\end{itemize}
+Card authentication mechanism
+\begin{itemize}
+	\item Static data authentication (offline)
+	\item Dynamic data authentication (offline)
+	\item Combined DDA with application cryptogram generation (offline)
+	\item Cryptogram (online)
+\end{itemize}
+Multiple cardholder verification mechanism (CVM)
+\begin{itemize}
+	\item No CVM required (e.g motorway toll)
+	\item Signature (common in some countries, e.g. US)
+	\item Offline pin (no internet, pin verified by the card)
+	\item Online PIN (internet, pin verified by the bank)
+\end{itemize}
+\subsection{SDA: Static Data Authentication}
+\begin{itemize}
+	\item Offline card payment
+	\item Used by old card and terminal
+	\item Lowest common denominator
+	\item Vulnerable to skimming attack
+	\item During transaction, terminal records the static data
+	\item A cloned card is created with the same static data
+\end{itemize}
+\begin{center}
+	\includegraphics[scale=0.7]{EMV}
+\end{center}
+An attacker can get records, $sig_{BANK}[records]$ by listening to a valid transaction\\
+\\
+The the attacker can create a fake card using $sig_{BANK}[records]$ and generate an invalid MAC. For offline transaction, the merchant cannot verify the MAC anyway. By the time the merchant sends the transactions to the bank, the attacker will be long gone\\
+\\
+Problem: static password\\
+\\
+\subsection{DDA: Dynamic Data Authentication}
+Use challenge-response authentication to generate data unique to the transaction
+\begin{center}
+	\includegraphics[scale=0.7]{dd}
+\end{center}
+Card clone is not possible because sig$_{card}$[card nonce, terminal nonce] is different at every transaction.\\
+\\
+However, card answer to PIN check is not authenticated either\\
+\\
+A wedge between a stolen card and a terminal can pretend that the password is always correct
+\begin{center}
+	\includegraphics[scale=0.7]{DDA2}
+\end{center}
+\subsection{CDA: Combined DDA/Application Cryptogram Generation}
+Solution: Second card authentication step after PIN check\\
+\\
+The terminal sends a message called CVMR representing the terminal view of the operation (PIN OK, PIN Wrong, signature etc) for the card to compare with its own point of view
+\begin{center}
+	\includegraphics[scale=0.7]{CDA}
+\end{center}
+Takeaway:
+\begin{itemize}
+	\item Do not send static auth data (e.g. unencrypted passwords)
+	\item Use challenge-response to prevent replay attacks
+	\item Make sure that authentication is verified at all steps
+\end{itemize}
 \end{document}

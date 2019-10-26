@@ -1,0 +1,116 @@
+\documentclass{article}[18pt]
+\usepackage{../../../../format}
+\lhead{Theory of Computation - Algorithms and Complexity}
+\lstset{language=C,
+	basicstyle=\ttfamily,
+	keywordstyle=\bfseries,
+	showstringspaces=false,
+	morekeywords={if, else, then, print, end, for, do, while},
+	tabsize=4,
+	mathescape=true,
+	escapechar=£,
+	numbers=left,
+	stepnumber=1,
+}
+
+\usepackage{caption}
+\DeclareCaptionFont{white}{\color{white}}
+\DeclareCaptionFormat{listing}{\colorbox{gray}{\parbox{\textwidth}{#1#2#3}}}
+\captionsetup[lstlisting]{format=listing,labelfont=white,textfont=white}
+
+\begin{document}
+\begin{center}
+\underline{\huge Matrices and Strassen's Algorithm}
+\end{center}
+\section{Master Method}
+The master method depends on the master theorem\\
+\\
+Let $T(n)$ be a function on the natural numbers defined by
+$$T(n)=aT(n/b)+f(n)$$
+(Interpret $n/b$ as either $\lfloor n/b \rfloor$ or $\lceil n/b \rceil$)\\
+\\
+We will compare $f(n)$ with the function $n^{\log_ba}$\\
+\\
+Let $T(n)$ be a function on the natural numbers defined by
+$$T(n)=aT(n/b)+f(n)$$
+for some constant $a\geqslant 1$ and $b>1$
+\begin{enumerate}
+	\item If $f(n)=\mathcal{O}(n^{\log_ba-\epsilon})$ for some constant $\epsilon>0$, then $T(n)=\Theta(n^{\log_ba})$
+	\item If $f(n)=\Theta(n^{\log_ba})$ then $T(n)=\Theta(n^{\log_ba}\log n)$
+	\item If $f(n)=\Omega(n^{\log_ba+\epsilon})$ for some constant $\epsilon>0$, and if there exist constant $c<1$ and $n_0$ such that $af(n/b)\leqslant cf(n)$ for all $n\geqslant n_0$, then $T(n)=\Theta(f(n))$
+\end{enumerate}
+\section{Divide-and-conquer for matrix multiplication}
+\subsection{Multiplying two matrices}
+We are interested in the following problem:
+\begin{itemize}
+	\item Input: two square matrices $A,B \in \mathbb{R}^{n\times n}$
+	\item Output: their product $C\in \mathbb{R}^{n\times n}$
+\end{itemize}
+We can do it in time $\Theta(n^3)$ by using the definition
+\[
+c_{i j}=\sum_{k=1}^{n} a_{i k} b_{k j}
+\]
+(for simplicity, we assume n is a power of two)\\
+\\
+Partition A, B and C into four parts:
+\[
+A=\left(\begin{array}{ll}{A_{11}} & {A_{12}} \\ {A_{21}} & {A_{22}}\end{array}\right), \quad B=\left(\begin{array}{ll}{B_{11}} & {B_{12}} \\ {B_{21}} & {B_{22}}\end{array}\right), \quad C=\left(\begin{array}{ll}{C_{11}} & {C_{12}} \\ {C_{21}} & {C_{22}}\end{array}\right)
+\]
+Thus
+\[
+\begin{array}{l}{C_{11}=A_{11} B_{11}+A_{12} B_{21}} \\ {C_{12}=A_{11} B_{12}+A_{12} B_{22}} \\ {C_{21}=A_{21} B_{11}+A_{22} B_{21}} \\ {C_{22}=A_{21} B_{12}+A_{22} B_{22}}\end{array}
+\]
+\newpage
+\subsection{Pseudo-code}
+\begin{lstlisting}[caption=R-MULT({A, B})]
+let C be a new $n\times n$ matrix
+if n=1 then
+	$c_{11}\leftarrow a_{11}b+{11}$
+else
+	partition A,B and C
+	$C_{11}\leftarrow$ R-MULT($A_{11},B_{11}$)+R-MULT($A_{12},B_{21}$)
+	$C_{12}\leftarrow$ R-MULT($A_{11},B_{12}$)+R-MULT($A_{12},B_{22})$
+	$C_{21}\leftarrow$ R-MULT($A_{21},B_{11}$)+R-MULT($A_{22},B_{21})$
+	$C_{22}\leftarrow$ R-MULT($A_{21},B_{12}$)+R-MULT($A_{22},B_{22})$
+return C
+\end{lstlisting}
+\subsection{Running time of simple approach}
+The running time of the R-MULT satisfies
+$$T(N)=8T(n/2)+\Theta(n^2)$$
+Since we do 8 multiplications ($8T(n/2)$) and four additions (of time $\Theta(n^2)$ each)\\
+\\
+By the master theorem $T(n)=\Theta(n^3)$
+\section{Strassen's algorithm}
+Strassen's algorithm uses a sophisticated divide-and-conquer approach. It has four steps:
+\begin{enumerate}
+	\item Divide A, B and C into four parts as before\\
+	Running time $\Theta(1)$
+	\item Create 10 Matrices $S_1,...,S_{10}\in \mathbb{R}^{n/2\times n/2}$, obtained by sums or differences of $A_{11},...,B_{22}$\\
+	Running time: $\Theta(n^2)$
+	\item Using all the matrices available, recursively compute seven product matrices $P_1,...,P_7\in \mathbb{R}^{n/2\times n/2}$\\
+	Running time $7T(n/2)$
+	\item Compute $C_{11},...,C_{22}$ by adding and subtracting combinations of $P_1,...,P_7$\\
+	Running time $\Theta(n^2)$
+\end{enumerate}
+\subsection{Running time of Strassen's}
+Thus, the worst-case running time of Strassen's algorithm satisfies
+\[
+T(n) \leq 7 T(n / 2)+\Theta\left(n^{2}\right)
+\]
+By the master method we obtain
+\[
+T(n)=\Theta\left(n^{\log _{2} 7}\right)=\Theta\left(n^{2.8074}\right)
+\]
+\subsection{Description of $S_1,...,S_{10}$}
+\[
+\begin{aligned} S_{1} &=B_{12}-B_{22} \\ S_{2} &=A_{11}+A_{12} \\ S_{3} &=A_{21}+A_{22} \\ S_{4} &=A_{21}-B_{11} \\ S_{5} &=A_{11}+A_{22} \\ S_{7} &=A_{12}-A_{22} \\ S_{8} &=B_{21}+B_{22} \\ S_{9} &=A_{11}-A_{21} \\ S_{10} &=B_{11}+B_{12} \end{aligned}
+\]
+\subsection{Description of $P_1,...,P_7$}
+\[
+\begin{array}{l}{P_{1}=A_{11} S_{1}=A_{11} B_{12}-A_{11} B_{22}} \\ {P_{2}=S_{2} B_{22}=A_{11} B_{22}+A_{12} B_{22}} \\ {P_{3}=S_{3} B_{11}=A_{21} B_{11}+A_{22} B_{11}} \\ {P_{4}=A_{22} S_{4}=A_{22} B_{21}-A_{22} B_{11}} \\ {P_{5}=S_{5} S_{6}=A_{11} B_{11}+A_{11} B_{22}+A_{22} B_{11}+A_{22} B_{22}} \\ {P_{6}=S_{7} S_{8}=A_{12} B_{21}+A_{12} B_{22}-A_{22} B_{21}-A_{22} B_{22}} \\ {P_{7}=S_{9} S_{10}=A_{11} B_{11}+A_{11} B_{12}-A_{21} B_{11}-A_{21} B_{12}}\end{array}
+\]
+\subsection{Expressing C}
+\[
+\begin{array}{l}{C_{11}=P_{5}+P_{4}-P_{2}+P_{6}} \\ {C_{12}=P_{1}+P_{2}} \\ {C_{21}=P_{3}+P_{4}} \\ {C_{22}=P_{5}+P_{1}-P_{3}-P_{7}}\end{array}
+\]
+\end{document}

@@ -51,8 +51,9 @@ We can do it in time $\Theta(n^3)$ by using the definition
 c_{i j}=\sum_{k=1}^{n} a_{i k} b_{k j}
 \]
 (for simplicity, we assume n is a power of two)\\
+$n^2$ entries, computing one entry takes $\Theta(n)$, so $\Theta(n^3)$\\
 \\
-Partition A, B and C into four parts:
+Partition A, B and C into four parts (the matrix doesn't need to be 2x2, $A_{11}$ etc can be a matrix, doesn't have to be a number):
 \[
 A=\left(\begin{array}{ll}{A_{11}} & {A_{12}} \\ {A_{21}} & {A_{22}}\end{array}\right), \quad B=\left(\begin{array}{ll}{B_{11}} & {B_{12}} \\ {B_{21}} & {B_{22}}\end{array}\right), \quad C=\left(\begin{array}{ll}{C_{11}} & {C_{12}} \\ {C_{21}} & {C_{22}}\end{array}\right)
 \]
@@ -76,9 +77,11 @@ return C
 \end{lstlisting}
 \subsection{Running time of simple approach}
 The running time of the R-MULT satisfies
-$$T(N)=8T(n/2)+\Theta(n^2)$$
-Since we do 8 multiplications ($8T(n/2)$) and four additions (of time $\Theta(n^2)$ each)\\
-\\
+$$T(n)=8T(n/2)+\Theta(n^2)$$
+Since we do 8 multiplications ($8T(n/2)$) and four additions (of time $\Theta(n^2)$ each)
+$$f(n)=\Theta(n^2)=\mathcal{O}(n^{3-1})$$
+$$=\mathcal{O}(n^{\log_ba-\epsilon})$$
+$$T(n)=\Theta(n^{\log_ba})=\Theta(n^3)$$
 By the master theorem $T(n)=\Theta(n^3)$
 \section{Strassen's algorithm}
 Strassen's algorithm uses a sophisticated divide-and-conquer approach. It has four steps:

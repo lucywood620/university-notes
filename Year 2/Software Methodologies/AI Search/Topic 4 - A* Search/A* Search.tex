@@ -7,6 +7,7 @@
 \begin{center}
 \underline{\huge A* Search}
 \end{center}
+He might ask general stuff about this, but wouldn't have a whole exam question relating to proving this.
 \section{A* Search Completeness}
 \textbf{Theorem 1}:\\
 If
@@ -26,6 +27,7 @@ Case (a): suppose A* search terminates without finding a goal-node (which exists
 \begin{itemize}
 	\item So, the search tree is finite and every goal has been expanded
 	\item So, some goal-node must have been on the fringe so that it has minimal f-value at some point
+	\item So, we can't have this case
 \end{itemize}
 Case (b): suppose A* search does not terminate
 \begin{itemize}
@@ -40,21 +42,19 @@ In particular, every goal-node is
 \end{itemize}
 Let's pause the main proof for a moment and prove a useful lemma\\
 \\
-Lemma 2: Let $\delta>0$ be any chosen value. There are only finitely many nodes of the search tree with f-value at most $\delta$\\
+\textbf{Lemma 2}: Let $\delta>0$ be any chosen value. There are only finitely many nodes of the search tree with f-value(path cost+heuristic cost) at most $\delta$\\
 \\
 Proof: 
 \begin{itemize}
 	\item Let z be any node in the search tree, of depth d, say
-	\item The cost $g(z)$ of the path from root to z is no less that $d_\epsilon$ (every step cost is at least $\epsilon$, by assumption)
-	\item Hence, $f(z)=g(z)+h(z)\geqslant d_\epsilon + h(z) \geqslant d_\epsilon$
-	\item If $f(z)\leqslant \delta$, then $d_\epsilon \leqslant \delta$; that is, $d\leqslant \delta \backslash \epsilon$
-	\item So, all nodes z for which $f(z)\leqslant \delta$ have depth at most $\delta \backslash \epsilon$
+	\item The cost $g(z)$ of the path from root to z is no less that $d\epsilon$ (every step cost is at least $\epsilon$, by assumption) (each step cost is at least $\epsilon$, and d steps)
+	\item Hence, $f(z)=g(z)+h(z)\geqslant d\epsilon + h(z) \geqslant d\epsilon$
+	\item If $f(z)\leqslant \delta$, then $d\epsilon \leqslant \delta$; that is, $d\leqslant \delta \backslash \epsilon$
+	\item So, all nodes z for which $f(z)\leqslant \delta$ have depth at most $\delta \backslash \epsilon$ (a fixed value)
 	\item But as the branching factor is bounded by b, there are finitely many nodes of depth $\delta \backslash \epsilon$ and so also f-value at most $\delta$
 \end{itemize}
-Recall we are in case (b)
-\begin{itemize}
-	\item Suppose A* search does not terminate
-\end{itemize}
+Recall we are in case (b) (Suppose A* search does not terminate)\\
+\\
 Suppose there is a non-goal-node z that is not expanded where the search tree path p from z to the root doesn't contain a goal-node
 \begin{itemize}
 	\item We may assume that all nodes on p from the root to z are expanded. If not then just take z to be the closest node to the root on this path p that is not expanded (z must be a non-goal-node as no goal-node lies on the path p)
@@ -62,7 +62,7 @@ Suppose there is a non-goal-node z that is not expanded where the search tree pa
 As the parent of p is expanded, z appears on the fringe at some point\\
 As z is not expanded
 \begin{itemize}
-	\item When z is placed on the fringe, it does not have minimal f-value from amongst the fringe nodes and is such thereafter
+	\item When z is placed on the fringe, it does not have minimal f-value (if it did, then it would be expanded) from amongst the fringe nodes and is such thereafter
 \end{itemize}
 By lemma 2, there are finitely many search tree nodes with f-value at most f(z)
 \begin{itemize}
@@ -78,13 +78,15 @@ But by lemma 2 with the value f(w)
 	\item There are finitely many search tree nodes with f-value at most f(w)
 	\item So, at some point w will have minimal f-value from amongst the fringe nodes
 \end{itemize}
-So the A* search algorithm terminates\\
+So the A* search algorithm terminates(a contradiction)\\
 \\
 So, neither case(a) or case(b) holds
 \begin{itemize}
 	\item Which means our very first assumption "Suppose that there is a goal-node but A* search doesn't find it" does not hold
 \end{itemize}
-Hence, if there is a goal-node then A* search will find it, assuming a bounded branching factor and a lower bound on step-costs
+Hence, if there is a goal-node then A* search will find it, assuming a bounded branching factor and a lower bound on step-costs\\
+\\
+If the branching factor is infinite then lemma 2 will not hold
 \section{A* search optimality}
 \begin{defin}[Admissible heuristic]
 The value $h(z)$ of any node z in the search tree is always at most the cost of a minimal cost path from z to a goal-node
@@ -97,7 +99,7 @@ If the heuristic function h is admissible and A* search terminates through findi
 \textbf{Proof}\\
 Suppose that A* search terminates because a goal-node w appears on the fringe with minimal f-value
 \begin{itemize}
-	\item but where the value f(w) is strictly greater than the cost c* of an optimal path to some goal-node
+	\item but where the value f(w) is strictly greater than the cost c* of an optimal path to some goal-node (c* is optimal)
 \end{itemize}
 In particular, at termination every other fringe node z is such that $f(z)\geqslant f(w)$\\
 Also at termination, at least one node on the fringe, call it z*, is on an optimal path in the search tree to some "optimal" goal-node W*
@@ -124,7 +126,7 @@ But at termination
 \end{itemize}
 Hence, if A* search terminates through finding a goal-node then we always obtain an optimal solution - assuming that h is admissible
 \section{A* search optimally efficient}
-Not only is A* search complete and optimal (under our reasonable conditions) but A* search can be forced to be optimally efficient
+Not only is A* search complete and optimal (under our reasonable conditions) but A* search can be forced to be \textbf{optimally efficient}
 \begin{itemize}
 	\item Every complete and optimal "search-tree-path-extended-from-root" algorithm necessarily expands all nodes whose f-value is less than the optimal path-cost c* (plus maybe some of f-value c*)
 	\begin{itemize}
@@ -145,7 +147,10 @@ If:
 	\item there is a fixed $\epsilon >0$ such that all step-costs exceed $\epsilon$
 	\item the branching factor is bounded by b
 \end{itemize}
-Then A* search is optimally efficient
+Then A* search is optimally efficient\\
+\begin{important}[Consistency vs Admissibility]
+If a heuristic is consistent then it is admissible
+\end{important}
 \section{Practical limitations of A* search}
 Whilst out A* search is complete, optimal and optimally efficient, it turns out that in practice there are still exponentially-many (in the depth of an optimal goal-node) nodes under the potential expansion in many fringes\\
 \\

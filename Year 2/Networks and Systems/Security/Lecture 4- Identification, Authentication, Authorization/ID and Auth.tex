@@ -20,7 +20,7 @@ Access to the resources:
 An active entity within a system (physical person, script, etc)	
 \end{defin}
 \begin{defin}[Principal]
-An entity that can be granted access (represented by a username, userid, pin etc
+An entity that can be granted access (represented by a username, userid, pin etc)
 \end{defin}
 The subject identifies itself to the system as a principal
 \section{Authentication}
@@ -85,7 +85,7 @@ Receiver Operating Characteristic (ROC) curve
 Performance policy
 \begin{itemize}
 	\item Prefer low FMR. E.g. automatic border control. Refer to human on negative result
-	\item Prefer now FNMR. E.g. suspect recognition on CCTV. Refer to human on positive result
+	\item Prefer low FNMR. E.g. suspect recognition on CCTV. Refer to human on positive result
 \end{itemize}
 \section{Two-factor authentication}
 Two-factor authentication.\\
@@ -96,7 +96,7 @@ Combine two authentication factors from:
 	\item What you have: mobile phone, authentication key
 \end{itemize}
 \section{Zero-Knowledge Password Proof}
-Objective: Do not reveal anything in the client/server communications about the password.\\
+\textbf{Objective}: Do not reveal anything in the client/server communications about the password.\\
 Otherwise we are vulnerable to replay attacks.\\
 \\
 Most common ZKPP approach: Challenge-response auth:
@@ -106,6 +106,12 @@ Most common ZKPP approach: Challenge-response auth:
 	\item Client computer response = hash(nonce + password)
 	\item Client send response back to server
 	\item Server compare the response with hash(nonce+stored password)
+\end{itemize}
+Nonce properties:
+\begin{itemize}
+	\item Nonce: Random or pseudo-random unique value
+	\item Uniqueness: Prevent replay attacks
+	\item Susceptible to PRNG flaws
 \end{itemize}
 \section{Example: EMV Payment}
 \begin{itemize}
@@ -144,8 +150,7 @@ An attacker can get records, $sig_{BANK}[records]$ by listening to a valid trans
 \\
 The the attacker can create a fake card using $sig_{BANK}[records]$ and generate an invalid MAC. For offline transaction, the merchant cannot verify the MAC anyway. By the time the merchant sends the transactions to the bank, the attacker will be long gone\\
 \\
-Problem: static password\\
-\\
+Problem: static password
 \subsection{DDA: Dynamic Data Authentication}
 Use challenge-response authentication to generate data unique to the transaction
 \begin{center}

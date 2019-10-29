@@ -2,6 +2,7 @@
 \usepackage{../../../../format}
 \lhead{Programming Paradigms - Functional Programming}
 \usepackage{minted}
+\setminted{tabsize=4}
 
 \begin{document}
 \begin{center}
@@ -23,11 +24,11 @@ Using conditional statements
 \begin{minted}{haskell}
 factorial :: Int->Int
 factorial n = if n==0 then 1
-	      else n *factorial n-1
+			  else n *factorial n-1
 
 factorial :: Int -> Int
 factorial n | n == 0 =1
-	    |otherwise =n* factorial n-1
+			|otherwise =n* factorial n-1
 \end{minted}
 Function application binds more tightly than binary operators. This is implemented:
 \begin{minted}{haskell}
@@ -127,7 +128,7 @@ startsWithA _ =False
 \end{minted}
 	\item Matches 3-element lists and checks if the first entry is the character 'a'
 \end{itemize}
-\begin{important}[Careful]
+\begin{important}[Where to put patterns]
 Use patterns in the equations defining a function. Not in the type of a function\\
 Pattern matches in the equations don't change the type of the function. They just say how it should act on particular expressions
 \end{important}
@@ -167,6 +168,9 @@ _ = [3,4]
 \begin{minted}{haskell}
 -- Not allowed
 sumThree (a:a:b:_) = a + a + b
+-- What you'd want to do here would be to have inputs a b and c, but only define through if a==b
+sumThree (a:b:c:_) | a==b = a+b+c
+				   | otherwise = undefined
 -- Allowed
 second (_:a:_) = a
 \end{minted}

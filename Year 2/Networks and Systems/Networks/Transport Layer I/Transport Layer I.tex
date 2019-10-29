@@ -10,7 +10,7 @@
 \section{Transport-layer services}
 \subsection{Transport services and protocols}
 \begin{itemize}
-	\item Provide logical communication between app processes running on different hosts
+	\item Provide logical communication between app processes running on different hosts, in contrast the network layer just communicates between hosts, not processes on hosts
 	\item Transport protocols run in end systems
 	\begin{itemize}
 		\item Send side: breaks up app messages into segments, passes to network layer
@@ -23,10 +23,10 @@
 \end{itemize}
 \subsection{Transport vs network layer}
 \begin{defin}[Network layer]
-Logical communication between hosts
+Logical communication between \textbf{hosts}
 \end{defin}
 \begin{defin}[Transport layer]
-Logical communication between processes. Relies on and enhances network layer services
+Logical communication between \textbf{processes}. Relies on and enhances network layer services
 \end{defin}
 \subsection{Internet transport-layer protocols}
 TCP (Transmission Control Protocol):
@@ -41,13 +41,20 @@ UDP(User Datagram Protocol):
 	\item Unreliable, unordered delivery
 	\item No-frills extension of "best-effort" IP
 	\item Services not available
-	\item Delay guarantees
+	\begin{itemize}
+		\item Delay guarantees
+		\item Bandwidth guarantees
+	\end{itemize}
 \end{itemize}
 TCP and UDP extend IP delivery service between hosts to delivery service between processes $\rightarrow$ transport layer multiplexing and demultiplexing
 \section{Multiplexing and demultiplexing}
 \begin{center}
 	\includegraphics[scale=0.7]{multiplexing}
 \end{center}
+\begin{important}[Groups of data]
+In the network layer it is called a packet\\
+In the transport layer it is called a segment
+\end{important}
 \begin{itemize}
 	\item Host receives IP datagrams
 	\item Each datagram has source IP address, destination IP address
@@ -82,15 +89,18 @@ TCP socket identified by 4-tuple
 	\item Destination IP address
 	\item Destination port number
 \end{itemize}
-Demix: receiver used all four values to direct segment to appropriate socket\\
+Demux: receiver used all four values to direct segment to appropriate socket\\
 Server host may support many simultaneous TCP sockets:
 \begin{itemize}
-	\item each socket identified by its own 4-tuple
+	\item Each socket identified by its own 4-tuple
 	\item Two arriving TCP segments with different source IP/ \#Port will be directed to two different sockets
 \end{itemize}
 \begin{center}
 	\includegraphics[scale=0.7]{connection}
 \end{center}
+\begin{important}[TCP Sockets]
+With TCP we have a different socket for each connection	
+\end{important}
 \section{Connectionless transport: UDP}
 \begin{itemize}
 	\item "No frills", "bare bones" internet transport protocol
@@ -122,6 +132,7 @@ Server host may support many simultaneous TCP sockets:
 \begin{center}
 	\includegraphics[scale=0.7]{"reliable data transfer"}
 \end{center}
+Note that reliable data transfer protocol is not a standard, it is just for us to look at academically
 \begin{center}
 	\includegraphics[scale=0.7]{"reliable data transfer1"}
 \end{center}

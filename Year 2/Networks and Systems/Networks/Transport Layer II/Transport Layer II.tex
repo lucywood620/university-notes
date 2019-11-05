@@ -1,0 +1,213 @@
+\documentclass{article}[18pt]
+\usepackage{../../../../format}
+\lhead{Networks and Systems - Networks}
+
+
+\begin{document}
+\begin{center}
+\underline{\huge Transport Layer II}
+\end{center}
+\section{Reliable data transfer}
+We will:
+\begin{itemize}
+	\item Incrementally develop sender, receiver sides of reliable data transfer protocol (rdt)
+	\item Consider only unidirectional data transfer - but control info will flow on both directions
+	\item Use finite state machines (FSM) to specify sender, receiver
+\end{itemize}
+\begin{center}
+	\includegraphics[scale=0.7]{rdt}
+\end{center}
+\subsection{rdt1.0: reliable transfer over a reliable channel}
+Underlying channel perfectly reliable:
+\begin{itemize}
+	\item No bit errors
+	\item No loss of packets
+\end{itemize}
+Separate FSMs for sender, receiver:
+\begin{itemize}
+	\item Sender sends data into underlying channel
+	\item Receiver reads data from underlying channel
+\end{itemize}
+\begin{center}
+	\includegraphics[scale=0.7]{rdt1}
+\end{center}
+\subsection{rdt2.0}
+\subsubsection{Channel with bit errors}
+\begin{itemize}
+	\item Underlying channel may flip bits in packet, checksum to detect bit errors
+	\item The question: how to recover from errors:
+	\begin{itemize}
+		\item Acknowledgements (ACKs): receiver explicitly tells sender that pkt received OK
+		\item Negative acknowledgements (NAKs): receiver explicitly tells sender that pkt had errors
+		\item Sender retransmits pkt on receipt of NAK
+		\item Using ACKs and NAKs is known as ARQ (Automatic Repeat reQuest) protocols
+		\begin{itemize}
+			\item Error detection. Sender embeds extra bits in packets
+			\item Feedback. Receiver provide sender with feedback
+			\item Retransmission. Retransmit erroneous packets
+		\end{itemize}
+	\end{itemize}
+	\item New mechanisms in \texttt{rdt2.0} (beyond rdt1.0)
+	\begin{itemize}
+		\item Error detection
+		\item Feedback: control msgs (ACK (1), NAK(0)) from receiver to sender
+	\end{itemize}
+\end{itemize}
+\subsubsection{FSM specification}
+\begin{center}
+	\includegraphics[scale=0.7]{FSM}
+\end{center}
+\subsubsection{Operation with no errors}
+\begin{center}
+	\includegraphics[scale=0.7]{operation_with_no_errors}
+\end{center}
+\subsubsection{Error scenario}
+\begin{center}
+	\includegraphics[scale=0.7]{error_scenario}
+\end{center}
+\subsubsection{Fatal flaw}
+What happens if ACK/NAK corrupted:
+\begin{itemize}
+	\item Sender doesn't know what happened at receiver
+	\item Can't just retransmit: possible duplicate
+\end{itemize}
+Handling duplicates:
+\begin{itemize}
+	\item Sender retransmits current pkt if ACK/NAK corrupted
+	\item Sender adds sequence number to each pkt
+	\item Receiver discards (doesn't deliver up) duplicate pkt
+\end{itemize}
+Stop and wait:
+\begin{itemize}
+	\item Sender sends one packet, then waits for the receiver response
+\end{itemize}
+\subsection{rdt3.0}
+\subsubsection{Channels with errors and loss}
+New assumption:
+\begin{itemize}
+	\item Underlying channel can also lose packets (data, ACKs)
+	\begin{itemize}
+		\item Checksum, seq. \#, ACKs, retransmissions will be of help, but not enough
+	\end{itemize}
+\end{itemize}
+Approach:
+\begin{itemize}
+	\item Sender waits "reasonable" amount of time for ACK
+	\begin{itemize}
+		\item Retransmits if no ACK received in this time
+		\item If no pkt (or ACK) just delayed (not lost):
+		\begin{itemize}
+			\item Retransmission will be duplicate, but seq. \#'s already handles this
+			\item Receiver must specify seq \# of pkt being ACKed
+		\end{itemize}
+		\item Requires countdown timer
+	\end{itemize}
+\end{itemize}
+\subsubsection{Sender}
+\begin{center}
+	\includegraphics[scale=0.7]{rdt_sender}
+\end{center}
+\subsubsection{In action}
+\begin{center}
+	\includegraphics[scale=0.7]{rdt_in_action}
+\end{center}
+\begin{center}
+	\includegraphics[scale=0.7]{rdt_in_action1}
+\end{center}
+\section{Pipelined protocols}
+\begin{center}
+	\includegraphics[scale=0.7]{pipelined_protocols1}
+\end{center}
+Pipelining has the following consequences for reliable data transfer protocols:
+\begin{itemize}
+	\item Range of sequence numbers must be increased
+	\begin{itemize}
+		\item Unique sequence number and there may be multiple, in-transit, unacknowledged packets
+	\end{itemize}
+	\item Multiple packet buffering at sender and/or receiver
+	\begin{itemize}
+		\item Sender buffers packets that have been transmitted but not yet acknowledged
+		\item Buffering of correctly received packets
+	\end{itemize}
+	\item Range of sequence numbers needed and the buffering requirements will depend on the manner in which a data transfer protocol responds to lost, corrupted, and overly delayed packets
+\end{itemize}
+Two generic forms of pipelined protocols:
+\begin{itemize}
+	\item Go-back-N
+	\begin{itemize}
+		\item Sender can send multiple packets without waiting for ACK
+		\item Sender can have up to N unacked packets in pipeline
+		\item Receiver only sends cumulative ack, doesn't ack packet if there's a gap
+		\item Sender has timer for oldest unacked packet, when timer expired, retransmit all unacked packets
+	\end{itemize}
+	\item Selective repeat:
+	\begin{itemize}
+		\item Sender can have up to N unacked packets in pipeline
+		\item Receiver sends individual ack for each packet
+		\item Sender maintains timer for each unacked packet, when timer expires, retransmit only that unacked packet
+	\end{itemize}
+\end{itemize}
+
+\section{GBN in action}
+\begin{center}
+	\includegraphics[scale=0.7]{GBN}
+\end{center}
+\section{Selective repeat}
+\begin{itemize}
+	\item Receiver individually acknowledges all correctly receives pkts. Buffers pkts, as needed, for eventual in-order delivery to upper layer
+	\item Sender only resends pkts for which ACK not received. Sender timer for each unACKed pkt
+	\item Sender window
+	\begin{itemize}
+		\item N consecutive seq \#'s
+		\item Limits seq \#s of sent, unACKed pkts
+	\end{itemize}
+\end{itemize}
+Sender:
+\begin{itemize}
+	\item Data from above:
+	\begin{itemize}
+		\item If next available seq \# in window, send pkt
+	\end{itemize}
+	\item timeout(n)
+	\begin{itemize}
+		\item Resend pkt n, restart timer
+	\end{itemize}
+	\item Mark pkt n as received
+	\item If n smallest unACKed pkt, advance window base to next unACKed seq \#
+\end{itemize}
+Receiver:
+\begin{itemize}
+	\item \texttt{pkt n in [rcvbase, rcvbase+N-1]}
+	\begin{itemize}
+	\item Send ACK(n)
+	\item Out-of-order: buffer
+	\item In-order: deliver( also deliver buffered, in-order pkts), advance window to next not-yet-received pkt
+	\end{itemize}
+	\item \texttt{pkt n in [rcvbase-N, rcvbase-1]}
+	\begin{itemize}
+		\item Ack(n)
+	\end{itemize}
+	\item Otherwise:
+	\begin{itemize}
+		\item Ignore
+	\end{itemize} 
+\end{itemize}
+\subsection{Selective repeat in action}
+\begin{center}
+	\includegraphics[scale=0.7]{selective_repeat_action}
+\end{center}
+\subsection{Selective repeat dilemma}
+Example:
+\begin{itemize}
+	\item Finite range of seq \# s: 0,1,2,3
+	\item Window size=3
+	\begin{itemize}
+		\item Receiver sees no difference in two scenarios
+		\item Duplicate data accepted as new in (b)
+	\end{itemize}
+\end{itemize}
+\begin{center}
+	\includegraphics[scale=0.7]{selective_repeat_dilemma}
+\end{center}
+
+\end{document}

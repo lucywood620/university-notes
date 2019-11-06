@@ -1,0 +1,546 @@
+\documentclass{article}
+\usepackage{../../../../format}
+\usepackage{enumerate}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usepackage{fancyvrb}
+\usepackage{minted}
+\usepackage{hyperref}
+\definecolor{links}{HTML}{2A1B81}
+\hypersetup{colorlinks,linkcolor=,urlcolor=blue}
+\usetikzlibrary{shapes.misc}
+\usetikzlibrary{shapes.geometric, arrows, positioning}
+
+\title{Systems Programming --- Lecture 4:\\
+Data types, \texttt{struct}s and \texttt{union}s (Part II)}
+\author{Dr Konrad Dabrowski\\
+\href{mailto://konrad.dabrowski@durham.ac.uk}{konrad.dabrowski@durham.ac.uk}
+}
+\date{E103 Christopherson Building
+}
+
+\begin{document}
+\begin{center}
+\underline{\huge Data types, \texttt{struct}s and \texttt{union}s (Part II)}
+\end{center}
+\section{Character constants}
+\begin{itemize}
+\item These are integer values that are written as a character in single quotes
+\item e.g. \verb!'0'! = \verb!48! in the ASCII  character set
+
+\item These can also include escape characters:
+\begin{tabular}{ll}
+\verb!'\n'! & newline character\\
+\verb!'\a'! & alert (bell) character\\
+\verb!'\t'! & horizontal tab\\
+\verb!'\0'! & \verb!NULL! character
+\end{tabular}
+
+\item Example:
+\begin{minted}{c}
+#define BELL '\a'
+\end{minted}
+
+\item On UNIX, you can run the \verb!man ascii! command for more information. (Press \verb!q! to exit.)
+\end{itemize}
+
+
+
+\section{String constants}
+\begin{itemize}
+\item These are zero or more characters in double quotes
+\item Technically this is an array of chars \emph{and} it has a \verb!NULL! character at the end of the string \verb!'\0'!
+\begin{minted}{c}
+char a[]="Hello";
+char a[]={'H','e','l','l','o','\0'};
+\end{minted}
+\item This means that:
+\verb!'x'! is not the same as \verb!"x"! (i.e. \verb!{'x','\0'}!)
+
+\begin{minted}{c}
+#include<string.h>
+char a[]="x";
+char b='x';
+strlen(a) = 1 // returns number of characters
+sizeof(b) = 1 // returns number of bytes
+sizeof(a) = 2
+\end{minted}
+\end{itemize}
+
+
+
+\section{Getting user input}
+\begin{itemize}
+\item To output text, we use \verb!printf()!
+\begin{itemize}
+\item e.g. \verb!printf("%d",x);!
+\end{itemize}
+\item To take user input from the user, we can use \verb!scanf()!
+\begin{itemize}
+\item e.g. \verb!scanf("%d",&x);!
+\end{itemize}
+\item Note the \verb!&! (\emph{address-of}) operator in front of \verb!x!. Why do we need this?
+\item We can also take in options from the command-line e.g.
+\begin{minted}{c}
+#include<stdio.h>
+int main(int argc, char *argv[]){
+  for(int i=0; i<argc; i++) {
+    printf("Argument %d is %s\n",i,argv[i]);
+  }
+  return 0;
+}
+\end{minted}
+\item \verb!argc! is the number of command-line arguments and each \verb!argv[i]! is a pointer to a string
+\item \verb!argv[0]! is the name of the program
+\item Can convert strings to integers using \verb!atoi()! from \verb!stdlib.h! e.g.
+\begin{minted}{c}
+char x[]="10";
+int y=atoi(x);
+\end{minted}
+\end{itemize}
+
+
+
+\section{Enumerations}
+\begin{itemize}
+\item In many programs, we'll need variables that have only a small set of meaningful values
+
+\item A variable that stores the suit of a playing card should have only four potential values: ``clubs'', ``diamonds'', ``hearts'', and ``spades''
+
+\item A ``suit'' variable can be declared as an integer, with a set of codes that represent the possible values of the variable:
+\begin{minted}{c}
+int s; /* s will store a suit */
+...
+s = 2; /* 2 represents "hearts" */
+\end{minted}
+
+\item Problems with this technique:
+\begin{itemize}
+\item We can't tell that \verb!s! has only four possible values
+\item The significance of \verb!2! isn't apparent
+\end{itemize}
+
+\item Using macros to define a suit ``type'' and names for the various suits is a step in the right direction:
+\begin{minted}{c}
+#define SUIT     int
+#define CLUBS    0
+#define DIAMONDS 1
+#define HEARTS   2
+#define SPADES   3
+\end{minted}
+
+\item An updated version of the previous example:
+\begin{minted}{c}
+SUIT s;
+...
+s = HEARTS;
+\end{minted}
+
+\item Problems with this technique:
+\begin{itemize}
+\item There's no indication to someone reading the program that the macros represent values of the same ``type''
+
+\item If the number of possible values is more than a few, defining a separate macro for each will be tedious
+
+\item The names \verb!CLUBS!, \verb!DIAMONDS!, \verb!HEARTS! and \verb!SPADES! will be removed by the preprocessor, so they won't be available during debugging
+\end{itemize}
+
+\item C provides a special kind of type designed specifically for variables that have a small number of possible values
+
+\item An enumerated type is a type whose values are listed (``enumerated'') by the programmer
+
+\item Each value must have a name (an enumeration constant)
+
+\item Enumerations are declared like this:
+\begin{minted}{c}
+enum {CLUBS, DIAMONDS, HEARTS, SPADES} s1, s2;
+\end{minted}
+\item The names of the constants must  be different from other identifiers declared in the enclosing scope
+\item Enumeration constants are similar to \verb!#define! constants directive, but not equivalent
+\item If an enumeration is declared inside a function, its constants won't be visible outside the function
+
+\item Behind the scenes, C treats enumeration variables and constants as integers
+
+\item By default, the compiler assigns the integers \verb!0!, \verb!1!, \verb!2!, \ldots to the constants in a particular enumeration
+
+\item In the suit enumeration, \verb!CLUBS!, \verb!DIAMONDS!, \verb!HEARTS! and \verb!SPADES! represent \verb!0!, \verb!1!, \verb!2! and \verb!3!, respectively
+\end{itemize}
+
+
+
+\section{Enumerations as Integers}
+\begin{itemize}
+\item The programmer can choose different values for enumeration constants:
+\begin{minted}{c}
+enum suit {CLUBS = 1, DIAMONDS = 2, HEARTS = 3,
+  SPADES = 4};
+\end{minted}
+
+\item The values of enumeration constants may be arbitrary integers, listed in no particular order:
+\begin{minted}{c}
+enum dept {RESEARCH = 20, PRODUCTION = 10,
+  SALES = 25};
+\end{minted}
+
+\item It's even legal for two or more enumeration constants to have the same value
+
+\item When no value is specified for an enumeration constant, its value is one greater than the value of the previous constant
+\item The first enumeration constant has the value \verb!0! by default
+
+\item Example:
+\begin{minted}{c}
+enum EGA_colors {BLACK, LT_GRAY = 7, DK_GRAY,
+  WHITE = 15};
+\end{minted}
+\item \verb!BLACK! has the value \verb!0!, \verb!LT_GRAY! is \verb!7!, \verb!DK_GRAY! is \verb!8! and \verb!WHITE! is \verb!15!
+\end{itemize}
+
+
+
+\section{Structures}
+\begin{itemize}
+\item Collections of one or more variables forming a new data structure, the closest thing C has to an O-O class
+
+\item The elements of a structure (its \emph{members}) aren't required to have the same type
+
+\item The members of a structure have names; to select a particular member, we specify its name
+
+\item In some languages, structures are called records, and members are known as fields
+\end{itemize}
+
+
+
+\section{Structure: example}
+\begin{itemize}
+\item For example a 2D point has \verb!x! and \verb!y! components but it is useful to create a single data structure to group them: 
+
+
+\item Declares template for a point
+
+\begin{minted}{c}
+struct point {
+  int x;
+  int y;
+};
+\end{minted}
+
+\item With members \verb!x! and \verb!y!
+\end{itemize}
+
+
+
+\section{Structures}
+\begin{minted}{c}
+struct point {
+  int x;
+  int y;
+};
+\end{minted}
+
+\begin{itemize}
+\item Create an instance of the point data structure:
+\begin{minted}{c}
+struct point a_point;
+\end{minted}
+
+\item Initialise a \verb!struct!:
+\begin{minted}{c}
+struct point a_point = {5, 6};
+\end{minted}
+
+\item Access to variable members of the structure:
+\begin{minted}{c}
+a_point.x = 4;
+a_point.y = 3;
+\end{minted}
+\end{itemize}
+
+
+
+\section{Structure and scope}
+\begin{minted}{c}
+struct point {
+  int x;
+  int y;
+};
+\end{minted}
+
+\begin{itemize}
+\item Each structure represents a new scope
+
+\item Any names declared in that scope won't conflict with other names in a program
+
+\item In C terminology, each structure has a separate name space for its members
+\end{itemize}
+
+
+
+\section{Operations on structures}
+\begin{itemize}
+\item The \verb!.! used to access a structure member is actually a C operator
+\item It takes precedence over nearly all other operators
+\item Example:
+
+\begin{minted}{c}
+z = 20*a_point.x;
+\end{minted}
+
+\item The \verb!.! operator takes precedence over the \verb!*! operator
+\end{itemize}
+
+
+
+\section{Assignment of structures}
+\begin{itemize}
+\item The other major structure operation is assignment:
+\begin{minted}{c}
+point2 = point1;
+\end{minted}
+
+\item The effect of this statement is to copy \verb!point1.x! into \verb!point2.x!, \verb!point1.y! into \verb!point2.y! and so on
+
+\item The structures must have compatible types
+
+\end{itemize}
+
+
+
+\section{Nested structures}
+\begin{itemize}
+\item Declare a template for a rect(angle)
+\begin{minted}{c}
+struct rect{
+  struct point pt1;
+  struct point pt2;
+};
+\end{minted}
+
+\item Create an instance of the point data structure:
+\begin{minted}{c}
+struct rect a_window;
+\end{minted}
+
+\item Access to variable members of the structure:
+\begin{minted}{c}
+a_window.pt1.x = 4;
+\end{minted}
+
+\item What is the \verb!sizeof(a_window)!?
+\end{itemize}
+
+
+
+
+\section{Unions}
+\begin{itemize}
+\item A \verb!union!, like a structure, consists of one or more members, possibly of different types
+
+\item The compiler allocates only enough space for the largest of the members, which overlay each other within this space
+
+\item Assigning a new value to one member alters the values of the other members as well
+\end{itemize}
+
+
+
+\subsection{Memory use}
+\begin{itemize}
+\item The structure \verb!s! and the union \verb!u! differ in just one way
+\item The members of \verb!s! are stored at different addresses in memory
+\item The members of \verb!u! are stored at the same address
+
+\begin{minted}{c}
+union {
+  int i;
+  double d;
+} u;
+
+struct {
+  int i;
+  double d;
+} s;
+\end{minted}
+\end{itemize}
+
+
+
+\subsection{Accessing members}
+\begin{itemize}
+\item Members of a union are accessed in the same way as members of a structure:
+\begin{minted}{c}
+u.i = 82;
+u.d = 74.8;
+\end{minted}
+\item Changing one member of a union alters any value previously stored in any of the other members
+\item Storing a value in \verb!u.d! causes any value previously stored in \verb!u.i! to be lost
+\item Changing \verb!u.i! corrupts \verb!u.d!
+\end{itemize}
+
+
+
+\subsection{Properties}
+\begin{itemize}
+\item The properties of unions are almost identical to the properties of structures
+
+\item Like structures, unions can be copied using the \verb!=! operator, passed to functions and returned by functions
+\end{itemize}
+
+
+
+\subsection{Initialisation}
+\begin{itemize}
+\item By default, only the first member of a union can be given an initial value
+\item How to initialize the i member of u to 0:
+\begin{minted}{c}
+union {
+  int i;
+  double d;
+} u = {0};
+\end{minted}
+\end{itemize}
+
+
+
+\subsection{Designated initialisers}
+\begin{itemize}
+\item Designated initializers can also be used with unions
+\item A designated initializer allows us to specify which member of a union should be initialized:
+\begin{minted}{c}
+union {
+  int i;
+  double d;
+} u = {.d = 10.0};
+\end{minted}
+\item Only one member can be initialized, but it doesn't have to be the first one
+\end{itemize}
+
+
+
+\subsection{For space saving}
+\begin{itemize}
+\item Unions can be used to save space in structures
+\item Suppose that we're designing a structure that will contain information about an item that's sold through a gift catalog
+\item Each item has a stock number and a price, as well as other information that depends on the type of the item:
+\begin{tabular}{ll}
+Books: & Title, author, number of pages\\
+Mugs: & Design\\
+Shirts: & Design, colors available, sizes available\\
+\end{tabular}
+
+\item A first attempt at designing the \verb!catalog_item! using \verb!struct!:
+\begin{minted}{c}
+struct s_catalog_item {
+  int stock_number;
+  double price;
+  int item_type;
+  char title[TITLE_LEN+1];
+  char author[AUTHOR_LEN+1];
+  int num_pages;
+  char design[DESIGN_LEN+1];
+  int colors;
+  int sizes;
+};
+\end{minted}
+\end{itemize}
+
+
+
+\begin{minted}{c}
+struct u_catalog_item {
+  int stock_number;
+  double price;
+  int item_type;
+  union {
+    struct {
+      char title[TITLE_LEN+1];
+      char author[AUTHOR_LEN+1];
+      int num_pages;
+    } book;
+    struct {
+      char design[DESIGN_LEN+1];
+    } mug;
+    struct {
+      char design[DESIGN_LEN+1];
+      int colors;
+      int sizes;
+    } shirt;
+  } item;
+};
+\end{minted}
+
+
+
+\subsection{Accessing nested structure}
+\begin{itemize}
+\item This nesting of unions does make accessing the struct fields a little more complex: 
+\begin{minted}{c}
+struct s_catalog_item  c; 
+
+c.title
+
+struct u_catalog_item c;
+
+c.item.book.title
+\end{minted}
+
+\item Enumerations can be used to mark which member of a union was the last to be assigned
+
+\item In the number structure, we can make a kind member an enumeration instead of an \verb!int!:
+\begin{minted}{c}
+struct number {
+  enum {INT_KIND, DOUBLE_KIND} kind;
+  union {
+    int i;
+    double d;
+  } u;
+};
+\end{minted}
+\end{itemize}
+
+
+
+\section{Using Enumerations to Declare ``Tag Fields''}
+\begin{minted}{c}
+struct number a_number ={INT_KIND, {10}};
+
+if (a_number.kind == INT_KIND)
+  printf("a_number is %d value %d \n", 
+     a_number.kind, a_number.u.i );
+
+a_number.kind = DOUBLE_KIND;
+
+a_number.u.d = 150.03;
+if (a_number.kind == DOUBLE_KIND)
+  printf("a_number is %d value %6.3f \n", 
+     a_number.kind, a_number.u.d );
+\end{minted}
+
+
+
+\section{Creating new types}
+\begin{itemize}
+\item \verb!typedef! can be used to assign names to types
+\begin{minted}{c}
+typedef unsigned char byte;
+byte b1 = 12;
+\end{minted}
+\item You can use this with \verb!struct!s and \verb!union!s too
+\begin{minted}{c}
+typedef struct coords {
+  int x;
+  int y;
+} point;
+point p1={5,4};
+
+typedef union id_thing {
+  int i;
+  double d;
+} number;
+number n = {.d =10.0};
+\end{minted}
+\end{itemize}
+
+
+
+
+
+\end{document}

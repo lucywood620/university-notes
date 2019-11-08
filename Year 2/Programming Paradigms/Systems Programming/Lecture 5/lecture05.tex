@@ -182,10 +182,6 @@ p = &i;
 \end{minted}
 \end{itemize}
 
-\begin{minted}{c}
-int i, j, *p, *q;
-p = &i;
-\end{minted}
 \begin{itemize}
 \item Another example of pointer assignment:
 \begin{minted}{c}
@@ -306,7 +302,7 @@ void swap(int *a, int *b) {
 
 \begin{itemize}
 \item Then call \verb!swap(&x,&y);!
-\item Remember C uses call by value 
+\item Remember C uses call by value, but by using pointers you can get around this problem as the pointer still points at the original data
 \end{itemize}
 
 
@@ -333,7 +329,8 @@ void swap(int *a, int *b) {
 
 \item Using the \verb!&! operator in the call would be wrong:
 \begin{minted}{c}
-  scanf("%d", &p);   /*** WRONG ***/
+  scanf("%d", &p);   /*** WRONG, would be the address of the pointer,
+   rather than the address of the thing p points at ***/
 \end{minted}
 \end{itemize}
 
@@ -427,8 +424,8 @@ c = a;
 
 \begin{minted}{c}
 char a[] = "Hello";
-strlen(a) = 5;
-sizeof(a) = 6;
+strlen(a) = 5; // number of characters
+sizeof(a) = 6; // includes the null character at the end
 \end{minted}
 
 \begin{itemize}
@@ -488,8 +485,8 @@ Hello H
 \end{center}
 
 \begin{minted}{c}
-char a[] = "Hello";
-char *a = "Hello";
+char a[] = "Hello"; // sizeof = 6
+char *a = "Hello"; // sizeof = 8  as pointers take 8 bytes
 \end{minted}
 
 \begin{itemize}
@@ -550,7 +547,7 @@ pa = (a+1);
 \end{itemize}
 
 
-
+% He stopped here
 \section{Strange but true}
 \begin{itemize}
 \item In C if I write \verb!a[x]! this works by adding \verb!x! to \verb!a! to find the pointer

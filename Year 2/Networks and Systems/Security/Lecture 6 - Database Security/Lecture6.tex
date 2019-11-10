@@ -1,0 +1,166 @@
+\documentclass{article}[18pt]
+\usepackage{../../../../format}
+\lhead{Networks and Systems - Security}
+
+
+\begin{document}
+\begin{center}
+\underline{\huge Database Security}
+\end{center}
+\section{Database Management System}
+DBMS Roles
+\begin{itemize}
+	\item Concurrency
+	\item Security
+	\item Data integrity
+	\item Administration procedures
+	\begin{itemize}
+		\item Change management
+		\item Performance monitoring/tuning
+		\item Backup and recovery
+	\end{itemize}
+	\item Automated rollbacks, restarts and recovery
+	\item Logging/auditing of activity
+\end{itemize}
+DBMS consists of
+\begin{enumerate}
+	\item The data
+	\item The engine
+	\begin{itemize}
+		\item Allows data to be
+		\begin{itemize}
+			\item Locked
+			\item Accessed
+			\item Modified
+		\end{itemize}
+	\end{itemize}
+	\item The schema
+	\begin{itemize}
+		\item Defines the database's logical structure
+	\end{itemize}
+\end{enumerate}
+\section{NoSQL Databases}
+Created lazily - none of the commands have actually performed any operations on the server until the first document is included into them
+\section{Database Security Overview}
+Primary concepts
+\begin{itemize}
+	\item Authentication - who are you?
+	\item Authorization - what are you allowed to do?
+	\item Encryption - protecting the data
+	\item Auditing - what did you do?
+\end{itemize}
+Other important concepts
+\begin{itemize}
+	\item Redaction - disguise sensitive data on returned results
+	\item Masking - creating similar but inauthentic version of the data for training/testing
+	\item Firewall - threat patterns, approved whitelisted commands, blacklist (harmful) commands, monitor for data leakage, evaluate IP address/time/location
+	\item Integrity - data should be accurate and tolerant to physical problems
+\end{itemize}
+\section{Database security background}
+\begin{itemize}
+	\item Vast majority of records breached are from database leaks
+	\begin{itemize}
+		\item Not surprising that hackers are going after databases, they contain transactional information, financial details, emails ...
+	\end{itemize}
+	\item Relatively small portion of security budget is spent on data centre security.
+\end{itemize}
+\section{Excessive and unused privileges}
+\begin{itemize}
+	\item Privilege control mechanisms for job roles have often not been well defined or maintained
+	\item People join the company, leave the company, change roles, their privileges often grow and aren't scaled back to be inline with their job requirements
+	\item Probably the greatest chance of impact in organisations
+\end{itemize}
+\section{Privilege Abuse}
+\begin{itemize}
+	\item People who have legitimate use of data, but choose to abuse it
+	\item Employees often feel entitled to take data with them
+	\begin{itemize}
+		\item They feel they were part of creating this data, therefore they will take it with them
+	\end{itemize}
+\end{itemize}
+\section{SQL Injection}
+\begin{itemize}
+	\item Inserting or injecting unauthorised malicious database statements somewhere in the application or database that gets executed by the database itself
+	\item Typing SQL commands to the database
+	\item Can be fixed with prepared statements
+\end{itemize}
+\section{Malware}
+\begin{itemize}
+	\item Organisations are quickly conpromised and then their data does out of the door within minutes or hours
+	\item Common strategy:
+	\begin{itemize}
+		\item Spear phishing
+		\item Malware
+		\item Credentials stolen
+		\item Data being stolen
+	\end{itemize}
+\end{itemize}
+\section{Weak audit trail}
+\begin{itemize}
+	\item We get a much clearer picture of what's going on with more detail and resolution
+	\item Most organisations don't record the details that you need to deal with the aftermath of these situations
+\end{itemize}
+\section{Storage media exposure}
+\begin{itemize}
+	\item After spear phishing and malware, it's often the database backups that are actually leaked in the end
+	\item Often something that's completely unprotected from an attack
+	\item Shows up in the details of a variety of security breaches
+\end{itemize}
+\section{Database Vulnerability Exploitation}
+\begin{itemize}
+	\item Companies rarely patch their servers
+\end{itemize}
+\section{Unmanaged sensitive data}
+\begin{itemize}
+	\item You can easily end up with some of your sensitive data being used in testing environments, or R\&D environments and not being managed properly
+\end{itemize}
+\section{DoS}
+\begin{itemize}
+	\item Attackers overload server resources
+	\item Flooding database with queries that cause server to crash
+\end{itemize}
+\section{Limited expertise}
+\begin{itemize}
+	\item Majority of organisations experienced staff related breaches when policies weren't well understood
+	\item Small businesses don't even have a position for educating their staff about security
+\end{itemize}
+\section{Obscure Queries}
+\begin{itemize}
+	\item Hide your real query in a more complex query - harder for the system to identify the real query
+\end{itemize}
+\section{Inference Attacks}
+\begin{itemize}
+	\item Data mining technique
+	\begin{itemize}
+		\item Analyze data in order to illegitimately gain knowledge of subject or database
+		\item Sensitive information can be leaked if hacker can infer real value with high confidence  
+	\end{itemize}
+	\item Occur when someone is allowed to execute queries that they're authorized for, but  by executing those queries they are able to gain access to information for which they are not authorized
+\end{itemize}
+\section{Approach to database security}
+\begin{enumerate}
+	\item Discovery and assessment
+	\begin{itemize}
+		\item You can't protect against problems if you don't know they exist
+		\item Quickly identify sensitive data and assessing vulnerabilities/misconfigurations
+	\end{itemize}
+	\item User rights management
+	\begin{itemize}
+		\item Make sure you have thorough process to review and eliminate excessive user rights
+	\end{itemize}
+	\item Monitoring and blocking
+	\begin{itemize}
+		\item Have procedures in place to monitor activity and block attempted policy violations
+	\end{itemize}
+	\item Auditing (creating a trail)
+	\item Protecting the data
+	\begin{itemize}
+		\item Storage encryption, tamper-proof audit trail
+	\end{itemize}
+	\item Non-technical security
+	\begin{itemize}
+		\item Raise awareness and cultivate experienced security professionals
+	\end{itemize}
+\end{enumerate}
+
+\end{document}

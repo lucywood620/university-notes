@@ -125,3 +125,22 @@
 	\begin{mdframed}[]\relax%
 		\centering
 		}{\end{mdframed}}
+	
+% Styling Pseudocode
+\lstset{language=C,
+	basicstyle=\ttfamily,
+	keywordstyle=\bfseries,
+	showstringspaces=false,
+	morekeywords={if, else, then, print, end, for, do, while, Let},
+	tabsize=4,
+	mathescape=true,
+	escapechar=£,
+	numbers=left,
+	stepnumber=1,
+	frame=top,
+	frame=bottom
+}
+
+\usepackage{caption}
+\DeclareCaptionFormat{listing}{\rule{\dimexpr\textwidth+17pt\relax}{0.4pt}\par\vskip1pt#1#2#3}
+\captionsetup[lstlisting]{format=listing,singlelinecheck=false, margin=0pt, font={sf},labelsep=space,labelfont=bf}

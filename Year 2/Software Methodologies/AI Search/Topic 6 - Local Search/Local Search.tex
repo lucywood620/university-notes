@@ -1,23 +1,9 @@
 \documentclass{article}[18pt]
 \usepackage{../../../../format}
 \lhead{Software Methodologies - AI Search}
-\lstset{language=C,
-	basicstyle=\ttfamily,
-	keywordstyle=\bfseries,
-	showstringspaces=false,
-	morekeywords={if, else, then, print, end, for, do, while},
-	tabsize=4,
-	mathescape=true,
-	escapechar=£,
-	numbers=left,
-	stepnumber=1,
-}
 
-\usepackage{caption}
-\DeclareCaptionFont{white}{\color{white}}
-\DeclareCaptionFormat{listing}{\colorbox{gray}{\parbox{\textwidth}{#1#2#3}}}
-\captionsetup[lstlisting]{format=listing,labelfont=white,textfont=white}
 
+\usepackage{upgreek}
 \begin{document}
 \begin{center}
 \underline{\huge Local Search}
@@ -187,7 +173,63 @@ Each iteration consists of the following process repeated |P| times
 		\item by e.g. replacing one randomly-chosen symbol in the string with some randomly-chosen symbol
 	\end{itemize}
 	\item Add the child Z to the new population newP
-	\item So, after this iteration, we have that |newP|=|P|
+	\item So, after this iteration, we have that $|newP|=|P|$
 	\item The current population P is now replaced with the new population newP and the next iteration begins
 \end{itemize}
+\section{Reproduction and crossover}
+Reproduction of the child Z from two individuals X and Y is achieved through crossover:
+\begin{itemize}
+	\item A random bit position in the strings X and Y is chosen so that both strings are partitioned into a prefix and a suffix (each of the same length)
+	\item The suffix of Y is concatenated onto the prefix of X
+	\item The suffix of X is concatenated onto the prefix of Y, so we get two children
+	\item The fittest of the two children so obtained is taken to be the child Z
+\end{itemize}
+\section{Proportional to fitness and minimising}
+\begin{itemize}
+	\item Choosing population members according to fitness is an implementation detail
+	\item One way is via a roulette wheel approach
+	\begin{itemize}
+		\item The total sum F of the fitness of all population individuals is calculated
+		\item Each population individual x whose fitness if f(x) is allocated a sector of the roulette wheel given by an angle of $(f(x)\times 360)/ F \deg$ at the centre. The wheel is "spun" so as to choose a population member
+	\end{itemize}
+	\item Genetic algorithms can also solve minimisation problems:
+	\begin{itemize}
+		\item e.g. choose threshold value $\uptau$ s.t. $\uptau > f(x)$, for any population member x
+		\item New fitness function $f_{min}=\uptau - f(x)$
+	\end{itemize}
+\end{itemize}
+\section{Genetic algorithm for the TSP}
+\begin{itemize}
+	\item In practice, we often have to adapt crossover and mutation to suit the problem in hand
+	\item Consider the TSP - individuals consists of complete tours with fitness the tour length
+	\item When we adapt a crossover, more often than not we find that the two resulting potential children do not actually encode tours
+	\begin{itemize}
+		\item e.g. 1,4,5,3,2 and 3,5,4,2,1 result in 1,4,4,2,1 and 3,5,5,3,2
+	\end{itemize}
+	\item We need to "fix" the children so that they do correspond to tours
+	\begin{itemize}
+		\item One way is to work through the suffixes replacing duplicates with missing cities, the order of occurrence in the other string
+		\begin{itemize}
+			\item e.g. 1,4,4,2,1 and 3,5,5,3,2 become 1,4,3,2,5
+		\end{itemize}
+	\end{itemize}
+	\item Also, we need to adapt the process of mutation for the same reason
+	\begin{itemize}
+		\item e.g. swap the locations of two randomly chosen cities in the tour
+	\end{itemize}
+\end{itemize}
+\begin{lstlisting}[caption=Genetic-algorithm]
+P= randomly generated initial population
+repeat
+	newP = $\varnothing$
+	for i = 1 to $|P|$ do
+		X = randomly chosen individual of P with probability proportional to fitness
+		Y = randomly chosen individual of P with probability proportional to fitness
+		Z = child reproduced from X and Y
+		with small fixed probability mutate Z
+		newP = newP + Z
+	P=newP
+until some individual is fit enough or a certain number of iterations have been done	
+return the fittest individual 
+\end{lstlisting}
 \end{document}

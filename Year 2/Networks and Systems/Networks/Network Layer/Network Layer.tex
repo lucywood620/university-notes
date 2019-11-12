@@ -1,7 +1,7 @@
 \documentclass{article}[18pt]
 \usepackage{../../../../format}
 \lhead{Networks and Systems - Networks}
-
+\newcommand\filledcirc{{\color{black}\bullet}\mathllap{\circ}}
 
 \begin{document}
 \begin{center}
@@ -15,15 +15,15 @@ Routing is the process of discovering network paths
 	\item Update routes for changes in topology (e.g. failures)
 \end{itemize}
 \section{Optimality Principle}
-Identify the optimal path from source to destination\\
-\\
-Sink tree: optimal routes from all sources to a given destination\\
-\\
+Identify the optimal path from source to destination
+\begin{defin}[Sink tree]
+Optimal routes from all sources to a given destination
+\end{defin}
 Distance metric: the number of hops, or time delay
 \section{Shortest Path Algorithm}
 Dijkstra's algorithm computes a sink tree on the graph
 \begin{itemize}
-	\item Each nose is labelled with its distance from the source node to the best known path
+	\item Each node is labelled with its distance from the source node to the best known path
 	\item Initially no paths are known
 	\item Each link is assigned a non-negative weight/distance
 	\item Shortest path is the one with the lowest total weight
@@ -31,9 +31,9 @@ Dijkstra's algorithm computes a sink tree on the graph
 Algorithm
 \begin{itemize}
 	\item Start with sink, set distance at other nodes to infinity
-	\item Relax distance to other nodes
-	\item Pick the lowest distance node, add it to sink tree
-	\item Repeat until all nodes are in the sink tree
+	\item Labels tentative ($\circ$) or permanent ($\filledcirc$), initially all tentative
+	\item Pick the lowest distance non-permanent node, make it permanent
+	\item Repeat from this node, until all nodes are permanent
 \end{itemize}
 \section{Distance vector routing}
 There are two dynamic routing algorithms
@@ -41,7 +41,7 @@ There are two dynamic routing algorithms
 \begin{itemize}
 	\item Each node maintains a table (vector of best known destination)
 	\item Tables are updated by exchanging information between nodes
-	\item Tables have 2 entries: outline line and estimate distance (\# hops or propagation delay)
+	\item Tables have 2 entries: \textbf{outgoing line} and \textbf{estimated distance} (\# hops or propagation delay)
 \end{itemize}
 Algorithm:
 \begin{itemize}
@@ -61,10 +61,10 @@ Failures can cause DV to "count to infinity" while seeking a path to an unreacha
 \subsection{Link State Routing}
 Link state is an alternative to distance vector algorithm. There are 5 steps:
 \begin{enumerate}
-	\item Learn the network address of the neighb ouring routers
+	\item Learn the network address of the neighbouring routers by sending HELLO packet, record name
 	\item Set the distance to each neighbour
-	\item Construct a (HELLO) packet telling all neighbours what it has just learned
-	\item Send the packet to neighbours and receive packet from neighbours
+	\item Construct a packet telling all other routers what it has just learned
+	\item Send the packet to neighbours and receive packet from all other routers
 	\item Compute the shortest path by using Dijkstra's algorithm
 \end{enumerate}
 \begin{defin}[LSP (Link State Packet)]
@@ -78,13 +78,14 @@ Hierarchical routing reduces the work of route computation but may result in sli
 \begin{center}
 	\includegraphics[scale=0.7]{Hierarchical}
 \end{center}
-\section{Flooding (i.e. broadcasting)}
+Useful in the internet, each region would be geographical, makes routing much faster to compute.
+\section{Flooding}
 \begin{itemize}
 	\item A simple method to send a packet to all network nodes
 	\item Each node floods a new packet received on an incoming link by sending it out of the other links
 	\item Nodes need to keep track of flooded packets to stop the flood
 \end{itemize}
-\subsection{Broadcast sends a packet to all nodes}
+\section{Broadcasting}
 Broadcast sends a packet to all nodes:
 \begin{itemize}
 	\item RPF (Reverse Path Forwarding): Arrived packets are checked to see if they arrived from a preferred link, which is the link that is normally used for sending packets towards the source of the broadcast

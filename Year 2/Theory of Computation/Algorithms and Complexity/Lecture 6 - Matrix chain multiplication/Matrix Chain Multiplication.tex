@@ -27,14 +27,14 @@ if $q\neq q'$ then
 	return ERROR: incompatible dimensions
 else
 	Let C be a new $p\times r$ matrix
-	for $i \leftarrow$ 1 to p do
-		for $j \leftarrow 1$ to r do
-			$c_{ij}\leqslant 0$
-			for $k\leftarrow 1$ to q do
+	for $i =$ 1 to p do
+		for $j = 1$ to r do
+			$c_{ij}= 0$
+			for $k= 1$ to q do
 				$c_{ij}=c_{ij}=a_{ik}b_{kj}$
 	return C
 \end{lstlisting}
-Number of scalar multiplications: pqr
+Number of scalar multiplications: $pqr$ (so $n^3$ if the same dimensions, as we have seen before)
 \subsection{Parenthesizing matrix multiplications}
 Matrix multiplication is associative:
 \[
@@ -108,14 +108,14 @@ Output: The minimum number of multiplications required to compute the matrix cha
 \textbf{Idea}: Computing $m[i,j]$ for a product of $j-i+1$ matrices only uses values for products of fewer than $j-1+1$ matrices
 \begin{lstlisting}[caption=MATRIX-CHAIN-ORDER(p)]
 Let m[1..n,1..n] be a new table
-for $i\leftarrow 1$ to n do
-	$m[i,i]\leftarrow 0$
-for $I \leftarrow 2$ to n do
-	for $i\leftarrow 1$ to $n_I+1$ do
-		$j\leftarrow i+I-1$
-		$m[i.j]\leftarrow \infty$
-		for $k\leftarrow i$ to $j-1$ do
-		 $m[i, j] \leftarrow \min \left\{m[i, k]+m[k+1, j]+p_{i-1} p_{k} p_{j}: i \leq k<j\right\}$
+for $i= 1$ to n do
+	$m[i,i]= 0$
+for $I = 2$ to n do
+	for $i= 1$ to $n_I+1$ do
+		$j= i+I-1$
+		$m[i.j]= \infty$
+		for $k= i$ to $j-1$ do
+		 $m[i, j] = \min \left\{m[i, k]+m[k+1, j]+p_{i-1} p_{k} p_{j}: i \leq k<j\right\}$
 return m
 \end{lstlisting}
 We can determine the minimum number of multiplications, but we also want to know HOW to parenthesize!\\
@@ -155,5 +155,5 @@ else
 	PRINT-PAR(s,s[i,j+1],j)
 	print ")"
 \end{lstlisting}
-Initial call: PRINT-PAR(s,1,n)
+Initial call: \texttt{PRINT-PAR(s,1,n)}
 \end{document}

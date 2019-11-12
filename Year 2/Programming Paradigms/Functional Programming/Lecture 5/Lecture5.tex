@@ -243,7 +243,7 @@ foldl f z (x:xs) = foldl f (z `f` x) xs -- tail recursive
 \end{center}
 \subsubsection{Why would I use them?}
 \begin{itemize}
-	\item Capture many linear recursive patterns in a clean way
+	\item Capture many linear recursive patterns cleanly
 	\item Can have efficient library implementation $\Rightarrow$ can apply program optimisations
 	\item Actually apply to all \mintinline{haskell}{Foldable} types, not just lists
 	\item e.g. \mintinline{haskell}{foldr}'s type is actually
@@ -258,7 +258,7 @@ Folds are general:
 \begin{minted}{haskell}
 product = foldr (*) 1
 sum = foldr (+) 0
-maximum = foldr1 max
+maximum = foldr1 max -- foldr1 assumes list has at least one value
 \end{minted}
 \end{itemize}
 \subsubsection{Which to choose?}

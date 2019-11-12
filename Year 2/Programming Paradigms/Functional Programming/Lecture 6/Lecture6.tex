@@ -1,0 +1,178 @@
+\documentclass{article}[18pt]
+\usepackage{../../../../format}
+\lhead{Programming Paradigms - Functional Programming}
+\usepackage{minted}
+\setminted{tabsize=4}
+\begin{document}
+\begin{center}
+\underline{\huge Algebraic data types and type classes}
+\end{center}
+\section{Adding new data types}
+\subsection{Defining data types}
+\begin{itemize}
+	\item So far we've only used the builtin data types
+	\item Of course, it often makes sense to define new data types
+	\item Multiple reasons to do this
+	\begin{itemize}
+		\item Hide complexity
+		\item Build new abstractions
+		\item Type safety
+	\end{itemize}
+	\item Haskell has three ways to do this
+	\begin{itemize}
+		\item \mintinline{haskell}{type}
+		\item \mintinline{haskell}{data}
+		\item \mintinline{haskell}{newtype} (won't cover this)
+	\end{itemize}
+\end{itemize}
+\subsection{Type declarations}
+A new name for an existing type can be defined using a type declaration
+\begin{minted}{haskell}
+type String = [Char]
+\end{minted}
+We can use these type declarations to make the semantics of our code cleaner
+\begin{minted}{haskell}
+type Pos  = (Int, Int)
+origin :: Pos
+origin :: (0,0)
+left :: Pos -> Pos
+left (i,j) = (i-1,j)
+\end{minted}
+Just like function definitions, type declarations can be parametrised over type variables
+\begin{minted}{haskell}
+type Pair a = (a,a)
+mult :: Pair Int -> Int
+mult (m, n) = m*n
+
+dup :: a -> Pair a
+dup x  = (x,x)
+\end{minted}
+You can't have class constraints in the definition and can't use recursive types
+\begin{minted}{haskell}
+-- Not allowed
+type Tree = (Int, [Tree])
+\end{minted}
+\subsection{Data Declarations: New types}
+We can introduce a completely new type by specifying allowed values using a data declaration
+\begin{minted}{haskell}
+data Bool = False | True
+\end{minted}
+Both the type name, and the constructor names, must begin with an upper-case letter
+\subsection{Using new types}
+\begin{minted}{haskell}
+data IsTrue = Yes | No | Perhaps
+negate :: IsTrue -> Is True
+negate Yes     = No
+negate No      = Yes
+negate Perhaps = Perhaps
+\end{minted}
+\subsection{Data declarations with fixed type parameters}
+The constructors in a data declaration can take arbitrarily many parameters
+\begin{minted}{haskell}
+data Shape = Circle Float | Rectangle Float Float
+\end{minted}
+"A shape is either a Circle, or a Rectangle. The circle is defined by one number, the rectangle by two"
+\begin{minted}{haskell}
+area :: Shape -> Float
+area (Circle r) = pi * r^2
+area (Rectangle x y) = x * y
+\end{minted}
+\subsection{Recursive types}
+Data declarations can refer to themselves
+\begin{minted}{haskell}
+data Nat = Zero | Succ Nat
+\end{minted}
+"Nat is a new type with constructors \mintinline{haskell}{Zero :: Nat} and \mintinline{haskell}{Succ :: Nat -> Nat}"\\
+\\
+This type has an infinite set of values\\
+\\
+We could use this to implement a representation of the natural numbers, and arithmetic\\
+\\
+This allows for very succinct definitions of data structures
+\begin{minted}{haskell}
+data List a = Empty | Const a (List a)
+intList = Cons 1 (Cons 2 ( Cons 3 Empty))
+== [1,2,3]
+\end{minted}
+\subsection{Some type theory and contrasts}
+Haskell's data declarations make Algebraic data types\\
+This is a type where we specify the "shape" of each element\\
+\\
+The two algebraic operations are "sum" and "product"
+\begin{defin}[Sum type]
+An alternation
+\begin{minted}{haskell}
+data Foo = A|B
+\end{minted}
+The value of type Foo can either be A or B, example of this is \mintinline{haskell}{Bool}
+\end{defin}
+
+\begin{defin}[Product type]
+A combination
+	\begin{minted}{haskell}
+data Pair = P Int Double
+	\end{minted}
+A pair of numbers, an Int and Double together
+\end{defin}
+\subsection{Haskell Types: Pros and Cons}
+\begin{minipage}{0.5\textwidth}
+\begin{center}
+\underline{Classes}
+\end{center}
+\begin{itemize}
+	\item [$\checkmark$] Easy to add new "kinds of things": just make a subclass
+	\item [x] Hard to add new "operation on existing things": need to change superclass to add new method and potentially update all subclasses
+\end{itemize}
+\end{minipage}
+\begin{minipage}{0.5\textwidth}
+\begin{center}
+	\underline{Algebraic Data Types}
+\end{center}
+	\begin{itemize}
+		\item [x] Hard to add new "kinds of things": need to add new constructor and update all functions that use the data type
+		\item [$\checkmark$] Easy to add new "operation on existing things": just write a new function
+	\end{itemize}
+\end{minipage}
+% Got up to here
+\section{Higher order functions and type classes again}
+\subsection{Separating code and data}
+\begin{itemize}
+	\item When designing software, a good aim is to hide the implementation of data structures
+	\item In OO based languages we do this with classes and inheritence
+	\item Or with interfaces, which define a contract that a class must implement
+	\item Idea is that calling code doesn't know internals and only relies on interface
+	\item As a result, we can change the implementation, and the client code still works
+\end{itemize}
+\subsection{Generic higher order functions}
+\begin{itemize}
+	\item In Haskell we can realise this idea with generic higher order functions, and type classes
+	\item Last time, we saw some examples of higher order functions for list
+	\item For example, imagine we want to add two lists pairwise
+\begin{minted}{haskell}
+-- By hand
+addLists _[] = []
+addLists [] _ = []
+addLists (x:xs) (y:ys) = (x+y) : addLists xs ys
+-- Better
+addLists xs ys = map (uncurry (+)) $ zip xs ys
+-- Best
+addLists = zipWith (+)
+\end{minted}
+	\item If we write our own data types, are we reduced to doing everything "by hand" again
+\end{itemize}
+\subsection{Using type classes}
+\begin{itemize}
+	\item Recall, Haskell has a concept of type classes
+	\item These describe interfaces that can be used to constrain the polymorphism of functions to those types satisfying the interface
+	\item (+) acts on any type, as long as that type implements the Num interface
+\begin{minted}{haskell}
+(+) :: Num a => a -> a -> a
+\end{minted}
+	\item $(<)$ acts on any type, as long as that type implements the Ord interface
+\begin{minted}{haskell}
+(<) :: Ord a => a -> a -> Bool
+\end{minted}
+	\item Haskell comes with many such type classes encapsulating common patterns
+	\item When we implement out own data types, we can "just" implement appropriate instances of these classes
+\end{itemize}
+\end{document}

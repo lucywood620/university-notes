@@ -82,6 +82,48 @@ A quine that consists of two parts: A followed by B. A prints out B in a straigh
 \begin{center}
 	\includegraphics[scale=0.7]{"Mutual Recursion"}
 \end{center}
-
-
+\section{m-reducibility}
+\textbf{Definition}. Let A and B be languages over the same alphabet $\Sigma$. A is a many-to-one reducible to B (write $A\leqslant B$) if there is a Turing machine F that terminates on every input $u\in \Sigma^*$, and such that
+$$A\{u\in \Sigma^*|F(u)\in B\}$$
+Informally: checking $u\in A$ is no harder than checking $w\in B$
+\subsection{Properties of m-reducibility}
+\textbf{Proposition}. Suppose $A\leqslant B$
+\begin{enumerate}
+	\item If B is Turing-decidable, so is A
+	\item If B is Turing-recognisable, so is A
+	\item If $A\leqslant B$ and $B\leqslant C$, then $A\leqslant C$
+\end{enumerate}
+\textbf{Definition}. Denote $A\equiv B$ to mean that $A\leqslant B$ and $B\leqslant A$\\
+\\
+Informally: A and B are equally difficult
+\section{m-completeness}
+\textbf{Definition}. A language A is m-complete if
+\begin{enumerate}
+	\item A is Turing-recognisable
+	\item For every Turing-recognisable language B, $B\leqslant A$
+\end{enumerate}
+Informally: If A is m-complete then A is as hard as any other Turing-recognisable language\\
+\\
+\textbf{Corollary} If A is m-complete and $A\leqslant B$, then B is m-complete\\
+\\
+\textbf{Definition} - The Halting language H consists of the words $\langle M \rangle \circ w$ (over some fixed alphabet) such that the Turing machine M terminates on $w$\\
+\\
+\textbf{Theorem} H is M complete\\
+\\
+\textbf{Proof}: Generic reduction. Pick any Turing-recognisable language A. It is recognised by some machine $M_A$. Reduce it to H by mapping any word $w$ onto the word $\langle M_A \rangle \circ w$. It is obvious that the reduction is computable and $w\in A$ iff $\langle M_A \rangle \circ w \in H$\\
+\\
+\textbf{Definition}: $H_0$ is the "diagonal" of H, i.e. the language $\langle M \rangle \circ \langle M \rangle$ such that M terminates on $\langle M \rangle$\\
+\\
+\textbf{Theorem}: $H_0$ is m-complete\\
+\\
+\textbf{Proof}: Reduction from H. Given a word $\langle M \rangle \circ w$, create a Turing machine $N_{M,w}$ that simulates M on w (and note that it ignores the input) - this can be done using a universal Turing machine. Now, $N_{M,w}$ terminates on any input iff M terminates on w. In particular $N_{M,w}$ terminates on $\langle N_{M,w}$ iff M terminates on w
+\section{Oracle Turing Machine and t-reducibility}
+\textbf{Definition}
+\begin{enumerate}
+	\item An oracle for a language A is a black-box that takes a word w as an input and instantly (and correctly) replies if $w\in A$
+	\item An oracle Turing machine M, denotes by $M^A$ is a Turing machine that has an additional capability of making calls to an oracle for the language A
+\end{enumerate}
+\textbf{Definition}: A language A is t-reducible to a language B is A is decidable by some oracle Turing machine $M^B$\\
+\\
+\textbf{Theorem}: If $A\leqslant_t B$ and B is Turing-decidable, then A is Turing-decidable
 \end{document}

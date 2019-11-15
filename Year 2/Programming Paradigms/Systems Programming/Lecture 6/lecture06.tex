@@ -12,7 +12,7 @@
 \begin{document}
 
 \begin{center}
-	\underline{\huge Lecture 6}
+	\underline{\huge Dynamic memory management}
 \end{center}
 
 
@@ -228,7 +228,7 @@ pa = (a+1);
 
 
 
-\section{Strange but true}
+\section{Pointer oddities}
 \begin{itemize}
 \item In C if I write \verb!a[x]! this works by adding \verb!x! to \verb!a! to find the pointer
 \item Hence \verb!a[x]! is the same as \verb!*(a+x)!
@@ -237,10 +237,10 @@ pa = (a+1);
 \item It compiles and works!
 \item See \verb!array.c!
 \end{itemize}
+\inputminted{c}{array.c}
+All of these are valid
 
-
-
-\section{What about?}
+\subsection{More oddities}
 \begin{itemize}
 \item \verb!a[-4]! ?
 \item Interpreted as \verb!*(a + -4)!
@@ -254,7 +254,8 @@ p = &i;
 printf("%d %d\n", p[0], p[1]);
 \end{minted}
 
-\item What will the output be?
+\item \mintinline{c}{p[0]} will be 5
+\item \mintinline{c}{p[1]} could be anything, it's just the next memory location
 \end{itemize}
 
 
@@ -297,6 +298,8 @@ printf("%d %d\n", p[0], p[1]);
 
 
 \section{Dynamic memory allocation}
+
+
 \begin{itemize}
 \item Variables and arrays provide fixed size allocation
 \item What if the memory needed cannot be pre-determined?
@@ -307,13 +310,14 @@ printf("%d %d\n", p[0], p[1]);
 
 
 
-{
-{\begin{picture}(30,210)\scalebox{1.0}{\hspace*{9cm}\vspace*{5cm}
+\begin{minipage}{0.4\textwidth}
+
+
 \begin{tikzpicture}
 \tikzset{
   myarrow/.style = {line width=1mm, draw=black, -triangle 60, fill=white,postaction={draw, line width=3mm, shorten >=3mm, -}}
 }
-\begin{scope}[yshift=-50]
+
 \draw[rounded corners] (-2.1, 0.5) rectangle (0.1, 1.45) {};
 \node at (-1,0.975) {Static data};
 \draw[rounded corners] (-2.1, 1.5) rectangle (0.1, 3) {};
@@ -326,12 +330,16 @@ printf("%d %d\n", p[0], p[1]);
 
 \draw [myarrow] (-1,3) -- (-1,3.6);
 \draw [myarrow] (-1,4.5) -- (-1,3.9);
-\end{scope}
+
 \end{tikzpicture}
-\hspace*{-3cm}}\end{picture}}
+
+
+\end{minipage}
+
+
+
 
 \section{Memory Layout}
-\begin{minipage}{0.7\textwidth}
 \begin{itemize}
 \item Stack
 \begin{itemize}
@@ -351,9 +359,9 @@ printf("%d %d\n", p[0], p[1]);
 \item Data that stays in memory for the duration of the program
 \end{itemize}
 \end{itemize}
-\end{minipage}
 
-}
+
+
 
 
 \section{Memory Allocation: \texttt{malloc() <stdlib.h>}}
@@ -365,7 +373,7 @@ void *malloc(size_t  size);
 \item Allocates a contiguous block of memory \verb!size! bytes long
 \item The return type is \verb!void*!, which is a generic pointer type that can be used with all types
 \item \verb!malloc()! returns a \verb!NULL! pointer if it fails to allocate the requested memory
-\item Always test for \verb!NULL! return!
+\item \textbf{Always test for \texttt{NULL} return!}
 \begin{itemize}
 \item An aside: By default, Linux follows an optimistic memory allocation strategy: if \verb!malloc()! returns a non-\verb!NULL! value, this is no guarantee that the memory is really available.
 The operating system actually allocates the memory when you try to use it for the first time; if the system runs out of memory, a process will be killed by the Out Of Memory (OOM) killer.
@@ -464,7 +472,7 @@ void *realloc( void *ptr, size_t  size );
 \end{itemize}
 
 \item Will move and copy contents if it needs to, freeing original block
-\item \verb!realloc()! returns a \verb!NULL! pointer if it fails. Check for this!
+\item \verb!realloc()! returns a \verb!NULL! pointer if it fails. \textbf{Check for this}!
 \item Cf. ArrayList in Java
 \end{itemize}
 

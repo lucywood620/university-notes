@@ -20,8 +20,8 @@ Structured global path based search problems
 	\end{itemize}
 	\item An assignment associates a value from $D_i$ to the variable $X_i$, for some or all of the variables
 	\begin{itemize}
-		\item It is called complete if every variable is assigned a value
-		\item It is called consistent (or legal) if no constraint is violated
+		\item It is called \textbf{complete} if every variable is assigned a value
+		\item It is called \textbf{consistent} (or legal) if no constraint is violated
 	\end{itemize}
 	\item A solution is a complete, consistent assignment
 	\item Some CSPs require a solution to maximise/minimize some objective function defined on the set of arguments
@@ -31,7 +31,7 @@ Structured global path based search problems
 \subsection{Graph 3-colourability problem (G3COL)}
 \begin{itemize}
 	\item Variable $X_i$ for every vertex $v_i$ in the given graph G
-	\item Domain of values for each variable is \{R,W,B\}
+	\item Domain of values for each variable is \{R,W,B\} (Red, White, Blue)
 	\item For every pair of variables $(X_i,X_j)$ for which the corresponding vertices are joined by an edge $e=(v_i,v_j)$ in G
 	\begin{itemize}
 		\item There is a constraint $C_e$ with scope $(X_i,X_j)$

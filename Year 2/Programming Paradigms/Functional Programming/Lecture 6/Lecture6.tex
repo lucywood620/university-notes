@@ -112,7 +112,7 @@ A combination
 	\begin{minted}{haskell}
 data Pair = P Int Double
 	\end{minted}
-A pair of numbers, an Int and Double together
+Provide a pair of numbers, an \mintinline{haskell}{Int} and \mintinline{haskell}{Double} together
 \end{defin}
 \subsection{Haskell Types: Pros and Cons}
 \begin{minipage}{0.5\textwidth}
@@ -168,7 +168,7 @@ addLists = zipWith (+)
 \begin{minted}{haskell}
 (+) :: Num a => a -> a -> a
 \end{minted}
-	\item $(<)$ acts on any type, as long as that type implements the Ord interface
+	\item $(<)$ acts on any type, as long as that type implements the Ord(erable) interface
 \begin{minted}{haskell}
 (<) :: Ord a => a -> a -> Bool
 \end{minted}

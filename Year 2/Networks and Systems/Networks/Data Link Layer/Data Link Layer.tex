@@ -17,7 +17,7 @@
 \end{center}
 \section{Framing methods}
 \subsection{Byte count}
-Frame begins with a count of the number of bytes in it - simple, but difficult to resynchronize after an error
+Frame begins with a count of the number of bytes in it - simple, but difficult to resynchronize after an error. If any of the counts are incorrect then everything will be shifted wrong and all the frames will be incorrect.
 \subsection{Headers and trailers}
 We add a header (e.g. the length of the data, etc.) and a trailer (extra data that can be used e.g. error-detection or error-correction)
 \begin{center}
@@ -25,17 +25,22 @@ We add a header (e.g. the length of the data, etc.) and a trailer (extra data th
 \end{center}
 Two adjacent frames are separated by a flag
 \subsection{Byte stuffing}
-Special flag bytes delimit frames; occurrences of flags in the data must (escapes) - longer, but easy to resynchronize after error
+Special flag bytes delimit frames; occurrences of flags in the data must (escapes) - longer, but easy to resynchronize after error\\
+\\
+If the flag value is found in the data you get lost again. The solution to this is byte or bit stuffing
 \begin{center}
 	\includegraphics[scale=0.7]{"byte stuffing"}
 \end{center}
 \begin{center}
 	\includegraphics[scale=0.7]{"byte stuffing1"}
 \end{center}
+This is the same idea as doing $\backslash$delta in latex
 \subsection{Bit stuffing}
 \begin{center}
 	\includegraphics[scale=0.7]{"bit stuffing"}
 \end{center}
+This is useful where you aren't working in bytes, as frames can be any size now\\
+\\
 The flag is six consecutive ones. Within the data, a zero is stuffed after each five consecutive ones to void instances of the flag in the data\\
 Bit stuffing
 \begin{enumerate}[label=(\alph*)]
@@ -62,33 +67,38 @@ Receiver, upon receiving 0 1 1 1 1 1:
 	\item Errors occur during frame transmission
 	\item Two strategies to deal with error
 	\begin{itemize}
-		\item Include enough redundant information to help receivers deduce original data (error correcting)
-		\item Include enough information to deduce an error occurred (error detecting)
+		\item Include enough redundant information to help receivers deduce original data (\textbf{error correcting})
+		\item Include enough information to deduce an error occurred (\textbf{error detecting})
 		\item Neither error-correcting codes nor error-detecting codes can handle all possible errors
 	\end{itemize}
 \end{itemize}
-EDC = Error detection and correction bit (redundancy)\\
-D = Data protected by error checking, may include header fields\\
+\textbf{EDC} = Error detection and correction bits (redundancy)\\
+\textbf{D} = Data protected by error checking, may include header fields\\
 \\
 Error detection is not 100\% reliable, protocol may miss some errors, but rarely
 \begin{center}
 	\includegraphics[scale=0.7]{EDC}
 \end{center}
 \section{Codeword}
+\begin{defin}[Codeword]
+The message with check bits added	
+\end{defin}
 \begin{itemize}
 	\item A frame consists of m data (message) bits and r redundant (check) bits
 	\item n-bit codewords with n=m+r
 \end{itemize}
+\newpage
 \section{Error codes}
 Error codes add structured redundancy to data so errors can be either detected, or corrected
+
 \subsection{Hamming codes}
 \begin{defin}[Hamming distance]
 The number of bit positions in which two codewords differ
 \end{defin}
 We will see a specific hamming code that corrects a single error:
 \begin{itemize}
-	\item Encoding: we number the data bits starting from one and skipping the powers of two. The powers of two are reserved for parity bits, the rest are message bits.
-	\item Decoding: calculate all parities. If they are all OK, there was no error. If not, add up the positions of the incorrect ones - this gives us the position of the error
+	\item \textbf{Encoding}: we number the data bits starting from one and skipping the powers of two. The powers of two are reserved for parity bits, the rest are message bits.
+	\item \textbf{Decoding}: calculate all parities. If they are all OK, there was no error. If not, add up the positions of the incorrect ones - this gives us the position of the error
 \end{itemize}
 Hamming code gives a simple way to add check bits and correct up to a single bit error
 \begin{itemize}
@@ -97,16 +107,23 @@ Hamming code gives a simple way to add check bits and correct up to a single bit
 \end{itemize}
 \section{Error detection}
 \subsection{Parity}
-Parity but is added as the modulo 2 sum of data bits\\
+Parity bit is added as the modulo 2 sum of data bits\\
 \\
-\textbf{Single bit parity} - detect single bit errors\\
+\textbf{Single bit parity} - detect single bit errors - this has one parity bit for whatever the length of the message\\
 \\
 \textbf{Two dimensional bit parity} - detect and correct single bit errors
+\begin{itemize}
+	\item Write the message in rows
+	\item Calculate the parity bit for both the row and column
+	\item These can then be used to correct a bit error as there will be a parity error on the corresponding row and column of the bit
+\end{itemize}
+
+
 \subsection{Checksum}
 The sender:
 \begin{enumerate}
 	\item Data is divided into k segment each of m bits (normally 16 bit integers) and summed
-	\item The 1s complement of the sum forms the checksum
+	\item The 1s complement of the sum forms the checksum.
 	\item The checksum segment is sent along with the data segments
 \end{enumerate}
 The receiver

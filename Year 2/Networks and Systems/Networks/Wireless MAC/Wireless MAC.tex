@@ -1,0 +1,90 @@
+\documentclass{article}[18pt]
+\usepackage{../../../../format}
+\lhead{Networks and Systems - Networks}
+
+
+\begin{document}
+\begin{center}
+\underline{\huge Wireless MAC}
+\end{center}
+\section{Elements of a wireless network}
+Wireless hosts:
+\begin{itemize}
+	\item Laptop, smartphone
+	\item Run applications
+	\item May be stationary or mobile
+\end{itemize}
+Base station:
+\begin{itemize}
+	\item Typically connected to wired network
+	\item Relay - responsible for sending packets between wired network and wireless host(s) in its "area" 
+\end{itemize}
+Wireless link:
+\begin{itemize}
+	\item Typically used to connect mobile(s) to base station
+	\item Also used as backbone link
+	\item Multiple access protocol coordinates link access
+	\item Various data rates, transmission distances
+\end{itemize}
+Infrastructure mode:
+\begin{itemize}
+	\item Base station connects mobiles into wired network
+	\item Handoff: mobile changes base station providing connection into wired network
+\end{itemize}
+Ad hoc mode:
+\begin{itemize}
+	\item No base stations
+	\item Nodes can only transmit to other nodes within link coverage
+	\item Nodes organize themselves into a network: route among themselves
+\end{itemize}
+\begin{tabular}{|c|c|c|}
+	\hline 
+	Standard & Frequency Range & Data Rate \\ 
+	\hline 
+	802.11b & 2.4 GHz & Up to 11 Mbps \\ 
+	\hline 
+	802.11a & 5 GHz & Up to 54 Mbps \\ 
+	\hline 
+	802.11g & 2.4 GHz & Up to 54 Mbps \\ 
+	\hline 
+	802.11n & 2.4 GHz and 5 GHz & Up to 450 Mbps \\ 
+	\hline 
+	802.11ac & 5GHz & Up to 1300 Mbps \\ 
+	\hline 
+\end{tabular} 
+\section{Wireless Link Characteristics}
+Important differences from wired link
+\begin{itemize}
+	\item Decreased signal strength: radio signal attenuates as it propagates through matter
+	\item Interference from other sources: standardized wireless network frequencies shared by other devices interfere as well
+	\item Multipath propagation: radio signal reflects off object ground, arriving at destination at slightly different times
+\end{itemize}
+Make communication across a wireless link much more difficult
+\begin{defin}[Hidden terminals]
+Senders that cannot sense each other but nonetheless collide at intended receiver
+\end{defin}
+Multiple wireless senders and receivers create additional problems (beyond multiple access)\\
+\begin{minipage}{0.5\textwidth}
+\includegraphics[scale=0.7]{"hidden terminal"}\\
+Hidden terminal problem
+\begin{itemize}
+	\item B,A hear each other
+	\item B,C hear each other
+	\item A,C can't hear each other, means A,C unaware of their interference at B 
+\end{itemize}
+\end{minipage}
+\begin{minipage}{0.5\textwidth}
+\includegraphics[scale=0.7]{"signal attenuation"}\\
+Signal attenuation:
+\begin{itemize}
+	\item B,A hear each other
+	\item B,C hear each other
+	\item A,C can't hear each other interfering at B
+\end{itemize}
+\end{minipage}
+\begin{defin}[Exposed terminals]
+Senders who can sense each other but still transmit safely (to different receivers)
+\end{defin}
+
+
+\end{document}

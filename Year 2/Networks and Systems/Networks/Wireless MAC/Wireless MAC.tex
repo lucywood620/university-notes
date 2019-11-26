@@ -55,9 +55,9 @@ Ad hoc mode:
 \section{Wireless Link Characteristics}
 Important differences from wired link
 \begin{itemize}
-	\item Decreased signal strength: radio signal attenuates as it propagates through matter
-	\item Interference from other sources: standardized wireless network frequencies shared by other devices interfere as well
-	\item Multipath propagation: radio signal reflects off object ground, arriving at destination at slightly different times
+	\item \textbf{Decreased signal strength}: radio signal attenuates as it propagates through matter
+	\item \textbf{Interference from other sources}: standardized wireless network frequencies shared by other devices interfere as well
+	\item \textbf{Multipath propagation}: radio signal reflects off object ground, arriving at destination at slightly different times
 \end{itemize}
 Make communication across a wireless link much more difficult
 \begin{defin}[Hidden terminals]
@@ -66,7 +66,7 @@ Senders that cannot sense each other but nonetheless collide at intended receive
 Multiple wireless senders and receivers create additional problems (beyond multiple access)\\
 \begin{minipage}{0.5\textwidth}
 \includegraphics[scale=0.7]{"hidden terminal"}\\
-Hidden terminal problem
+\underline{Hidden terminal problem}
 \begin{itemize}
 	\item B,A hear each other
 	\item B,C hear each other
@@ -75,7 +75,7 @@ Hidden terminal problem
 \end{minipage}
 \begin{minipage}{0.5\textwidth}
 \includegraphics[scale=0.7]{"signal attenuation"}\\
-Signal attenuation:
+\underline{Signal attenuation}
 \begin{itemize}
 	\item B,A hear each other
 	\item B,C hear each other
@@ -85,6 +85,7 @@ Signal attenuation:
 \begin{defin}[Exposed terminals]
 Senders who can sense each other but still transmit safely (to different receivers)
 \end{defin}
+Exposed terminals will cause collisions but it won't matter as the data gets to where it is intended anyway
 \section{802.11 LAN architecture}
 Wireless host communicates with base station:
 \begin{itemize}
@@ -102,16 +103,16 @@ Basic Service Set (BSS) (aka "cell") in infrastructure mode contains:
 	\item AP admin chooses frequency for AP
 	\item Interference possible: channel can be same as that chosen by neighbouring AP 
 \end{itemize}
-Host must associate with an AP
+Host must \textbf{associate} with an AP
 \begin{itemize}
-	\item Scans channels, listening for beacon frames containing AP's name (SSID) and MAC address
+	\item Scans channels, listening for \textbf{beacon frames} containing AP's name (SSID) and MAC address
 	\item Selects AP to associate with
 	\item May perform authentication
 \end{itemize}
 \section{802.11: passive/active scanning}
 \begin{minipage}{0.5\textwidth}
 \includegraphics[scale=0.7]{"passive scanning"}
-Passive scanning
+\underline{Passive scanning}
 \begin{enumerate}
 	\item Beacon frames sent from APs
 	\item Association request frame sent: H1 to selected AP
@@ -120,7 +121,7 @@ Passive scanning
 \end{minipage}
 \begin{minipage}{0.5\textwidth}
 \includegraphics[scale=0.7]{"active scanning"}
-Active scanning
+\underline{Active scanning}
 \begin{enumerate}
 	\item Probe request frame broadcast from H1
 	\item Probe response frames sent from APs
@@ -140,7 +141,7 @@ Active scanning
 	\end{itemize}
 \end{itemize}
 \section{IEEE 802.11 MAC Protocol: CSMA/CA}
-802.11 sender
+\textbf{802.11 sender}
 \begin{enumerate}
 	\item If sense channel idle for DIFS then transmit entire frame (no CD)
 	\item If sense channel busy then
@@ -151,13 +152,13 @@ Active scanning
 		\item If no ACK, increase random backoff interval, repeat 2
 	\end{itemize}
 \end{enumerate}
-802.11 receiver
+\textbf{802.11 receiver}
 \begin{itemize}
 	\item If frame received OK return ACK after SIFS (ACK needed due to hidden terminal problem)
 \end{itemize}
 Idea: allow sender to "reserve" channel rather than random access of data frames: avoid collisions of long data frames
 \begin{itemize}
-	\item Sender first transmits small request-to-send (RTS) packets to BS using CSMA
+	\item Sender first transmits small request-to-send (RTS) packets to BS (base station) using CSMA
 	\begin{itemize}
 		\item RTSs may still collide with each other (but they're short)
 	\end{itemize}

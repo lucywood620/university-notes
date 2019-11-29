@@ -169,7 +169,7 @@ gcc main.c func.o
 \section{\texttt{static}}
 \begin{itemize}
 \item \verb!static! and \verb!extern! are mutually exclusive as keywords
-\item \verb!static! variables have the same lifetime as the program
+\item \verb!static! variables have the same lifetime as the program - so on calling a function it will keep the same value as was defined before
 \item \verb!static! global variables (i.e. those outside function declarations)
  have \emph{file scope}
 \item \verb!static! local variables (i.e. those inside function declarations) have \emph{function scope}
@@ -211,9 +211,8 @@ gcc main.c func.o
 
 
 \section{Local variables}
+Properties of local variables
 \begin{itemize}
-\item Properties of local variables
-
 \item Automatic storage duration:
 \begin{itemize}
 \item Storage is automatically allocated when the function is called and de-allocated when it terminates

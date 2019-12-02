@@ -2,7 +2,6 @@
 \usepackage{../../../../format}
 \lhead{Networks and Systems - Security}
 
-
 \begin{document}
 \begin{center}
 \underline{\huge Software Security}
@@ -49,6 +48,7 @@ The stack being full is cased by
 \begin{itemize}
 	\item Memory is not guaranteed to be initialised to zero
 	\item Can malloc memory to same size of some sensitive data
+	\item Stack is in registers, heap is in main memory
 \end{itemize}
 \section{Understanding the platform}
 \begin{itemize}
@@ -56,5 +56,4 @@ The stack being full is cased by
 	\item Hardware is the base platform (for software)
 	\item Lots of things get in the way
 \end{itemize}
-
 \end{document}

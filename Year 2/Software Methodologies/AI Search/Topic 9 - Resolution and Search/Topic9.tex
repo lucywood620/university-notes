@@ -10,7 +10,7 @@
 \section{Proof systems}
 The proof system resolution:
 \begin{itemize}
-	\item all formulae are clauses, i.e. disjunctions of literals
+	\item All formulae are clauses, i.e. disjunctions of literals
 	\item One rule of inference, the resolution rule
 \end{itemize}
 We may assume that our knowledge base KB is a set of clauses as follows:
@@ -27,69 +27,95 @@ Suppose that we want to decide whether $KB \models \phi$
 	\item Iteratively apply the resolution rule to produce new clauses which are added to the set of clauses if they are not already present
 	\item This iterative process continues until either
 	\begin{itemize}
-		\item There are no new clauses to be added - in which case our algorithm answers that KB does not entail $\phi$
-		\item Two clauses resolve to yield the empty clause, so these clauses must be X and $\lnot X$, for some boolean variable X, in which case our algorithm answers that KB does entail $\phi$
+		\item There are no new clauses to be added - in which case our algorithm answers that KB \textbf{does not} entail $\phi$
+		\item Two clauses resolve to yield the empty clause, so these clauses must be X and $\lnot X$, for some boolean variable X, in which case our algorithm answers that KB \textbf{does} entail $\phi$
 	\end{itemize}
-	\item We can also factor, that is, replace $\alpha\land \alpha$ with $\alpha$ ($\alpha$ is some literal)
+	\item We can also factor, that is, replace $\alpha\lor \alpha$ with $\alpha$ ($\alpha$ is some literal)
 \end{itemize}
 The resolution inference algorithm is both sound and complete, so in the worst case it is exponential
 \subsection{Example}
 Recall our wumpus world KB from earlier
 \[
-\left\{\neg P_{1,1}, B_{1,1} \Leftrightarrow\left(P_{1,2}^{\vee} P_{2,1}\right), B_{1,2} \Leftrightarrow\left(P_{1,1}^{\vee} P_{2,2}^{\vee} P_{1,3}\right), \neg B_{1,1}, B_{1,2}\right\}
+\left\{\neg P_{1,1}, B_{1,1} \Leftrightarrow\left(P_{1,2}{\lor} P_{2,1}\right), B_{1,2} \Leftrightarrow\left(P_{1,1}{\lor} P_{2,2}{\lor} P_{1,3}\right), \neg B_{1,1}, B_{1,2}\right\}
 \]
 Rewrite these formula so that KB is in c.n.f and take the clauses
 \[
-\begin{array}{l}{\left\{\neg P_{1,1},-B_{1,1}^{\vee} P_{1,2}^{\vee} P_{2,1}, \neg P_{1,2}^{\vee} B_{1,1}, \neg P_{2,1}^{\vee} B_{1,1}\right.} \\ {\neg B_{1,2}^{\vee} P_{1,1}^{\vee} P_{2,2}^{\vee} P_{1,3}, \neg P_{1,1}^{\vee} B_{1,2}, \neg P_{2,2}^{\vee} B_{1,2}} \\ {\left.\neg P_{1,3}^{\vee} B_{1,2}, \neg B_{1,1}, B_{1,2}\right\}}\end{array}
+\begin{array}{l}{\left\{\neg P_{1,1},-B_{1,1}\lor P_{1,2}\lor P_{2,1}, \neg P_{1,2}\lor B_{1,1}, \neg P_{2,1}\lor B_{1,1}\right.,} \\ {\neg B_{1,2}\lor P_{1,1}\lor P_{2,2}\lor P_{1,3}, \neg P_{1,1}\lor B_{1,2}, \neg P_{2,2}\lor B_{1,2},} \\ {\left.\neg P_{1,3}\lor B_{1,2}, \neg B_{1,1}, B_{1,2}\right\}}\end{array}
 \]
 Suppose that the agent returns from room [1,2] to room [1,1] and then moves to room [2,1]\\
 As a consequence, suppose the following formulae are added to KB
 \[
-B_{2,1} \Leftrightarrow\left(P_{1,1}^{\vee} P_{2,2}^{\vee} P_{3,1}\right) \text { and } \neg B_{2,1}
+B_{2,1} \Leftrightarrow\left(P_{1,1}\lor P_{2,2}\lor P_{3,1}\right) \text { and } \neg B_{2,1}
 \]
-Or more precisely the formula
+Which converted to c.n.f is:
 \[
-B_{2,1}^{\vee} P_{1,1}^{\vee} P_{2,2}^{\vee} P_{3,1}, \neg P_{1,1}^{\vee} B_{2,1}, \neg P_{2,2}^{\vee} B_{2,1}, \neg P_{3,1}^{\vee} B_{2,1}, \neg B_{2,1}
+B_{2,1}\lor P_{1,1}\lor P_{2,2}\lor P_{3,1}, \neg P_{1,1}\lor B_{2,1}, \neg P_{2,2}\lor B_{2,1}, \neg P_{3,1}\lor B_{2,1}, \neg B_{2,1}
 \]
-Suppose we want to know whether $KB \models P_{1,3}$\\
+Suppose we want to know whether $KB \models P_{1,3}$ (which is finding if there is a pit in $P_{1,3}$)\\
 Add $\lnot P_{1,3}$ to our set of clauses and apply Resolution\\
 \\
-We get the empty set, so there is definitely a pit in room [1,3]
+We get the empty set, so there is definitely a pit in room [1,3]\\
+\\
+This is a bit of a cheat as the resolution is just being applied, where in reality it is difficult for an algorithm to do this. It is especially difficult as the set of clauses could get very large-
 \section{Realising Resolution via "global path-based" search}
 \begin{itemize}
 	\item In our first illustration we "magically" found the derivation of the empty clause
 	\item In general, what we'll need to do is apply a search algorithm in order to try and "find" the empty clause
-	\begin{itemize}
-		\item A state is a set of clauses, with the initial state the clauses of $KB\land \lnot \phi$
-		\item There are two actions: "resolve" and "factor"
-		\item A goal state is any set of clauses containing the empty clause
-		\item A state transition ($\Sigma$, action, $\Sigma$') is such that
-		\begin{itemize}
-			\item Resolve: the target of clauses $\Sigma'$ is the result of applying the resolution rule of inference (once) to the source set of clauses $\Sigma$
-			\item Factor: we factor a clause $\Sigma$ to obtain the set of clauses $\Sigma'$
-		\end{itemize}
-		\item The step cost of any transition is 1
-		\item The path from the initial state to a goal state is a "proof" with an optimal path being a "shortest proof" 
-	\end{itemize}
 \end{itemize}
-\section{Realising Resolution via "local state-based" search}
-Here is a "local state-based" search formulation of Resolution
+{\renewcommand{\arraystretch}{2}
+\begin{tabularx}{\textwidth}{|X|X|}
+\hline
+State & Set of clauses\\
+\hline
+Initial state & The clauses of $KB \lor \lnot \phi$\\
+\hline
+Actions & Resolve and Factor\\
+\hline
+Goal state & Any set of clauses containing the empty clause\\
+\hline
+State Transition & 
+($\Sigma$, action, $\Sigma$') such that
 \begin{itemize}
-	\item A state is a set of clauses, with the initial state of the clauses of $KB\land \lnot \phi$
-	\item A state transition $(\Sigma,\Sigma')$ is such that
-	\begin{itemize}
-		\item The target set of clauses $\Sigma'$ is
-		\begin{itemize}
-			\item The result of applying the resolution rule of inference (once) to the source set of clauses $\Sigma$, or
-			\item The result of factoring a clause $\Sigma$
-		\end{itemize}
-	\end{itemize}
-	\item The objective function f such that $f(\Sigma)$ is
-	\begin{itemize}
-		\item The number of clauses in $\Sigma$ if the empty clause $\varnothing$ is in $\Sigma$
-		\item $\infty$ otherwise, with $\infty$ a number bigger than the total number of clauses
-	\end{itemize}
+	\item \textbf{Resolve}: the target of clauses $\Sigma'$ is the result of applying the resolution rule of inference (once) to the source set of clauses $\Sigma$
+	\item \textbf{Factor}: we factor a clause $\Sigma$ to obtain the set of clauses $\Sigma'$
 \end{itemize}
+\\
+\hline
+Step cost & 1\\
+\hline
+
+\end{tabularx}}\\
+\\
+The path from the initial state to a goal state is a "proof" with an optimal path being a "shortest proof"
+\section{Realising Resolution via "local state-based" search}
+Here is a "local state-based" search formulation of Resolution\\
+\\
+{\renewcommand{\arraystretch}{2}
+\begin{tabularx}{\textwidth}{|X|X|}
+\hline
+State & Set of clauses\\
+\hline
+Initial state & The clauses of $KB \lor \lnot \phi$\\
+\hline
+State transition & 
+$(\Sigma,\Sigma')$ is such that the target set of clauses $\Sigma'$ is
+\begin{itemize}
+	\item The result of applying the resolution rule of inference (once) to the source set of clauses $\Sigma$, or
+	\item The result of factoring a clause $\Sigma$
+\end{itemize}
+\\
+\hline
+Objective function &
+f such that $f(\Sigma)$ is
+\begin{itemize}
+	\item The number of clauses in $\Sigma$ if the empty clause $\varnothing$ is in $\Sigma$
+	\item $\infty$ otherwise, with $\infty$ a number bigger than the total number of clauses
+	\item Or a better objective function might be the size of the smallest clause in $\Sigma$
+\end{itemize}
+\\
+\hline
+\end{tabularx}
+}
 
 
 

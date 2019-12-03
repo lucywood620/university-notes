@@ -29,23 +29,38 @@ There are many digital encoding schemes
 	\includegraphics[scale=0.7]{Modulation}
 \end{center}
 \subsection{NRZ Encoding (Non-Return-to-Zero)}
+
+\begin{defin}[NRZ Encoding]
 \begin{itemize}
 	\item A high voltage represents a 1 and a low voltage represents a 0
 	\item The voltage does not return to zero, it changes only when the bit value changes
 \end{itemize}
+\end{defin}
+
+
+
+
 \begin{itemize}
 	\item Problem: having long runs of consecutive bits with the same value (no changes in voltage) the constant signal values can't synchronize the communicating devices
+	\item Especially with long runs of either 0 or 1, there is no change to resynchronise so it is likely that the clocks would get out of sync
 \end{itemize}
 \subsection{NRZI Encoding}
 \begin{itemize}
 	\item NRZI attempts to alleviate the problem in NRZ scheme
-	\item 0 is encoded as no change in the level. 1 is encoded depending on the current state of the line
-	\item If the current state is low voltage the 1 will be encoded as high voltage, if the current state is again high voltage the 1 will be encoded as a low voltage
 \end{itemize}
+\begin{defin}[NRZI Encoding]
+\begin{itemize}
+	\item 0 is encoded as no change in the level. 1 is encoded depending on the current state of the line
+	\item 1 is encoded as an inverting of the current state
+\end{itemize}
+\end{defin}
+
+
 \begin{itemize}
 	\item This fixes the problem of sending consecutive 1s but not consecutive 0s
 \end{itemize}
 \subsection{Bipolar Encoding}
+\begin{defin}[Bipolar Encoding]
 \begin{itemize}
 	\item 0 is represented by a zero voltage, neither high nor low
 	\item 1 is represented by either positive voltage or negative voltage
@@ -54,10 +69,18 @@ There are many digital encoding schemes
 		\item It is represented by a negative voltage if it was represented by a positive voltage when it was last transmitted, and vice versa
 	\end{itemize}
 \end{itemize}
+\end{defin}
+For this, over a long enough message, the sum of the voltages is zero, this is called a "balanced encoding" and is desirable in some applications
+
 \subsection{Manchester Encoding}
+\begin{defin}[Manchester Encoding]
 \begin{itemize}
-	\item Manchester code: a high to low voltage represents a 1 and a low to high voltage represents a 0
+	\item A high to low voltage represents a 1 and a low to high voltage represents a 0
 	\item Uses signal changes to transmit a bit and achieves synchronisation
+	\item This is equivalent to an XOR of the clock signal and the NRZ encoding. The clock is at twice the frequency of the NRZ
+\end{itemize}
+\end{defin}
+\begin{itemize}
 	\item Twice the bandwidth of NRZ is required
 \end{itemize}
 \section{Multiplexing}
@@ -66,6 +89,11 @@ There are many digital encoding schemes
 	\item Different ways to accomplish multiplexing:
 \end{itemize}
 \subsection{Frequency Division Multiplexing}
+\begin{itemize}
+	\item Refactor the signals to start at different frequencies
+	\item Sit them side by side on the frequency spectrum on the same channel, so they don't interfere with each other
+	\item Put a small region in-between adjacent frequency bands to avoid interference
+\end{itemize}
 \begin{center}
 	\includegraphics[scale=0.7]{FDM}
 \end{center}
@@ -75,10 +103,16 @@ There are many digital encoding schemes
 	\item The multiplexed channel
 \end{enumerate}
 \subsection{Wavelength Division Multiplexing}
+\begin{itemize}
+	\item The same as FDM but for optical fibres instead of wireless signals
+\end{itemize}
 \begin{center}
 	\includegraphics[scale=0.7]{WDM}
 \end{center}
 \subsection{Time division multiplexing}
+\begin{itemize}
+	\item Intersperse the channels in some sequence, leave a guard time to be able to separate out information
+\end{itemize}
 \begin{center}
 	\includegraphics[scale=0.7]{TDM}
 \end{center}
@@ -87,7 +121,10 @@ There are many digital encoding schemes
 	\item Nice and clean mathematical method allows every transmitter to use the entire channel all the time
 	\item The individual transmissions are blended (or extracted by a receiver) using coding theory
 	\item Imagine that we have four transmitters called, from now on, stations
-	\item Each station has a chip, which is a four bit vector
+	\item Each station has a chip (i.e. a code), which is a four bit vector
+	\item These codes are chosen so that the dot product of any of these codes with any other of the codes is 0 i.e. they are orthogonal to each other
+	\item Transmitting the stations chip sequence a 1
+	\item Transmitting the negation of a stations chip sequence is a 0
 \end{itemize}
 
 

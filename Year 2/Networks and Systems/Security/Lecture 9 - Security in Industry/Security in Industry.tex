@@ -1,0 +1,146 @@
+\documentclass{article}[18pt]
+\usepackage{../../../../format}
+\lhead{Networks and Systems - Security}
+
+
+\begin{document}
+\begin{center}
+\underline{\huge Security in Industry}
+\end{center}
+Trade off between:
+\begin{itemize}
+	\item Security
+\end{itemize}
+and
+\begin{itemize}
+	\item Cost
+	\item Convenience
+	\item Usability
+\end{itemize}
+\section{Security in Large Corporations}
+Locked down environments:
+\begin{itemize}
+	\item Software has to be pre-vetted before being installed
+	\item Often will have VMs/OS images with everything setup
+	\item Network policies will be very strict
+\end{itemize}
+General security policies
+\begin{itemize}
+	\item Need to have badge and swipe everywhere you go
+	\item Very secure areas will be monitored/locked down
+	\item Usually very locked down by default - need to escalate to managers to get approval
+	\item Clean desk policy
+	\item Heavy monitoring of production servers
+\end{itemize}
+Laptop security policies
+\begin{itemize}
+	\item Screen locks
+	\item Encrypted HDD
+	\item Kensington locks
+	\item Monitoring software
+\end{itemize}
+\section{Attacks on Large Corporations}
+\begin{itemize}
+	\item Out of date software
+	\item Exploit single server running software with security flaw
+	\item Social engineering
+\end{itemize}
+\section{Best practices}
+\subsection{Login credentials}
+\begin{itemize}
+	\item Use strong hash function for passwords
+	\item Salt passwords
+	\item Secure your email and password database
+	\begin{itemize}
+		\item No outside access
+		\item Limit who can access this server
+		\item Encrypt if possible
+	\end{itemize}
+\end{itemize}
+\subsection{MFA}
+Pick at least 2 from:
+\begin{itemize}
+	\item Something you know
+	\item Something you have
+	\item Something you are
+\end{itemize}
+\subsection{Web Dev}
+\begin{itemize}
+	\item Add SRI checks on all 3rd party resources
+	\item Keep software up to date
+	\begin{itemize}
+		\item This is very important
+		\item Build in time to do this in estimates
+		\item OS deps, language, frameworks - all are important
+	\end{itemize}
+	\item Use well maintained framework for web development
+	\item Limit what users can upload
+	\begin{itemize}
+		\item XSS attacks
+		\item SQL injections
+		\item CSRF attacks
+	\end{itemize}
+	\item Never execute input from user directly
+	\item Use a strongly typed language
+	\item Keep it simple
+\end{itemize}
+\section{AWS Security}
+\begin{itemize}
+	\item Port scanning is a good idea
+	\item Security Groups allow for good security
+	\begin{itemize}
+		\item Clump nodes together
+		\item Connection-oriented (only have to allow outbound for outbound TCP request)
+	\end{itemize}
+	\item VPCs are complex but powerful
+	\begin{itemize}
+		\item Network-level security
+		\item Now even work between AWS regions
+	\end{itemize}
+	\item IAM profiles are very useful for security
+	\begin{itemize}
+		\item Only give access to particular resources
+	\end{itemize}
+	\item Use ELBs/ALBs with HTTPS enabled
+	\begin{itemize}
+		\item Simple to setup and performant
+		\item Scales automatically
+		\item No need to deal with certs in application
+	\end{itemize}
+\end{itemize}
+\section{Software Dependencies}
+Trust and package managers
+\begin{itemize}
+	\item System packages vs programming language packages, which is safer?
+	\begin{itemize}
+		\item GPG checks ensure that package you download was uploaded by maintainer
+		\item Usually system packages have to go through rigorous vetting process
+		\item Linux has been decades ahead of windows and mac os on this front
+	\end{itemize}
+\end{itemize}
+\section{Anti-patterns}
+\begin{itemize}
+	\item Automatic minor version updates
+	\item Depending on a lot of packages
+	\begin{itemize}
+		\item Each dependent package is a liability
+	\end{itemize}
+	\item Using packages which are no longer actively maintained
+	\item Installing dependencies directly on servers:
+	\begin{itemize}
+		\item This is bad for speed and security
+		\item Instead: bundle up dependencies with app using package/container/system image
+	\end{itemize}
+\end{itemize}
+\section{Personal Security: Best practices}
+\begin{itemize}
+	\item Use 2FA
+	\item Use secure apps
+	\item Use a password manager
+	\item Use TOR/SSH tunneling if you are on an unsafe connection
+	\item Use an ad blocker
+	\item Use Linux
+	\item Go to conferences
+\end{itemize}
+
+\end{document}

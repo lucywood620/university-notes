@@ -1,0 +1,144 @@
+\documentclass{article}[18pt]
+\usepackage{../../../../format}
+\lhead{Programming Paradigms - Functional Programming}
+\usepackage{minted}[tabsize=4]
+
+\begin{document}
+\begin{center}
+\underline{\huge IO and Interaction}
+\end{center}
+\section{Batch programs}
+\begin{itemize}
+	\item So far, we've only written batch programs
+	\item That is, programs that take all their inputs at the start and provide output at the end
+	\item To change what we compute, need to change source code a rerun
+\end{itemize}
+\section{Interactive programs}
+\begin{itemize}
+	\item What if we want to use haskell to write interactive programs?
+	\item These read from the keyboard and write to the screen as they are running
+\end{itemize}
+\section{A problem}
+\begin{itemize}
+	\item Haskell problems are pure mathematical functions
+	\item [$\Rightarrow$] Haskell programs therefore have no side effects
+\end{itemize}
+\begin{defin}[Side effect]
+	Modifying some (internal/hidden) state as well as returning a value
+\end{defin}
+\begin{itemize}
+	\item Reading from the keyboard and writing to the screen are side effects
+	\item [$\Rightarrow$] Interactive programs have side effects
+\end{itemize}
+\section{Conceptual idea}
+\begin{itemize}
+	\item We can think of an interactive program as a pure function of type \mintinline{haskell}{World -> World}
+	\item That is, it takes the current state of the world as input and produces a modified world as output
+	\item New World object reflects any side effects that were performed 
+\end{itemize}
+\textbf{IO actions}
+\begin{minted}{haskell}
+type IO a  = World -> (a,World)
+\end{minted}
+Input/output eats the world and produces a result of type a, along with a new world
+\section{Actions}
+\begin{itemize}
+	\item Copying the world is too expensive in practice
+	\item Introduce new types to distinguish pure expressions from impure actions
+	\item Use the concept, but Haskell uses a primitive type: implementation details are hidden
+	\item These actions may have side effects
+	\item Now we can write interactive programs in Haskell and "hide" the side effects behind type
+\end{itemize}
+\subsection{Basic actions}
+\subsubsection{Reading}
+\begin{minted}{haskell}
+getChar :: IO Char
+getChar = ...
+\end{minted}
+Read a character from the keyboard, echo it to the screen and return it
+\subsubsection{Writing}
+\begin{minted}{haskell}
+putChar :: Char -> IO ()
+putChar c = ...
+\end{minted}
+Write a character to the screen and return noting (indicated by the empty tuple)
+\subsection{Bridging from expressions into actions}
+\begin{itemize}
+	\item For type safety, we need a way of "wrapping" values into actions
+	\item Allows us to bring side-effect-free expressions into the "action" world
+\end{itemize}
+\begin{minted}{haskell}
+return :: a -> IO a
+return v = ...
+\end{minted}
+"Lift" a pure expression into an impure action\\
+\\
+Note: no way of turning an action back again
+\begin{important}[Return]
+The name return is rather misleading when coming from imperative languages. Calling return does not affect control flow
+\end{important}
+\subsection{Sequencing actions}
+We can combine a sequence of IO actions using do notation
+\begin{minted}{haskell}
+do v1 <- a1
+   v2 <- a2
+   ...
+   vn <- an
+   return (f v1 v2 ... vn)
+\end{minted}
+Binds results of actions to values then applies f to the values and lifts into "action-land" with return\\
+\\
+Similarity with list comprehensions
+\begin{itemize}
+	\item Each expression is called a generator
+	\item If we want to execute an action, but don't care about the result, we can use \mintinline{haskell}{_ <- ai} or just ai
+\end{itemize}
+\subsection{Example: reading characters}
+\begin{minted}{haskell}
+act :: IO(Char, Char)
+act = do x<- getChar
+         getChar
+         y <- getChar
+         return (x,y)
+\end{minted}
+\begin{itemize}
+	\item Read three characters, discard the second, and return the first and third
+	\item Note the use of return, without it we would get a type error
+\end{itemize}
+\subsection{When is an action performed}
+\begin{itemize}
+	\item Actions never require arguments \mintinline{haskell}{act :: IO} is not a function
+	\item Just specify that something will be done
+	\item Must run to execute
+	\item GHCi knows to run actions at the prompt
+	\item Conversely when writing a program to be compiled, GHC only ends up running the main action
+\end{itemize}
+\section{Pure vs impure}
+\begin{minipage}{0.5\textwidth}
+\underline{Pure}
+\begin{itemize}
+	\item Always produces the same result when applied to the same arguments
+	\item Never has side effects
+	\item Never alters state
+\end{itemize}
+\end{minipage}
+\begin{minipage}{0.5\textwidth}
+\underline{Impure}
+\begin{itemize}
+	\item May produce different results when applied to the same arguments
+	\item May have side effects
+	\item May alter state
+\end{itemize}
+\end{minipage}
+\begin{defin}[Referential transparency]
+	Replacing an expression by its value does not change the behaviour of the program
+\end{defin}
+\section{Actions as promises}
+\begin{itemize}
+	\item To fix the issue of referential transparency, \mintinline{haskell}{IO} is introduced
+	\item We can think then of a type \mintinline{haskell}{IO Char} as a placeholder for a char that will only materialise once the program executes
+	\item Moreover, it encapsulates a promise that this \mintinline{haskell}{Char} will actually appear
+	\item Manipulating an \mintinline{haskell}{IO Char} is equivalent to setting up "plans" to be executed when the \mintinline{haskell}{Char} materialises
+	\item This way, we maintain type safety "inside" the action
+\end{itemize}
+\end{document}

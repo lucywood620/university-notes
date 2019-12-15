@@ -1,0 +1,56 @@
+\documentclass{article}[18pt]
+\usepackage{../../../../format}
+\lhead{Software Methodologies - Image Processing}
+
+
+\begin{document}
+\begin{center}
+\underline{\huge Colour spaces and adding colour to grayscale images}
+\end{center}
+\section{RGB Colour Space}
+Colours represented as R,G,B intensities.\\
+\\
+The space is modelled geometrically by a cube with axes R,G and B\\
+\\
+RGB is used as it is based on the human perception of the visible spectrum - the human eye has R, G and B receptors with different sensitivity at different wavelengths
+{\renewcommand{\arraystretch}{2}
+\section{HSV colour space}
+\begin{tabularx}{\textwidth}{|X|X|X|}
+\hline
+H(ue)& Specifies the dominant wavelength & $0 \rightarrow 360^\circ$\\
+\hline
+S(aturation)& High values correspond to vibrant pure colours& $0\rightarrow 1$\\
+\hline
+V(alue)&Brightness of colour& $0\rightarrow 1$\\
+\hline
+\end{tabularx}}
+\subsection{The geometry of the HSV space}
+The hue is mapped cyclically, so red corresponds to both 0 and 360, so the HSV space can be modelled by a cylinder\\
+\\
+When we map the RGB cube onto the HSV cylinder we get a subset of this cylinder in the shape of a pyramid with hexagonal base, which in turn gives rise to the cone model
+\subsection{Thresholding}
+Thresholding produces a binary image from a grayscale image\\
+\\
+Easier to colour threshold in HSV space than RGB
+\begin{defin}[Colour slicing]
+	A portion of the Hue colour channel (range of wavalengths) can be isolated. For better results, also use S and V in conjunctoon
+\end{defin}
+Isolate objects by colour:
+\begin{itemize}
+	\item Use an upper and lower threshold on the Hue channel to isolate by colour
+	\item Use a threshold on the Saturation channel to isolate pure colours
+	\item Combine the two outputs with logical AND
+\end{itemize}
+\textbf{Specular highlights}
+\begin{itemize}
+	\item RGB: very different position in space to original colour
+	\item HSV: similar position in Hue as specular present in Value
+\end{itemize}
+\textbf{Shadows}:
+\begin{itemize}
+	\item HSV: isolated in the Saturation/Value components
+\end{itemize}
+\section{CMY colour space}
+
+
+\end{document}

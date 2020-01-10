@@ -1,0 +1,61 @@
+\documentclass{article}[18pt]
+\usepackage{../../../../format}
+\lhead{Software Methodologies - Computer Graphics}
+
+
+\begin{document}
+\begin{center}
+\underline{\huge Introduction}
+\end{center}
+Study methods for digitally synthesizing and manipulating visual content and the generation of 2D images for display\\
+\\
+Although it often refers to 3D computer graphics, it also studies 2D computer graphics and certain image processing.
+\section{Modern Graphics hardware setting}
+\begin{center}
+	\includegraphics[scale=0.7]{"general graphics system"}
+\end{center}
+\begin{itemize}
+	\item Typically, the CPU runs graphics applications, e.g. a computer game and continuously generates graphics commands
+	\item These commands are buffered and executed by the graphics processor one at a time
+\end{itemize}
+\section{Graphics processor}
+A graphics processor accepts graphics commands from the CPU and executes them\\
+Graphics commands may include:
+\begin{itemize}
+	\item Draw point
+	\item Draw polygon
+	\item Draw text
+	\item Clear frame buffer
+	\item Change drawing colour
+\end{itemize}
+It draws the rendered results into the frame buffer
+\section{Types of graphics commands}
+A graphics processor handles two types of drawing commands\\
+\textbf{2D graphics commands}:
+\begin{itemize}
+	\item Based on 2D coordinates
+	\item When objects overlap each other in x and y, the current object being drawn will obscure objects drawn previously
+	\item Frame buffer operations, such as copy/move/clear contents
+\end{itemize}
+\textbf{3D Graphics commands:}
+\begin{itemize}
+	\item Based on 3D coordinates
+	\item When objects overlap each other in x and y, the z values of the object determine their visibility
+\end{itemize}
+\section{Frame Buffer}
+\begin{defin}[Frame buffer]
+	A memory space that stores a grid\\
+	Each grid cell stores an intensity or colour value and is mapped to a pixel on the screen
+\end{defin}
+\begin{defin}[Double Buffering]
+	To support interactive graphics applications, more than one frame buffer is required. While an image in the frame buffer is being displayed, the next image can be rendered into the other frame buffer
+\end{defin}
+\section{Stereoscopic vision}
+\begin{defin}[Stereopsis]
+The impression of depth that is perceived when a scene is viewed with both eyes
+\end{defin}
+
+
+
+
+\end{document}

@@ -1,0 +1,91 @@
+\documentclass{article}[18pt]
+\usepackage{../../../../format}
+\lhead{Networks and Systems - Distributed Systems}
+
+
+\begin{document}
+\begin{center}
+\underline{\huge Introduction}
+\end{center}
+\begin{defin}[Distributed Systems]
+	A collection of independent components, including
+	\begin{itemize}
+		\item Hardware
+		\item Software Components
+		\item Web services
+	\end{itemize}
+	Which work together and appear to its users as a single coherent system
+\end{defin}
+\section{Comparison}
+Networks:
+\begin{itemize}
+	\item Focus: method and implementation of communication
+	\item Data transmission: addressing, scheduling, quality control and error recovery
+\end{itemize}
+Distributed Systems:
+\begin{itemize}
+	\item Components: heterogeneous (OS, H/W, S/W), physically loosely coupled, but are required to collaborate
+	\item System architecture: transparency, performance, reliability
+	\item Network technology: means to connect and organise DS components
+\end{itemize}
+\section{Applications of distributed systems}
+\begin{itemize}
+	\item Rapid system development, reuse existing components or services
+	\item Construct low cost and scalable system: link up many low cost machines to work together as a coherent system
+	\item Improve system reliability or availability: based on redundant components
+\end{itemize}
+\section{Design issues}
+Network issues:
+\begin{itemize}
+	\item Highly variable bandwidth
+	\item Possibly large and variable latency
+\end{itemize}
+Distributed event issues:
+\begin{itemize}
+	\item No native support to clock synchronization among hosts
+	\item Difficult to ensure data consistency
+\end{itemize}
+System failure issue:
+\begin{itemize}
+	\item Unpredictable failures of components, may be due to failure of a network component or communication delay incurred on the communication path
+\end{itemize}
+Security issues
+\begin{itemize}
+	\item Centralized systems:
+	\begin{itemize}
+		\item Can rely on physical security
+		\item Users understand what trust to assign to the system
+		\item System administrators are responsible
+	\end{itemize}
+	\item Distributed systems:
+	\begin{itemize}
+		\item None of the above applies
+		\item Hard to know what is being trusted or what can be trusted
+	\end{itemize}
+\end{itemize}
+\section{Transparency requirement}
+Hide the separation of components or their organisation and changes\\
+\begin{tabularx}{\textwidth}{|X|X|}
+	\hline
+	Types of transparency& Description\\
+	\hline
+	Access& Hide differences in data representations and how a component is accessed\\
+	\hline
+	Location& Hide where a component is located\\
+	\hline
+	Migration&Hide that a component or a resource may move to another location(content distribution network)\\
+	\hline
+	Relocation& Hide that a component or a resource may be moved to another location while in use (caching)\\
+	\hline
+	Replication& Hide that a component or a resource may have multiple copies(provide fast or local access)\\
+	\hline
+	Concurrency&Hide that a resource may be shared by several competitive users(handle shared resources)\\
+	\hline
+	Failure&Hide the failure and recovery of a resource or a component\\
+	\hline
+\end{tabularx}
+
+
+
+
+\end{document}

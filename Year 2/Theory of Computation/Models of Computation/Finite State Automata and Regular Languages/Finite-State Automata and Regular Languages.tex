@@ -1,0 +1,66 @@
+\documentclass{article}[18pt]
+\usepackage{../../../../format}
+\lhead{Theory of Computation - Models of Computation}
+
+
+\begin{document}
+\begin{center}
+\underline{\huge Finite-state Automata and Regular Languages}
+\end{center}
+\section{Formal Definition}
+A Deterministic Finite-State Automaton is a 5-tuple $(Q,\Sigma, \delta, q_0,F)$ where
+\begin{enumerate}
+	\item Q is a finite set of states
+	\item $\Sigma$ is a finite alphabet
+	\item $\delta: Q\times \Sigma \rightarrow$ is the transition function
+	\item $q_0\in Q$ is the start state, and
+	\item $F\subseteq Q$ is the set of accept states
+\end{enumerate}
+Let $M=(Q,\Sigma, \delta, q_0,F)$ to be a DFA and let $w=w_1w_2...w_n$ be a word over $\Sigma$. M accepts w if there is a sequence of states $r_0,r_1,r_2,...,r_n$ satisfying the following conditions
+\begin{enumerate}
+	\item $r_0=q_0$
+	\item $\delta(r_i,w_{i+1})=r_{i+1}$ for every i, $0\leqslant i\leqslant n-1$
+	\item $r_n\in F$
+\end{enumerate}
+\section{Regular Languages}
+The DFA M recognises the language L if L = $\{w| M \text{ accepts } w\}$
+\begin{defin}[Regular language]
+	A language is called a regular language if some DFA recognises it
+\end{defin}
+\section{Regular Operations}
+Boolean (set-theoretic):\\
+\begin{tabularx}{\textwidth}{r l}
+Union& $A\cup B=\{x| x\in A \text{ or } x\in B\}$\\
+Intersection& $A\cap B=\{x| x\in A \text{ and } x\in B\}$\\
+Difference& $A\backslash B=\{x| x\in A \text{ or } x\notin B\}$\\
+Complement& $\overline{A}=\Sigma^* \backslash A$
+\end{tabularx}
+Language theory specific\\
+\begin{tabularx}{\textwidth}{r l}
+Concatenation& $A\circ B = \{xy| x\in A \text{ and } y\in B\}$\\
+Star& \(A^{*}=\left\{x_{1} x_{2} \ldots x_{k} | k \geq 0 \text { and } x_{i} \in A \text { for every } i, 1 \leq i \leq k\right\}\)
+\end{tabularx}
+\section{Regular expression}
+A Regular Expression (RE) R defines a regular language L(R). We shall eventually prove that $RE\equiv DFA$ (i.e. REs define exactly class of the regular languages)\\
+\\
+The definition is inductive (recursive), i.e. there are initial RE, and new REs can be obtained from old ones by means of Regular Operations\\
+\\
+\textbf{Definition}: R is a Regular expression over the alphabet $\Sigma$ if R is
+\begin{enumerate}
+	\item a for some $a\in \Sigma$
+	\item $\epsilon$
+	\item $\varnothing$
+	\item $(R_1\cup R_2)$, where $R_1$ and $R_2$ are REs
+	\item $(R_1\circ R_2)$, where $R_1$ and $R_2$ are REs, or
+	\item $(R_1^*)$, where $R_1$ is an RE
+\end{enumerate}
+Note that by convention the concatenation symbol may be omitted, i.e. $R_1R_2$ means $R_1\circ R_2$. Parentheses may also be omitted, bearing in mind the precedence order
+\section{Combining Automata}
+Given $L_1$ recognised by $M_1=(Q_1,\Sigma,\delta_1,q_1,F_1)$ and $L_2$ recognised by $M_1=(Q_2,\Sigma,\delta_2,q_2,F_2)$; want to combine $M_1$ and $M_2$ into a new automaton M that would recognise $L_1\cup L_2$\\
+\\
+\textbf{Naive idea}: Simulate first $M_1$ on the input and then simulate $M_2$ on the same input; accept if either $M_1$ or $M_2$ or both accept. This does not work as after $M_1$ has run on the input, the input is exhausted and there is no way to "rewind" it in order to run $M_2$\\
+\\
+The solution is to run $M_1$ and $M_2$ on the input in parallel
+
+
+\end{document}

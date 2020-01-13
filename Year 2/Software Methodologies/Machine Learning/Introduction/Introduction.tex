@@ -15,6 +15,8 @@
 	\includegraphics[scale=0.7]{"Machine Learning Lifecycle1"}
 \end{center}
 \begin{itemize}
+	\item Randomise the data order so that the model doesn't train for specific orders
+	\item Two types of data, training and evaluation, to train and assess the model respectively 
 	\item To determine how to differentiate between things using our model rather than using human judgement and manual rules
 	\item We can extrapolate the ideas to other problem domains as well, where the same principles apply
 \end{itemize}
@@ -28,15 +30,17 @@ Machine learning is the study of algorithms that:
 	\item At some task T
 	\item With experience E
 \end{itemize}
-A well defined learning task is given by \texttt{P,T,E}
-\section{Supervised Learning}
+A well defined learning task is given by \texttt{<P,T,E>}
+\section{Supervised Learning (regression)}
 To learn the mapping (the rules) between a set of inputs and outputs\\
 \\
 Labelled data is provided of past input and output pairs during the learning process to train the model how it should behave
 \section{Unsupervised learning}
 To learn the hidden pattern (the rules) from a set of inputs (no output)\\
 \\
-Unlabelled data is provided of past input during the learning process to train the model how it should behave
+Unlabelled data is provided of past input during the learning process to train the model how it should behave\\
+\\
+\textbf{Dimensionality reduction} - Get rid of unused parameters and aspects of the system
 \section{Reinforcement learning}
 Occasional positive and negative feedback is used to reinforce behaviours
 \begin{itemize}
@@ -50,7 +54,12 @@ A reinforcement learning algorithm just aims to maximise its rewards by playing 
 \section{Key terms}
 \textbf{Label} - The variable that we are predicting typically represented by the variable y\\
 \textbf{Features} are input variables that describe our data typically represented by the variables ${x_1,x_2,x_3,...,x_n}$\\
-\textbf{Example} - A particular instance of data, x
+\textbf{Example} - A particular instance of data, x\\
+\textbf{Labelled example} - Has \{features,label\}:(x,y) used to train the model\\
+\textbf{Unlabelled example} - Has \{feature,?\}:(x,?) used for making prediction on new data\\
+\textbf{Model} - Maps examples to predict labels: $\hat{y}$ defined by internal parameters, which ate learned\\
+\textbf{Training} - Creating or learning the model\\
+\textbf{Inference} - Applying the trained model to unlabelled examples
 
 
 

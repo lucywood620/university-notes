@@ -7,6 +7,7 @@
 \begin{center}
 \underline{\huge Introduction}
 \end{center}
+OSI is more time consuming than TCP/IP as it has more layers and so there is more time taken when changing between layers
 \begin{defin}[Distributed Systems]
 	A collection of independent components, including
 	\begin{itemize}
@@ -16,16 +17,19 @@
 	\end{itemize}
 	Which work together and appear to its users as a single coherent system
 \end{defin}
+Duplicated components in distributed systems allow for redundancy if one of them fails\\
+The front end is a server and selects which component will serve the request\\
+It is not economical to get all the components to process the request if there are duplicated components.
 \section{Comparison}
 Networks:
 \begin{itemize}
-	\item Focus: method and implementation of communication
+	\item Focus on the method and implementation of communication
 	\item Data transmission: addressing, scheduling, quality control and error recovery
 \end{itemize}
 Distributed Systems:
 \begin{itemize}
 	\item Components: heterogeneous (OS, H/W, S/W), physically loosely coupled, but are required to collaborate
-	\item System architecture: transparency, performance, reliability
+	\item System architecture: transparency (hide the components from the user so it acts as one system, think transparency as in invisible), performance, reliability
 	\item Network technology: means to connect and organise DS components
 \end{itemize}
 \section{Applications of distributed systems}
@@ -34,6 +38,7 @@ Distributed Systems:
 	\item Construct low cost and scalable system: link up many low cost machines to work together as a coherent system
 	\item Improve system reliability or availability: based on redundant components
 \end{itemize}
+% Lecture 1 Finished Here
 \section{Design issues}
 Network issues:
 \begin{itemize}

@@ -1,0 +1,114 @@
+\documentclass{article}[18pt]
+\usepackage{../../../../format}
+\lhead{Programming Paradigms - Object Oriented Programming}
+\usepackage{minted}
+
+\begin{document}
+\begin{center}
+\underline{\huge Objects First with Java}
+\end{center}
+\section{Methods and Parameters}
+\begin{itemize}
+	\item Objects have operations which can be invoked (Java called them methods)
+	\item Methods may have parameters to pass additional information needed to execute
+	\item In Java methods are not "first class"
+	\item Many instances can be created from a single class
+	\item An object have attributed: values stored in fields
+	\item The class defines what field an object has, but each object stores its own set of values (the state of the object)
+\end{itemize}
+\section{Basic class structure}
+\begin{minted}{java}
+public class ClassName
+{
+	Fields
+	Constructors
+	Methods
+} 
+\end{minted}
+\section{Fields}
+\begin{itemize}
+	\item Fields store values for an object
+	\item They are also known as instance variables
+	\item Use the inspect option to view an object's fields
+	\item Fields define the state of an object
+\end{itemize}
+\section{Constructors}
+\begin{itemize}
+	\item Constructors initialise an object
+	\item They have the same name as their class
+	\item They store initial values into the fields
+	\item They often receive external parameter values for this
+\end{itemize}
+\begin{minted}{java}
+public TicketMachine(int ticketCost)
+{
+	price = ticketCost;
+	balance = 0;
+	total = 0;
+}
+\end{minted}
+\section{Accessor methods}
+\begin{itemize}
+	\item Methods implement the behaviour of objects
+	\item Accessors provide information about an object
+	\item Methods have a structure consisting of a header and a body
+	\item The header defines the method's signature \mintinline{java}{public int getPrice()}
+	\item The body encloses the method's statement
+\end{itemize}
+\begin{minted}{java}
+return price;
+\end{minted}
+\section{Mutator methods}
+\begin{itemize}
+	\item Have a similar method structure: header and body
+	\item Used to mutate (i.e. change) an object's state
+	\item Achieved through changing the value of one or more fields
+	\begin{itemize}
+		\item Typically contain assignment statements
+		\item Typically receive parameters
+	\end{itemize}
+\end{itemize}
+\begin{minted}{java}
+balance=balance+amount
+\end{minted}
+\section{Printing from methods}
+\begin{minted}{java}
+System.out.println("String")
+\end{minted}
+\section{If statements}
+\begin{minted}{java}
+if(perform some test) {
+	//Do these statements if the test gave a true result
+}
+else {
+	//Do these statements if the test gave a false result
+}
+\end{minted}
+\section{Local variables}
+Fields are one sort of variable
+\begin{itemize}
+	\item They store values through the life of the object
+	\item They are accessible throughout the class
+\end{itemize}
+Methods can include shorter lived variables
+\begin{itemize}
+	\item They exist only as long as the method is being executed
+	\item They are only accessible from within the method
+\end{itemize}
+\subsection{Scope and life time}
+\begin{itemize}
+	\item The scope of a local variable is the block it's declared in
+	\item The lifetime of a local variable is the time of execution of the block it's declared in
+\end{itemize}
+\subsection{Local variable syntax}
+\begin{minted}{java}
+public int refundBalance()
+{
+	int amountToRefund; // note there is no visibility modifier here
+	amountToRefund = balance;
+	balance = 0;
+	return amountToRefund;
+}
+\end{minted}
+
+\end{document}

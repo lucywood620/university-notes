@@ -67,7 +67,7 @@ Compilers and interpreters must:
 	\item Propose solutions wherever possible
 \end{itemize}
 \subsection{Structure of a compiler}
-Analysis part (front end)
+\textbf{Analysis part (front end)}
 \begin{itemize}
 	\item Breaks the source program into constituent pieces
 	\item Imposes grammatical structure on them (according to the rules of the source language)
@@ -75,7 +75,7 @@ Analysis part (front end)
 	\item Provides informative error messages (if errors detected)
 	\item Collects all the important information in a symbol table and passes the symbol table and IR along to the synthesis part
 \end{itemize}
-Synthesis part (back end)
+\textbf{Synthesis part (back end)}
 \begin{itemize}
 	\item Uses the symbol table and the IR
 	\item Generates and optimises the target code
@@ -208,7 +208,7 @@ Recursive use of compilers (and T diagrams):
 \begin{itemize}
 	\item \textcolor{red}{1st compiler written in S translating A to T}
 	\item \textcolor{cyan}{2nd compiler written in T translating S to T}
-	\item \textcolor{LimeGreen}{3rd compiler written in T translating A to T}
+	\item \textcolor{LimeGreen}{3rd compiler written in T translating A to T (the compiler made as the conjunction of the first two)}
 \end{itemize}
 \begin{center}
 	\includegraphics[scale=0.7]{"Recursive Compiler"}

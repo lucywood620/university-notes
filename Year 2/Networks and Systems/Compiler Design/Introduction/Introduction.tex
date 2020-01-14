@@ -1,4 +1,5 @@
 \documentclass{article}[18pt]
+\usepackage[dvipsnames]{xcolor}
 \usepackage{../../../../format}
 \lhead{Networks and Systems - Compiler Design}
 
@@ -205,9 +206,9 @@ T diagrams: a set of "puzzle pieces"
 \end{center}
 Recursive use of compilers (and T diagrams):
 \begin{itemize}
-	\item 1st compiler written in S translating A to T
-	\item 2nd compiler written in T translating S to T
-	\item Third compiler written in T translating A to T
+	\item \textcolor{red}{1st compiler written in S translating A to T}
+	\item \textcolor{cyan}{2nd compiler written in T translating S to T}
+	\item \textcolor{LimeGreen}{3rd compiler written in T translating A to T}
 \end{itemize}
 \begin{center}
 	\includegraphics[scale=0.7]{"Recursive Compiler"}

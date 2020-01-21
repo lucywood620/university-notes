@@ -1,0 +1,65 @@
+\documentclass{article}[18pt]
+\usepackage{../../../../format}
+\lhead{Theory of Computation - Algorithms and Complexity}
+
+
+\begin{document}
+\begin{center}
+\underline{\huge Dijkstra's Shortest Path Algorithm}
+\end{center}
+The shortest path between u and v is denoted $\delta(u,v)$, if there is no path, then $\delta(u,v)=\infty$
+\section{Can a shortest path contain a cycle?}
+A directed cycle is:
+\begin{itemize}
+	\item Positive: if its edge weights sum up to a positive number
+	\item Negative: if its edge weights sum up to a negative number
+\end{itemize}
+If there is a positive cycle in the graph, it will not be contained in any shortest path between u and v so we can assume that the shortest paths we find contain no positive cycles.\\
+\\
+However if there is a negative cycle between u and v, then $\delta(u,v)=-\infty$ so we shall assume that the graphs we consider do not contain negative cycles.
+\section{Single-Source Shortest Paths}
+\begin{itemize}
+	\item Aim: to describe an algorithm that solves the single-source shortest paths problem, i.e. an algorithm that finds the shortest path from a specific source vertex 
+	\item This is a generalization of BFS
+	\item So the output of the algorithm should be two arrays d, $\pi$ where for each vertex v:
+	\begin{itemize}
+		\item $d(v)=\delta(s,v)$
+		\item $\pi(v)$ is the predecessor of v
+	\end{itemize}
+\end{itemize}
+\section{Relaxation}
+\begin{itemize}
+	\item Assume that the weight on every edge is non-negative
+	\item We do not directly compute the entry $d(v)=\delta(s,v)$ 
+	\item Instead, at every step, $d(v)$ is an estimate for $\delta(s,v)$
+	\begin{itemize}
+		\item Initially, $d(v)=\infty$, and it always remains $d(v)\geqslant \delta(s,v)$
+		\item $d(v)$ is updated (i.e. it decreases) as shorter paths are found
+		\item At the end of the algorithm we have $d(v)=\delta(s,v)$
+	\end{itemize}
+\end{itemize}
+\begin{lstlisting}[caption=Initialise-Single-Source({G,s})]
+for each vertex v$\in$V(g) do
+	d(v)=$\infty$
+	$\pi$(v)=NIL
+d(s)=0
+\end{lstlisting}
+The process of relaxing an edge (u,v):
+\begin{itemize}
+	\item Test whether we can improve the shortest path from s to v that we found so far, by going through u
+	\item If yes, then update $d(v)$ and $\pi(v)$
+	\begin{itemize}
+		\item Decrease the estimate $d(v)$
+		\item Update the predecessor $\pi(v)$ to u
+	\end{itemize}
+	\item The algorithm first calls initialise-single-source and then it repeatedly relaxes the appropriate edges (according to the weight function w)
+\end{itemize}
+\begin{lstlisting}[caption=Relax({u,v,w})]
+if d(v)$>$d(u)+w(u,v) then
+	d(v)=d(u)+w(u,v)
+	$\pi$(v)=u
+\end{lstlisting}
+\section{Dijkstra's Algorithm}
+
+
+\end{document}

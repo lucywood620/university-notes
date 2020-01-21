@@ -1,0 +1,558 @@
+\documentclass{article}
+\usepackage{enumerate}
+\usepackage{boxedminipage}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usepackage{fancyvrb}
+%\usepackage{hyperref}
+\definecolor{links}{HTML}{2A1B81}
+\usepackage{../../../../format}
+\lhead{Programming Paradigms - Systems Programming}
+
+\usetikzlibrary{shapes.misc}
+\usetikzlibrary{shapes.geometric, arrows, positioning}
+
+
+\usepackage{minted}
+
+\begin{document}
+\begin{center}
+	\underline{\huge Large Programs and External Libraries}
+\end{center}
+
+
+
+
+\section{Scope - again}
+\begin{itemize}
+\item Scope in a single file has two specific uses:
+\begin{itemize}
+\item Local identifiers visible only in code blocks
+\item Global identifiers visible to all functions in one file
+\end{itemize}
+
+\item Larger programs need multiple source files
+
+\item Therefore scope has to be managed across files in large programs and external libraries like OpenGL
+
+\item In C, functions and variables must be \emph{declared} before they are used, but can be \emph{defined} later
+\end{itemize}
+
+
+
+\section{Multiple source files}
+\begin{itemize}
+\item A C program may be divided among any number of source files
+\item By convention, source files have the extension \verb!.c!
+\item Each source file contains part of the program
+\begin{itemize}
+\item primarily definitions of functions and variables
+\end{itemize}
+\item One source file must still contain a function named \verb!main()!, which is the entry point for the program
+\end{itemize}
+
+
+
+\section{Header files}
+\begin{itemize}
+\item Problems that arise when a program is divided into several source files:
+\begin{itemize}
+\item How can a function in one file call a function that's defined in another file?
+\item How can a function access an external variable in another file?
+\item How can two files share the same macro definition or type definition?
+\end{itemize}
+\item The answer lies with the \verb!#include! directive, which makes it possible to share information among any number of source files
+\end{itemize}
+
+
+
+\section{Header and multiple source files}
+
+\begin{itemize}
+\item \verb!func.h!
+\begin{itemize}
+\item declarations
+\item The header file contains the declarations needed to use the functions in \verb!func.c!
+\end{itemize}
+
+\item \verb!func.c!
+\begin{itemize}
+\item \verb!#include "func.h"!
+\item definitions
+\item The source file contains all the global and private functions and variables chosen
+\end{itemize}
+
+\item \verb!main.c!
+\begin{itemize}
+\item \verb!#include "func.h"!
+\item This should contain at least the \verb!main()! function
+\end{itemize}
+\end{itemize}
+
+
+
+\section{Sharing identifier declarations}
+\begin{itemize}
+\item When variables and functions need to be shared between files there often needs to be a way to separate declarations \verb!&! definitions
+
+\item We can then declare identifiers so that they can be used in any file, while keeping the definition in a single place in one file
+
+\item The solution to this is the \verb!extern! modifier 
+\end{itemize}
+
+
+
+\section{\texttt{extern} use with variables}
+\begin{itemize}
+\item Use the header file to contain the declarations of variables that are shared with other files
+\begin{minted}{c}
+func.h
+  extern int cost; // declaration
+
+func.c
+  int cost = 1; // definition
+\end{minted}
+\end{itemize}
+
+
+
+\section{\texttt{extern} use with functions}
+\begin{itemize}
+\item Use the header file to contain the declarations of just the functions shared with other files
+\newcommand{\graytext}[1]{\textcolor{gray}{#1}}
+
+\begin{minted}{c}
+func.h
+ +graytext[extern] void set_cost( int val ); // declaration
+func.c
+  void set_cost( int val ) {
+    cost = val;
+  }                                // definition
+\end{minted}
+\end{itemize}
+
+
+
+\section{Abstract data types}
+\begin{itemize}
+\item How should we divide functions into files?
+\item Abstract data types pre-date O-O concepts
+\item Identify key data types and encapsulate them in separate files
+\item Access the instances using the public interface, functions and variables
+\item Hide other implementation details from the users
+\end{itemize}
+
+
+
+\section{Walls of abstraction}
+\begin{center}
+\tikzset{
+  myarrow/.style = {line width=0.5mm, draw=black, -triangle 60, fill=white,postaction={draw, line width=2mm, shorten >=3mm, -}}
+}
+
+\begin{tikzpicture}
+
+\draw[fill=gray] (-0.5, 1) rectangle (0.5, 3.5) {};
+\draw[fill=gray] (-0.5, -1) rectangle (0.5, -3.5) {};
+
+\node[align=left] at (-4,2) {User code\\\\Calls to the\\public functions};
+
+\node[align=left] at (4,0) {ADT code\\Private implementation\\\\\\\\\\Any implementation that\\supports the interface\\can be used};
+\node at (0,0) {public interface};
+\draw [myarrow] (-1,0.5) -- (1,0.5);
+\draw [myarrow] (1,-0.5) -- (-1,-0.5);
+\end{tikzpicture}
+\end{center}
+
+
+
+\section{ADT Benefits}
+\begin{itemize}
+\item Abstraction
+\begin{itemize}
+\item from the implementation details
+\end{itemize}
+\item Encapsulation
+\begin{itemize}
+\item user cannot access internals
+\end{itemize}
+\item Independence
+\begin{itemize}
+\item reduces number of interactions
+\end{itemize}
+\item Flexibility
+\begin{itemize}
+\item implementation change transparent
+\end{itemize}
+\item Another protection from our brain's limited powers to manage complexity in systems
+\end{itemize}
+
+
+
+\section{ADT implementation}
+\begin{itemize}
+\item C usually implements complex types with a \verb!struct! definition
+
+\item In part to hide the details of the \verb!struct! ADTs are sometimes implemented with only a pointer type visible to the user, the \verb!struct! itself remains private to the ADT source file
+
+\item More modern languages than C have clearer ways to handle this through class definitions
+\end{itemize}
+
+
+
+\section{ADT implementation for \texttt{POINT\_T}}
+\begin{itemize}
+\item Publicly in the header file \verb!point.h! define a new type:
+\begin{minted}{c}
+typedef struct PointStructType *POINT_T;
+\end{minted}
+
+\item Privately in the source file point.c declare the underlying structure:
+
+\begin{minted}{c}
+struct PointStructType {
+  double array[NUM_DIMS];
+};
+\end{minted}
+\end{itemize}
+
+
+
+\section{Summary: large programs}
+\begin{itemize}
+\item Split large software projects into separate files to manage complexity
+
+\item \verb!extern! allows variables and functions to be declared and shared in header files
+
+\item \verb!#include! allows header (\verb!.h!) files to be included wherever needed
+
+\item \verb!typedef! allows the creation of new abstract data types that encapsulate implementation privately
+\end{itemize}
+
+
+
+\section{Recap - Compilation Model}
+
+\begin{center}
+\tikzset{
+  myarrow/.style = {line width=0.5mm, draw=black, -triangle 60, fill=white,postaction={draw, line width=2mm, shorten >=3mm, -}}
+}
+\begin{tikzpicture}
+
+\node at (0,0) {source code};
+\draw [myarrow] (0,-0.3) -- (0,-1.1);
+
+
+\begin{scope}[yshift=-40]
+\draw[rounded corners] (-1.5, -0.3) rectangle (1.5, 0.3) {};
+\node at (0,0) {Pre-processor};
+\draw [myarrow] (0,-0.3) -- (0,-1.1);
+\begin{scope}[yshift=-20]
+\node at (1.5,0) {source code};
+\end{scope}
+\begin{scope}[yshift=-40]
+\draw[rounded corners] (-1.5, -0.3) rectangle (1.5, 0.3) {};
+\node at (0,0) {Compiler};
+\draw [myarrow] (0,-0.3) -- (0,-1.1);
+\begin{scope}[yshift=-20]
+\node at (1.5,0) {assembly code};
+\end{scope}
+\begin{scope}[yshift=-40]
+\draw[rounded corners] (-1.5, -0.3) rectangle (1.5, 0.3) {};
+\node at (0,0) {Assembler};
+\draw [myarrow] (0,-0.3) -- (0,-1.1);
+\node at (-3.5,0) {external libraries};
+\draw [myarrow] (-2.5,-0.3) -- (-0.5,-1.1);
+\begin{scope}[yshift=-20]
+\node at (1.5,0) {object code};
+\end{scope}
+\begin{scope}[yshift=-40]
+\draw[rounded corners] (-1.5, -0.3) rectangle (1.5, 0.3) {};
+\node at (0,0) {Linker};
+\draw [myarrow] (0,-0.3) -- (0,-1.1);
+\begin{scope}[yshift=-40]
+\node at (0,0) {executable code};
+\end{scope}
+\end{scope}
+\end{scope}
+\end{scope}
+\end{scope}
+\end{tikzpicture}
+\end{center}
+
+
+
+\section{The C Preprocessor}
+\tikzset{
+  myarrow/.style = {line width=0.5mm, draw=black, -triangle 60, fill=white,postaction={draw, line width=2mm, shorten >=3mm, -}}
+}
+\begin{center}
+\begin{tikzpicture}
+
+\node at (0,0) {source code};
+\draw [myarrow] (0,-0.3) -- (0,-1.1);
+
+
+\begin{scope}[yshift=-40]
+\draw[rounded corners] (-1.5, -0.3) rectangle (1.5, 0.3) {};
+\node at (0,0) {Pre-processor};
+\draw [myarrow] (0,-0.3) -- (0,-1.1);
+\begin{scope}[yshift=-40]
+\node at (0,0) {source code};
+\end{scope}
+\end{scope}
+\end{tikzpicture}
+\end{center}
+\begin{itemize}
+\item Directives such as \verb!#define! and \verb!#include! are handled by the preprocessor, a piece of software that edits C programs just prior to compilation
+
+\item Its reliance on a preprocessor makes C (and C++) unique among major programming languages
+\end{itemize}
+
+
+
+\section{Conditional include}
+\begin{minted}{c}
+#ifndef CODE_H
+  #define CODE_H // define the identifier
+  extern void setCount( int val );
+#endif
+\end{minted}
+
+\begin{itemize}
+\item This allows the header file to be \verb!#include!d many times
+\item If the header file has not been seen before - set definitions
+\item And set that we've seen it before - \verb!#define CODE_H!
+\item Otherwise skip
+\end{itemize}
+
+
+
+\section{The link editor (linker)}
+\begin{center}
+\tikzset{
+  myarrow/.style = {line width=0.5mm, draw=black, -triangle 60, fill=white,postaction={draw, line width=2mm, shorten >=3mm, -}}
+}
+\begin{tikzpicture}
+\node at (0,0) {object code};
+\draw [myarrow] (0,-0.3) -- (0,-1.1);
+\node at (-3.5,0) {external libraries};
+\draw [myarrow] (-2.5,-0.3) -- (-0.5,-1.1);
+\begin{scope}[yshift=-40]
+\draw[rounded corners] (-1.5, -0.3) rectangle (1.5, 0.3) {};
+\node at (0,0) {Linker};
+\draw [myarrow] (0,-0.3) -- (0,-1.1);
+\begin{scope}[yshift=-40]
+\node at (0,0) {executable code};
+\end{scope}
+\end{scope}
+\end{tikzpicture}
+\end{center}
+\begin{itemize}
+\item The linker's job is to combine all the files needed to form the executable
+
+\item It specifically has to resolve all symbols, functions and variables, it most often fails when it can't find required object code, for example because it is in the wrong folder, or you have forgotten to specify which external library to link with e.g. the maths library with \verb~-lm~
+\end{itemize}
+
+
+
+
+\section{Makefiles}
+\begin{itemize}
+\item When we have a number of files to compile together we need a rule-set to perform this
+\item The \verb!make! command provides this
+\item Requires a rule-file called the \verb!Makefile!
+\item Declarative programming style set of rules for building the program
+\item Format of each rule:
+\begin{minted}{c}
+target [target ...]: [component ...]
+        [command 1]
+        ...
+        [command n]
+\end{minted}
+\item N.B. Tab character
+\item \verb!target! - what you want to make
+\item \verb!component! - something which needs to exist (might need another rule)
+\end{itemize}
+
+
+
+\section{Makefiles: Example}
+\begin{itemize}
+\item Files: \verb!main.c!, \verb!counter.h!, \verb!counter.c!, \verb!sales.h!, \verb!sales.c!
+
+\begin{minted}{c}
+all: counter.o sales.o main.c
+        gcc -o program main.c counter.o sales.o
+
+counter.o: counter.c counter.h
+        gcc -c counter.c
+
+sales.o: sales.c sales.h
+        gcc -c sales.c
+
+clean:
+        rm -rf program counter.o sales.o
+\end{minted}
+\end{itemize}
+
+
+
+\section{Makefiles: Macros}
+\begin{itemize}
+\item Macros can be used to store definitions
+\begin{itemize}
+\item \verb!AUTHOR = Konrad Dabrowski!
+\end{itemize}
+\item They can be generated from commands
+\begin{itemize}
+\item \verb!DATE = `date`!
+\end{itemize}
+\item And used in the \verb!Makefile!
+\begin{minted}{c}
+all:
+        echo $(AUTHOR) compiled this on $(DATE)
+\end{minted}
+\item \verb!all:!
+\item Running this gives:
+\item \verb!echo Konrad Dabrowski compiled this on `date`!
+\begin{itemize}
+\item \verb!Konrad Dabrowski compiled this on Thu 16! \verb!Jan 10:54:36 GMT 2020!
+\end{itemize}
+\end{itemize}
+
+
+
+\section{Makefiles: Pattern Rules}
+\begin{itemize}
+\item We can specify a pattern rule which matches multiple files
+\item e.g. compile C files into object files:
+\begin{minted}{c}
+DEPS = counter.h sales.h
+%.o: %.c $(DEPS)
+        gcc -c $< -o $@
+\end{minted}
+\item This would change our original Makefile example to:
+\begin{minted}{c}
+all: counter.o sales.o main.c
+        gcc -o program main.c counter.o sales.o
+
+%.o: %.c $(DEPS)
+        gcc -c $< -o $@
+
+clean:
+        rm -rf program counter.o sales.o
+\end{minted}
+\end{itemize}
+
+
+
+\section{Makefiles: A few comments}
+\begin{itemize}
+\item Comments - lines starting with \verb!#!
+\item Lazy evaluation
+\item If a target exists and has a timestamp later than all of its components assume it is up to date and don't bother to re-process
+\item Nothing to do with C
+\item Although Makefiles are often used with C programs there is no intrinsic link - can use with any code/work
+\item You can run any specific rule by invoking its target:
+\item \verb!make sales.o!
+\end{itemize}
+
+
+
+\section{External libraries}
+\begin{itemize}
+\item One of the reasons why C is so popular is the huge collection of tried and tested libraries available across many different computing platforms.  E.g.  OpenGL
+\end{itemize}
+
+\begin{center}
+\tikzset{
+  myarrow/.style = {line width=0.5mm, draw=black, -triangle 60, fill=white,postaction={draw, line width=2mm, shorten >=3mm, -}}
+}
+\begin{tikzpicture}
+\draw[rounded corners] (-0.9, -0.45) rectangle (0.9, 0.45) {};
+\node at (0,0) {C API};
+\draw [myarrow] (1.0,0) -- (2.5,0);
+\node[align=center] at (1.75,-1) {Commands \&\\Geometry};
+\begin{scope}[xshift=100]
+\draw[rounded corners] (-0.9, -0.45) rectangle (0.9, 0.45) {};
+\node[align=center] at (0,0) {Graphics\\hardware*};
+\draw [myarrow] (1.0,0) -- (2.5,0);
+\node[align=center] at (1.75,-1) {Pixels};
+\begin{scope}[xshift=100]
+\draw[rounded corners] (-0.9, -0.45) rectangle (0.9, 0.45) {};
+\node[align=center] at (0,0) {Display};
+\end{scope}
+\end{scope}
+\end{tikzpicture}
+\end{center}
+
+\begin{itemize}
+\item Commands from your program are sent by the API to the graphics hardware which generates pixels for display
+\item *in OpenGL the hardware behaves as a state machine
+\end{itemize}
+
+
+
+\section{OpenGL programming}
+\begin{itemize}
+\item On its own OpenGL is:
+\begin{enumerate}
+\item Low level
+\item O/S independent
+\end{enumerate}
+\item Hence it is usually used with:
+\begin{itemize}
+\item GLU a utility library with high level shape support
+\item GLUT utility library for window creation and I/O
+\end{itemize}
+\end{itemize}
+
+
+
+\section{Commonly used C libraries}
+\begin{itemize}
+\item general: \verb!libglib! / \verb!libgobject! / \verb!libpthread!
+\item console: \verb!libncurses!
+\item 2D graphics: \verb!libX11! / \verb!libSDL!
+\item 3D graphics: \verb!libGL! / \verb!libGLU! / \verb!libGLUT!
+\item GUI toolkits: \verb!libgtk! / \verb!libQT!
+\item Images: \verb!libjpeg! / \verb!libpng! / \verb!libgif!
+\item text rendering: \verb!libpango! / \verb!libfreetype!
+\item sound: \verb!libasound! / \verb!libSDL!
+\item compression: \verb!libz! (\verb!zlib!) / \verb!libgzip! / \verb!libbz2!
+\item encryption: \verb!libcrypt! / \verb!libssl! / \verb!libgssapi! / \verb!libkrb5!
+\item XML: \verb!libxml2!
+\item web: \verb!libcurl!
+\end{itemize}
+
+
+
+\section{Usage of libraries}
+\begin{itemize}
+\item If a library is \emph{statically linked} then a copy of the library is included in the executable
+\item C/C++/assembly can be combined
+\item Often bound to other languages e.g. php, XML, curl
+\item Many of these libraries will be \emph{dynamically linked}
+\item LGPL (Lesser Gnu Public License) often used
+\item Try \verb!ldd /usr/bin/php! on Linux to list dynamic dependencies
+\end{itemize}
+
+
+
+\section{Dynamic vs static linking}
+\begin{itemize}
+\item Dynamic linking takes place at run-time not build-time
+\item Reduces filespace demands (bloat) by keeping only one copy of the library
+\item Can help with updates e.g. for security
+\item Dynamic libraries are called differently by OSs
+\item Linux: shared objects (\verb!.so!)
+\item Windows: Dynamic Link Libraries (\verb!.dll!)
+\item OSX: \verb!.dylib!
+\item Can lead to ``DLL Hell'': many versions of the same dynamic library
+\item Best to include version number with library
+\end{itemize}
+
+
+\end{document}
+\end{document}

@@ -1,0 +1,99 @@
+\documentclass{article}[18pt]
+\usepackage{../../../../format}
+\lhead{Software Engineering - Tests}
+
+
+\begin{document}
+\begin{center}
+\underline{\huge Unit Tests}
+\end{center}
+\begin{itemize}
+	\item Unit testing is widely used, regardless of software architectural style
+	\item Unit testing means testing the smallest separate module in the system, for most languages this will be a class
+	\item The principle of unit testing is to test each unit in isolation
+	\item Thorough unit testing increases confidence in the software when units are integrated
+\end{itemize}
+\textbf{Why objects and not methods?} - Methods are usually not independent of each other in a class
+\section{Software Contracts}
+Contracts identify what a unit should do\\
+\\
+Consider the impact of any changes to a contract (interface), such as
+\begin{itemize}
+	\item Addition of new methods
+	\item Removal of existing methods
+	\item Renaming methods or changes to their prototype/signature
+\end{itemize}
+Tests will then need to be updated to deal with any changes that occur to the contract so contract changes should be minimised to avoid excessive regression testing\\
+Testing public methods implies black-box testing
+\begin{itemize}
+	\item No need (ability) to see the source code for the unit under test
+	\item Can test third party libraries without access to source code
+	\item No need to now about the precise implementation (encapsulation)
+\end{itemize}
+The contract should define what the correct output should be (hence the contract provides the oracle)\\
+Unit testing can use the methods defined in the contract for the unit\\
+For contracts defined by an interface, we have to test a concrete class that implements the contract\\
+Contracts need not be interfaces - the contract for a class could be its public methods, therefore we test public methods
+\section{Functional Testing}
+\begin{itemize}
+	\item Focuses on what the module does, not how it does it
+	\item We usually aim to select test cases that cover normal operation, boundary conditions, and errors
+\end{itemize}
+\section{Equivalence testing}
+For a given test case, we should be able to separate input values into equivalence classes. These are organised (categorised) so that:
+\begin{itemize}
+	\item Every possible input belongs to one equivalence class, so the set of classes together contain the complete set of possible inputs
+	\item No input value belongs to more than one equivalence class
+	\item An element can then represent all other elements in the class, so if a fault can be detected using one member of the equivalence class, there is a high probability that every other member of that class will reveal the same fault
+\end{itemize}
+This means that the overall test set only needs to contain representative members of each class
+\section{Code Reviews}
+These are a form of structural testing. Two forms:
+\begin{itemize}
+	\item A \textbf{walkthrough} is led by the coder who represents the code to the team, the members comment on its correctness in an informal atmosphere and the aim is to find faults, not to fix them
+	\item A \textbf{code inspection} is more formal than a walkthrough, with the team checking code and documentation against a prepared list of concerns
+\end{itemize}
+These approaches have been studied experimentally for many years, and are recognised as being consistently successful as a means of finding faults\\
+\\
+Because of this, many organisations also use reviews to test the requirements specification, design etc
+\section{Structural Testing Approaches}
+These are based upon the way that the data is manipulated by the code. Major forms are:
+\begin{itemize}
+	\item Statement testing  - Every statement in the component is executed at least once in some test
+	\item Branch testing - For every decision point, each branch is chosen at least once in some test
+	\item Path testing - Every distinct path through code is executed at least once in some test
+	\item Definition use path testing - Every path between the definition of every variable to every use of that definition is exercised in some test
+	\item All-uses testing - The test set includes at least one path from every definition to every use that can be reached by that definition
+	\item All-predicate-uses/some-computational-uses testing: For every variable and definition of that variable, a test includes at least one path from the definition to every predicate use; if there are definitions not covered by that, then include computational uses so that every definition is covered
+	\item All-computational-uses/some-predicate uses testing - Redefinition of above definition
+\end{itemize}
+\section{Automation}
+Testing by hand is:
+\begin{itemize}
+	\item Slow
+	\item Tedious
+	\item Error prone
+\end{itemize}
+To automate unit testing, code is written to:
+\begin{itemize}
+	\item Set up the unit
+	\item Formulate inputs to methods
+	\item Execute methods with inputs to get outputs
+	\item Compare outputs with expected (correct) value
+\end{itemize}
+Tests can be run at any time. But again, needs a dependable oracle
+\section{When to stop testing}
+\begin{itemize}
+	\item Ideally, when we have found all of the faults. But software testing is an ISP
+	\item However, if we find a lot of faults, there is a good probability that a lot more remain at whatever point we stop testing
+	\item Beyond a certain point, the effort needed to detect each fault will rise - no real correlation with the importance of the remaining ones either
+	\item Techniques for determining when to stop include:
+	\begin{itemize}
+		\item Fault seeding - put in intentional faults to test how good error detection is
+		\item Fault estimates
+		\item No of tests still to perform complete coverage
+	\end{itemize}
+\end{itemize}
+
+
+\end{document}

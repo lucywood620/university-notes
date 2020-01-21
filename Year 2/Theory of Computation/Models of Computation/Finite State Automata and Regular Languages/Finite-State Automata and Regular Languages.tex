@@ -61,6 +61,173 @@ Given $L_1$ recognised by $M_1=(Q_1,\Sigma,\delta_1,q_1,F_1)$ and $L_2$ recognis
 \textbf{Naive idea}: Simulate first $M_1$ on the input and then simulate $M_2$ on the same input; accept if either $M_1$ or $M_2$ or both accept. This does not work as after $M_1$ has run on the input, the input is exhausted and there is no way to "rewind" it in order to run $M_2$\\
 \\
 The solution is to run $M_1$ and $M_2$ on the input in parallel
+\section{Concatenation}
+$w\in L_1 \circ L_2$ only if there are words $x$ and $y$ such that $w=xy, x\in L_1$ and $y\in L_2$\\
+\\
+We need to run $M_1$ on a prefix of $w$ and then to run $M_2$ on the rest. To find the break point we guess it (non deterministically)
+\begin{center}
+	\includegraphics[scale=0.7]{concatenation}
+\end{center}
+The result is not a DFA because of the red transitions
+\section{Non-deterministic Finite Automaton (NFA)}
+A NFA is a 5-tuple $(Q,\Sigma, \delta, q_0, F)$, where
+\begin{enumerate}
+	\item Q is a finite set of states
+	\item $\Sigma$ is a finite alphabet
+	\item $\delta: Q\times (\Sigma\cup \{\epsilon\})\rightarrow \mathscr{P}(Q)$ is the transition function
+	\item $q_0\in Q$ is the start state, and
+	\item $F\subseteq Q$ is the set of accept states
+\end{enumerate}
+\subsection{Computation of a NFA}
+Let $M=(Q,\Sigma, \delta, q_0, F)$ be a NFA and $w=w_1w_2...w_n$ be a word over $\Sigma\cup \{\epsilon\}$\\
+\textbf{Important remark}: $\epsilon$'s can be freely added inside the actual word $\in\Sigma^*$\\
+\\
+M accepts w if there exists a sequence of states $r_0,r_1,r_2,...,r_n$ satisfying the following conditions:
+\begin{enumerate}
+	\item $r_0=q_0$
+	\item $r_{i+1}\in \delta(r_i,w_{i+1})$ for every $0\leqslant i\leqslant n-1$ and
+	\item $r_n\in F$
+\end{enumerate}
+\textbf{DFA} - There is a unique computation (path). It either accepts or rejects\\
+\textbf{NFA} - There are, in general, many computational paths. The NFA accepts if at least one computation accepts. The NFA rejects only if all the computations reject.
+\section{Converting a NFA into a DFA}
+At any time there are a number of possible states the NFA computation can be into. As the DFA needs to keep track of all of these, the DFA's states will correspond to subsets of the NFA's-state set. The transition function of the DFA can then be defined as shown below:
+\begin{center}
+	\includegraphics[scale=0.7]{"NFA to DFA"}
+\end{center}
+Let $N=(Q,\Sigma, \delta, q_0, F)$ be a NFA recognising some language L (assume that L has no $\epsilon$ transitions). We shall construct a DFA $M=(Q',\Sigma, \delta', q_0', F')$ that recognises the same language L as follows
+\begin{enumerate}
+	\item $Q'=\mathscr{P}(Q)$
+	\item For $R\in Q'$ and $a\in \Sigma$ let
+	\[
+	\delta^{\prime}(R, a)=\{q \in Q | q \in \delta(r, a) \text { for some } r \in R\}
+	\]
+	Equivalently
+	\[
+	\delta^{\prime}(R, a)=\bigcup_{r \in R} \delta(r, a)
+	\]
+	\item $q_0'=\{q_0\}$
+	\item \(F^{\prime}=\left\{R \in Q^{\prime} | \exists r \in R r \in F\right\}\)
+\end{enumerate}
+Let us take care of $\epsilon$-transitions. For $R\subseteq Q$ (same as $R\in Q'$) let\\
+$$E(R)=\{q | q \text { is reachable from } R \text { through a number of } \varepsilon \text { -transitions. }\}$$
+Modify the construction as follows
+\begin{enumerate}
+	\item $Q'=\mathscr{P}(Q)$
+	\item For $R\in Q'$ and $a\in \Sigma$ let
+	\[
+	\delta^{\prime}(R, a)=\{q \in Q | q \in E( \delta(r, a)) \text { for some } r \in R\}
+	\]
+	Equivalently
+	\[
+	\delta^{\prime}(R, a)=\bigcup_{r \in R} E(\delta(r, a))
+	\]
+	\item $q_0'=E(\{q_0\})$
+	\item \(F^{\prime}=\left\{R \in Q^{\prime} | \exists r \in R r \in F\right\}\)
+\end{enumerate}
+\section{Closure under regular operations}
+Union
+\[
+A \cup B=\{x | x \in A \text { or } x \in B\}
+\]
+\begin{center}
+	\includegraphics[scale=0.7]{Union}
+\end{center}
+Concatenation
+\[
+A \circ B=\{x y | x \in A \text { and } y \in B\}
+\]
+\begin{center}
+	\includegraphics[scale=0.7]{Concatenation}
+\end{center}
+Star
+\[
+A^{*}=\left\{x_{1} x_{2} \ldots x_{k} | k \geq 0 \text { and } x_{i} \in A \text { for every } i, 1 \leq i \leq k\right\}
+\]
+\begin{center}
+	\includegraphics[scale=0.7]{Star}
+\end{center}
+\section{Equivalence of FA and Regular Expressions}
+\textbf{Theorem} - A language is regular iff some regular expression describes it\\
+\textbf{Proof}\\
+$\Leftarrow$ Given a RE R, construct a NFA that recognises L(R) - this can be done by structural induction\\
+\\
+\textit{Base case} - All initial REs can be implemented by NFAs\\
+\textit{Inductive step} - We have already proven that the class of regular languages is closed under regular operations\\
+\\
+$\Rightarrow$ Given a DFA M, construct a RE that recognises L(M)
 
-
+\section{Generalised Non-deterministic Finite Automaton (GNFA)}
+\begin{enumerate}
+	\item A single start state with no incoming edges
+	\item A single accept state with no outgoing edges
+	\item Every transition is labelled with a regular expression
+\end{enumerate}
+-\begin{center}
+	\includegraphics[scale=0.7]{GNFA}
+\end{center}
+\section{DFA into RE}
+\begin{enumerate}
+	\item Convert the given n-state DFA(NFA) into an equivalent n+2 state GNFA
+	\begin{center}
+		\includegraphics[scale=0.7]{DFA->RE}
+	\end{center}
+	\item Eliminate all internal states of the GNFA one by one, while preserving the language recognised by the automaton
+	\begin{center}
+		\includegraphics[scale=0.7]{DFA->RE1}
+	\end{center}
+	\item We are done, as $L(R)=L(DFA)$
+\end{enumerate}
+\section{Internal state elimination}
+Pick an internal state r for elimination\\
+For every two states u and v $u\neq r\neq v$, do the following
+\begin{center}
+	\includegraphics[scale=0.7]{Elimination}
+\end{center}
+\section{Non-regular languages}
+How do we prove that a given language N is not regular?
+\begin{itemize}
+	\item Can't be recognised by DFA: assume that there is a DFA that recognises N and then use an adversary argument against that DFA in order to get a contradiction
+\end{itemize}
+\section{Pumping Lemma}
+For every regular language L, there is a number p (called "pumping length" of L) such that every word $w\in L$ of length at least p can be divided into three parts $w=xyz$, satisfying the following conditions:
+\begin{enumerate}
+	\item $xy_iz\in L$ for every $i\in \mathbb{N}$ (in particular $xz\in L$ as one can take $i=0$)
+	\item $y$ is a non empty string
+	\item The length of the string $xy$ is not greater than p
+\end{enumerate}
+\textbf{Proof} Let $M=(Q,\Sigma, \delta, q_0, F)$ be a DFA that recognises L, and let us set the pumping length p to be the number of states in M: $p=|Q|$\\
+Consider the computation of M on the word $w=w_1w_2...2_n$ (where $n\leqslant p$)
+\[
+q_{0}=r_{0} \rightarrow^{w_{1}} \rightarrow r_{1} \rightarrow r_{2} \rightarrow r_{2} \rightarrow \cdots \cdots \cdots r_{n-1} \rightarrow r_{n} \in F
+\]
+Let i be the first moment in time where we see a repetition in the states $r_0,r_1,r_2,...,r_n$ (such an i exists by the pigeon hole principle as $n+1>p$) Then we can set $x=w_1w_2...w_j$, $y=w_{j+1}..w_i$ and $z=w_{i+1}...w_n$\\
+\\
+It is now straightforward to check that all three conditions are met
+\section{DFA Minimisation}
+An algorithm that "minimises" any given DFA, i.e. finds an equivalent DFA with the minimal number of states. It answers at once the following important questions
+\begin{enumerate}
+	\item What is the smallest (in terms of number of states) DFA that recognises the same language?
+	\item Given two DFAs, do they recognise the same language
+\end{enumerate}
+\subsection{Outline of the algorithm}
+\begin{enumerate}
+	\item Remove all the states that are not reachable from the start state
+	\item Contract a set of states that are equivalent into a single state
+\end{enumerate}
+Two states, s and t, are equivalent if any word w, which is accepted when starting from s, is accepted when starting from t and vice versa.
+\subsection{Equivalent and Distinguishable states}
+\textbf{Extended Transition Function}: Let a DFA $M=(Q,\Sigma, \delta, q_0, F)$ be given and let $\hat{\delta}: Q\times \Sigma^8\rightarrow Q$ be defined as
+\[
+\begin{array}{c}
+{\hat{\delta}(s, \varepsilon)=s} \\
+{\hat{\delta}\left(s, w_{1} w_{2} \ldots w_{n}\right)=\hat{\delta}\left(\delta\left(s, w_{1}\right), w_{2} \ldots w_{n}\right)}
+\end{array}
+\]
+for every state s and every word $w_1w_2...w_n$\\
+\textbf{Equivalent states}: Two states s and t are equivalent if
+\[
+\left\{w \in \Sigma^{*} | \hat{\boldsymbol{\delta}}(s, w) \in F\right\}=\left\{w \in \Sigma^{*} | \hat{\boldsymbol{\delta}}(t, w) \in F\right\}
+\]
+Otherwise, s and t are distinguishable, i.e. there is a witness word u such that either \(\hat{\delta}(s, u) \in F, \hat{\delta}(t, u) \notin F\) or \(\hat{\delta}(s, u) \notin F, \hat{\delta}(t, u) \in F\)
 \end{document}

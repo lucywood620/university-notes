@@ -1,0 +1,89 @@
+\documentclass{article}[18pt]
+\usepackage{../../../../format}
+\lhead{Software Engineering - Testing}
+
+
+\begin{document}
+\begin{center}
+\underline{\huge Integration and System Testing}
+\end{center}
+\section{Integration Testing}
+\begin{itemize}
+	\item When unit testing has demonstrated a suitable level of correctness for our components, we need to start combining these
+	\item \textbf{Big Bang} - Stick all the components together and hope it workd
+	\item \textbf{Phased} - Begin testing before all components are ready
+\end{itemize}
+\subsection{Bottom-up integration}
+\begin{itemize}
+	\item Aim to complete unit testing for components at the lowest level of hierarchy first
+	\item Test the next level of components, using the lowest ones
+	\item Continue with this to complete system level
+\end{itemize}
+This does assume that there is a component hierarchy\\
+Need to create a set of component drivers to test each level by providing the necessary calls\\
+Devising an oracle for this is often relatively tractable
+\subsubsection{Issues}
+\begin{itemize}
+	\item Helps identify sources of problems quite well
+	\item Lower level components get tested first and key ones at the top level only get tested later
+\end{itemize}
+\subsection{Top-down integration}
+\begin{itemize}
+	\item Involves testing with the key components at the top of the hierarchy
+	\item Since lower level elements may not be ready or tested, can use a stub which emulates the missing component in a simplified manner for each one.
+	\item Testing of components in the middle may need stubs and drivers
+\end{itemize}
+\subsubsection{Issues}
+\begin{itemize}
+	\item Writing the stubs and drivers may be quite complex
+	\item Needs the support of an effective test harness to aid configuration, and also collection of test outputs. (call the correct stubs and drivers at the right time)
+	\item Devising an oracle can be quite challenging
+\end{itemize}
+\subsection{Sandwich integration}
+\begin{itemize}
+	\item Combine top down and bottom up to work from both ends, reducing the number of stubs needed
+\end{itemize}
+\section{Continuous builds}
+\begin{itemize}
+	\item Maintain a single source repository
+	\item Automate the build
+	\item Make the build self testing
+	\item Require everyone to commit every day
+	\item Keep the build fast
+	\item Ensures visibility to all participants
+\end{itemize}
+\section{System Testing}
+System testing is much more concerned with conformance to the specification (requirements) than with finding bugs. Precedes and underpins UAT
+\begin{itemize}
+	\item Unit testing and integration testing are concerned with whether the coding conforms to the design
+	\item System testing is concerned with whether the design conforms to the requirements
+\end{itemize}
+Steps in system testing include:
+\begin{enumerate}
+	\item Function testing
+	\item Performance testing
+	\item Acceptance testing
+	\item Installation testing
+\end{enumerate}
+\subsection{Function tests}
+\begin{itemize}
+	\item Driven by the list of requirements
+	\item Can be documented in a tabular form by listing the requirement and then recording how it has been tested and the outcomes of that test
+	\item Can form a preliminary stage for UAT, ensuring that the system works and that it conforms to the requirements as stated. UAT then assesses whether the stated requirements are the real ones
+\end{itemize}
+\subsection{Performance tests}
+Address the non functional issues such as
+\begin{itemize}
+	\item Security
+	\item Speed
+	\item Accuracy
+	\item Reliability
+\end{itemize}
+The ordering here is important. It is a good principle to get the system working then address these issues.
+
+
+
+
+
+
+\end{document}

@@ -1,0 +1,78 @@
+\documentclass{article}[18pt]
+\usepackage{../../../../format}
+\lhead{Software Methodologies - Computer Graphics}
+
+
+\begin{document}
+\begin{center}
+\underline{\huge GPU Programming with WebGL}
+\end{center}
+\begin{defin}[Polygon model/mesh]
+Comprises a set of connected polygons to represent an object
+\end{defin}
+\section{Why WebGL}
+\begin{itemize}
+	\item Cross-platform, browser-based
+	\item Hardware-based rendering
+	\item Support programmable rendering pipeline
+	\item Zero setup effort before you start programming
+\end{itemize}
+\section{GPU Programming}
+GPU
+\begin{itemize}
+	\item Typically comprises of hundreds to thousands of processors
+	\item Process graphics primitives in parallel
+\end{itemize}
+Programmable rendering pipeline
+\begin{itemize}
+	\item Vertex shader and fragment shader are programmable
+	\item GPU programming is also called shader programming
+\end{itemize}
+\section{Programmable rendering pipeline}
+\begin{center}
+	\includegraphics[scale=0.7]{pipeline}
+\end{center}
+\section{Shaders}
+Vertex shader:
+\begin{itemize}
+	\item Manipulates per-vertex data such as vertex coordinates, normals, colors, and texture coordinates
+\end{itemize}
+Fragment shader:
+\begin{itemize}
+	\item Deals with surface points for processing
+	\item Main goal: calculate colour for each pixel that will display on the screen
+\end{itemize}
+Rasterization process:
+\begin{itemize}
+	\item A black box (non programmable) generates fragments from outputs of vertex shader
+\end{itemize}
+\section{Data Structures}
+\begin{defin}[Vertex Buffer Objects (VBOs)]
+Contain the data that WebGL requires to describe the geometry that is going to be rendered
+\end{defin}
+
+\begin{defin}[Index Buffer Objects (IBOs)]
+	Contain integers that use as references pointing to data in VBOs, in order to enable the reuse of the same vertex
+\end{defin}
+
+Attributes, uniforms and varyings are the three types of variables that you will find when programming with shaders
+\begin{defin}[Attributes]
+	Input variables used in the vertex shader (dynamic)
+\end{defin}
+
+\begin{defin}[Uniforms]
+Input variables available for the vertex shader and the fragment shader (static)
+\end{defin}
+
+\begin{defin}[Varyings]
+Used for passing data from the vertex shader to the fragment shader
+\end{defin}
+
+
+
+
+
+
+
+
+\end{document}

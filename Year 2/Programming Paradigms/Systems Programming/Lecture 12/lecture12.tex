@@ -1,0 +1,263 @@
+\documentclass{article}
+\usepackage{../../../../format}
+\lhead{Programming Paradigms - Systems Programming}
+\usepackage{enumerate}
+\usepackage{boxedminipage}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usepackage{fancyvrb}
+\usepackage{hyperref}
+\definecolor{links}{HTML}{2A1B81}
+\hypersetup{colorlinks,linkcolor=,urlcolor=blue}
+\usetikzlibrary{shapes.misc}
+\usetikzlibrary{shapes.geometric, arrows, positioning}
+\usepackage{minted}
+
+
+
+\begin{document}
+
+
+\begin{center}
+	\underline{\huge Large Programs and External Libraries (Continued)}
+\end{center}
+
+
+
+\section{Makefiles}
+\begin{itemize}
+\item When we have a number of files to compile together we need a rule-set to perform this
+\item The \verb!make! command provides this
+\item Requires a rule-file called the \verb!Makefile!
+\item Declarative programming style set of rules for building the program
+\item Format of each rule:
+\begin{minted}{c}
+target [target ...]: [component ...]
+        [command 1]
+        ...
+        [command n]
+\end{minted}
+\item N.B. Tab character
+\item \verb!target! - what you want to make
+\item \verb!component! - something which needs to exist (might need another rule)
+\end{itemize}
+
+
+
+\section{Makefiles: Example}
+\begin{itemize}
+\item Files: \verb!main.c!, \verb!counter.h!, \verb!counter.c!, \verb!sales.h!, \verb!sales.c!
+
+\begin{minted}{c}
+all: counter.o sales.o main.c
+        gcc -o program main.c counter.o sales.o
+
+counter.o: counter.c counter.h
+        gcc -c counter.c
+
+sales.o: sales.c sales.h
+        gcc -c sales.c
+
+clean:
+        rm -rf program counter.o sales.o
+\end{minted}
+\end{itemize}
+
+
+
+\section{Makefiles: Macros}
+\begin{itemize}
+\item Macros can be used to store definitions
+\begin{itemize}
+\item \verb!AUTHOR = Konrad Dabrowski!
+\end{itemize}
+\item They can be generated from commands
+\begin{itemize}
+\item \verb!DATE = `date`!
+\end{itemize}
+\item And used in the \verb!Makefile!
+\begin{minted}{c}
+all:
+        echo $(AUTHOR) compiled this on $(DATE)
+\end{minted}
+\item \verb!all:!
+\item Running this gives:
+\item \verb!echo Konrad Dabrowski compiled this on `date`!
+\begin{itemize}
+\item \verb!Konrad Dabrowski compiled this on Thu 16! \verb!Jan 10:54:36 GMT 2020!
+\end{itemize}
+\end{itemize}
+
+
+
+\section{Makefiles: Pattern Rules}
+\begin{itemize}
+\item We can specify a pattern rule which matches multiple files
+\item e.g. compile C files into object files:
+\begin{minted}{c}
+DEPS = counter.h sales.h
+%.o: %.c $(DEPS)
+        gcc -c $< -o $@
+\end{minted}
+\item This would change our original Makefile example to:
+\begin{minted}{c}
+all: counter.o sales.o main.c
+        gcc -o program main.c counter.o sales.o
+
+%.o: %.c $(DEPS)
+        gcc -c $< -o $@
+
+clean:
+        rm -rf program counter.o sales.o
+\end{minted}
+\end{itemize}
+
+
+
+\section{Makefiles: A few comments}
+\begin{itemize}
+\item Comments - lines starting with \verb!#!
+\item Lazy evaluation
+\item If a target exists and has a timestamp later than all of its components assume it is up to date and don't bother to re-process
+\item Nothing to do with C
+\item Although Makefiles are often used with C programs there is no intrinsic link - can use with any code/work
+\item You can run any specific rule by invoking its target:
+\item \verb!make sales.o!
+\end{itemize}
+
+
+
+
+\section{A: Singly-linked list}
+\begin{itemize}
+\item Implement a program that stores numbers in a linked list and then prints them out.
+\item The nodes of your linked list should be an appropriate \verb!struct! type and should be dynamically allocated using \verb!malloc()!.
+\item The program should let the user input numbers at runtime and should contain a function that adds nodes to the end of the list.
+\item (Note that pressing \verb!Ctrl+D! makes \verb!scanf()! return \verb!EOF!.)
+\end{itemize}
+
+
+
+\section{B: More advanced linked list}
+Add functions to:
+\begin{itemize}
+\item delete the last number in the list
+\item add a number to the start of the list
+\item search for a number in the list and return either a pointer to it or \verb!NULL! if the number is not in the list
+\end{itemize}
+
+
+
+\section{C: Doubly-linked list}
+\begin{itemize}
+\item Change your code to use a doubly-linked list.
+\item Add a function which takes a pointer to a node in the list and deletes the corresponding node from the list. Remember to \verb!free()! the memory used by the node!
+\end{itemize}
+
+
+
+\section{Implement \texttt{calloc()} and \texttt{realloc()}.}
+\begin{itemize}
+\item Write functions \verb!calloc2()! and \verb!realloc2()!, that use \verb!malloc()! and \verb!free()! to implement the functionality of \verb!calloc()! and \verb!realloc()!, respectively.
+\item Remember that \verb!calloc()! sets the allocated memory to zero (for this exercise, you may ignore testing for integer overflows when multiplying the arguments of \verb!calloc()! together).
+\item When implementing the copying part of \verb!realloc()!, recall that \verb!char! is 1 byte; the C standard states that you may use \verb!char *! pointers to access individual bytes of memory.
+\end{itemize}
+
+
+
+\section{External libraries}
+\begin{itemize}
+\item One of the reasons why C is so popular is the huge collection of tried and tested libraries available across many different computing platforms.  E.g.  OpenGL
+\end{itemize}
+
+\begin{center}
+\tikzset{
+  myarrow/.style = {line width=0.5mm, draw=black, -triangle 60, fill=white,postaction={draw, line width=2mm, shorten >=3mm, -}}
+}
+\begin{tikzpicture}
+\draw[rounded corners] (-0.9, -0.45) rectangle (0.9, 0.45) {};
+\node at (0,0) {C API};
+\draw [myarrow] (1.0,0) -- (2.5,0);
+\node[align=center] at (1.75,-1) {Commands \&\\Geometry};
+\begin{scope}[xshift=100]
+\draw[rounded corners] (-0.9, -0.45) rectangle (0.9, 0.45) {};
+\node[align=center] at (0,0) {Graphics\\hardware*};
+\draw [myarrow] (1.0,0) -- (2.5,0);
+\node[align=center] at (1.75,-1) {Pixels};
+\begin{scope}[xshift=100]
+\draw[rounded corners] (-0.9, -0.45) rectangle (0.9, 0.45) {};
+\node[align=center] at (0,0) {Display};
+\end{scope}
+\end{scope}
+\end{tikzpicture}
+\end{center}
+
+\begin{itemize}
+\item Commands from your program are sent by the API to the graphics hardware which generates pixels for display
+\item *in OpenGL the hardware behaves as a state machine
+\end{itemize}
+
+
+
+\section{OpenGL programming}
+\begin{itemize}
+\item On its own OpenGL is:
+\begin{enumerate}
+\item Low level
+\item O/S independent
+\end{enumerate}
+\item Hence it is usually used with:
+\begin{itemize}
+\item GLU a utility library with high level shape support
+\item GLUT utility library for window creation and I/O
+\end{itemize}
+\end{itemize}
+
+
+
+\section{Commonly used C libraries}
+\begin{itemize}
+\item general: \verb!libglib! / \verb!libgobject! / \verb!libpthread!
+\item console: \verb!libncurses!
+\item 2D graphics: \verb!libX11! / \verb!libSDL!
+\item 3D graphics: \verb!libGL! / \verb!libGLU! / \verb!libGLUT!
+\item GUI toolkits: \verb!libgtk! / \verb!libQT!
+\item Images: \verb!libjpeg! / \verb!libpng! / \verb!libgif!
+\item text rendering: \verb!libpango! / \verb!libfreetype!
+\item sound: \verb!libasound! / \verb!libSDL!
+\item compression: \verb!libz! (\verb!zlib!) / \verb!libgzip! / \verb!libbz2!
+\item encryption: \verb!libcrypt! / \verb!libssl! / \verb!libgssapi! / \verb!libkrb5!
+\item XML: \verb!libxml2!
+\item web: \verb!libcurl!
+\end{itemize}
+
+
+
+\section{Usage of libraries}
+\begin{itemize}
+\item If a library is \emph{statically linked} then a copy of the library is included in the executable
+\item C/C++/assembly can be combined
+\item Often bound to other languages e.g. php, XML, curl
+\item Many of these libraries will be \emph{dynamically linked}
+\item LGPL (Lesser Gnu Public License) often used
+\item Try \verb!ldd /usr/bin/php! on Linux to list dynamic dependencies
+\end{itemize}
+
+
+
+\section{Dynamic vs static linking}
+\begin{itemize}
+\item Dynamic linking takes place at run-time not build-time
+\item Reduces filespace demands (bloat) by keeping only one copy of the library
+\item Can help with updates e.g. for security
+\item Dynamic libraries are called differently by OSs
+\item Linux: shared objects (\verb!.so!)
+\item Windows: Dynamic Link Libraries (\verb!.dll!)
+\item OSX: \verb!.dylib!
+\item Can lead to ``DLL Hell'': many versions of the same dynamic library
+\item Best to include version number with library
+\end{itemize}
+
+
+\end{document}
+

@@ -137,6 +137,56 @@ Regular grammars:
 	\item Many "local" features of a programming language can be expressed by regular expressions, e.g. constants, strings, identifiers
 	\item A regular expression describing an identifier:
 	$$L(L'|D)^*$$
+	Here:
+	\begin{itemize}
+		\item L is the set of all letters
+		\item $L'=L\cup \{\_\}$ is the set of all letters, including '\_'
+		\item D is the set of all digits
+	\end{itemize}
 \end{itemize}
+\section{Context Free Grammars}
+\begin{itemize}
+	\item Many syntactic properties of a programming language can be expressed by a context free grammar
+	\item e.g. the pattern of matching brackets of arbitrary length 
+	\item This can't be expressed by a regular expression but by this context free grammar
+\end{itemize}
+$$S\rightarrow (S)$$
+$$S\rightarrow SS$$
+$$S\rightarrow \epsilon$$
+\section{Calling Graph}
+Many algorithms in compiler construction first collect some basic data items then apply some rules to them to:
+\begin{itemize}
+	\item Extend the known information about these data items
+	\item Draw more general conclusions about them
+\end{itemize}
+These "information-improving" algorithms:
+\begin{itemize}
+	\item Share a common structure
+	\item Although they seem different
+\end{itemize}
+Basic example: the calling graph of a program
+\begin{itemize}
+	\item Directed graph with a node for each procedure
+	\item Edge from A to B, whenever A calls
+\end{itemize}
+An example of why we need to find the calling graph is to find out which procedures:
+\begin{itemize}
+	\item Are recursive
+	\item Can be expanded in-line inside another procedure
+\end{itemize}
+\section{Regular Definition}
+\begin{definition}[Regular Definition]
+	A sequence of definitions of the form
+	$$
+	\begin{array}{l}{d_{1} \rightarrow r_{1}} \\ {d_{2} \rightarrow r_{2}} \\ {\quad \cdots} \\ {d_{k} \rightarrow r_{k}}\end{array}
+	$$
+	Where:
+	\begin{itemize}
+		\item Each $d_i$ is different and not in $\Sigma$
+		\item Each $r_i$ is a regular expression in $\Sigma \cup \{r_1,r_2,...,r_{i-1}\}$
+	\end{itemize}
+\end{definition}
+We avoid recursive definitions by sequentially "eliminating" all $d_i$'s, thus if we can write a set of regular expressions as a regular definition, then we have no recursive definitions
+
 
 \end{document}

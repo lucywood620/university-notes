@@ -1,0 +1,92 @@
+\documentclass{article}[18pt]
+\usepackage{../../../../format}
+\lhead{Software Methodlogies - Machine Learning}
+
+
+\begin{document}
+\begin{center}
+\underline{\huge Generalisation, Training and Test Set Representation}
+\end{center}
+\section{Generalisation}
+\begin{center}
+	\includegraphics[scale=0.7]{Generalisation}
+\end{center}
+\begin{itemize}
+	\item Goal - to predict well on new data drawn from (hidden) true distribution
+	\item Issue - we don't see the truth, but we only get to sample from it
+	\item If it fits current sample well, how can we trust it will predict well on other new samples?
+\end{itemize}
+How do we know if our model is good?
+\begin{itemize}
+	\item Theoretically
+	\begin{itemize}
+		\item Generalisation theory - based on ideas of measuring model simplicity/complexity
+	\end{itemize}
+	\item Intuition: formalisation of Ockham's razor principle
+	\begin{itemize}
+		\item The less complex a model is, the more likely a good empirical result is
+	\end{itemize}
+	\item Empirically
+	\begin{itemize}
+		\item Asking: will our model do well on a new sample of data 
+		\item Evaluate: get a new sample of data - call it the set set
+		\item Good performance on the test set is a useful indicator of good performance
+	\end{itemize}
+\end{itemize}
+Three basic assumptions in all of the above
+\begin{enumerate}
+	\item We draw examples independently and identically at random from the distribution
+	\item The distribution is stationary - it doesn't change over time
+	\item We always pull from the same distribution, including training, validation and test sets
+\end{enumerate}
+\section{Training and Test set}
+\textbf{Larger Training Set} - The better model we will be able to learn\\
+\textbf{Larger Test Set} - The better we will be able to have confidence in evaluation metrics and tighter confidence intervals\\
+\\
+Ensure the test set meets the following 2 conditions:
+\begin{itemize}
+	\item Is large enough to yield statistically meaningful results
+	\item Is representative of the data set as a whole
+\end{itemize}
+\subsection{Validation Set}
+\begin{center}
+	\includegraphics[scale=0.7]{Validation}
+\end{center}
+\begin{enumerate}
+	\item Keeping the test data way off to the side (completely unused)
+	\item Pick the model that does best on the validation set
+	\item Double check that model against the test set 
+\end{enumerate}
+This is a better workflow because it creates fewer exposures to the test set
+\section{Representation}
+We must create a representation of the data to provide the model with a useful vantage point into the data's key qualities. That is, in order to train a model, we must choose the set of features that best represent the data
+\subsection{Numeric}
+This works for some models, but in some cases the gradient will change throughout, so would not work
+\subsection{Bucketing}
+One categorical feature is created for each bucket (sections). Then a fitting can be created for each bucket
+\subsection{Categorical}
+\textbf{One hot encoding} - Only one category selected at a time (e.g. a person can only have one blood type)\\
+\\
+If there are a small number of categories, then use the raw value, for larger numbers, hashing may be needed.
+\subsection{Feature Crossing}
+Two different features (e.g. age and blood type), then connect together as one feature (e.g. young people with blood type A)
+\subsection{Hashing}
+\begin{itemize}
+	\item Save memory and time
+	\item Adds some noise, but limits the maximum number of possibilities
+\end{itemize}
+\subsection{Embedding}
+\begin{itemize}
+	\item Powerful ways to represent large vocabularies
+	\item Tell the model that objects with different names mean the same thing (group together)
+\end{itemize}
+
+
+
+
+
+
+
+
+
+\end{document}

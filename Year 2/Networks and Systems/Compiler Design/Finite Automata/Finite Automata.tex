@@ -82,6 +82,71 @@ However the simulation of NFAs is not straightforward
 	NFAs accept exactly the same languages as DFAs
 \end{theorem}
 i.e. for every NFA, we can construct an equivalent DFA
+\section{From regular expressions to NFA}
+\textbf{Our aim}: given a regular expression r, construct a NFA that accepts r\\
+\\
+Recursive construction\\
+For any symbol $a\in \Sigma \cup \{\epsilon\}$ 
+\includegraphics[scale=0.6]{recusrive}\\
+\\
+For any two regular expressions s and t with NFAs N(s) and N(t).
+\newpage
+If $r=s|t$
+\begin{center}
+	\includegraphics[scale=0.7]{"Two Regular Expressions"}
+\end{center}
+if $r=st$ =, then:
+\begin{center}
+	\includegraphics[scale=0.7]{r=st}
+\end{center}
+If $r=s^*$, then
+\begin{center}
+	\includegraphics[scale=0.7]{r=s*}
+\end{center}
+\section{From NFA to DFA}
+\textbf{Our aim}: Given an NFA, construct a DFA that accepts the same regular language. A DFA can be used directly as an automatic string/identifier recogniser.\\
+\\
+The main idea is that each state of the constructed DFA corresponds to a rest of states in the NFA\\
+\\
+Recursive construction of the DFA, after reading (any) input $a_1a_2\ldots a_k$ the DFA is in the state that corresponds to the set of states that the NFA reaches when reading the same input.
+\section{Extensions of DFA}
+A context free language can be recognised by a push-down automaton (PDA). This is exactly the same as an NFA, with the addition of a stack
+\section{Push-Down Automata}
+A push-down automaton(PDA) is a tuple $(Q,\Sigma, \Gamma, \delta, p, Z, F)$, where:
+\begin{itemize}
+	\item Q is a finite set of states
+	\item $\Sigma$ is the input alphabet
+	\item $\Gamma$ is the push-down alphabet
+	\item $\delta$ is a set of transitions
+	\item $p$ is the initial state
+	\item $Z$ is a push-down symbol, initially in the stack
+	\item $F$ is the same set of finial states
+\end{itemize}
+In general a PDA is non-deterministic\\
+\\
+A move in a PDA consists of:
+\begin{itemize}
+	\item Reading a symbol of $\Sigma \cup \{\epsilon\}$
+	\item Changing state
+	\item Replacing the top symbol of the stack by a (possibly empty) string
+\end{itemize}
+Writing a symbol on the stack "pushes" all the other\\
+A PDA accepts an input string x if it reaches:
+\begin{itemize}
+	\item Either a final state in F
+	\item Or an empty stack ($\epsilon$)
+\end{itemize}
+After reading the input x
+\begin{theorem}
+	PDAs accept exactly the context free languages
+\end{theorem}
+
+\begin{theorem}
+	Deterministic PDAs accept strictly fewer languages that nondeterministic ones
+\end{theorem}
+
+
+
 
 
 

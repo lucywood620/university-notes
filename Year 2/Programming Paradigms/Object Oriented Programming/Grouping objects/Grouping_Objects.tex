@@ -1,0 +1,175 @@
+\documentclass{article}[18pt]
+\usepackage{../../../../format}
+\lhead{Programming Paradigms - Object Oriented Programming}
+\usepackage{minted}
+
+\begin{document}
+\begin{center}
+\underline{\huge Grouping Objects}
+\end{center}
+\section{Class Libraries}
+\begin{itemize}
+	\item These are collections of useful classes
+	\item We don't have to write everything from scratch
+	\item Java calls its libraries packages
+	\item Grouping objects is a recurring requirement
+\end{itemize}
+\section{Collections}
+We specify
+\begin{itemize}
+	\item The type of collection: ArrayList
+	\item The type of objects it will contain \mintinline{java}{<String>}
+\end{itemize}
+\subsection{Features}
+\begin{itemize}
+	\item Increases capacity as necessary
+	\item Keeps a private count (size() accessor)
+	\item Keeps the objects in order
+	\item Details of how all this is done are hidden
+\end{itemize}
+\subsection{Using a collection}
+\begin{minted}{java}
+public class Notebook
+{
+	private ArrayList<String> notes;
+	...
+	
+	public void storeNote(String note)
+	{
+		notes.add(note);
+	}
+	
+	public int numberOfNotes()
+	{
+		return notes.size();
+	}
+}
+\end{minted}
+\subsection{Retrieving an object}
+\begin{minted}{java}
+public void showNote(int noteNumber)
+{
+	if(noteNumber < 0) {
+		// This is not a valid note number.
+	}
+	else if(noteNumber < numberOfNotes()) {
+		System.out.println(notes.get(noteNumber));
+	}
+	else {
+		// This is not a valid note number.
+	}
+}
+\end{minted}
+\subsection{Generic Classes}
+\begin{itemize}
+	\item Collections are known as parameterized or generic types
+	\item ArrayList implements list functionality
+	\item The type of parameter says what we want a list of
+\end{itemize}
+\section{For-each loop}
+\begin{minted}{java}
+/**
+* List all notes in the notebook.
+*/
+public void listNotes()
+{
+	for(String note : notes) {
+		System.out.println(note);
+	}
+} 
+\end{minted}
+\section{While loop}
+\begin{minted}{java}
+/**
+* List all notes in the notebook.
+*/
+public void listNotes()
+{
+	int index = 0;
+	while(index < notes.size()) {
+		System.out.println(notes.get(index));
+		index++;
+	}
+} 
+\end{minted}
+\section{Equality vs Identity}
+\begin{minted}{java}
+// tests identity
+if(input == "bye") {		
+	...
+}
+// tests equality
+if(input.equals("bye")) {
+	...
+}
+\end{minted}
+Identity tests if a variable holds the same instance as another variable\\
+Equality tests if two distinct objects can be used interchangeably
+\section{Iterators}
+\begin{minted}{java}
+Iterator<ElementType> it = myCollection.iterator();
+while(it.hasNext()) {
+	call it.next() //to get the next object
+	//do something with that object
+} 
+\end{minted}
+\newpage
+\subsection{Index vs Iterator}
+For each loop
+\begin{itemize}
+	\item Use if we want to process every element
+\end{itemize}
+While loop
+\begin{itemize}
+	\item Use if we might want to stop part way through
+	\item Use for repetition that doesn't involve a collection
+\end{itemize}
+Iterator object
+\begin{itemize}
+	\item Use if we might want to stop part way through
+	\item Often used with collections where indexed access if not very efficient, or impossible
+\end{itemize}
+\section{Arrays}
+\begin{minted}{java}
+public class LogAnalyzer
+{
+	private int[] hourCounts; // array variable declaration
+	private LogfileReader reader;
+	
+	public LogAnalyzer()
+	{ 
+		hourCounts = new int[24]; // array object creation
+		reader = new LogfileReader();
+	}
+
+}
+\end{minted}
+\subsection{Array length}
+To get the length of an array use
+\begin{minted}{java}
+private int[] numbers = { 3, 15, 4, 5 };
+int n = numbers.length;
+\end{minted}
+Note here that length is not a method
+\section{For loop}
+\begin{itemize}
+	\item The for loop is often used to iterate a fixed number of times
+	\item Often used with a variable that changes a fixed amount on each iteration
+\end{itemize}
+\begin{minted}{java}
+for(int hour = 0; hour < hourCounts.length; hour++) {
+	System.out.println(hour + ": " + hourCounts[hour]);
+}
+\end{minted}
+
+
+
+
+
+
+
+
+
+
+
+\end{document}

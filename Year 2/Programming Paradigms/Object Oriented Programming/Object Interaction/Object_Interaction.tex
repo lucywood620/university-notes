@@ -1,0 +1,87 @@
+\documentclass{article}[18pt]
+\usepackage{../../../../format}
+\lhead{Programming Paradigms - Object Oriented Programming}
+\usepackage{minted}
+
+
+\begin{document}
+\begin{center}
+\underline{\huge Object Interaction}
+\end{center}
+\begin{definition}[Abstraction]
+The ability to ignore details of parts to focus attention on a higher level of a problem
+\end{definition}
+
+\begin{definition}[Modularisation]
+The process of dividing a whole into well-defined parts, which can be built and examined separately, and which interact in well-defined ways
+\end{definition}
+A class can have within it other classes
+\begin{minted}{java}
+public class NumberDisplay
+{
+	private int limit;
+	private int value;
+
+}
+\end{minted}
+
+\begin{minted}{java}
+public class ClockDisplay
+{
+private NumberDisplay hours;
+private NumberDisplay minutes;
+}
+\end{minted}
+
+The variables in NumberDisplay are primitive types\\
+The variables in ClockDisplay are object types
+\section{Objects creating objects}
+Formal parameter:
+\begin{minted}{java}
+public NumberDisplay(int rollOverLimit);
+\end{minted}
+Actual Parameter:
+\begin{minted}{java}
+hours = new NumberDisplay(24);
+\end{minted}
+\section{Method calling}
+\begin{minted}{java}
+public void timeTick()
+{
+	minutes.increment();
+	if(minutes.getValue() == 0) { 
+		// it just rolled over!
+		hours.increment();
+	}
+	updateDisplay();
+}
+\end{minted}
+\newpage
+\section{Internal Methods}
+\begin{minted}{java}
+/**
+* Update the internal string that
+* represents the display.
+*/
+private void updateDisplay()
+{
+	displayString = 
+	hours.getDisplayValue() + ":" + 
+	minutes.getDisplayValue();
+}
+\end{minted}
+\section{Method calls}
+Internal method calls
+\begin{minted}{java}
+updateDisplay;
+private void updateDisplay()
+\end{minted}
+External method calls
+\begin{minted}{java}
+minutes.increment()
+\end{minted}
+
+
+
+
+\end{document}

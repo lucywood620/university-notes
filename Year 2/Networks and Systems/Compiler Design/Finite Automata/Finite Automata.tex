@@ -7,6 +7,7 @@
 \begin{center}
 \underline{\huge Finite Automata}
 \end{center}
+These allow us to recognise whether a given string belongs to a given language
 \section{Nondeterministic Finite Automata}
 A nondeterministic finite automaton (NFA) consists of
 \begin{itemize}
@@ -18,10 +19,15 @@ A nondeterministic finite automaton (NFA) consists of
 Often we represent an NFA by a transition graph
 \begin{itemize}
 	\item Nodes are possible states
-	\item Edges are directed and labelled
-	\item The same symbol can label edges from a state to many different other states 
+	\item Edges are directed and labelled by a symbol from $\Sigma \cup \{\epsilon\}$
+	\item The same symbol can label edges from a state s to many different other states 
 \end{itemize}
+Note that if a symbol is not defined at a state and you read it, then it rejects\\
+\\
+You can move straight along a node represented by $\epsilon$
 \subsection{Representation}
+The accepting states are represented by double circles\\
+For it ot be accepting there needs to be a given route to the accepting state, this is why there is two options for a coming out of 0.
 $$\Sigma = \{a,b\}$$
 $$s_0=0$$
 $$F=\{3\}$$
@@ -38,7 +44,9 @@ Alternative representation is a transition table
 	\includegraphics[scale=0.7]{NFA1}
 \end{center}
 Advantage of transition table: more visible transitions\\
-Disadvantage of transition table: needs more space than the transition graph
+Disadvantage of transition table: needs more space than the transition graph\\
+This accepts the language:
+$$(a|b)^*abb$$
 \subsection{Acceptance of NFA}
 An NFA accepts an input string x if there exists a path that:
 \begin{itemize}
@@ -54,7 +62,7 @@ A language accepted (or defined) by an NFA:
 A deterministic finite automaton (DFA) is a special case of a NFA, where:
 \begin{itemize}
 	\item No edge is labelled by the empty string $\epsilon$
-	\item For each state s and each input symbol a, there is exactly one edge out of s labelled with a
+	\item For each state s and each input symbol a, there is exactly one edge out of s labelled with a. If in a state with a certain letter, there is exactly one choice, so not 0.
 \end{itemize}
 A direct algorithm to decide whether a given string x is accepted by a DFA:
 \begin{itemize}
@@ -65,7 +73,9 @@ A direct algorithm to decide whether a given string x is accepted by a DFA:
 		\item If yes, then the DFA accepts x
 		\item Otherwise not
 	\end{itemize}
+	\item All of this meaning, follow the path guided by the arrows, see if you are in an accepting state at the end
 \end{itemize}
+You can label a state with $\varnothing$ to represent a rejecting state
 \section{NFA vs DFA}
 \begin{theorem}
 NFAs accept exactly the regular languages (i.e. the regular expressions)
@@ -95,7 +105,7 @@ If $r=s|t$
 \begin{center}
 	\includegraphics[scale=0.7]{"Two Regular Expressions"}
 \end{center}
-if $r=st$ =, then:
+if $r=st$, then:
 \begin{center}
 	\includegraphics[scale=0.7]{r=st}
 \end{center}
@@ -111,8 +121,9 @@ The main idea is that each state of the constructed DFA corresponds to a rest of
 Recursive construction of the DFA, after reading (any) input $a_1a_2\ldots a_k$ the DFA is in the state that corresponds to the set of states that the NFA reaches when reading the same input.
 \section{Extensions of DFA}
 A context free language can be recognised by a push-down automaton (PDA). This is exactly the same as an NFA, with the addition of a stack
+\newpage
 \section{Push-Down Automata}
-A push-down automaton(PDA) is a tuple $(Q,\Sigma, \Gamma, \delta, p, Z, F)$, where:
+A push-down automaton (PDA) is a tuple $(Q,\Sigma, \Gamma, \delta, p, Z, F)$, where:
 \begin{itemize}
 	\item Q is a finite set of states
 	\item $\Sigma$ is the input alphabet
@@ -140,6 +151,7 @@ After reading the input x
 \begin{theorem}
 	PDAs accept exactly the context free languages
 \end{theorem}
+Don't worry about proving theorem 3
 
 \begin{theorem}
 	Deterministic PDAs accept strictly fewer languages that nondeterministic ones

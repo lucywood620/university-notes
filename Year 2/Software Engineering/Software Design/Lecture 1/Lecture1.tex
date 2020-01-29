@@ -1,0 +1,78 @@
+\documentclass{article}[18pt]
+\usepackage{../../../../format}
+\lhead{Software Engineering - Software Design}
+
+
+\begin{document}
+\begin{center}
+\underline{\huge Introduction to Software Design and Architectural Styles}
+\end{center}
+Design as a verb - Relates to the design process\\
+\\
+Design as a noun - The form of the model or plan produced from the design process\\
+\\
+Technical debt - A form of risk, and one that needs to be recognised and managed when designing\\
+\\
+Designing involves using abstraction to help:
+\begin{itemize}
+	\item Model our design solution in terms of the essential aspects
+	\item Separate the logical and physical aspects of a solution
+	\item Make decisions where there are choices
+\end{itemize}
+The ultimate criterion for any decision should be fitness for purpose, in that a design should be well structures, should do its job well, and have no unnecessary features.
+\section{Knowledge Schemas}
+Schematic knowledge complements knowledge about the domain and about syntax and semantics, and relates to the way ideas about possible solutions are organised in memory.\\
+\\
+Schematic knowledge is typically transferred via:
+\begin{itemize}
+	\item Plan driven design methods
+	\item Design patterns
+	\item Software Architectures
+\end{itemize}
+\section{Some complications}
+Significant problems that we encounter and must cope with when designing software are that
+\begin{itemize}
+	\item It has both static and dynamic characteristics
+	\item We need to use static forms of description to model these characteristics
+	\item Software is invisible, and so we have no intuitive ways of visualising its form or describing it diagrammatically 
+\end{itemize}
+\section{The outcomes of designing}
+The outcome of the design process is usually in the form of a model or plan which can be used to guide the task of implementation, and that describes
+\begin{itemize}
+	\item The characteristics of the set of elements that will make up the "solution"
+	\item Structure (how these elements are related to one another)
+	\item How the elements will interact when the system is executed
+\end{itemize}
+The form of the model reflects the type of design elements we employ and is influenced by the choice of architectural style\\
+\\
+Plan driven approaches create much of the model before implementation begins, whereas for agile forms, the details of the model evolve dynamically.
+\section{Architectural Style}
+\textbf{Architectural style} - Concerned with a high-level concept of widely used structures and relationships.\\
+\textbf{Architectural form} - Concerned with the high-level design of a particular system\\
+\\
+The concept helps analysis and understanding, but as with so many aspects of software, this has proved a difficult one to describe in a systematic manner
+\subsection{What does software architecture do for us?}
+\begin{itemize}
+	\item Assists understanding, by giving a vocabulary that descries a system's high-level design
+	\item Enables reuse of software, by identifying where we might "match" different system elements
+	\item Aids system evolution, by exposing the dimensions along which a system is expected to evolve. The maintainers can use this as a guide as to how the system can best be executed
+	\item Provides a framework for analysis - allowing us to assess how well the solution will meet user needs
+\end{itemize}
+\subsection{Classifying architectural style}
+A simple and useful classification scheme is one based on the forms of the following three elements:
+\begin{itemize}
+	\item Components: the basic building blocks used in a system built in this style
+	\item Connectors: the way the components interact
+	\item Context: how the elements and their interactions are organised and managed at run-time
+\end{itemize}
+The context can also be characterised in terms of other features of a system, sich as:
+\begin{itemize}
+	\item Topology of information and control flow
+	\item Synchronisation mechanisms
+	\item Binding time
+\end{itemize}
+
+
+
+
+\end{document}

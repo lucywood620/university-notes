@@ -1,7 +1,7 @@
 \documentclass{article}[18pt]
 \usepackage{../../../../format}
 \lhead{Software Engineering - Software Design}
-
+\newcolumntype{L}{>{\raggedright\arraybackslash}X}%
 
 \begin{document}
 \begin{center}
@@ -71,7 +71,43 @@ The context can also be characterised in terms of other features of a system, si
 	\item Synchronisation mechanisms
 	\item Binding time
 \end{itemize}
-
+\subsection{Evolution of architecture}
+\begin{itemize}
+	\item Early architectural styles tended to mirror the way that a computer operated, with a strong emphasis upon function
+	\item Later styles show more balance between function and data
+	\item But all are still used
+\end{itemize}
+\subsection{Major architectural styles}
+{\renewcommand{\arraystretch}{2}
+\begin{tabularx}{\textwidth}{|L|L|L|}
+	\hline
+	Form & Dominated By & Examples \\
+	\hline
+	Data Flow & Motion of data, with no upstream content control by recipient & Batch sequential, pipe-and-filter \\
+	\hline
+	Call-and-return & Order of computation, with a single thread of control & Main program and subprograms, abstract data types \\
+	\hline
+	Interacting-processes & Communication among independent, concurrent processes & Communicating processes, distributed objects \\
+	\hline
+	Data-centered repository & Complex central data store & Transactional databases, client-server, blackboard \\
+	\hline
+	Data-Sharing & Direct sharing of data among components & Hypertext, lightweight processes \\
+	\hline
+\end{tabularx}}
+\subsection{Data Flow examples}
+\subsubsection{Batch sequential systems}
+No user interaction, the program reads data from files and outputs to new files:
+\begin{itemize}
+	\item Components are the program itself any files it users
+	\item Connectors are the run-time links to files
+\end{itemize}
+\subsubsection{Pipe-and-Filter}
+A chain of processes, which each filter the input data in some way, but which also have clearly independent and reusable roles
+\begin{itemize}
+	\item Components are the filter processes
+	\item Connectors are the mechanism linking the standard output from one filter to the standard inpit of another
+\end{itemize}
+Unix processes and pipes are a classical example of this form
 
 
 

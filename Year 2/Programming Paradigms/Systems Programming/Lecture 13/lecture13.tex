@@ -51,9 +51,8 @@
 
 \begin{itemize}
 \item Commands from your program are sent by the API to the graphics hardware which generates pixels for display
-\item *in OpenGL the hardware behaves as a state machine
 \end{itemize}
-
+*in OpenGL the hardware behaves as a state machine
 
 
 \section{OpenGL programming}
@@ -72,34 +71,15 @@
 
 
 
-\section{Commonly used C libraries}
-\begin{itemize}
-\item general: \verb!libglib! / \verb!libgobject! / \verb!libpthread!
-\item console: \verb!libncurses!
-\item 2D graphics: \verb!libX11! / \verb!libSDL!
-\item 3D graphics: \verb!libGL! / \verb!libGLU! / \verb!libGLUT!
-\item GUI toolkits: \verb!libgtk! / \verb!libQT!
-\item Images: \verb!libjpeg! / \verb!libpng! / \verb!libgif!
-\item text rendering: \verb!libpango! / \verb!libfreetype!
-\item sound: \verb!libasound! / \verb!libSDL!
-\item compression: \verb!libz! (\verb!zlib!) / \verb!libgzip! / \verb!libbz2!
-\item encryption: \verb!libcrypt! / \verb!libssl! / \verb!libgssapi! / \verb!libkrb5!
-\item XML: \verb!libxml2!
-\item web: \verb!libcurl!
-\end{itemize}
-
-
-
 \section{Usage of libraries}
 \begin{itemize}
-\item If a library is \emph{statically linked} then a copy of the library is included in the executable
+\item If a library is \textbf{statically linked} then a copy of the library is included in the executable
 \begin{itemize}
 \item No need to worry about what version of the library you have
 \end{itemize}
 \item C/C++/assembly can be combined
 \item Often bound to other languages e.g. php, XML, curl
 \item Many of these libraries will be \emph{dynamically linked}
-\item Try \verb!ldd /usr/bin/php! on Linux to list dynamic dependencies
 \end{itemize}
 
 
@@ -108,10 +88,10 @@
 \begin{itemize}
 \item \emph{Dynamic} linking takes place at run-time not build-time
 \begin{itemize}
-\item Reduces filespace demands (bloat) by keeping only one copy of the library
-\item Only one copy of the library is loaded into memory
-\item Can help with updates e.g. for security
-\item Using dynamic linking can be slightly slower than static linking
+\item [+] Reduces filespace demands (bloat) by keeping only one copy of the library
+\item [+] Only one copy of the library is loaded into memory
+\item [+] Can help with updates e.g. for security
+\item [-] Using dynamic linking can be slightly slower than static linking
 \end{itemize}
 \item LGPL (Lesser Gnu Public License) often used
 \item Dynamic libraries are called differently by OSs
@@ -287,9 +267,7 @@ void hello_function(int times){
 }
 \end{minted}
 \end{itemize}
-
-
-
+We want function pointers to pass a function to a function
 \section{Using \texttt{qsort()}}
 \begin{itemize}
 \item \verb!stdlib.h! contains an implementation of the quicksort algorithm. The function declaration is:

@@ -1,0 +1,342 @@
+\documentclass{article}
+\usepackage{../../../../format}
+\lhead{Programming Paradigms - System Programming}
+\usepackage{minted}
+\usepackage{enumerate}
+\usepackage{boxedminipage}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usepackage{fancyvrb}
+\usepackage{hyperref}
+\definecolor{links}{HTML}{2A1B81}
+\hypersetup{colorlinks,linkcolor=,urlcolor=blue}
+\usetikzlibrary{shapes.misc}
+\usetikzlibrary{shapes.geometric, arrows, positioning}
+
+
+\begin{document}
+	
+\begin{center}
+	\underline{\huge External Libraries}
+\end{center}	
+	
+
+
+\section{External libraries}
+\begin{itemize}
+\item One of the reasons why C is so popular is the huge collection of tried and tested libraries available across many different computing platforms.  E.g.  OpenGL
+\end{itemize}
+
+\begin{center}
+\tikzset{
+  myarrow/.style = {line width=0.5mm, draw=black, -triangle 60, fill=white,postaction={draw, line width=2mm, shorten >=3mm, -}}
+}
+\begin{tikzpicture}
+\draw[rounded corners] (-0.9, -0.45) rectangle (0.9, 0.45) {};
+\node at (0,0) {C API};
+\draw [myarrow] (1.0,0) -- (2.5,0);
+\node[align=center] at (1.75,-1) {Commands \&\\Geometry};
+\begin{scope}[xshift=100]
+\draw[rounded corners] (-0.9, -0.45) rectangle (0.9, 0.45) {};
+\node[align=center] at (0,0) {Graphics\\hardware*};
+\draw [myarrow] (1.0,0) -- (2.5,0);
+\node[align=center] at (1.75,-1) {Pixels};
+\begin{scope}[xshift=100]
+\draw[rounded corners] (-0.9, -0.45) rectangle (0.9, 0.45) {};
+\node[align=center] at (0,0) {Display};
+\end{scope}
+\end{scope}
+\end{tikzpicture}
+\end{center}
+
+\begin{itemize}
+\item Commands from your program are sent by the API to the graphics hardware which generates pixels for display
+\item *in OpenGL the hardware behaves as a state machine
+\end{itemize}
+
+
+
+\section{OpenGL programming}
+\begin{itemize}
+\item On its own OpenGL is:
+\begin{enumerate}
+\item Low level
+\item O/S independent
+\end{enumerate}
+\item Hence it is usually used with:
+\begin{itemize}
+\item GLU a utility library with high level shape support
+\item GLUT utility library for window creation and I/O
+\end{itemize}
+\end{itemize}
+
+
+
+\section{Commonly used C libraries}
+\begin{itemize}
+\item general: \verb!libglib! / \verb!libgobject! / \verb!libpthread!
+\item console: \verb!libncurses!
+\item 2D graphics: \verb!libX11! / \verb!libSDL!
+\item 3D graphics: \verb!libGL! / \verb!libGLU! / \verb!libGLUT!
+\item GUI toolkits: \verb!libgtk! / \verb!libQT!
+\item Images: \verb!libjpeg! / \verb!libpng! / \verb!libgif!
+\item text rendering: \verb!libpango! / \verb!libfreetype!
+\item sound: \verb!libasound! / \verb!libSDL!
+\item compression: \verb!libz! (\verb!zlib!) / \verb!libgzip! / \verb!libbz2!
+\item encryption: \verb!libcrypt! / \verb!libssl! / \verb!libgssapi! / \verb!libkrb5!
+\item XML: \verb!libxml2!
+\item web: \verb!libcurl!
+\end{itemize}
+
+
+
+\section{Usage of libraries}
+\begin{itemize}
+\item If a library is \emph{statically linked} then a copy of the library is included in the executable
+\begin{itemize}
+\item No need to worry about what version of the library you have
+\end{itemize}
+\item C/C++/assembly can be combined
+\item Often bound to other languages e.g. php, XML, curl
+\item Many of these libraries will be \emph{dynamically linked}
+\item Try \verb!ldd /usr/bin/php! on Linux to list dynamic dependencies
+\end{itemize}
+
+
+
+\section{Dynamic vs static linking}
+\begin{itemize}
+\item \emph{Dynamic} linking takes place at run-time not build-time
+\begin{itemize}
+\item Reduces filespace demands (bloat) by keeping only one copy of the library
+\item Only one copy of the library is loaded into memory
+\item Can help with updates e.g. for security
+\item Using dynamic linking can be slightly slower than static linking
+\end{itemize}
+\item LGPL (Lesser Gnu Public License) often used
+\item Dynamic libraries are called differently by OSs
+\item Linux: shared objects (\verb!.so!)
+\item Windows: Dynamic Link Libraries (\verb!.dll!)
+\item OSX: \verb!.dylib!
+\item Can lead to ``DLL Hell'': many versions of the same dynamic library
+\item Best to include version number with library
+\end{itemize}
+
+
+
+\section{Compilation Model}
+
+\begin{center}
+\tikzset{
+  myarrow/.style = {line width=0.5mm, draw=black, -triangle 60, fill=white,postaction={draw, line width=2mm, shorten >=3mm, -}}
+}
+\begin{tikzpicture}
+
+\node at (0,0) {source code};
+\draw [myarrow] (0,-0.3) -- (0,-1.1);
+
+
+\begin{scope}[yshift=-40]
+\draw[rounded corners] (-1.5, -0.3) rectangle (1.5, 0.3) {};
+\node at (0,0) {Pre-processor};
+\draw [myarrow] (0,-0.3) -- (0,-1.1);
+\begin{scope}[yshift=-20]
+\node at (1.5,0) {source code};
+\end{scope}
+\begin{scope}[yshift=-40]
+\draw[rounded corners] (-1.5, -0.3) rectangle (1.5, 0.3) {};
+\node at (0,0) {Compiler};
+\draw [myarrow] (0,-0.3) -- (0,-1.1);
+\begin{scope}[yshift=-20]
+\node at (1.5,0) {assembly code};
+\end{scope}
+\begin{scope}[yshift=-40]
+\draw[rounded corners] (-1.5, -0.3) rectangle (1.5, 0.3) {};
+\node at (0,0) {Assembler};
+\draw [myarrow] (0,-0.3) -- (0,-1.1);
+\node at (-3.5,0) {external libraries};
+\draw [myarrow] (-2.5,-0.3) -- (-0.5,-1.1);
+\begin{scope}[yshift=-20]
+\node at (1.5,0) {object code};
+\end{scope}
+\begin{scope}[yshift=-40]
+\draw[rounded corners] (-1.5, -0.3) rectangle (1.5, 0.3) {};
+\node at (0,0) {Linker};
+\draw [myarrow] (0,-0.3) -- (0,-1.1);
+\begin{scope}[yshift=-40]
+\node at (0,0) {executable code};
+\end{scope}
+\end{scope}
+\end{scope}
+\end{scope}
+\end{scope}
+\end{tikzpicture}
+\end{center}
+
+
+
+
+
+
+\section{Creating a static library}
+\begin{itemize}
+\item A static library is effectively just an archive containing object (\verb!.o!) files and is created with the archiver \verb!ar!.
+\item On UNIX, static libraries use the \verb!.a! extension.
+\begin{minted}{bash}
+gcc -c linkedlist.c -o bin/static/linkedlist.o
+gcc -c anotherfile.c -o bin/static/anotherfile.o
+ar rcs bin/static/libLL.a bin/static/linkedlist.o \
+    bin/static/anotherfile.o
+\end{minted}
+\item To link statically:
+\begin{itemize}
+\item Use the \verb!-L! flag to list a (non-standard) directory where the library can be found
+\item Use the \verb!-l! flag to give the name of the library. Note that it assumes the library starts with \verb!lib! and has the extension \verb!.a! (static) or \verb!.so! (dynamic)
+\end{itemize}
+\begin{minted}{bash}
+gcc  main.o  -Lbin/static -lLL -o bin/main-static
+\end{minted}
+\item Can now run
+\begin{minted}{bash}
+bin/main-static
+\end{minted}
+\end{itemize}
+
+
+
+
+\section{Loading/unloading a library}
+\begin{itemize}
+\item We can add code to see when a library is loaded into memory and when it is unloaded.
+\begin{itemize}
+\item N.B. This is a \verb!gcc! extension and might not work on other compilers.
+\end{itemize}
+\end{itemize}
+\begin{minted}{c}
+void __attribute__ ((constructor)) initLibrary(void){
+ printf("Library is being loaded\n");
+}
+
+void __attribute__ ((destructor)) cleanUpLibrary(void){
+ printf("Library is being exited\n");
+}
+\end{minted}
+
+
+
+\section{Creating a shared library}
+\begin{itemize}
+\item Objects files for a shared library need to be compiled with the \verb!-fPIC! option
+\item On UNIX, static libraries use the \verb!.so! extension.
+\begin{itemize}
+\item PIC=``Position Independent Code'', since we don't know where in memory the library will be loaded at run-time
+\end{itemize}
+\begin{minted}{bash}
+gcc -fPIC -c linkedlist.c -o bin/dynamic/linkedlist.o
+gcc -fPIC -c anotherfile.c -o \
+    bin/dynamic/anotherfile.o
+gcc -shared bin/dynamic/linkedlist.o \
+    bin/dynamic/anotherfile.o -o bin/dynamic/libLL.so
+\end{minted}
+\item To link dynamically:
+\begin{minted}{bash}
+gcc   main.o  -Lbin/static -lLL -o bin/main-static
+\end{minted} 
+\end{itemize}
+
+
+
+\begin{itemize}
+\item If we try to run it, we get an error:
+\begin{minted}{bash}
+bin/main-shared: error while loading shared libraries:
+    libLL.so: cannot open shared object file: No such
+    file or directory
+\end{minted} 
+\item Need to tell the operating system where to find the library:
+\begin{minted}{bash}
+# In bash:
+LD_LIBRARY_PATH=`pwd`/bin/dynamic/:$LD_LIBRARY_PATH
+# In tcsh (the default shell on mira):
+setenv LD_LIBRARY_PATH \
+    `pwd`/bin/dynamic:$LD_LIBRARY_PATH
+\end{minted}
+\item (Note that \verb!`! above is a backtick)
+\end{itemize}
+
+
+
+\section{Function Pointers}
+\begin{itemize}
+\item We've seen pointers to variables. We can also have pointers to functions!
+\begin{minted}{c}
+#include<stdio.h>
+void hello_function(int times);
+
+int main(){
+  void (*func_ptr)(int);
+  func_ptr=hello_function;
+  func_ptr(3);
+  return 0;
+}
+
+void hello_function(int times){
+  for(int i=0;i<times;i++) {
+    printf("Hello, World!\n");
+  }
+}
+\end{minted}
+\end{itemize}
+
+
+
+\section{Using \texttt{qsort()}}
+\begin{itemize}
+\item \verb!stdlib.h! contains an implementation of the quicksort algorithm. The function declaration is:
+\begin{minted}{c}
+void qsort(void *base, size_t nmemb, size_t size,
+    int (*compar)(const void *, const void *)) 
+\end{minted}
+\item \verb!void *base! is a pointer to the array
+\item \verb!size_t nmemb! is the number of elements in the array
+\item \verb!size_t size! is the size of each element
+\item \verb!int (*compar)(const void *, const void *)! is a function pointer composed of two arguments and returns '\verb!0! when the arguments have the same value, \verb!<0! when \verb!arg1! comes before \verb!arg2!, and \verb!>0! when \verb!arg1! comes after \verb!arg2!.
+\end{itemize}
+
+
+
+\begin{minted}{c}
+#include <stdio.h>
+#include <stdlib.h>
+int compare (const void *, const void *); 
+int main() {
+  int arr[] = {52, 14, 50, 48, 13};
+  int num, width, i;
+  num = sizeof(arr)/sizeof(arr[0]);
+  width = sizeof(arr[0]);
+  qsort(arr, num, width, compare);
+  for (i = 0; i < 5; i++)
+    printf("%d ", arr[i]);
+  printf("\n");
+  return 0;
+}
+
+int compare (const void *arg1, const void *arg2) {
+  return *(int *)arg1 - *(int *)arg2;
+}
+\end{minted}
+
+
+
+
+\section{Implement \texttt{calloc()} and \texttt{realloc()}.}
+\begin{itemize}
+\item Write functions \verb!calloc2()! and \verb!realloc2()!, that use \verb!malloc()! and \verb!free()! to implement the functionality of \verb!calloc()! and \verb!realloc()!, respectively.
+\item Remember that \verb!calloc()! sets the allocated memory to zero (for this exercise, you may ignore testing for integer overflows when multiplying the arguments of \verb!calloc()! together).
+\item When implementing the copying part of \verb!realloc()!, recall that \verb!char! is 1 byte; the C standard states that you may use \verb!char *! pointers to access individual bytes of memory.
+\end{itemize}
+
+
+
+\end{document}
+\end{document}

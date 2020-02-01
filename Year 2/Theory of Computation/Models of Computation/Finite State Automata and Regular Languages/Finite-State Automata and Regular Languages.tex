@@ -230,4 +230,36 @@ for every state s and every word $w_1w_2...w_n$\\
 \left\{w \in \Sigma^{*} | \hat{\boldsymbol{\delta}}(s, w) \in F\right\}=\left\{w \in \Sigma^{*} | \hat{\boldsymbol{\delta}}(t, w) \in F\right\}
 \]
 Otherwise, s and t are distinguishable, i.e. there is a witness word u such that either \(\hat{\delta}(s, u) \in F, \hat{\delta}(t, u) \notin F\) or \(\hat{\delta}(s, u) \notin F, \hat{\delta}(t, u) \in F\)
+\section{Team-Splitting Algorithm}
+Best explained in terms of teams of players (sets of states) that pass balls of different colours (input symbols via transmissions)\\
+\\
+\textbf{Start}: Disqualify useless players (states that are unreachable from the start state)\\
+\\
+\textbf{Round 0}: Start with two teams, one consisting of all the accept states and the other consisting of all the non-accept states. Set $i:=1$\\
+\\
+\textbf{Round i}: For every team $S\in \mathscr{P}(Q)$ and every colour $a\in \Sigma$ check if all players from S agree on passing an a-ball. If not, split the team S into the maximal sub-teams that agreed, set $i:=i+1$ and go to round i\\
+\\
+\textbf{End}: Return the teams as sets of equivalent states
+\subsection{Correctness of the algorithm}
+\textbf{Proposition}: The Team-Splitting algorithm terminates\\
+\\
+\textbf{Proof}: There cannot be more than $n-1$ splits (where n is the number of players)\\
+\\
+\textbf{Proposition}: Every two players that are in the same team in the end are equivalent\\
+\\
+\textbf{Proof}: Pick any sequences of passes (a word) and prove, by induction of its length, that it can't tell the two players apart\\
+\\
+\textbf{Proposition}: Every two players that have been split at some round can't be equivalent\\
+\\
+\textbf{Proof}: Induction on the round number. The inductive step - a proof by contradiction.
+\section{Equivalence and Isomorphism of DFAs}
+Two see if two DFAs recognise the same language put them together, apply the minimisation algorithm as if they were as single automaton, and see whether the two start states are equivalent\\
+\\
+\textbf{Corollary}: If $M_1$ and $M_2$ are two minimal DFAs that recognise the same language, the minimisation algorithm always produces a bijection between the (equivalent) states of $M_1$ and $M_2$. We say that $M_1$ and $M_2$ are isomorphic\\
+\\
+\textbf{Proof}: Build the bijection starting from the two start states\\
+\\
+\textbf{Theorem}: The team splitting algorithm finds the minimal DFA equivalent ot the original one\\
+\\
+\textbf{Proof}: By first arguing that the DFA produced by the algorithm is equivalent to the minimal one, and then observing that the former can't have unreachable or equivalent states, so it must be isomorphic to the latter 
 \end{document}

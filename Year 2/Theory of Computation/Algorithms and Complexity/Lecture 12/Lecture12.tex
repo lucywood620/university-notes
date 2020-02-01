@@ -109,7 +109,156 @@ Interpretation:
 	\item Can then push another $c(u,v)$ from u to v
 	\item We can push in total $c_f(u,v)=c(u,v)+x>c(u,v)$ from u to v
 \end{itemize}
-
+Given flow network $G=(V,E)$ and flow f, the residual network of G induced by f is $G_f=(V,E_f)$ with
+\[
+E_{f}=\left\{(u, v) \in V \times V: c_{f}(u, v)>0\right\}
+\]
+i.e. each residual edge that can admit flow that is strictly positive
+$$G: \ u\xrightleftharpoons[1]{3/5} v \ \Rightarrow \ G_f: \ u\xrightleftharpoons[4]{2} v$$
+Note that $|E_f| \leqslant 2|E|$\\
+\\
+\textbf{Lemma}:\\
+Let $G=(V,E)$ be a flow network, f be a flow in G, $G_f$ be the residual network of G induced by f, and let $f'$ be a flow in $G_f$. Then the flow sum $f+f'$ with
+$$(f+f')(u,v)=f(u,v)+f'(u,v)$$
+Is a flow in G with value $|f+f'|=|f|+|f'|$
+\textbf{Proof}:\\
+Must verify that skew symmetry, capacity constraints and conservation are obeyed\\
+\textit{Skew symmetry}:
+\[
+\begin{aligned}
+\left(f+f^{\prime}\right)(u, v) &=f(u, v)+f^{\prime}(u, v) \\
+&=-f(v, u)-f^{\prime}(v, u) \\
+&=-\left(f(v, u)+f^{\prime}(v, u)\right) \\
+&=-\left(f+f^{\prime}\right)(v, u)
+\end{aligned}
+\]
+\textit{Capacity constraint}:\\
+Note $f'$ is flow in $G_fr$, so $f'(u,v)\leqslant  c_f(u,v)$. Since by def. $c_f(u,v) = c(u,v)-f(u,v)$
+\[
+\begin{aligned}
+\left(f+f^{\prime}\right)(u, v) &=f(u, v)+f^{\prime}(u, v) \\
+& \leq f(u, v)+c_{f}(u, v) \\
+&=f(u, v)+(c(u, v)-f(u, v)) \\
+&=c(u, v)
+\end{aligned}
+\]
+\textit{Flow conservation}:\\
+For all $u\in V-\{s,t\}$
+\[
+\begin{aligned}
+\sum_{v \in V}\left(f+f^{\prime}\right)(u, v) &=\sum_{v \in V}\left(f(u, v)+f^{\prime}(u, v)\right) \\
+&=\sum_{v \in V} f(u, v)+\sum_{v \in V} f^{\prime}(u, v) \\
+&=0+0 \\
+&=0
+\end{aligned}
+\]
+\textit{Value}
+\[
+\begin{aligned}
+\left|f+f^{\prime}\right| &=\sum_{v \in V}\left(f+f^{\prime}\right)(s, v) \\
+&=\sum_{v \in V}\left(f(s, v)+f^{\prime}(s, v)\right) \\
+&=\sum_{v \in V} f(s, v)+\sum_{v \in V} f^{\prime}(s, v) \\
+&=|f|+\left|f^{\prime}\right|
+\end{aligned}
+\]
+\section{Augmenting Paths}
+Given a flow network $G(V,E)$ and flow f an augmenting path P is a simple path in residual network $G_f$\\
+\\
+Recall that each edge $(u,v)$ in $G_f$ admits some additional positive flow, obeying capacity constraint\\
+\\
+Flow value can be increased by
+\[
+c_{f}(P)=\min _{(u, v) \in P} c_{f}(u, v)
+\]
+\begin{center}
+	\includegraphics[scale=0.7]{"Augmenting Path"}
+\end{center}
+\textbf{Lemma}:\\
+\\
+Let $G=(V,E)$ to be a flow network, f be a flow in G, and let P be an augmenting path in $G_f$. Define $f_p$ by
+\[
+f_{P}(u, v)=\left\{\begin{array}{ll}
+{c_{f}(P)} & {\text { if }(u, v) \text { is on } P} \\
+{-c_{f}(P)} & {\text { if }(v, u) \text { is on } P} \\
+{0} & {\text { otherwise }}
+\end{array}\right.
+\]
+Then $f_p$ is a flow in $G_f$ with value $|f_p|=c_f(P)>0$
+\textbf{Corollary (Improve)}\\
+Let $G,f,P,f_p$ be as above, Define $f'=f+f_p$. Then $f'$ is a flow in G with value $|f'|=|f|+|f_p|>|f|$
+\section{Basic Ford-Fulkerson algorithm}
+\begin{lstlisting}[caption=Ford-Fulkerson({G,s,t})]
+for each edge (u,v) $\in$ E do
+	f(u,v)=0
+	f(v,u)=0
+end for
+while there exists a path P = $s\rightsquigarrow t$ in the residual network $G_f$ do
+	$c_f$(P)=min\{$c_f$(u,v):(u,v)\in P\}
+	for each edge $(u,v)\in P$ do
+		f(u,v)=f(u,v)+$c_f$(P)
+		f(v,u)=-f(u,v)
+	end for
+end while
+\end{lstlisting}
+\subsection{Running Time}
+The running strongly depends on how the augmenting paths in line 4 are determined\\
+\\
+\textbf{If chosen poorly:}
+\begin{itemize}
+	\item Value of flow increases with each iteration
+	\item But possibly too slowly
+	\item In extreme cases it can never terminate and it can even not converge to the value of maximum flow (can only happen if capacities are irrational numbers)
+\end{itemize}
+\textbf{In practice}
+\begin{itemize}
+	\item Capacities are integers so always terminates
+	\item If capacities are small then it is an efficient algorithm (polynomial time)
+\end{itemize}
+\subsubsection{Running time analysis}
+Assume integral capacities. Simple bound $\mathcal{O}(E\cdot |f^*|)$ for running time when choosing paths arbitrarily, $|f^*|$ being the value of maximum flow
+\begin{itemize}
+	\item Initialisation in lines 1-4 take $\mathcal{O}(E)$
+	\item While loop in lines 5-11 is executed at most $|f^*|$ times (value of flow increases by at least one unit in each interaction)
+	\item In lines 6-10 (within the while loop) we need $\mathcal{O}(V+E)=\mathcal{O}(E)$ time. 
+\end{itemize}
+\subsubsection{Problematic case}
+Algorithm needs $\Omega(E|f^*|)$ time in worst case, because $(u,v)$ is always chosen to be part of augmenting path.\\
+\\
+Note that the value of the maximum flow f* can be arbitrarily large (might even be exponential on the size of the network)\\
+\\
+This algorithm has not polynomial running time in the worst case
+\section{Edmonds-Karp algorithm}
+\begin{itemize}
+	\item A special implementation of Ford-Fulkerson algorithm
+	\item The augmenting path P is always chosen to be a shortest path from s to t (e.g. using BFS) in the residual network $G_f$
+	\item Regardless of the flow that fits in this path P
+\end{itemize}
+This has running time $\mathcal{O}(V\cdot E^2)$
+\section{Cuts of flow networks}
+A cut of a flow network $G=(V,E)$ is a partition of V into the sets S and T=V-S such that $s\in S$ and $t\in T$\\
+\\
+If f is a flow in G, then $f(S,T)$ is the net flow across cut (S,T); its capacity is c(S,T)\\
+\\
+A minimum cut is a cut with minimum capacity over all cuts\\
+\\
+\textbf{Lemma: Net Flow}\\
+Let f be a flow in a flow network G with source s and sink t, let (S,T) be a cut of G. Then the flow across (S,T) is f(S,T)=$|f|$\\
+\\
+\textbf{Corollary (Upper Cut)}\\
+The value of a flow f in a network G is upper bounded by the capacity of any cut (S,T) in G\\
+\\
+\textbf{Proof}
+\[
+|f|=f(S, T)=\sum_{u \in S} \sum_{v \in T} f(u, v) \leq \sum_{u \in S} \sum_{v \in T} c(u, v)=c(S, T)
+\]
+Therefore max-flow $\leqslant$ min-cut\\
+\textbf{Theorem: Max-flow min-cut}\\
+If f is a flow in a flow network $G=(V,E)$ with source s and sink t, then the following conditions are equivalent
+\begin{enumerate}
+	\item f is a maximum flow in G
+	\item The residual network $G_f$ contains no augmenting path
+	\item $|f|=c(S,T)$ for some cut $(S,T)$ of G
+\end{enumerate} 
 
 
 \end{document}

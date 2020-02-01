@@ -12,7 +12,7 @@ A Deterministic Finite-State Automaton is a 5-tuple $(Q,\Sigma, \delta, q_0,F)$ 
 \begin{enumerate}
 	\item Q is a finite set of states
 	\item $\Sigma$ is a finite alphabet
-	\item $\delta: Q\times \Sigma \rightarrow$ is the transition function
+	\item $\delta: Q\times \Sigma \rightarrow Q$ is the transition function
 	\item $q_0\in Q$ is the start state, and
 	\item $F\subseteq Q$ is the set of accept states
 \end{enumerate}
@@ -24,9 +24,9 @@ Let $M=(Q,\Sigma, \delta, q_0,F)$ to be a DFA and let $w=w_1w_2...w_n$ be a word
 \end{enumerate}
 \section{Regular Languages}
 The DFA M recognises the language L if L = $\{w| M \text{ accepts } w\}$
-\begin{defin}[Regular language]
+\begin{definition}[Regular language]
 	A language is called a regular language if some DFA recognises it
-\end{defin}
+\end{definition}
 \section{Regular Operations}
 Boolean (set-theoretic):\\
 \begin{tabularx}{\textwidth}{r l}

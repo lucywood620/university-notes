@@ -1,0 +1,109 @@
+\documentclass{article}[18pt]
+\usepackage{../../../../format}
+\lhead{Theory of Computation - Algorithms and Complexity}
+\newtheorem{theorem}{Theorem}
+
+\begin{document}
+\begin{center}
+\underline{\huge Decision Problems}
+\end{center}
+\section{Optimisation vs Decision Problems}
+\begin{itemize}
+	\item A major variation of optimization problems: decision problems
+	\item Answer is not a value but YES/NO
+	\item Every optimisation -problem has a decision counterpart
+	\item An optimisation problem has a fast algorithm iff the corresponding decision problem has a fast algorithm
+\end{itemize}
+\section{Decision problems and encodings}
+The standard way to define a decision problem is to describe a generic instance and a yes-no question about each instance\\
+\\
+\textbf{Reachability}:
+\begin{itemize}
+	\item Instance: A finite directed graph G and vertices s and t
+	\item Question: Is there a path in G from s to t?
+\end{itemize}
+To input problems to a computer, each instance must be encoded as a string of symbols over some alphabet. We need an encoding scheme\\
+\\
+To ensure that encoding the problem does not change its essential nature, an encoding scheme must be concise
+\begin{itemize}
+	\item Represent numbers efficiently
+	\item Not add unnecessary information
+\end{itemize}
+\section{Languages}
+An alphabet, $\Sigma$ is a (finite) set of symbols\\
+A string over $\Sigma$ is a finite sequence of symbols from $\Sigma$\\
+A language over $\Sigma$ is any set of strings over $\Sigma$\\
+\\
+For a problem $\Pi$ and an encoding scheme e with alphabet $\Sigma$, the set of all strings corresponding to instances with answer yes is denoted $\mathscr{L}(\Pi,e)$ and is called the language associated with $\Pi$ and e\\
+\\
+For decision problems, we just want to decide whether the (encoding of a) given instance belongs to the alphabet $\mathscr{L}(\Pi, e)$
+\section{Complexity of Problems}
+\begin{itemize}
+	\item The problems encountered so far in this course have all proved to be tractable (since we have found fast algorithms for all of them)
+	\item There are many problems however, which cannot be quickly solved in practice, i.e., which are intractable
+	\item There are many difficulties:
+	\begin{itemize}
+		\item What do we mean by tractable and intractable
+		\item Can we define these notions formally
+		\item Can we prove that a problem is one but not the other
+	\end{itemize}
+	\item One technique that will prove very useful: showing that one decision problem can be transformed(reduced) into another
+\end{itemize}
+\section{Complexity measures}
+Every decidable problems has a set of algorithms that solved it. The properties of this set of algorithms:
+\begin{itemize}
+	\item The difficulty of constructing the algorithm
+	\item The length of the shortest possible algorithm
+	\begin{itemize}
+		\item Static complexity measure
+		\item Useful for classifying the complexity of strings, called Kolmogorov complexity
+	\end{itemize}
+	\item The efficiency of the most possible algorithm?
+	\begin{itemize}
+		\item Dynamic complexity measure
+		\item A numerical function that measures the maximum resources used by an algorithm to compute the answer to a given instance
+	\end{itemize}
+\end{itemize}
+\section{Dynamic complexity measures}
+\begin{itemize}
+	\item The most critical resources are often time/space
+	\item By considering Turing Machines as our model of computation
+\end{itemize}
+\begin{definition}[Time complexity]
+The time complexity of a Turing Machine T is the function $Time_T$ such that $Time_T(x)$ is the number of steps taken by the computation $T(x)$
+\end{definition}
+
+\begin{definition}[Space complexity]
+The space complexity of a Turing Machine T is the function $Space_T$ such that $Space_T(x)$ is the number of distinct tape cells visited during the computation $T(x)$
+\end{definition}
+
+\section{Equivalence}
+\begin{theorem}
+An n-vertex graph G has an independent set of size k iff G has a vertex cover of size n-k
+\end{theorem}
+\textbf{Corollary} - The decision problems independent set and vertex cover are equivalent
+\section{Clique}
+\begin{itemize}
+	\item Instance - A graph G and an integer k
+	\item Question: Does G have a clique of size at least k - i.e. a set of at least k vertices that are all adjacent to one another
+\end{itemize}
+\section{Complement}
+\begin{definition}[Complement]
+The complement of a graph G has the same vertex set, and there is an edge between two vertices u and v in the complement iff there is no edge from u to v in G
+\end{definition}
+\begin{theorem}
+A graph G has an independent set of size k iff its complement $\overline{G}$ has a clique of size k
+\end{theorem}
+\textbf{Corollary} - The decision problems independent set and clique are equivalent
+\section{Set cover}
+\begin{itemize}
+	\item Instance - A set U of n elements, a collection of subsets $S_1,S_2,...,S_t$ whose union equals I, and an integer k
+	\item Question: Does there exist a collection of at most k of these sets whose union is equal to all of U
+\end{itemize}
+Vertex cover can be solved using an algorithm for SET COVER
+
+
+
+
+
+\end{document}

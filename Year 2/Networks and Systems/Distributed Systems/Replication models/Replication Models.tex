@@ -1,0 +1,153 @@
+\documentclass{article}[18pt]
+\usepackage{../../../../format}
+\lhead{Networks and Systems - Distributed Systems}
+
+
+\begin{document}
+\begin{center}
+\underline{\huge Replication Models}
+\end{center}
+\section{Replication}
+\begin{itemize}
+	\item Provide multiple copies of the same data or functionalities (services) in a distributed system
+	\item Improve system capabilities in terms of performance, availability and load distribution
+\end{itemize}
+\section{Types and Requirements}
+Types:
+\begin{itemize}
+	\item Computation (function/service) replication: multiple instances of the same functional processes are executed (behaviour) - may run on different hardware and implement different algorithms
+	\item Data replication: same piece of information is being stored in multiple devices (data integrity)
+\end{itemize}
+Requirements:\begin{itemize}
+	\item Replication transparency: A user sees one logical service, but not its physical copies
+	\item Data consistency: The same request will receive the same result even if it is processed by a different copy of the same service
+\end{itemize}
+\section{System Model - Replication}
+\begin{center}
+	\includegraphics[scale=0.7]{"System Model"}
+\end{center}
+Replicas:
+\begin{itemize}
+	\item Maintain copies of the same data or functions - can be implemented by different technologies
+	\item Replicas are not necessarily consistent all the time (some may have received updates, not yet conveyed to others)
+\end{itemize}
+\section{System Components}
+Replicas (R)
+\begin{itemize}
+	\item Maintain replicas (data/functions) on servers
+	\item Process requests or store results (may propagate to other servers)
+	\item Dynamic/static: set of Rs is fixed or variable (scalability issues)
+\end{itemize}
+Clients (C) requests
+\begin{itemize}
+	\item Those without updates are called read-only requests, the others are called update requests (they may include reads)
+	\item Read only: handle by one replica
+	\item Update: may involve data propagation/synchronisation, and concurrency control
+\end{itemize}
+Front End (FE)
+\begin{itemize}
+	\item Make replication transparent
+	\item Monitor and maintain replica availability
+	\item Perform request distribution, and collate responses
+\end{itemize}
+\section{System workflow}
+\begin{enumerate}
+	\item Incoming request
+	\begin{itemize}
+		\item Receive by the FE, and the FE will forward to the R(s)
+	\end{itemize}
+	\item Coordination
+	\begin{itemize}
+		\item R(s) accepts a request
+		\item Decide the ordering request relative to other requests
+	\end{itemize}
+	\item Execution
+	\begin{itemize}
+		\item R(s) process the request
+	\end{itemize}
+	\item Agreement
+	\begin{itemize}
+		\item R(s) reach consensus on the effect of the requests
+	\end{itemize}
+	\item Response
+	\begin{itemize}
+		\item One or more Rs reply to the FE
+		\item FE may process the response before returning it to the client
+	\end{itemize}
+\end{enumerate}
+\section{Fault-Tolerance Services}
+\begin{itemize}
+	\item Provide a correct service despite up to f process failures
+	\item Each replica is assumed to behave according to the specification of the distributed system, when they have not crashed
+	\item A service based on replication is correct if:
+	\begin{itemize}
+		\item It keeps responding despite failures
+		\item Clients can't tell the difference between the service they obtain from an implementation with replicated data and one provided by a single correct replica manager
+	\end{itemize}
+\end{itemize}
+\subsection{Passive (Primary-Backup) model for fault tolerance}
+\begin{center}
+	\includegraphics[scale=0.7]{"Passive Fault Tolerance"}
+\end{center}
+\begin{itemize}
+	\item There is at any time a single primary R and one or more secondary (backup, slave) Rs
+	\item FEs communicate with the primary which executes the operation and sends copies of the updates data to the result to backups
+	\item If the primary fails, one of the backups is promoted to act as the primary
+\end{itemize}
+\subsubsection{Workflow}
+\begin{enumerate}
+	\item Request
+	\begin{itemize}
+		\item An FE issues the request, containing a unique identifier, to the primary R
+	\end{itemize}
+	\item Coordination
+	\begin{itemize}
+		\item The primary processes each request, in the order in which it received it relative to other requests (message ordering)
+		\item It checks the unique id; if it has already done the request, it re-sends the response (Handle Message loss)
+	\end{itemize}
+	\item Execution
+	\begin{itemize}
+		\item The primary executes the request and stores the response
+	\end{itemize}
+	\item Agreement
+	\begin{itemize}
+		\item If the request is an update the primary sends the updated state, the response and the unique identifier to all the backups. The backups send an acknowledgement (result propagation)
+	\end{itemize}
+	\item Response
+	\begin{itemize}
+		\item The primary responds to the FE, which hands the response back to the client
+	\end{itemize}
+\end{enumerate}
+\subsubsection{Discussion of Passive Replication}
+\begin{itemize}
+	\item Non-deterministic behaviour at primary replica
+	\begin{itemize}
+		\item e.g. due to multi-threading
+		\item No fatal problem: as other replicas (backups) only slavishly record states determined by the primary's actions
+	\end{itemize}
+	\item Replica crashes
+	\begin{itemize}
+		\item Survive up to f replica crash, when the system comprises $f+1$ replicas
+	\end{itemize}
+	\item Front-end functionality
+	\begin{itemize}
+		\item Requires little functionality: only need to lookup a new primary replica when the current one isn't available
+	\end{itemize}
+	\item System overhead
+	\begin{itemize}
+		\item Relatively large due to data propagation
+	\end{itemize}
+\end{itemize}
+\subsection{Active replication}
+\begin{itemize}
+	\item The Rs are state machines all playing the same role and organised as a group - all start in the same state and perform the same in the same order so that their state remains identical (synchronisation)
+	\item If an R crashes it has no effect on performance of the service because the others continue as normal
+\end{itemize}
+\begin{center}
+	\includegraphics[scale=0.7]{"Active Replication"}
+\end{center}
+
+
+
+
+\end{document}

@@ -18,7 +18,7 @@ RPC, Java RMI and Python PYRO
 	\item Do not require developers to deal with socket programming when implementing programs that support remote communication
 	\item Have a performance issue due to synchronous communication
 \end{itemize}
-COBRA
+CORBA
 \begin{itemize}
 	\item Still follow the programming library approach
 	\item Similar to Java RMI: provide object request broker (ORB) define the interface definition language (IDL)
@@ -31,6 +31,7 @@ COBRA
 	\item Messages stored in message queues
 	\item Message servers decouple client and server
 	\item Various assumptions about message content
+	\item Provides data persistence, if server goes down, when it comes back up it will send the info again
 	
 \end{itemize}
 
@@ -53,7 +54,9 @@ Processing of messages by intermediate message server(s)
 	\item May do filtering, transforming, logging
 	\item Networks of message servers
 \end{itemize}
-Natural for database integration
+Natural for database integration\\
+\\
+Choose which requests get processed and combine duplicate requests into one request (in a similar way to multicasting)
 \section{Java Message Service (JMS)}
 \begin{itemize}
 	\item API specification to access MOM implementations
@@ -90,7 +93,7 @@ Service Discovery
 	\includegraphics[scale=0.5]{"Web Services"}
 \end{center}
 \subsection{Attributed of Web-Services}
-Web based protocols - Web services based on HTTP are designed to work over the public internet. The use of HTTP for transport means these protocols can traverse firewalls,l and can work in a heterogeneous environment\\
+Web based protocols - Web services based on HTTP are designed to work over the public internet. The use of HTTP for transport means these protocols can traverse firewalls, and can work in a heterogeneous environment\\
 \\
 Interoperability - SOAP defines a common standard that allows differing systems to interoperate\\
 \\

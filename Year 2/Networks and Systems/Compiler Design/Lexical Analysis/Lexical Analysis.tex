@@ -1,0 +1,79 @@
+\documentclass{article}[18pt]
+\usepackage{../../../../format}
+\lhead{Networks and Systems - Compiler Design}
+
+
+\begin{document}
+\begin{center}
+\underline{\huge Lexical Analysis}
+\end{center}
+The role of a lexical analyser
+\begin{itemize}
+	\item The first phase of a compiler
+	\item Reads input characters
+	\item Groups them into lexemes
+	\item Produces as output a sequence of tokens
+	\item The stream of tokens is sent to the parser
+	\item When it discovers the lexeme for a new identifier it enters this lexeme into the symbol table
+\end{itemize}
+\subsection{Lexical Analysis vs Parsing}
+Lexical analysis and syntax analysis are separate phases
+\begin{itemize}
+	\item Simplicity of design
+	\begin{itemize}
+		\item Simplify each task separately
+	\end{itemize}
+	\item Improved compiler efficiency
+	\begin{itemize}
+		\item Apply specialised techniques for each step
+	\end{itemize}
+	\item Compiler portability
+	\begin{itemize}
+		\item Different lexical analysers for specific devices
+	\end{itemize}
+\end{itemize}
+\section{Tokens vs Lexemes}
+Token
+\begin{itemize}
+	\item A notation representing the kind of lexical unit, e.g.
+	\begin{itemize}
+		\item A keyword
+		\item An identifier
+	\end{itemize}
+	\item Consists of a pair of:
+	\begin{itemize}
+		\item A token name
+		\item An (optional) attribute value
+	\end{itemize}
+	\item The tokens are given as input to the parser
+\end{itemize}
+Pattern of a token
+\begin{itemize}
+	\item A description of the form of its lexemes, e.g.
+	\begin{itemize}
+		\item For a keyword, the sequence of its characters
+		\item For an identifier: a description that matches many strings
+	\end{itemize}
+\end{itemize}
+The lexeme of a token
+\begin{itemize}
+	\item A sequence of characters in the source program that matches the pattern of the token
+	\item The lexical analyser identifies a lexeme as an instance of a token
+\end{itemize}
+\section{Attributes of tokens}
+In cases when many lexemes match with a specific token
+\begin{itemize}
+	\item The compiler must know which lexeme was found in the source program
+	\item The lexical analyser provides to the parser
+	\begin{itemize}
+		\item The token name
+		\item Additional information that specifies the particular lexeme represented by the token (attribute value)
+	\end{itemize}
+\end{itemize}
+Token names - influence parsing decisions\\
+\\
+Attribute names - influence the transition of the token after the parsing (in the semantic analysis)
+
+
+
+\end{document}

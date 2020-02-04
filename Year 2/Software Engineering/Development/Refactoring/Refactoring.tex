@@ -1,0 +1,127 @@
+\documentclass{article}[18pt]
+\usepackage{../../../../format}
+\lhead{Software Engineering - Software Devopment}
+
+
+\begin{document}
+\begin{center}
+\underline{\huge Refactoring code and scaling up}
+\end{center}
+\section{Code Complexity}
+Metrics
+\begin{itemize}
+	\item Lines of code
+	\begin{itemize}
+		\item Easy to count and automate
+		\item Focuses on implementation
+		\item Counts vary between language
+		\item Can encourage counter-productive coding practices
+		\item More a measure of effort rather than complexity
+		\item Remember that readability counts
+	\end{itemize}
+	\item Cyclomatic complexity
+	\begin{itemize}
+		\item Treats the program as a graph
+		\item Measures how many paths there are through your code
+		\item Node(N), actions
+		\item Edge(E), program flow between actions
+		\item P is the number of connected components (for a single piece of code P is equal to 1)
+		$$C=E-N+2P$$
+		
+		\[
+		\begin{array}{ll}
+		{1-10} & {\text { Easy program, low risk }} \\
+		{11-20} & {\text { Complex program, tolerable risk }} \\
+		{21-50} & {\text { Complex program, high risk }} \\
+		{50+} & {\text { Impossible to test }}
+		\end{array}
+		\]
+		
+	\end{itemize}
+	\item Halstead metrics
+	\begin{itemize}
+		\item Relates to the size of the codebase
+		\begin{itemize}
+			\item n1 = Number of distinct operators
+			\item n2 = Number of distinct operands
+			\item N1 = Total number of occurrences of operators
+			\item N2 = Total number of occurrences of operands
+		\end{itemize}
+		\item Halstead volume
+		$$V=N\times \log_2(n)$$
+		Where:
+		\begin{itemize}
+			\item N=N1+N2
+			\item n=n1+n2
+		\end{itemize}
+	\end{itemize}
+	\item Maintainability index
+	\begin{itemize}
+		\item A combination of the previous metrics
+		$$MI = 171-5.2\ln(V)-0.23(C)-16.2\ln(LoC)+50\sin\sqrt{2.4CM}$$
+		Where
+		\begin{itemize}
+			\item V = Halstead Volume
+			\item C = Cyclomatic Complexity
+			\item LoC = Lines of code
+			\item CM = average percentage of comment lines
+		\end{itemize}
+		\item High MI ($>75$) - Good maintainability
+		\item Low MI ($<25$) - Code restructuring necessary
+	\end{itemize}
+\end{itemize}
+\section{Complexity and Refactoring}
+Why refactor?
+\begin{itemize}
+	\item Greater predictability - plan for amount of maintenance required
+	\item Software Risk Mitigation - Can assess and mitigate the risks of introducing bugs into existing code
+	\item Reduced costs - Keeping the software relatively simple can reduce financial overhead in terms of maintenance
+	\item Extended value - reducing complexity means that the software will retain value for longer
+	\item Decision support - having the data to hand to help make a retirement decision (cost of re-write vs new code)
+\end{itemize}
+\section{Refactoring}
+Refactoring is changing a software system by improving its internal structure without changing its external behaviour
+\begin{itemize}
+	\item When refactoring you should not add functionality
+	\item Refactoring improves the understandability of the software and so reduces the need for documentation
+	\item Changes are easier to make because the code is well structured and clear
+\end{itemize}
+Refactoring improves the code to slow down the degradation of the code through change
+\subsection{Where refactoring helps}
+\begin{itemize}
+	\item Code smell - a surface indication that there might be a deeper problem in the system, a subjective assessment
+	\item Unhealthy dependencies between classes and packages
+	\item Duplicate code - similar code may be included at different places in a program
+	\item Long methods
+	\item Data clumping - same group of data items reoccur in different places
+	\item Untidy code and poorly named attributes and methods
+\end{itemize}
+\subsection{Why refactor?}
+\begin{itemize}
+	\item Improves the design of software
+	\item Easier to understand
+	\item To find the bugs
+	\item To program faster
+\end{itemize}
+\subsection{Resistance to refactoring}
+Maintenance is hard:
+\begin{itemize}
+	\item Programmers don't want to touch an existing codebase
+	\item Often hard to follow another programmers code
+	\item Code maintenance is boring so avoided if possible
+\end{itemize}
+Stakeholders
+\begin{itemize}
+	\item Project manager - It doesn't add any new desired functionality, nor does it fix any bugs
+	\item Senior developers - Too much investment in the system and its easier if nothing changes
+	\item Junior developers - Don't have enough experience and not fun or leads to promotion
+\end{itemize}
+\subsection{When to refactor}
+\begin{itemize}
+	\item Best to do it continuously, but if not possible, then set an MI boundary that you and your team wish to maintain
+\end{itemize}
+
+
+
+
+\end{document}

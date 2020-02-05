@@ -1,0 +1,81 @@
+\documentclass{article}[18pt]
+\usepackage{../../../../format}
+\lhead{Theory of Computation - Models of Computation}
+
+
+\begin{document}
+\begin{center}
+\underline{\huge Linear Temporal Logic}
+\end{center}
+\section{Intuition}
+We have a Boolean state (or world), in which a number of atomic propositions (AP) are true or false\\
+\\
+We'd like to reason about discrete linear time, which is an infinite sequence of states $A_0,A_1....$ with state $A_0$ at time 0 being the current state (thus any propositional formula over the AP talks about $A_0$)\\
+\\
+We'd next line to add temporal modalities, such as:
+\begin{itemize}
+	\item always A - $\square A$
+	\item eventually A - $\diamond A$
+	\item next A - $\circ A$
+	\item etc
+\end{itemize}
+These let us express other natural temporal properties such as infinitely often a - $\square\diamond a$
+\section{Syntax of LTL}
+We are given a finite set AP of atomic propositions (boolean variables), Boolean connectives plus two temporal modalities:
+\begin{itemize}
+	\item $\circ$ - next
+	\item $U$ - until
+\end{itemize}
+A formula in LTL is defined by the following grammar (in which brackets are omitted)
+\[
+\varphi:=\text { true }|a| \varphi_{1} \wedge \varphi_{2}|\neg \varphi| \bigcirc \varphi | \varphi_{1} U \varphi_{2}
+\]
+where $a\in AP$ and $\varphi_1,\varphi_2$ are LTL formulae\\
+\\
+Other modalities can be expressed, e.g.
+\[
+\diamond a \stackrel{\text { def }}{=} \text { trueUa }
+\]
+\[
+\square a \stackrel{\text { def }}{=} \neg \diamond \neg a
+\]
+\section{Intuitive statements}
+\begin{center}
+	\includegraphics[scale=0.7]{"Intuitive statements"}
+\end{center}
+\section{Formal Semantics}
+A world is labelled by the AP that are true in it, so it is just a letter from the alphabet $2^{AP}$ (the set of all subsets of AP)\\
+\\
+A word $\sigma$ is an infinite sequence of worlds, i.e. $\sigma \in (2^{AP})^\omega$\\
+\\
+The satisfaction relation, $\sigma \models \varphi$ where $\sigma = A_0A_1...$ is a word and $\varphi$ is a formula, recursively defined by
+\begin{center}
+	\includegraphics[scale=0.7]{"Satisfaction Relation"}
+\end{center}
+The set of all words that satisfy a formula $\varphi$ is called $Words(\varphi)$
+\section{Transition Systems}
+A transition system TS has:
+\begin{enumerate}
+	\item A finite set of states S
+	\item A transition relation $\rightarrow \subseteq S\times S$, which is left-total (for every $s_1\in S$, there is $s_2\in S$ such that $s_1\rightarrow s_2$)
+	\item A set of initial states $I\subseteq S$
+	\item A finite set of atomic propositions AP
+	\item A labelling function $L:S\rightarrow 2^{AP}$
+\end{enumerate}
+The transitions may be labelled by a finite set of actions Act, in which case the transition relation becomes $\rightarrow \subseteq S\times Act \times S$
+\section{Execution of a TS}
+A run of TS is an infinite sequence of states
+$$S_0\rightarrow s_1 \rightarrow ...$$
+where $s_0\in I$, which produces an infinite trace $\sigma \in (2^{AP})^\omega$, $\sigma=L(s_0)L(s_2...)$\\
+\\
+The set of all possible traces of the TS is called $Traces(TS)$\\
+\\
+Finally, TS satisfies $\varphi$, $TS\models \varphi$, if $Traces(TS)\subseteq Words(\varphi)$ i.e. if each trace of the TS satisfies the formula $\varphi$\\
+\\
+Thus is is possible that $TS\not\models \varphi$ and $TS \not\models \lnot \varphi$
+
+
+
+
+
+\end{document}

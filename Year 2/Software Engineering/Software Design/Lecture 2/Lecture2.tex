@@ -101,8 +101,74 @@ A "distributed" form using a "thin" client process to interact with the end-user
 	\item Components - Data managers and computations
 	\item Connectors - Transaction operations with history
 \end{itemize}
-
-
+The history element is important, systems that lack this are sometimes termed "naive client-server" forms
+\section{Data-Sharing}
+Characterised by:
+\begin{itemize}
+	\item Direct sharing of data between the components
+	\item Data may be distributed between many elements, but these share a common form of "representation" for using and sharing this data
+\end{itemize}
+Type of reasoning:
+\begin{itemize}
+	\item Based upon the data representation itself and ensuring that this is common to all elements
+	\item Describes both programs, but also documents
+\end{itemize}
+\subsection{Hypertext}
+This is a "document" form rather than a program form, but still an important architectural style since it affects the way that programs are structured in order to use it
+\begin{itemize}
+	\item Components - Documents in HTML format
+	\item Connectors - Hyperlinks and internal anchors
+\end{itemize}
+Websites can incorporate both static pages and also pages that are generated dynamically, so this example is quite an important one.
+\section{Mixed styles}
+An example of a mixed style is a compiler, it started out as pipe and filter, but are now usually more of a data-centred repository.
+\section{Shaw and Clement's classification}
+\begin{itemize}
+	\item Context is elaborated by being sub-divided into three aspects (control, data and control/data interaction) which are further sub-divided
+	\item In addition, they consider the form of reasoning that might be used with a particular architectural style
+\end{itemize}
+Control issues are classified in terms of:
+\begin{itemize}
+	\item Topology (geometric form)
+	\item Synchronicity (interdependence of actions and states)
+	\item Binding time (when is the identify of a partner established)
+\end{itemize}
+Data issues are classified using:
+\begin{itemize}
+	\item Topology - same concept as for control
+	\item Continuity - e.g. continuous flow of data or sporadic flow
+	\item Mode - whether data is copied, shared etc
+	\item Binding time (as for control)
+\end{itemize}
+Control/data interaction captures some further relationships, and is classified in terms of
+\begin{itemize}
+	\item Share (are control and data flow topologies isomorphic?)
+	\item Directionality (if the shapes are the same, does control flow in the same direction as data, or in the opposite direction)
+\end{itemize}
+\section{Architectural Mismatch}
+\begin{definition}[Architectural Mismatch]
+Mismatched assumptions a reusable part makes about the system it is to be a part of
+\end{definition}
+Basic cause was in the detail (of components, connectors and context). Each element had a slightly different model of how control and event passing was organised, reinforcing the point that all of the different aspects of architectural style are relevant
+\section{Security}
+\begin{itemize}
+	\item The way this is handled will depend on architectural style
+	\item Each style will exhibit its own vulnerabilities
+	\begin{itemize}
+		\item How does a component check or confirm that is it connected to a valid component
+		\item How might it be attacked
+		\item How easily can we achieve "information hiding" within a particular architectural style
+	\end{itemize}
+	\item Increasingly, this adds a new dimension to those that the designer has to think of
+\end{itemize}
+\section{Choosing a style}
+Some guidelines on choice of style, where this is not already determined by other factors:
+\begin{itemize}
+	\item For strongly sequential tasks: batch sequential or pipe-and-filter
+	\item For tasks which involve transformation on continuous streams of data, use pipe-and-filter
+	\item If a central issue in your system is understanding the data used in the application, consider a repository style
+	\item For flexibility, loose coupling between tasks and reactive tasks, consider interacting processes
+\end{itemize}
 
 
 

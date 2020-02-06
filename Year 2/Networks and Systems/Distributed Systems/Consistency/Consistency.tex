@@ -1,0 +1,57 @@
+\documentclass{article}[18pt]
+\usepackage{../../../../format}
+\lhead{Networks and Systems - Distributed Systems}
+
+
+\begin{document}
+\begin{center}
+\underline{\huge Concurrent events and consistency control}
+\end{center}
+\section{Concurrency}
+\begin{itemize}
+	\item \textbf{Shared Object} - May be simultaneously accessed by multiple events
+	\item A server which manages shared objects is responsible for ensuring the objects remain consistent when accessed by concurrent events
+	\item Such a control is called concurrency control
+\end{itemize}
+Extension to replication - If event T happens before event U in their conflicting access to objects at one of the servers then they must be in that order at all of the servers whose objects are accessed in a conflicting manner by both T and U
+\section{Locking}
+Grant a lock
+\begin{itemize}
+	\item Locks on an object are held (in a server) locally
+	\item Local lock manager can decide whether to grant a lock or make the requesting transaction wait
+\end{itemize}
+Issues with Distributed Transmission (DT)
+\begin{itemize}
+	\item A DT acquires resource located at different servers
+	\item Can't release any locks until the transaction has been committed or aborted at all servers involved in the transaction
+	\item Objects remain locked and are unavailable for all other transactions during the atomic commit protocol
+\end{itemize}
+\section{Timestamp ordering}
+Timestamp:
+\begin{itemize}
+	\item Assign a timestamp to each transaction when it starts
+	\item Serial equivalence is enforced by committing the versions of objects in the order of the timestamps of transactions that accessed them
+	\item Requirement: Globally unique timestamps
+\end{itemize}
+Distributed Transaction:
+\begin{itemize}
+	\item Servers of distributed transactions are jointly responsible for ensuring that they are performed in a serially equivalent manner
+	\item To achieve the same ordering at all the servers, the coorinators must agree as to the ordering of their timestamps
+	\item Issue - In practice, a timestamp is usually assigned by a local server, generating a timestamp, server id pair
+\end{itemize}
+\section{Concurrent Operations}
+In a single machine:
+\begin{itemize}
+	\item Concurrent operations (events), no matter originated from different or the same machine, are handled by the time sharing feature of an operating system
+	\item Operations are implicitly executed one by one in a series under a single clock, i.e. order of operations is well-defined
+\end{itemize}
+In a distributed system:
+\begin{itemize}
+	\item Concurrent operations may run on different machines, i.e. distributed transactions
+	\item Order of operations can't be easily sorted out due to overlapping operations, clock synchronisation problems, network latency and message loss etc
+\end{itemize}
+\section{Deadlock Detection}
+
+
+
+\end{document}

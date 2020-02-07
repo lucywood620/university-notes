@@ -1,5 +1,5 @@
 \documentclass{article}[18pt]
-\usepackage{../../../../format}
+\input{../../../../format}
 \lhead{Software Methodologies - Computer Graphics}
 \usepackage{minted}
 
@@ -9,10 +9,12 @@
 \underline{\huge Scene Construction and Projection}
 \end{center}
 \section{World and Local Coordinate Systems}
-\textbf{Local Coordinates} - Each object is constructed on a dedicated coordinate system\\
-\\
-\textbf{World coordinates} - Apply a single coordinate system to all objects globally.\\
-\\
+\begin{definition}[Local Coordinates]
+Each object is constructed on a dedicated coordinate system
+\end{definition}
+\begin{definition}[World Coordinates]
+Apply a single coordinate system to all objects globally.
+\end{definition}
 The purpose of this is to reduce complication for 3D scene construction
 \section{View Transform}
 Shift the origin of the world coordinate system to the view origin. The view origin is where our eye (or virtual camera) is located with respect to the world origin\\

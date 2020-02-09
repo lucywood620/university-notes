@@ -1,0 +1,46 @@
+\documentclass{article}[18pt]
+\input{../../../../format}
+\lhead{Theory of Computation - Algorithms and Complexity}
+
+
+\begin{document}
+\begin{center}
+\underline{\huge Decision Problems}
+\end{center}
+\begin{definition}[Time complexity]
+	For any function f, we say that the time complexity of a decidable language $\mathscr{L}$ is $\mathcal{O}(f)$, or $\mathscr{L}$ is decidable in $\mathcal{O}(f)$ time, if there exists a TM T which decides $\mathscr{L}$, and constants $n_0$ and $c$ such that for all inputs x with $|x|>n_0$
+	$$Time_T(x)\leqslant c\cdot f(|x|)$$
+\end{definition}
+\section{Complexity Classes}
+\begin{definition}[Time complexity class {TIME[f]}]
+	The class of all problems for which there exists an algorithm with time complexity in $\mathcal{O}(f)$
+\end{definition}
+\section{The complexity class P}
+\begin{definition}[P]
+$$
+\mathbf{P}=\bigcup_{k \geq 0} T I M E\left[n^{k}\right]
+$$
+\end{definition}
+The class P is a reasonable mathematical model of the class of problems which are tractable or solvable in practice\\
+\\
+However, the correspondence is not exact:
+\begin{itemize}
+	\item When the degree of the polynomial is high then the time grows so fast that in practice the problem is not solvable
+	\item The constants may also be very large
+\end{itemize}
+\section{Different models of computation}
+\textbf{Lemma}\\
+We can simulate t steps of k-tape TM with an equivalent one tape TM in $\mathcal{O}[t^2]$ steps\\
+\\
+\textbf{Lemma}\\
+We cans simulate t steps of a two-way infinite k-tape machine with an equivalent k-tape TM in $\mathcal{O}[t]$ steps\\
+\\
+Hence the class P is the same for all of these models of computation (and many others)
+\section{Different encodings}
+\textbf{Lemma}\\
+\\
+For any number n, the length of the encoding of n in base $b_1$ and the length of the encoding of n in base $b_2$ are related by a constant factor (provided $b_1,b_2\geqslant 2$)
+
+
+
+\end{document}

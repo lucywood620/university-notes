@@ -1,0 +1,40 @@
+\documentclass{article}[18pt]
+\input{../../../../format}
+\lhead{Software Methodologies - Machine Learning}
+
+
+\begin{document}
+\begin{center}
+\underline{\huge Odds and Logistic Regression}
+\end{center}
+\section{Odds}
+\begin{definition}[Odds]
+	A numerical expression, expressed as a pair of numbers
+\end{definition}
+\begin{important}[Odds vs Probabilities]
+Odds are not probabilities, odds is the number of successes vs number of failures, whereas probabilities is number of successes against total number of cases
+\end{important}
+$$\dfrac{\text{Probabilitiy(success)}}{\text{Probability(Failure)}}=\text{Odds}$$
+\subsection{Log of odds}
+Odds against success is between 0 and 1\\
+Odds in favour of success is between 1 and $+\infty$\\
+\\
+This makes the odds against success look way smaller, so take the logs to make everything symmetrical
+\subsection{Odds ratios}
+\section{Logistic Regression}
+This is similar to linear regression except it predicts true or false\\
+\\
+Logistic regression provides probabilities and classifies new samples using continuous and discrete measurements
+$$\log(\frac{p}{1-p})=\log(odds)$$
+$$\dfrac{p}{1-p}=e^{\log(odds)}$$
+$$p=(1-p)e^{\log(odds)}=e^{\log(odds)}-pe(\log(odds))$$
+$$p+pe^{\log(odds)}=e^{\log(odds)}$$
+$$p(1+e^{\log(odds)})=e^{\log(odds)}$$
+$$p=\dfrac{e^{\log(odds)}}{1+e^{\log(odds)}}$$
+
+
+
+
+
+
+\end{document}

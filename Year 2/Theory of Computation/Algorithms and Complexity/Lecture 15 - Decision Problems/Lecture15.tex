@@ -7,14 +7,20 @@
 \begin{center}
 \underline{\huge Decision Problems}
 \end{center}
+
+As
+$$\log_an=\log_ab \times \log_bn$$
+$\log_\alpha n$ and $\log_\beta n$ are the same when it comes to $\mathcal{O}$
+
 \begin{definition}[Time complexity]
-	For any function f, we say that the time complexity of a decidable language $\mathscr{L}$ is $\mathcal{O}(f)$, or $\mathscr{L}$ is decidable in $\mathcal{O}(f)$ time, if there exists a TM T which decides $\mathscr{L}$, and constants $n_0$ and $c$ such that for all inputs x with $|x|>n_0$
+	For any function f, we say that the time complexity of a decidable language $\mathcal{L}$ is $\mathcal{O}(f)$, or $\mathcal{L}$ is decidable in $\mathcal{O}(f)$ time, if there exists a TM T which decides $\mathcal{L}$, and constants $n_0$ and $c$ such that for all inputs x with $|x|>n_0$
 	$$Time_T(x)\leqslant c\cdot f(|x|)$$
 \end{definition}
 \section{Complexity Classes}
 \begin{definition}[Time complexity class {TIME[f]}]
 	The class of all problems for which there exists an algorithm with time complexity in $\mathcal{O}(f)$
 \end{definition}
+This is sometimes called DTIME[f] - for deterministic time
 \section{The complexity class P}
 \begin{definition}[P]
 $$
@@ -38,9 +44,107 @@ We cans simulate t steps of a two-way infinite k-tape machine with an equivalent
 Hence the class P is the same for all of these models of computation (and many others)
 \section{Different encodings}
 \textbf{Lemma}\\
+For any number n, the length of the encoding of n in base $b_1$ and the length of the encoding of n in base $b_2$ are related by a constant factor (provided $b_1,b_2\geqslant 2$)\\
 \\
-For any number n, the length of the encoding of n in base $b_1$ and the length of the encoding of n in base $b_2$ are related by a constant factor (provided $b_1,b_2\geqslant 2$)
+Hence the class P is the same for these encodings (and many others)
+\section{Proving a problem is in P}
+\begin{itemize}
+	\item The class P is said to be robust - it doesn't depend on the exact details of the computational model or encoding so we don't need to specify all the details of the machine model or even the encoding
+	\item The most direct way to show that a problem is in P is to give a polynomial time algorithm which solves it 
+	\item Even a naive polynomial time algorithm often provides a good insight into how the problem can be solved efficiently
+	\item To find such an algorithm we generally need to identify an approach to the problem that is considerably better than brute-force search
+\end{itemize}
+\section{CNF}
+Some of the most important computational problems concern logical formulas\\
+\\
+A logical formula f is said to be in conjunctive normal form (CNF) if
+$$f=C_1\land ... \land C_m$$
+where each $C_i$ is a clause, which is a disjunction (OR) of literals
+$$C_i=l_{i1}\lor ... \lor l_{ik}$$
+and a literal is either a variable or its negation
+\begin{definition}[k-CNF]
+If a logical formula in CNF has at most k literals per clause then it is in k-CNF
+\end{definition}
 
+\section{Satisfiability}
+\begin{definition}[Satisfiable]
+The logical formula f is satisfiable if there exists an assignment of True and False to the variables of f which makes f true
+\end{definition}
+\begin{itemize}
+	\item f is True iff all the clauses are True
+	\item A clause is True iff at least one literal is true
+\end{itemize}
+\begin{problem}[Satisfiability]
+\textbf{Instance} - CNF formula f\\
+\textbf{Question} - Is f satisfiable?
+\end{problem}
 
+\begin{problem}[k-Satisfiability]
+\textbf{Instance} - k-CNF formula f\\
+\textbf{Question} - Is f satisfiable?
+\end{problem}
+\subsection{2 Satisfiability}
+\textbf{Proposition} - 2-Satisfiability is in P\\
+\\
+\textbf{Proof}:
+\begin{enumerate}
+	\item Declare all clauses unsatisfied and literals unassigned
+	\item Select an arbitrary unassigned variable x and assign x the value True and $\lnot x$ the value False
+	\item Select an unsatisfied clause $l_i\lor l_j$
+	\begin{enumerate}
+		\item If both literals are unassigned, ignore the clause
+		\item If at least one literal is assigned True, declare the clause satisfied
+		\item If both are False, restart the algorithm setting x false and $\lnot x$ True. If a conflict occurs again, declare unsatisfiable
+		\item If one literal is False and the other unassigned, set the other to True and its negation to False, and declare the clause satisfied
+	\end{enumerate}
+	\item Repeat step 3 until either
+	\begin{enumerate}
+		\item All clauses are satisfied, return satisfiable
+		\item Or all clauses remaining not satisfied (yet) have all their variables unassigned. In this case return to step 2
+	\end{enumerate}
+\end{enumerate}
+\section{Polynomial-time reducibility}
+Another way to show that a problem is in P is to use a reduction\\
+\\
+Informally, a problem P is reducible to a problem Q if we can somehow use methods that solve Q in order to solve P
+\begin{definition}[Polynomially reducible]
+A language $\mathcal{L}_1$ is polynomially reducible to $\mathcal{L}_2$, denoted $\mathcal{L}_1\leqslant \mathcal{L}_2$, if a polynomial-time computable function f exists such that
+$$x\in \mathcal{L}_1 \Leftrightarrow f(x)\in \mathcal{L}_2$$
+\end{definition}
+\textbf{Lemma}\\
+$$\mathcal{L}_1\leqslant \mathcal{L}_2 \text{ and } \mathcal{L}_2 \in P \Rightarrow \mathcal{L}_1\in P$$
+Main idea - The composition of polynomials is a polynomial\\
+\\
+\textbf{Proof}
+\begin{itemize}
+	\item Let $A_2$ be a polynomial-time algorithm that decides $L_2$
+	\item Let f be a polynomial-time reduction algorithm from $L_1$ to $L_2$
+	\item We construct a polynomial-time algorithm $A_1$ that decides $L_1$
+	\begin{enumerate}
+		\item Given input $x\in \{0,1\}^*$, compute $f(x)$ in polynomial time (we know that $x\in L_1 \Leftrightarrow f(x)\in L_2$)
+		\item Use algorithm $A_2$ to decide whether $f(x)\in L_2$
+		\item If $f(x)\in L_2$ then output YES; otherwise output NO
+	\end{enumerate}
+\end{itemize}
+\section{k-Colourability}
+\begin{itemize}
+	\item Let $G=(V,E)$ be a graph, with vertices V and edges E
+	\item Recall that a function $f:V\rightarrow \{1,...,n\}$ is a colouring if adjacent vertices are assigned different values (colours)
+\end{itemize}
+\begin{problem}[k-Colourability]
+\textbf{Instance} - A graph G\\
+\textbf{Question} - Is there a colouring of G using at most k colours?
+\end{problem}
+\subsection{2-Colourability $\leqslant$ 2-Satisfiability}
+We can reduce 2-Colourability to 2-Satisfiability
+\begin{itemize}
+	\item For each vertex $v_i$ of the graph we create a variable $x_i$
+	\item For each edge $(v_i,v_j)$ we add two clauses $(x_i\lor x_j)$ and $(\lnot x_i \lor \lnot x_j)$
+\end{itemize}
+This translation of a 2-colourability problem to a 2-satisfiability problem is computable in polynomial time. now we check if it satisfies the reducibility condition:
+\begin{itemize}
+	\item [$\Rightarrow$] If the graph is 2-colourable, use 2-colouring to assign truth values to variables (one colour is true, the other false)
+	\item If the formula is satisfiable, define the 2-colouring by setting true variables to colour 1 and false to colour 2. If two adjacent vertices get the same colour then one of the associated clauses is not satisfied (contradiction). Thus we have a 2-colouring
+\end{itemize}
 
 \end{document}

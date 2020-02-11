@@ -26,6 +26,8 @@ Requirements:\begin{itemize}
 \begin{center}
 	\includegraphics[scale=0.7]{"System Model"}
 \end{center}
+% In CW Backend Server Means Replicas
+% To support replication can't just rely on RMI Registry to become FE server, need to implement your own
 Replicas:
 \begin{itemize}
 	\item Maintain copies of the same data or functions - can be implemented by different technologies
@@ -49,6 +51,7 @@ Front End (FE)
 	\item Make replication transparent
 	\item Monitor and maintain replica availability
 	\item Perform request distribution, and collate responses
+	\item Load balancing
 \end{itemize}
 \section{System workflow}
 \begin{enumerate}
@@ -86,6 +89,7 @@ Front End (FE)
 	\end{itemize}
 \end{itemize}
 \subsection{Passive (Primary-Backup) model for fault tolerance}
+% This is the model that should be used in the CW
 \begin{center}
 	\includegraphics[scale=0.7]{"Passive Fault Tolerance"}
 \end{center}

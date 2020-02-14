@@ -1,0 +1,189 @@
+\documentclass{article}
+\input{../../../../format}
+\lhead{Programming Paradigms - System Programming}
+\usepackage{minted}
+\usepackage{enumerate}
+\usepackage{boxedminipage}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usepackage{fancyvrb}
+%\usepackage{hyperref}
+\definecolor{links}{HTML}{2A1B81}
+\hypersetup{colorlinks,linkcolor=,urlcolor=blue}
+\usetikzlibrary{shapes.misc}
+\usetikzlibrary{shapes.geometric, arrows, positioning}
+
+
+
+\begin{document}
+\begin{center}
+	\underline{\huge The C Standard Library}
+\end{center}
+
+
+
+\section{Logical Operators}
+\begin{itemize}
+\item C has logical operators \verb~!~, \verb!&&! and \verb!||!, in decreasing order of precedence
+\item If \verb!a! is \verb!0! then \verb~!a~ is \verb!1! and \verb~!a~ is \verb~0~ otherwise
+\item \verb!a&&b! is \verb~1~ if both \verb!a! and \verb!b! are non-zero and is \verb!0! otherwise
+\item \verb!a||b! is \verb!0! if both \verb!a! and \verb!b! are \verb!0! and is \verb!1! otherwise
+\item How can you use logical operators to change an \verb!int! to \verb!0! if it is false and \verb!1! if it is true?
+\item What is the value of \verb~!1||0&&1~?
+\item The operators \verb!&&! and \verb!||! are short-circuiting:
+\end{itemize}
+
+
+
+\begin{minted}{c}
+#include<stdio.h>
+int yes(int x);
+int no(int x);
+int main(){
+  if (yes(1)||yes(2)) printf("First thing\n");
+  if (yes(3)&&yes(4)) printf("Second thing\n");
+  if (no(5)||no(6)) printf("Third thing\n");
+  if (no(7)&&no(8)) printf("Fourth thing\n");
+  return 0;
+}
+int yes(int x){
+  printf("%d\n",x);
+  return 1;
+}
+int no(int x){
+  printf("%d\n",x);
+  return 0;
+}
+\end{minted}
+
+
+
+\section{Classifying Characters}
+\begin{itemize}
+\item C has various functions to classify different sorts of characters. These functions are declared in \verb!ctype.h!
+\begin{minted}{c}
+#include<ctype.h>
+int isdigit(int c);
+\end{minted}
+\item This function returns a non-zero value if the character~\verb!c! is a digit (\verb!'0'-'9'!) and zero otherwise
+\item \verb!c! must be either in the range of an \verb!unsigned char! or equal to \verb!EOF! (otherwise behavioour is undefined)
+\item Why does \verb!c! have type \verb!int! not \verb!char!?
+\item How could we implement it?
+\end{itemize}
+
+
+
+\section{Classifying Characters}
+\begin{itemize}
+\item \verb!int isalnum(int c);! alphanumeric
+\item \verb!int isalpha(int c);! alphabetic character
+\item \verb!int isblank(int c);! space or tab character
+\item \verb!int iscntrl(int c);! control character (\verb!0x00-0x1F! and \verb!0x7F!)
+%\item \verb!int isdigit(int c);! 
+\item \verb!int isgraph(int c);! printable character other than space
+\item \verb!int islower(int c);! lowercase character
+\item \verb!int isprint(int c);! printable character including space
+\item \verb!int ispunct(int c);! printable character other than space or an alphanumeric character
+\item \verb!int isspace(int c);! whitespace character (\verb!' '!, \verb!'\f'!, \verb!'\n'!, \verb!'\r'!, \verb!'\t'! or \verb!'v'!)
+\item \verb!int isupper(int c);! uppercase character
+\item \verb!int isxdigit(int c);! hexadecimal digit
+\end{itemize}
+
+
+
+\section{More Input/Output \texttt{stdio.h}}
+\begin{itemize}
+\item We've previously seen \verb!printf()! and \verb!scanf()!, along with the variants \verb!fprintf()!, \verb!sprintf()!, \verb!fscanf()! and \verb!sscanf()!.
+\item \verb!sprintf()! puts a formatted string into the array pointed to by \verb!str!
+\begin{minted}{c}
+int sprintf(char *str, const char *format, ...);
+\end{minted}
+\item \verb!snprintf()! does the same, but puts at most \verb!size-1! characters into the array. Why might you want this?
+\begin{minted}{c}
+int snprintf(char *str, size_t size,
+    const char *format, ...);
+\end{minted}
+\item Aside: variants of these functions with bounds checking were introduced as an optional feature in C11 (see Annex K of the C standard): \verb!scanf_s()!, \verb!printf_s()! etc. They work in subtely different ways to the normal variants and \textbf{NO} compilers implement them entirely correctly. These functions are likely to be deprecated/removed in the future, so avoid using them.
+\end{itemize}
+
+
+
+\section{More Input/Output \texttt{stdio.h}}
+\begin{itemize}
+\item \verb!feof()! returns a non-zero value if the end of file has been reached and zero if not. This only happens if you have tried to read \textbf{past} the last character in the file, not if you have only read the last character.
+\begin{minted}{c}
+int feof(FILE *stream);
+\end{minted}
+\item \verb!fgets()! reads in at most \verb!size-1! characters from the file stream and stores them in the \verb!char! array \verb!s!, null-terminated.
+\begin{minted}{c}
+char *fgets(char *s, int size, FILE *stream);
+\end{minted}
+\item \verb!fgets()! keeps reading until it either reaches a newline \verb!'\n'! (which will be included in the string \verb!s!) or it reaches the end of the file.
+\item Returns \verb!s! on success and \verb!NULL! on failure (if end-of-file has been reached and no bytes are read, this counts as failure)
+\end{itemize}
+
+
+
+\section{More Input/Output \texttt{stdio.h}}
+\begin{itemize}
+\item \verb!fputs()! writes every character from the null-terminated string \verb!s! into the file stream \verb!stream!
+\begin{minted}{c}
+int fputs(const char *s, FILE *stream);
+\end{minted}
+\item \verb!puts()! prints \verb!s! to the screen \textbf{followed by a newline} \verb!'\n'!
+\begin{minted}{c}
+int puts(const char *s);
+\end{minted}
+\item \verb!fputc()! writes the character \verb!c! (cast to an \verb!unsigned char!) to the file stream
+\begin{minted}{c}
+int fputc(int c, FILE *stream);
+\end{minted}
+\item \verb!putchar()! writes the character \verb!c! to the screen
+\begin{minted}{c}
+int putchar(int c);
+\end{minted}
+
+\item Aside: printing to the screen is often buffered. Once you are done writing, it is often good to print a newline, at which point the buffer will be flushed.
+\end{itemize}
+
+
+
+\section{More Input/Output \texttt{stdio.h}}
+\begin{itemize}
+\item \verb!fgetc()! gets a single character from the input stream (i.e. file) and returns it as an \verb!unsigned char! cast to an \verb!int! or \verb!EOF! on error.
+\begin{minted}{c}
+int fgetc(FILE *stream);
+\end{minted}
+\item \verb!getchar()! works equivalently to \verb!fgetc(stdin)!
+\begin{minted}{c}
+int getchar(void);
+\end{minted}
+\item \verb!ungetc()! lets you push back one character onto the stream. This will be the first character read on future reads from the stream. You are only guaranteed to be able to push back one character, but it does \textbf{NOT} have to be the character you read from the stream.
+\begin{minted}{c}
+int ungetc(int c, FILE *stream);
+\end{minted}
+\end{itemize}
+
+
+
+\section{Random Numbers (\texttt{stdlib.h})}
+\begin{itemize}
+\item \verb!rand()! generates random numbers between \verb!0! and \verb!RAND_MAX!
+\item \verb!srand()! sets the seed of the random number generator. If \verb!srand()! is given the same seed, it should produce the same sequence of random numbers from \verb!rand()!
+\item The random-number generator is not cryptographically secure!
+\item Typical practice is to use the current time as the seed:
+
+\begin{minted}{c}
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+
+...
+srand(time(NULL));
+int random_number=rand();
+\end{minted}
+\end{itemize}
+
+\end{document}
+
+

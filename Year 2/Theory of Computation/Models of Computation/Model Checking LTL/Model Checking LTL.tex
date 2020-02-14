@@ -1,0 +1,61 @@
+\documentclass{article}[18pt]
+\input{../../../../format}
+\lhead{Theory of Computation - Models of Computation}
+
+
+\begin{document}
+\begin{center}
+\underline{\huge Model Checking LTL by Buchi Automata}
+\end{center}
+\section{Setup and high-level solution}
+We are given a Transition System $\tau$ and an LTL $\varphi$, both over the same set of atomic propositions AP. The task is to decide if $\tau\models\varphi$\\
+\\
+That is, if all runs of $\tau$ satisfy $\varphi$, i.e. $Traces(\tau)\subseteq Words(\varphi)$.\\
+ Equivalently
+$$Traces(\tau)\cap \big((2^{AP})^\omega \backslash Words(\varphi)\big)=\varnothing$$
+This is the same as
+$$Traces(\tau)\cap Words(\lnot \phi)=\varnothing$$
+So if both the runs of $\tau$ and the models of $\varphi$ are represented by Buchi Automata, we can construct the intersection and check for emptiness. If it is empty, reply that $\tau\models\varphi$, otherwise return $a,b\in (2^{AP})^*$ such that $ab^\omega$ is a run of $\tau$ that falsifies $\varphi$
+\section{Difficulties of operations on BA}
+\begin{enumerate}
+	\item \textbf{Transforming a TS into a Buchi Automaton} - easy - move each label from the state onto all outgoing transitions and introduce a new start state (of the automaton) instead of multiple ones (of the TS)
+	\item \textbf{Constructing the intersection of two BA} - easy - take the product of the two BA and making sure that we alternate infinitely often between accepting states from the two
+	\item \textbf{Checking a BA for emptiness} - easy - check if there is a non-trivial strongly connected component that contains an accepting state and is reachable from the start state
+	\item \textbf{Transforming an LTL formulae into an equivalent BA} - difficult - Translate it into a generalised BA that has multiple sets of accepting states and the acceptance condition is that a state form each set is visited infinitely often. A GBA is however easily transformed into an equivalent BA
+	\item \textbf{Negating a BA} - Difficult
+\end{enumerate}
+\section{LTL to Buchi}
+\subsection{States}
+A state has two components
+\begin{enumerate}
+	\item A subset of the AP (that are true; all the other are false) that records the current world, which is the last input seen
+	\item A subset of all subformulae of the $\varphi$ that should be true in the future, from this state onward
+\end{enumerate}
+\begin{itemize}
+	\item A state must be propositionally consistent. This takes care of all boolean connectives
+\end{itemize}
+\subsection{Transitions}
+A transition from $s_1$ into $s_2$ labelled by $a\in 2^{AP}$ is added if
+\begin{enumerate}
+	\item The label $a$ matches the first component of the state $s_2$
+	\item The state $s_1$ has the subformula $\circ\psi$ iff the state $s_2$ has the subformula (or AP) $\psi$ - this takes care of the Next operator
+	\item Whether the state $s_2$ has the subformula $\varphi_1\cup \varphi_2$
+	\begin{enumerate}
+		\item The state $s_1$ has $\varphi_2$, or
+		\item The state $s_1$ has $\varphi_1$ and the state $s_2$ has $\varphi_1\cup \varphi_2$
+	\end{enumerate}
+	This partly takes care of the until operator as it can be expanded as follows
+	\[
+	\varphi_{1} \cup \varphi_{2} \rightarrow \varphi_{2} \vee\left(\varphi_{1} \wedge \bigcirc\left(\varphi_{1} \cup \varphi_{2}\right)\right)
+	\]
+\end{enumerate}
+\subsection{Acceptance and Start}
+The expansion \(
+\varphi_{1} \cup \varphi_{2} \rightarrow \varphi_{2} \vee\left(\varphi_{1} \wedge \bigcirc\left(\varphi_{1} \cup \varphi_{2}\right)\right)
+\)
+doesn't guarantee that $\varphi_2$ eventually happens. Thus, any infinite run that always has $\varphi_{1}\cup\varphi_{2}$ but never $\varphi_{2}$ is inconsistent. We can prevent it, though, by insisting that every run has states that have $\varphi_{2}$ or haven't $\varphi_{1}\cup \varphi_{2}$ infinitely often.
+
+
+
+
+\end{document}

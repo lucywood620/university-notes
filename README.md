@@ -16,3 +16,7 @@ and in the replace section put
 ```regex
 mintinline{c}{\1}
 ```
+
+### Windows compatibility
+These notes can't be cloned into windows due to illegal characters in file names. At the moment I'm not going to fix this, but I plan to in the future.
+

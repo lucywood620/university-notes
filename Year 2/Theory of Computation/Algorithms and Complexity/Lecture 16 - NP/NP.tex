@@ -1,26 +1,30 @@
 \documentclass{article}[18pt]
 \input{../../../../format}
 \lhead{Theory of Computation - Algorithms and Complexity}
-
+\newtheorem{theorem}{Theorem}
 
 \begin{document}
 \begin{center}
 \underline{\huge The Complexity Class NP}
 \end{center}
 \section{Certificates}
-Every yes-instance of an NP problem has a short and easily checkable certificate, for example a satisfying assignment for satisfiability
+Every yes-instance of an NP problem has a short and easily checkable certificate, for example an assignment for satisfiability
+\begin{definition}[Certificate]
+A potential solution, it may be correct or incorrect
+\end{definition}
 \section{Verifiers}
-\begin{definition}[Acceptor]
-An acceptor machine V which halts on all inputs is called a verifier for a language $\mathcal{L}$ if
+\begin{definition}[Verifier]
+An acceptor machine (FSM with accepting states) V which halts on all inputs is called a verifier for a language $\mathcal{L}$ if
 $$\mathcal{L}=\{w| V \text{accepts "w; c" for some string c}\}$$
 \end{definition}
 \begin{itemize}
+	\item w;c just means a problem certificate pair
 	\item The string c is called a certificate (or witness) for w
 	\item A verifier is said to be polynomial-time if it is a polynomial-time TM, and there is a polynomial $p(x)$ such that, for any $w\in \mathcal{L}$, there is a certificate c with $|c|\leqslant p(|w|)$
 \end{itemize}
 \section{The class NP}
 \begin{definition}[NP]
-	The class of languages that have polynomial-time verifiers is called NP
+	The class of languages that have polynomial-time verifiers is called NP	
 \end{definition}
 \begin{problem}[Composite Number]
 \textbf{Instance} - A positive integer k\\
@@ -28,7 +32,7 @@ $$\mathcal{L}=\{w| V \text{accepts "w; c" for some string c}\}$$
 \end{problem}
 \begin{problem}[Subset Sum]
 \textbf{Instance} - A collection of positive integers $S=\{a_1,...,a_k\}$ and a target integer t\\
-\textbf{Question} - Is there a subset $T\subseteq S$ such that $\sum_{i\in T}=t$
+\textbf{Question} - Is there a subset $T\subseteq S$ such that $\sum_{i\in T}a_i=t$
 \end{problem}
 \section{Problems (probably) not in NP}
 \begin{problem}[No Hamiltonian Cycle]
@@ -47,8 +51,66 @@ Recall that if NT is a non-deterministic Turing Machine, then NT(x) denotes the 
 The time complexity of a non-deterministic Turing Machine NT is the function $NTime_{NT}$ such that $NTime_{NT}(x)$ is the number of steps in the shortest accepting path $NT(x)$ is there is one, otherwise it is the number of steps in the shortest rejecting path
 \end{definition}
 \section{Non-Deterministic time complexity}
-
-
+\begin{definition}[Non-deterministic time complexity]
+For any function f, we say that the non-deterministic time complexity of a decidable language $\mathcal{L}$ is $\mathcal{O}(f)$ is there exists a non-deterministic TM NT which decides $\mathcal{L}$, and constants $n_0$, and $c$ such that for all inputs $x$ with $|x|>n_0$
+$$NTime_{NT}(x)\leqslant c\cdot f(|x|)$$
+\end{definition}
+\begin{definition}[Non-deterministic time complexity class]
+The non-deterministic time complexity class NTIME[f] is defined to be the class of all problems (i.e. languages), for which there exists an algorithm with non-deterministic time complexity in $\mathcal{O}(f)$.
+\end{definition}
+\section{Alternative NP Definition}
+\[
+\mathrm{NP}=\bigcup_{k \geq 0} N T M E\left[n^{k}\right]
+\]
+Proof:
+\begin{itemize}
+	\item If $\mathcal{L}\in NTIME[n^k]$, then there is a non-deterministic machine NT such that $x\in\mathcal{L}$ iff there is an accepting computation path in $NT(x)$. Furthermore, the length of these paths is $\mathcal{O}(|x|^k)$
+	\item Using (some encoding of) these computation paths as the certificates, we can construct a polynomial time verifier for $\mathcal{L}$ which simply checks that each step of the computation path is valid
+	\item Conversely, if $\mathcal{L}$ has a polynomial-time verifier V, then we can construct a non-deterministic machine that first "guesses" the value of the certificate, and then simulates V with that certificate
+	\item Since the length of this certificate is polynomial in the length of the input, this machine is a non-deterministic-polynomial-time decision procedure for $\mathcal{L}$
+\end{itemize}
+\section{Complete Problems}
+\begin{itemize}
+	\item Any complexity class can be partitioned into equivalence classes via polynomial time reduction - each class contains problems that are reducible to each other
+	\item These equivalence classes are partially ordered by reduction
+	\item Problems in the maximal class are called complete
+\end{itemize}
+\section{NP-completeness}
+\begin{itemize}
+	\item To show that $\mathcal{L}$ is NP-complete we must show that every language in NP can be reduced to $\mathcal{L}$ in polynomial time
+	\item However once we have one NP-complete language $\mathcal{L}_0$, we can show any other language $\mathcal{L}$ is NP complete by showing that $\mathcal{L}_0\leqslant \mathcal{L}$
+\end{itemize}
+\section{Ladner's theorem}
+\begin{theorem}
+If $P\neq NP$ then NP contains infinitely many (polynomial time) inequivalent problems
+\end{theorem}
+\begin{itemize}
+	\item This implies that unless P=NP, the class NP contains (infinitely many) problems that are neither in P nor NP-complete. Such problems are called NP-intermediate
+\end{itemize}
+\section{Linear Programming}
+\begin{problem}[Linear Programming]
+\textbf{Instance}: Integer vectors $V_i=(v_1^i,...,v_n^i), 1\leqslant i\leqslant m, D=(d_1,...,d_n), C=(c_1,...,c_n)$ and an integer B\\
+\textbf{Question}: Is there a rational vector $X=(x_1,...,x_n)$ such that $V_i\cdot X\leqslant d_i$ for all $1\leqslant i\leqslant m$ and such that $C\cdot X\geqslant B$
+\end{problem}
+\begin{itemize}
+	\item This is in P, but the same problems where X is required to be an integer vector is NP-complete
+\end{itemize}
+\section{Primes/composite}
+\begin{problem}[Composite]
+\textbf{Instance}: Positive integer K\\
+\textbf{Question}: Is K composite?
+\end{problem}
+\begin{itemize}
+	\item Recently proven that it is in P
+\end{itemize}
+\section{Graph Isomorphism}
+\begin{problem}[Graph Isomorphism]
+\textbf{Instance}: Two undirected graphs $G=(V_G,E_G)$ and $H=(V_H,E_H)$\\
+\textbf{Question}: Are G and H isomorphic, i.e., is there a bijection $f:V_G\rightarrow V_H$ such that $(u,v)\in E_G$ iff $(f(u),f(g))\in E_H$?
+\end{problem}
+\begin{itemize}
+	\item Currently the main candidate for NP-intermediate
+\end{itemize}
 
 
 \end{document}

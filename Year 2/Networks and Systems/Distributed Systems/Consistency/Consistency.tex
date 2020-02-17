@@ -8,8 +8,10 @@
 \underline{\huge Concurrent events and consistency control}
 \end{center}
 \section{Concurrency}
+\begin{definition}[Shared Object]
+May be simultaneously accessed by multiple events (requests into the system)
+\end{definition}
 \begin{itemize}
-	\item \textbf{Shared Object} - May be simultaneously accessed by multiple events
 	\item A server which manages shared objects is responsible for ensuring the objects remain consistent when accessed by concurrent events
 	\item Such a control is called concurrency control
 \end{itemize}
@@ -35,6 +37,7 @@ Timestamp:
 \end{itemize}
 Distributed Transaction:
 \begin{itemize}
+	\item The front end is often a good choice to use when setting a global timestamp
 	\item Servers of distributed transactions are jointly responsible for ensuring that they are performed in a serially equivalent manner
 	\item To achieve the same ordering at all the servers, the coordinators must agree as to the ordering of their timestamps
 	\item Issue - In practice, a timestamp is usually assigned by a local server, generating a timestamp, server id pair

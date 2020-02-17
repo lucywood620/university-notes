@@ -1,0 +1,491 @@
+\documentclass{article}
+\input{../../../../format}
+\lhead{Software Engineering - LSEPI}
+\usepackage{enumerate}
+\usepackage{hyperref}
+
+
+
+\title{Software Engineering --- LSEPI Lecture 6: Contracts}
+\author{Dr Konrad Dabrowski\\
+\href{mailto://konrad.dabrowski@durham.ac.uk}{konrad.dabrowski@durham.ac.uk}
+}
+\date{E103 Christopherson Building}
+
+\begin{document}
+\begin{center}
+	\underline{\huge Contracts}
+\end{center}
+
+
+
+
+
+\section{Contracts}
+\begin{itemize}
+\item ``One of the hallmarks of a free society is the autonomy it affords its members to reach the goals of their choice, provided they do not harm others.''
+\begin{itemize}
+\item Contracts: a formal way to ensure that ``others are not harmed''
+\end{itemize}
+\end{itemize}
+
+
+
+\section{Outline}
+\begin{itemize}
+\item Understand the purpose of contracts
+\begin{itemize}
+\item What should go in contracts for software?
+\end{itemize}
+\item Know the different types of contractual agreement
+\item Be familiar with the main issues that contracts address
+\item Understand the different types of liability for defective software
+\end{itemize}
+
+
+
+\section{What is a contract}
+\begin{itemize}
+\item An \emph{agreement} between two or more \emph{parties} (legal / natural persons) that can be enforced in a court of law
+\item All the parties must intend to make the contract
+\item All the parties must be competent to make the contract:
+\begin{itemize}
+\item old enough
+\item sufficiently sound mind to understand what they are doing
+\end{itemize}
+\item There must be a (objectively determined) ``consideration'', i.e. all parties must be:
+\begin{itemize}
+\item receiving something
+\item providing something
+\end{itemize}
+\end{itemize}
+
+
+
+\section{Contracts in the UK}
+\begin{itemize}
+\item Contract law regulates every transaction:
+\begin{itemize}
+\item from buying a tube ticket 
+\item to computerized derivatives trading
+\end{itemize}
+\item Breach of a contract:
+\begin{itemize}
+\item failure to perform the obligations defined in a contract
+\item court can award compensation for damages
+\end{itemize}
+\end{itemize}
+
+
+
+\section{Contracts in the UK}
+\begin{itemize}
+\item Mostly based on the Common Law
+\begin{itemize}
+\item i.e. based on past court decisions (precedence)
+\end{itemize}
+\item Contract law in the UK: a long history
+\begin{itemize}
+\item ``well adapted to effectively handle disputes that arise in fulfilling commercial agreements'' [2]
+\item Perfectly adequate legislation for traditional transactions
+\begin{itemize}
+\item e.g. supply of goods or computers
+\end{itemize}
+\end{itemize}
+\end{itemize}
+
+
+
+\section{Contracts in the UK}
+\begin{itemize}
+\item New technologies came recently into the market: 
+\begin{itemize}
+\item internet
+\item e-commerce
+\end{itemize}
+\item Need for new regulations about new issues, as:
+\begin{itemize}
+\item electronic signatures (\url{http://www.legislation.gov.uk/ukpga/2000/7/section/7}),
+\item which country's law governs international transactions,
+\item \ldots 
+\end{itemize}
+\item In this lecture, we focus on:
+\begin{itemize}
+\item differentiating between different kinds of contracts 
+\item for providing software / services
+\item liability issues when software fails
+\end{itemize}
+\end{itemize}
+
+
+
+\section{Fixed Price Contracts}
+\begin{itemize}
+\item Used when a company buys a \emph{tailor made} system (or \emph{bespoke system}), i.e.
+\begin{itemize}
+\item a specially designed system that fits its needs
+\begin{itemize}
+\item just a single PC, or
+\item thousands of PCs in several cities
+\end{itemize}
+\end{itemize}
+\end{itemize}
+
+
+
+\section{Fixed Price Contracts - components}
+\begin{itemize}
+\item Consists of:
+\begin{itemize}
+\item A short agreement
+\begin{itemize}
+\item Signed by the parties of the contract
+\item Clearly states that anything said before is not binding
+\end{itemize}
+\end{itemize}
+\item Contracts for small-scale development projects:
+\begin{itemize}
+\item may be much simpler
+\item often only exchange of letters
+\end{itemize}
+\end{itemize}
+
+
+
+\section{Fixed Price Contracts - components}
+\begin{itemize}
+\item The standard terms and conditions
+\begin{itemize}
+\item Normal terms under which the \emph{supplier} does business
+\end{itemize}
+\item A set of schedules state explicitly
+\begin{itemize}
+\item for suppliers: \emph{what} and \emph{when} items are to be supplied
+\item for customer: \emph{when} payments are to be made
+\end{itemize}
+\item Annex
+\begin{itemize}
+\item states precisely \emph{what} is to be provided
+\begin{itemize}
+\item source code / documentation / user training / software tools \ldots
+\end{itemize}
+\item additional stipulations 
+\begin{itemize}
+\item refers to the requirements specification (separate document)
+\end{itemize}
+\end{itemize}
+\end{itemize}
+
+
+
+\section{Fixed Price Contracts - delivery}
+\begin{itemize}
+\item Software delivery is not simply delivering the source code which does what is required.
+\item Important: contract should state a list of deliverables:
+\begin{itemize}
+\item Source code
+\item Command file for building or executing code
+\item Design documentation
+\item Reference manual, training manual, operating command etc.
+\item Software tool to help main the code
+\item User training
+\item Training for client's maintenance
+\item Test data and test results
+\item etc.
+\end{itemize}
+\end{itemize}
+
+
+
+\section{Fixed Price Contracts - ownership of rights}
+\begin{itemize}
+\item Ownership of rights:
+\begin{itemize}
+\item specifies what legal rights are passed by the software company to the client
+\end{itemize}
+\item Physical ownership:
+\begin{itemize}
+\item books / documents / computers / discs usually pass to the client
+\end{itemize}
+\item Software:
+\begin{itemize}
+\item potentially protected by Intellectual Property Rights
+\begin{itemize}
+\item copyright / design rights / trademarks / patents
+\end{itemize}
+\end{itemize}
+\item Very important:
+\begin{itemize}
+\item explicitly state in the contract who has the rights
+\end{itemize}
+\end{itemize}
+
+
+
+\section{Fixed Price Contracts}
+\begin{itemize}
+\item Example: \url{http://www.coactivate.org/projects/agile-contracts/sample-fixed-price-agile-contract}
+\end{itemize}
+
+
+
+\section{Confidentiality}
+\begin{itemize}
+\item During the design of a tailor made system:
+\begin{itemize}
+\item both parties gain confidential information for the other party
+\end{itemize}
+\item Obligation of confidence
+\begin{itemize}
+\item Clause in a contract
+\item Separate non-disclosure agreements
+\item Subject to Intellectual Property law
+\end{itemize}
+\item Example:
+\item \url{http://www.wyetec.co.uk/PDFs/WyeTec_NDA_website_2012.pdf}
+\end{itemize}
+
+
+
+\section{Payments and Penalties}
+\begin{itemize}
+\item Specified by the standard terms and conditions:
+\begin{itemize}
+\item periods to pay
+\item surcharge on overdue payments
+\end{itemize}
+\item For instance:
+\begin{itemize}
+\item ``Payment shall become due within thirty days of the date of issue of an invoice. If payment is delayed by more than 30 days from the due date, the Company shall have the right, at its discretion, to terminate the contract or to apply a surcharge at an interest rate of 2\% above the bank base lending rate''
+\end{itemize}
+\item In practice, such clauses are brought into effect only in extreme cases
+\begin{itemize}
+\item may destroy the goodwill between the two parties
+\end{itemize}
+\end{itemize}
+
+
+
+\section{Payments and Penalties}
+\begin{itemize}
+\item Usually payment is done in phases
+\begin{itemize}
+\item it reduces the financial risk of the supplier against
+\begin{itemize}
+\item insolvency of the client
+\item any other cash flow difficulties
+\end{itemize}
+\end{itemize}
+\item Annex:
+\begin{itemize}
+\item Payment tied to milestones, e.g.
+\begin{itemize}
+\item on signature of the contract
+\item at various points during the development
+\item on acceptance of software
+\item at the end of the warranty period
+\end{itemize}
+\item Payment for delays and penalties
+\begin{itemize}
+\item client / supplier not fulfilling their obligations
+\end{itemize}
+\end{itemize}
+\end{itemize}
+
+
+
+\section{Acceptance procedure}
+\begin{itemize}
+\item Critical stage of the fixed price contracts
+\begin{itemize}
+\item Provide the criteria for successful software completion
+\item Client should provide fixed acceptance test and accepted result
+\item Test set must be provided at or before acceptance procedure
+\item Extra tests cannot be added once test set has been delivered
+\begin{itemize}
+\item To complete acceptance procedure in reasonable time
+\end{itemize}
+\end{itemize}
+\end{itemize}
+
+
+
+\section{Indemnity}
+\begin{itemize}
+\item Supplier is led, unwittingly, to infringe IP of third party 
+\begin{itemize}
+\item Using proprietary software
+\item Which party indemnifies the other for liability?
+\end{itemize}
+\end{itemize}
+
+
+
+\section{Termination of a contract}
+\begin{itemize}
+\item Many reasons to terminate a contract:
+\begin{itemize}
+\item client chooses another company that covers his/her needs
+\item client does not need the services of the supplier anymore
+\end{itemize}
+\item The contract must specify:
+\begin{itemize}
+\item payment to the point of completed work
+\item costs of redeploying staff
+\item ownership of work products
+\end{itemize}
+\item Both parties may accept in the contract that:
+\begin{itemize}
+\item in the case of conflict (dispute), they will accept the decision of an independent arbitrator (e.g. from the BCS)
+\end{itemize}
+\item Arbitration Act 1996 \url{http://www.legislation.gov.uk/ukpga/1996/23/contents}
+\end{itemize}
+
+
+
+\section{Arbitration}
+\begin{itemize}
+\item Going to court can be very expensive
+\item Mainly law firms benefit from it
+\item Contract should contain a clause the parties agree to accept an independent arbitrator's decision
+\begin{itemize}
+\item The president of the BCS or the president of IEE
+\end{itemize}
+\item If arbitration is required it will take place in accordance with the Arbitration Act 1996
+\item The Act of parliament defined the set of rules for arbitration that cover many eventualities
+\end{itemize}
+
+
+
+\section{Contract Hire}
+\begin{itemize}
+\item Supplier agrees to provide to a customer some staff with specific skills for an agreed rate
+\item Payment is set at a fixed daily / hourly rate:
+\begin{itemize}
+\item based on skills and experience of staff
+\item terminated by either party at short notice (e.g. 1 week)
+\end{itemize}
+\item Supplier is only responsible to:
+\begin{itemize}
+\item provide competent staff
+\item replace missing / unsuitable staff quickly
+\end{itemize}
+\item Sometimes called ``body shopping''
+\item Ownership of IP must be addressed.
+\end{itemize}
+
+
+
+\section{Consultancy}
+\begin{itemize}
+\item A version of a contract hire
+\begin{itemize}
+\item much simpler contract
+\end{itemize}
+\item Consultants are experts hired to:
+\begin{itemize}
+\item assess some aspect of an organisation
+\item propose solutions to problems
+\end{itemize}
+\item Fixed-price, usually small amount.
+\item A report is delivered as the final product. Success measure is harder than products delivered in fixed-price contracts
+\end{itemize}
+
+
+
+\section{Consultancy - main components}
+\begin{itemize}
+\item Confidentiality agreement 
+\item Terms of reference
+\begin{itemize}
+\item Important to refer to it to solve disagreements.
+\end{itemize}
+\item Liability
+\item Control over the final version of the report
+\item Usually no early termination of the contract:
+\begin{itemize}
+\item end product is usually a report 
+\item difficult to prove that the services are not good
+\end{itemize}
+\end{itemize}
+
+
+
+\section{Outsourcing}
+\begin{itemize}
+\item Handing over specific company functions to another specialized company, e.g.
+\begin{itemize}
+\item electricity providers / planning / management / operation \ldots 
+\item 25 years ago, UK outsourced IT services
+\end{itemize}
+\item Contracts can be complex:
+\begin{itemize}
+\item how is performance to be monitored / judged
+\begin{itemize}
+\item what if not satisfactory
+\end{itemize}
+\item rates and duration
+\item intellectual property rights 
+\item transferring / removing own staff, previously doing this job
+\item contingency planning / disaster recovery
+\item Service level agreement - related to performance monitoring
+\end{itemize}
+\end{itemize}
+
+
+
+\section{Licence agreements}
+\begin{itemize}
+\item Customers buy copies of software
+\item There may be many different agreements
+\begin{itemize}
+\item To use one copy
+\item Run software on server, limiting the maximum number of users
+\item Use unlimited number of copies
+\end{itemize}
+\item Vendors concern:
+\begin{itemize}
+\item Not giving away its own rights
+\item Limiting customers' use of the software
+\item Regular income from support activities
+\item Not liable for any defects
+\end{itemize}
+\end{itemize}
+
+
+
+\section{Liability for defective software}
+\begin{itemize}
+\item Software suppliers always try to limit their contractual commitment for quality
+\item In most contracts, their liability is limited to:
+\begin{itemize}
+\item the purchase price, or
+\item some fixed amount
+\end{itemize}
+\item Unfair Contract Terms Act (1977) \url{https://assets.publishing.service.gov.uk/government/uploads/system/uploads/attachment_data/file/284426/oft311.pdf}:
+\begin{itemize}
+\item sets some minimum limits of the liability of suppliers
+\item no limit if product defect causes death or injury
+\begin{itemize}
+\item important for safety-critical software
+\end{itemize}
+\end{itemize}
+\item Courts may judge liability issues case-specifically:
+\item St. Albans City vs. International Computers Ltd. \url{https://en.wikipedia.org/wiki/St_Albans_District_Council_v_International_Computers_Ltd}
+\end{itemize}
+
+
+
+\section{You should be able to:}
+\begin{itemize}
+\item Describe / discuss (with references) the main issues of contracts in software engineering, e.g.:
+\begin{itemize}
+\item fixed price contracts
+\item contract hire
+\item consultancy
+\item outsourcing
+\item liability for defective software
+\end{itemize}
+\end{itemize}
+
+\end{document}

@@ -1,0 +1,72 @@
+\documentclass{article}[18pt]
+\input{../../../../format}
+\lhead{Software Methodologies - Machine Learning}
+
+
+\begin{document}
+\begin{center}
+\underline{\huge Decision Trees and Random Forests}
+\end{center}
+\section{Decision Trees}
+There might be multiple decision trees for deciding the same thing from different conditions. To decide which is best, we use Gini Impurity
+$$\text{Gini Impurity}=1-(\text{the probability of Yes})^2-(\text{the Probability of No})^2$$
+The lower the value the better\\
+\\
+From a raw table of data to a decision tree:
+\begin{enumerate}
+	\item Calculate all of the Gini Impurity values
+	\item If a node itself has the lowest value, leave it as a Leaf node
+	\item If separating the data results in an improvement, then pick the separation with the lowest Gini impurity value
+\end{enumerate}
+\subsection{Numeric Data}
+To get impurities
+\begin{enumerate}
+	\item Sort the values lowest to highest
+	\item Calculate the average for adjacent values
+	\item Calculate the impurity values for each average weight
+\end{enumerate}
+To Build a tree:
+\begin{enumerate}
+	\item Yes/no questions at each step
+	\item Numeric data, like patient weight
+\end{enumerate}
+\subsection{Ranked Data and Multiple Choice Data}
+Ranked Data
+\begin{center}
+	\includegraphics[scale=0.7]{"Ranked Data"}
+\end{center}
+Multiple Choices Data
+\begin{center}
+	\includegraphics[scale=0.7]{"Multiple Choices Data"}
+\end{center}
+\section{Random Forests}
+Why Random Forests:
+\begin{itemize}
+	\item Decision Trees are easy to build, use and interpret, but not flexible when classifying new samples
+	\item Random forests combine the simplicity of decision trees with flexibility for better accuracy 
+\end{itemize}
+\subsection{How to build a random forest}
+\textbf{Step 1} - Create a "bootstrapped" dataset:
+\begin{itemize}
+	\item Same size as the original dataset
+	\item Randomly selected samples from the original dataset
+	\item Samples can be selected more than once
+\end{itemize}
+\textbf{Step 2} - Build a decision tree using "bootstrapped" dataset, but only use a random subset of variables, e.g. 2\\
+\\
+\textbf{Step 3} - Go back to step 1 and repeat: make a new bootstrap  dataset and build a tree considering a subset of variables at each step (ideally 100's of times)
+\begin{itemize}
+	\item Using a bootstrapped sample and considering only a subset of the variables at each steps results in a wide variety of trees
+	\item The variety makes random forests more effective than individual Decision Trees
+\end{itemize}
+\subsection{How to use a random forest}
+\begin{itemize}
+	\item Take the data and run it down the first tree we built
+	\item Keep track of the result
+\end{itemize}
+\begin{definition}[Bagging]
+	Bootstrapping the data plus using the aggregate to make a decision
+\end{definition}
+
+
+\end{document}

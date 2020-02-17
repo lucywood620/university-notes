@@ -36,7 +36,7 @@ Timestamp:
 Distributed Transaction:
 \begin{itemize}
 	\item Servers of distributed transactions are jointly responsible for ensuring that they are performed in a serially equivalent manner
-	\item To achieve the same ordering at all the servers, the coorinators must agree as to the ordering of their timestamps
+	\item To achieve the same ordering at all the servers, the coordinators must agree as to the ordering of their timestamps
 	\item Issue - In practice, a timestamp is usually assigned by a local server, generating a timestamp, server id pair
 \end{itemize}
 \section{Concurrent Operations}
@@ -51,6 +51,82 @@ In a distributed system:
 	\item Order of operations can't be easily sorted out due to overlapping operations, clock synchronisation problems, network latency and message loss etc
 \end{itemize}
 \section{Deadlock Detection}
+\begin{itemize}
+	\item Local deadlocks can arise within a single server when locking is used for concurrency control
+	\item Timeouts: clumsy solution; difficult to choose an appropriate timeout interval, and transactions may be aborted unnecessarily
+\end{itemize}
+Wait for graph:
+\begin{itemize}
+	\item Most deadlock detections schemes operate by finding cycles in the transaction wait-for graph
+\end{itemize}
+\begin{center}
+	\includegraphics[scale=0.7]{Wait-for}
+\end{center}
+\subsection{Distributed Deadlock Detection}
+\begin{itemize}
+	\item Centralised deadlock detection is not a good idea, because it depends on a single server, suffering from poor availability, lack of fault tolerance and no ability to scale
+	\item If the global graph is collected less frequently, deadlocks may take longer to be detected
+\end{itemize}
+Phantom deadlocks
+\begin{itemize}
+	\item A deadlock that is "detected" but is not really a deadlock
+	\item Global deadlock detector requires time to receive local wait-for graphs for constructing the construct the global one. This global wait-for graph may no longer be valid by the time it is constructed
+\end{itemize}
+Edge chasing:
+\begin{itemize}
+	\item Don't construct a global wait-for graph
+	\item Instead, each server involved attempts to find cycles by forwarding messages called probes
+	\item A probe message consists of transaction wait-for relationships representing a (local) path in the global wait for graph
+\end{itemize}
+\begin{center}
+	\includegraphics[scale=0.7]{"Edge Chasing"}
+\end{center}
+\section{Correctness of replicated objects}
+\begin{itemize}
+	\item If a system only maintains a single copy for each object, object correctness simply relates to the sequence of operations applied on the object
+	\item Correctness of replicated objects is challenging:
+	\begin{itemize}
+		\item Object copies maintained by different machines, where each machine may receive operations with a different order
+	\end{itemize}
+	\item Operations are linearisable if:
+	\begin{itemize}
+		\item The interleaved sequence of operations meets the specification of a (single) correct copy of the objects
+		\item The order of operations in the interleaving is consistent with the real times at which the operations occurred in the actual execution
+	\end{itemize}
+\end{itemize}
+\subsection{Linearisability}
+There exists a virtual canonical execution - the interleaved operations against a virtual single image of shared (and particularly replicated) objects, and that:
+\begin{itemize}
+	\item Each client sees a view of the shared objects that is consistent with that single image
+	\item i.e. results of the client's operations make sense as they occur within the interleaving
+\end{itemize}
+\section{Consistency Control}
+Issues with distributed systems:
+\begin{itemize}
+	\item They reply on replicating shared objects, or allowing concurrent access at many nodes
+	\item If concurrent accesses of (shared) objects are not carefully controlled, object accesses may be executed in an order different from user expectation, generating incorrect results
+\end{itemize}
+Modelling of Consistency Control:
+\begin{itemize}
+	\item Informally, certain object is coherent if the value returned by a read operation is always the value that the user expected
+	\item Consistency model: Defined rules for the apparent order and visibility of updates, and it is a continuum with trade-offs
+\end{itemize}
+\section{Types of consistency}
+\begin{definition}[Strict consistency]
+	An read on a data item X returned a value corresponding to the result of the most recent write on X
+\end{definition}
+\begin{definition}[Sequential Consistency]
+	If for any transaction there is some interleaving of the series of operations issued by all the clients that satisfies the following two criteria
+	\begin{itemize}
+		\item The interleaved sequence of operations meets the specification of a (single) correct copy of the contents
+		\item The order of operations in the interleaving is consistent with the program order in which each individual process executed them
+	\end{itemize}
+\end{definition}
+
+\begin{definition}[Casual Consistency]
+If event B is caused or influenced by an earlier event A, everyone first see A and then B
+\end{definition}
+
 
 
 

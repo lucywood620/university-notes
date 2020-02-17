@@ -1,0 +1,54 @@
+\documentclass{article}[18pt]
+\input{../../../../format}
+\lhead{Theory of Computation - Algorithms and Complexity}
+
+
+\begin{document}
+\begin{center}
+\underline{\huge The Complexity Class NP}
+\end{center}
+\section{Certificates}
+Every yes-instance of an NP problem has a short and easily checkable certificate, for example a satisfying assignment for satisfiability
+\section{Verifiers}
+\begin{definition}[Acceptor]
+An acceptor machine V which halts on all inputs is called a verifier for a language $\mathcal{L}$ if
+$$\mathcal{L}=\{w| V \text{accepts "w; c" for some string c}\}$$
+\end{definition}
+\begin{itemize}
+	\item The string c is called a certificate (or witness) for w
+	\item A verifier is said to be polynomial-time if it is a polynomial-time TM, and there is a polynomial $p(x)$ such that, for any $w\in \mathcal{L}$, there is a certificate c with $|c|\leqslant p(|w|)$
+\end{itemize}
+\section{The class NP}
+\begin{definition}[NP]
+	The class of languages that have polynomial-time verifiers is called NP
+\end{definition}
+\begin{problem}[Composite Number]
+\textbf{Instance} - A positive integer k\\
+\textbf{Question} - Are there integers $u,v>1$ such that $u\cdot v=k$
+\end{problem}
+\begin{problem}[Subset Sum]
+\textbf{Instance} - A collection of positive integers $S=\{a_1,...,a_k\}$ and a target integer t\\
+\textbf{Question} - Is there a subset $T\subseteq S$ such that $\sum_{i\in T}=t$
+\end{problem}
+\section{Problems (probably) not in NP}
+\begin{problem}[No Hamiltonian Cycle]
+\textbf{Instance} - A graph G\\
+\textbf{Question} - Is it true that G has no Hamiltonian cycle?
+\end{problem}
+\begin{problem}[Checkers]
+\textbf{Instance} - An integer n and a position in checkers on $n\times n$ board\\
+\textbf{Question} - Is it a winning position for white?
+\end{problem}
+\section{Nondeterministic Machines}
+We can get an alternative definition of the class NP by considering non-deterministic machines.\\
+\\
+Recall that if NT is a non-deterministic Turing Machine, then NT(x) denotes the tree of configurations which can be entered with input x, and NT accepts x if there is some accepting path in NT(x).
+\begin{definition}[Time Complexity]
+The time complexity of a non-deterministic Turing Machine NT is the function $NTime_{NT}$ such that $NTime_{NT}(x)$ is the number of steps in the shortest accepting path $NT(x)$ is there is one, otherwise it is the number of steps in the shortest rejecting path
+\end{definition}
+\section{Non-Deterministic time complexity}
+
+
+
+
+\end{document}

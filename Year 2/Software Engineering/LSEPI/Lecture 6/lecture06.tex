@@ -18,36 +18,10 @@
 \end{center}
 
 
-
-
-
-\section{Contracts}
-\begin{itemize}
-\item ``One of the hallmarks of a free society is the autonomy it affords its members to reach the goals of their choice, provided they do not harm others.''
-\begin{itemize}
-\item Contracts: a formal way to ensure that ``others are not harmed''
-\end{itemize}
-\end{itemize}
-
-
-
-\section{Outline}
-\begin{itemize}
-\item Understand the purpose of contracts
-\begin{itemize}
-\item What should go in contracts for software?
-\end{itemize}
-\item Know the different types of contractual agreement
-\item Be familiar with the main issues that contracts address
-\item Understand the different types of liability for defective software
-\end{itemize}
-
-
-
 \section{What is a contract}
 \begin{itemize}
 \item An \emph{agreement} between two or more \emph{parties} (legal / natural persons) that can be enforced in a court of law
-\item All the parties must intend to make the contract
+\item All the parties must intend to make the contract - can't fool people into signing
 \item All the parties must be competent to make the contract:
 \begin{itemize}
 \item old enough
@@ -65,25 +39,14 @@
 \section{Contracts in the UK}
 \begin{itemize}
 \item Contract law regulates every transaction:
-\begin{itemize}
-\item from buying a tube ticket 
-\item to computerized derivatives trading
-\end{itemize}
 \item Breach of a contract:
 \begin{itemize}
 \item failure to perform the obligations defined in a contract
 \item court can award compensation for damages
 \end{itemize}
 \end{itemize}
-
-
-
-\section{Contracts in the UK}
 \begin{itemize}
-\item Mostly based on the Common Law
-\begin{itemize}
-\item i.e. based on past court decisions (precedence)
-\end{itemize}
+\item Mostly based on the Common Law i.e. based on past court decisions (precedence)
 \item Contract law in the UK: a long history
 \begin{itemize}
 \item ``well adapted to effectively handle disputes that arise in fulfilling commercial agreements'' [2]
@@ -109,12 +72,6 @@
 \item which country's law governs international transactions,
 \item \ldots 
 \end{itemize}
-\item In this lecture, we focus on:
-\begin{itemize}
-\item differentiating between different kinds of contracts 
-\item for providing software / services
-\item liability issues when software fails
-\end{itemize}
 \end{itemize}
 
 
@@ -133,7 +90,7 @@
 
 
 
-\section{Fixed Price Contracts - components}
+\subsection{Components}
 \begin{itemize}
 \item Consists of:
 \begin{itemize}
@@ -146,14 +103,8 @@
 \item Contracts for small-scale development projects:
 \begin{itemize}
 \item may be much simpler
-\item often only exchange of letters
+\item often only exchange of letters (doesn't need to be "formal")
 \end{itemize}
-\end{itemize}
-
-
-
-\section{Fixed Price Contracts - components}
-\begin{itemize}
 \item The standard terms and conditions
 \begin{itemize}
 \item Normal terms under which the \emph{supplier} does business
@@ -178,7 +129,7 @@
 
 
 
-\section{Fixed Price Contracts - delivery}
+\subsection{Delivery}
 \begin{itemize}
 \item Software delivery is not simply delivering the source code which does what is required.
 \item Important: contract should state a list of deliverables:
@@ -197,7 +148,7 @@
 
 
 
-\section{Fixed Price Contracts - ownership of rights}
+\subsection{Ownership of rights}
 \begin{itemize}
 \item Ownership of rights:
 \begin{itemize}
@@ -222,12 +173,6 @@
 
 
 
-\section{Fixed Price Contracts}
-\begin{itemize}
-\item Example: \url{http://www.coactivate.org/projects/agile-contracts/sample-fixed-price-agile-contract}
-\end{itemize}
-
-
 
 \section{Confidentiality}
 \begin{itemize}
@@ -241,8 +186,6 @@
 \item Separate non-disclosure agreements
 \item Subject to Intellectual Property law
 \end{itemize}
-\item Example:
-\item \url{http://www.wyetec.co.uk/PDFs/WyeTec_NDA_website_2012.pdf}
 \end{itemize}
 
 
@@ -254,20 +197,10 @@
 \item periods to pay
 \item surcharge on overdue payments
 \end{itemize}
-\item For instance:
-\begin{itemize}
-\item ``Payment shall become due within thirty days of the date of issue of an invoice. If payment is delayed by more than 30 days from the due date, the Company shall have the right, at its discretion, to terminate the contract or to apply a surcharge at an interest rate of 2\% above the bank base lending rate''
-\end{itemize}
 \item In practice, such clauses are brought into effect only in extreme cases
 \begin{itemize}
 \item may destroy the goodwill between the two parties
 \end{itemize}
-\end{itemize}
-
-
-
-\section{Payments and Penalties}
-\begin{itemize}
 \item Usually payment is done in phases
 \begin{itemize}
 \item it reduces the financial risk of the supplier against
@@ -295,8 +228,8 @@
 
 
 \section{Acceptance procedure}
-\begin{itemize}
-\item Critical stage of the fixed price contracts
+
+Critical stage of the fixed price contracts
 \begin{itemize}
 \item Provide the criteria for successful software completion
 \item Client should provide fixed acceptance test and accepted result
@@ -306,18 +239,20 @@
 \item To complete acceptance procedure in reasonable time
 \end{itemize}
 \end{itemize}
-\end{itemize}
 
 
-
+\newpage
 \section{Indemnity}
+\begin{definition}[Indemnity]
+
+Supplier is led, unwittingly, to infringe IP of third party 
 \begin{itemize}
-\item Supplier is led, unwittingly, to infringe IP of third party 
-\begin{itemize}
-\item Using proprietary software
-\item Which party indemnifies the other for liability?
+	\item Using proprietary software
+	\item Which party indemnifies the other for liability?
 \end{itemize}
-\end{itemize}
+
+\end{definition}
+
 
 
 
@@ -370,13 +305,12 @@
 \item provide competent staff
 \item replace missing / unsuitable staff quickly
 \end{itemize}
-\item Sometimes called ``body shopping''
 \item Ownership of IP must be addressed.
 \end{itemize}
 
 
 
-\section{Consultancy}
+\subsection{Consultancy}
 \begin{itemize}
 \item A version of a contract hire
 \begin{itemize}
@@ -393,7 +327,7 @@
 
 
 
-\section{Consultancy - main components}
+\subsubsection{Main components}
 \begin{itemize}
 \item Confidentiality agreement 
 \item Terms of reference
@@ -413,11 +347,7 @@
 
 \section{Outsourcing}
 \begin{itemize}
-\item Handing over specific company functions to another specialized company, e.g.
-\begin{itemize}
-\item electricity providers / planning / management / operation \ldots 
-\item 25 years ago, UK outsourced IT services
-\end{itemize}
+\item Handing over specific company functions to another specialized company
 \item Contracts can be complex:
 \begin{itemize}
 \item how is performance to be monitored / judged
@@ -471,21 +401,7 @@
 \end{itemize}
 \end{itemize}
 \item Courts may judge liability issues case-specifically:
-\item St. Albans City vs. International Computers Ltd. \url{https://en.wikipedia.org/wiki/St_Albans_District_Council_v_International_Computers_Ltd}
-\end{itemize}
 
-
-
-\section{You should be able to:}
-\begin{itemize}
-\item Describe / discuss (with references) the main issues of contracts in software engineering, e.g.:
-\begin{itemize}
-\item fixed price contracts
-\item contract hire
-\item consultancy
-\item outsourcing
-\item liability for defective software
-\end{itemize}
 \end{itemize}
 
 \end{document}

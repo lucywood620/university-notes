@@ -150,6 +150,27 @@ Front End (FE)
 \begin{center}
 	\includegraphics[scale=0.7]{"Active Replication"}
 \end{center}
+Steps for client request
+\begin{enumerate}
+	\item Request - uses a totally ordered reliable multicast - use TCP with multicasting to make reliable
+	\item Coordination - message ordering
+	\item Execution - every R executed the request
+	\item Agreement - none required as all Rs execute the same operations in the same order
+	\item Response - FEs collect responses from Rs
+\end{enumerate}
+\section{Byzantine Fault}
+\begin{definition}[Byzantine Fault]
+	An arbitrary fault that occurs during the execution of an algorithm by a distributed system
+\end{definition}
+This encompasses both
+\begin{itemize}
+	\item Omission failure - crashes, failing to receive/send a request etc
+	\item Commission failure - Incorrect processing
+\end{itemize}
+\begin{definition}[Byzantine failure-tolerant algorithms]
+	Characterised by their resilience f, the number of faulty processes with which an algorithm can cope
+\end{definition}
+Can mask up to f Byzantine faults if the system incorporates at least $2f+1$ replicas (just taking the mode of the results)
 
 
 

@@ -10,12 +10,14 @@
 \section{Decision Trees}
 There might be multiple decision trees for deciding the same thing from different conditions. To decide which is best, we use Gini Impurity
 $$\text{Gini Impurity}=1-(\text{the probability of Yes})^2-(\text{the Probability of No})^2$$
+A weighted average should be used if the sample size is different\\
+\\
 The lower the value the better\\
 \\
 From a raw table of data to a decision tree:
 \begin{enumerate}
 	\item Calculate all of the Gini Impurity values
-	\item If a node itself has the lowest value, leave it as a Leaf node
+	\item If a node itself has the lowest value, leave it as a Leaf node, don't further separate it
 	\item If separating the data results in an improvement, then pick the separation with the lowest Gini impurity value
 \end{enumerate}
 \subsection{Numeric Data}
@@ -24,7 +26,13 @@ To get impurities
 	\item Sort the values lowest to highest
 	\item Calculate the average for adjacent values
 	\item Calculate the impurity values for each average weight
+	\begin{itemize}
+		\item For each average, look at the yes and no instances on the greater than and less than sections, use these for the probabilities
+	\end{itemize}
 \end{enumerate}
+
+
+
 To Build a tree:
 \begin{enumerate}
 	\item Yes/no questions at each step
@@ -39,6 +47,17 @@ Multiple Choices Data
 \begin{center}
 	\includegraphics[scale=0.7]{"Multiple Choices Data"}
 \end{center}
+\subsection{Missing data}
+Options for boolean:
+\begin{itemize}
+	\item Choose the most common value in the column
+	\item Find another column that has the highest correlation with the feature and use that as a guide
+\end{itemize}
+Options for numbers:
+\begin{itemize}
+	\item Use mean
+	\item Use linear regression with another column with a good correlation
+\end{itemize}
 \section{Random Forests}
 Why Random Forests:
 \begin{itemize}
@@ -63,10 +82,24 @@ Why Random Forests:
 \begin{itemize}
 	\item Take the data and run it down the first tree we built
 	\item Keep track of the result
+	\item Then run the next data down the second tree
+	\item Then run the next data down all the trees and what the majority of the trees choose is the outcome
 \end{itemize}
 \begin{definition}[Bagging]
 	Bootstrapping the data plus using the aggregate to make a decision
 \end{definition}
-
+\subsection{Performance}
+\begin{definition}[Out of bag dataset]
+Data that was not used in the bootstrapped dataset
+\end{definition}
+\begin{itemize}
+	\item Use the data that doesn't end up in the bootstrapped dataset for testing
+	\item Run the data on the trees and see if the outcome is correctly predicted
+	\item Use the number that correctly predict vs incorrectly predict as the measure
+	\item Repeat for all samples and trees
+\end{itemize}
+\begin{definition}[Out of bag error]
+	The proportion of out of bag samples that were incorrectly classified
+\end{definition}
 
 \end{document}

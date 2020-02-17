@@ -18,5 +18,5 @@ mintinline{c}{\1}
 ```
 
 ### Windows compatibility
-These notes can't be cloned into windows due to illegal characters in file names. At the moment I'm not going to fix this, but I plan to in the future.
+These notes should be able to be cloned into windows, but I may put an illegal character in by accident, raise an issue if you find one
 

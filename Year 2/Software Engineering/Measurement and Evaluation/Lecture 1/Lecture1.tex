@@ -1,0 +1,52 @@
+\documentclass{article}[18pt]
+\input{../../../../format}
+\lhead{Software Engineering - Measurement and Evaluation}
+
+
+\begin{document}
+\begin{center}
+\underline{\huge Lecture 1}
+\end{center}
+\begin{definition}[Measure]
+Ascertain extent or quantity of [thing] by comparison with fixed unit or with object of known size
+\end{definition}
+\begin{definition}[Evaluate]
+Assess the quality of something, preferably by assigning a numerical value to it
+\end{definition}
+\section{Forms of measure}
+\begin{definition}[Quantitative]
+Concerned with things that are countable, and independent of the observer
+\end{definition}
+\begin{definition}[Qualitative]
+More concerned with having the observer make judgements - and typically use ordinal scales
+\end{definition}
+\begin{definition}[Indirect measurements]
+Things we can measure are combined to provide a "surrogate" measure for some attribute we can't measure directly
+\end{definition}
+\section{Variation}
+In the physical sciences, repeated measurements will usually result in a \textbf{Normal} distribution, with a bell shaped curve that is centred on the mean\\
+\\
+Where an experiment involves humans, the spread of values is more complex and may well be asymmetric. We usually show this by using the median as our centre point, as illustrated by box plots
+\section{Software Metrics}
+Measurement science tends to differentiate between an attribute, which we associate with some element, and a metric, which will be some specific number and associated unit of measurement\\
+\\
+When adopting a metric, we need a clear definition of the counting rules used to measure its value
+\section{Roles for metrics}
+\begin{definition}[Actionable Metrics]
+Relate to things that we can control. We can then react to the values we measure for the metric by making changes
+\end{definition}
+\begin{definition}[Informational (or unactionable) metrics]
+Relate to things we can measure and they may matter to us, but we can't directly influence
+\end{definition}
+\section{Why are metrics important}
+\begin{itemize}
+	\item For any software project, metrics an provide the means of control, to monitor how well our estimated values for such attributes as size, quality, dependencies etc. match the actual values that we measure
+	\item In turn, making estimates also requires that we use such measures, because ultimately we need to determine how much effort a project needs and what levels of skill, and when it might be delivered
+\end{itemize}
+\section{Complexity}
+\begin{itemize}
+	\item Complexity is not an attribute in itself so must have a clear context of what attributes, or set of attributes we are referring to
+	\item Complexity is a property of attributes such as control flow, information flow, coupling etc
+	\item Therefore need some idea of what threshold value will be used to determine that something is considered as being complex.
+\end{itemize}
+\end{document}

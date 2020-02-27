@@ -1,6 +1,0 @@
-- name: Imgbot is friendly
-  conditions:
-  - author=imgbot[bot]
-  actions:
-    merge:
-      method: merge

@@ -1,0 +1,63 @@
+\documentclass{article}[18pt]
+\input{../../../../format}
+\lhead{Programming Paradigms - OO Programming}
+\usepackage{minted}
+
+
+\begin{document}
+\begin{center}
+\underline{\huge Abstraction Techniques}
+\end{center}
+\section{Abstract classes and methods}
+\begin{itemize}
+	\item Abstract methods have abstract in the signature
+	\item Abstract methods have no body
+	\item Abstract methods make the class abstract
+	\item Abstract classes can't be instantiated
+	\item Concrete subclasses complete the implementation
+\end{itemize}
+\section{Multiple inheritance}
+\begin{itemize}
+	\item Having a class inherit directly from multiple ancestors
+	\item Each language has its own rules
+	\item Java forbids it for classes
+	\item Java permits it for interfaces - no competing implementation
+\end{itemize}
+\section{Interfaces as types}
+\begin{itemize}
+	\item Implementing classes don't inherit code
+	\item However implementing classes are subtypes of the interface type
+	\item So, polymorphism is available with interfaces as well as classes
+\end{itemize}
+\section{Features of interfaces}
+\begin{itemize}
+	\item All methods are abstract
+	\item There are no constructors
+	\item All methods are public
+	\item All fields are public, static and final
+\end{itemize}
+\section{Interfaces as specifications}
+\begin{itemize}
+	\item Strong separation of functionality form implementation - though parameter and return types are mandated
+	\item Clients interact independently of the implementation - but clients can choose from alternative implementations
+\end{itemize}
+\section{Example of an interface}
+\begin{minted}{java}
+public interface Actor
+{
+	/**
+	* Perform the actor's regular behavior.
+	* @param newActors A list for storing newly created
+	*                  actors.
+	*/
+	void act(List<Actor> newActors);
+	
+	/**
+	* Is the actor still active?
+	* @return true if still active, false if not. 
+	*/ 
+	boolean isActive(); 
+}
+\end{minted}
+
+\end{document}

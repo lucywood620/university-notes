@@ -1,0 +1,94 @@
+\documentclass{article}[18pt]
+\input{../../../../format}
+\lhead{Networks and Systems - Distributed Systems}
+
+
+\begin{document}
+\begin{center}
+\underline{\huge Fault Tolerance}
+\end{center}
+\begin{definition}[Fault tolerance]
+Ability of a system to continue error-free operation even in the presence of unexpected fault
+\end{definition}
+\section{Approaches based on redundancy}
+\begin{itemize}
+	\item Apply duplication to increase system reliability
+	\item System architecture approach
+	\begin{itemize}
+		\item Incorporate Active or Passive replication
+		\item Design server configuration and number of replicated servers
+		\item Could be expensive due to requiring extra hardware
+	\end{itemize}
+	\item Operational approach
+	\begin{itemize}
+		\item Replicate system operations to offer fault tolerance
+		\begin{itemize}
+			\item Time redundancy
+			\item Component redundancy
+			\item Information redundancy
+			\item Communication redundancy
+		\end{itemize}
+	\end{itemize}
+\end{itemize}
+\subsection{Time redundancy}
+\begin{itemize}
+	\item Perform the same operation multiple times
+	\item No fault if getting the same result each time
+	\item Detect temporary faults but not permanent ones
+	\item Impact system performance
+\end{itemize}
+\begin{center}
+	\includegraphics[scale=0.7]{"Time Redundancy"}
+\end{center}
+\subsection{Component redundancy}
+Replicate component and compare outputs:
+\begin{itemize}
+	\item Introduce two or more independent running components which provide the same functionalities
+	\item Impose little or no performance impact
+\end{itemize}
+N-Version Programming (NVP):
+\begin{itemize}
+	\item Design diversity - implementing multiple versions of the program
+	\item Tolerate hardware and software faults, but not correlated faults
+\end{itemize}
+\begin{center}
+	\includegraphics[scale=0.7]{"Component Redundancy"}
+\end{center}
+\subsection{Information Redundancy}
+Encode outputs with error detection or correcting code\\
+Advantage:
+\begin{itemize}
+	\item Less hardware is required than replicating module
+	\item Support fault detection
+\end{itemize}
+Drawback
+\begin{itemize}
+	\item Added complexity in design
+	\item Fault recovery capability may be limited
+\end{itemize}
+\section{Communication Failures}
+Client is unable to locate server
+\begin{itemize}
+	\item Use an exception handler (programming language dependent)
+	\item Check out available/update servers from a directory service
+\end{itemize}
+Client request to server is lost:
+\begin{itemize}
+	\item Apply timeout to await server reply then re-send
+	\item If multiple requests appear to get lost assume "can't locate server" error
+\end{itemize}
+Server crashes after receiving client request
+\begin{itemize}
+	\item Server may stop before or after returning the info, or before ACK
+	\item Store user request in the FE
+	\item Rebuild or use alternate server to retry request
+	\item Give up and report failure
+\end{itemize}
+Server reply to client is lost
+\begin{itemize}
+	\item Apply timeout to await server reply
+\end{itemize}
+
+
+
+\end{document}

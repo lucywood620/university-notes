@@ -1,17 +1,183 @@
 \documentclass{article}[18pt]
 \input{../../../../format}
 \lhead{Programming Paradigms - Object Oriented Programming}
-
+\usepackage{minted}
+\setminted[java]{tabsize=4}
 
 \begin{document}
 \begin{center}
 \underline{\huge Improving Structure with inheritance}
 \end{center}
+\begin{itemize}
+	\item Define one superclass
+	\item Define subclasses
+	\item The superclass defines common attributes
+	\item The subclasses inherit the superclass attributes
+	\item The subclasses add their own attributes
+\end{itemize}
+\begin{minted}{java}
+// Superclass
+public class Item
+{
+	private String title;
+	private int playingTime;
+	private boolean gotIt;
+	private String comment;
+	
+	// constructors and methods omitted.
+}
+// Subclass
+public class CD extends Item
+{
+	private String artist;
+	private int numberOfTracks;
+	
+	// constructors and methods omitted.
+}
+\end{minted}
+\section{Superclass constructor call}
+\begin{itemize}
+	\item Subclass constructors must always contain a "super" call
+	\item If none is written, the compiler inserts one (without parameters)
+	\item Must be the first statement in the subclass constructor
+\end{itemize}
+\begin{minted}{java}
+public class CD extends Item
+{
+	private String artist;
+	private int numberOfTracks;
+	
+	/**
+	* Constructor for objects of class CD
+	*/
+	public CD(String theTitle, String theArtist, int tracks, int time)
+	{
+		super(theTitle, time);
+		artist = theArtist;
+		numberOfTracks = tracks;
+	}
+	
+	// methods omitted
+}
+\end{minted}
+\section{Subclasses and subtyping}
+\begin{itemize}
+	\item Classes define types
+	\item Subclasses define subtypes
+	\item Objects of subclasses can be used where objects of supertypes are used (this is called substitution)
+\end{itemize}
+\section{Polymorphic variables}
+\begin{itemize}
+	\item Object variables in Java are polymorphic (they can hold objects of more than one type)
+	\item They can hold objects of the declared type, or of subtypes of the declared type
+\end{itemize}
+\section{Casting}
+\begin{itemize}
+	\item Can assign subtype to supertype
+	\item Can't assign supertype to subtype
+\end{itemize}
+For example, the last line of this causes a compile time error
+\begin{minted}{java}
+Vehicle v;
+Car c = new Car();
+v=c; // this is fine
+c=v; // this causes a compile time error
+\end{minted}
+This can be fixed with casting like so
+\begin{minted}{java}
+c= (Car) v;
+\end{minted}
+\begin{itemize}
+	\item An object type in parentheses
+	\item Used to overcome "type loss"
+	\item The object is not changed in any way
+	\item A runtime check is made to ensure the object really is of that type
+\end{itemize}
+\section{Polymorphic collections}
+\begin{itemize}
+	\item All collections are polymorphic
+	\item The elements are of type object
+\end{itemize}
+\section{Collections and primitive types}
+All objects can be entered into collections because collections accept elements of type Object and all classes are subtypes of Object
+\section{Wrapper classes}
+\begin{itemize}
+	\item Primitive types (int, char, etc) are not objects. They must be wrapped into an object
+\end{itemize}
+\begin{tabular}{|c|c|}
+	\hline
+	Simple Type & Wrapper Class \\
+	\hline
+	int & Integer \\
+	\hline
+	float & Float \\
+	\hline
+	char & Character \\
+	\hline
+\end{tabular}
+\begin{minted}{java}
+int i=18;
+Integer iwrap = new Integer(i); // wrapping the value
+itn value = iwrap.intValue(); //unwrap it
+\end{minted}
+\section{Static type and dynamic type}
+\begin{itemize}
+	\item The declared type of a variable is its static type
+	\item The type of the object a variable refers to is its dynamic type
+	\item The compiler's job is to check for static-type violations
+\end{itemize}
+\section{Overriding}
+\begin{itemize}
+	\item Superclass and subclass define methods with the same signature
+	\item Each has access to the fields of its class
+	\item Superclass satisfies static type check
+	\item Subclass method is called at runtime - it overrides the superclass version
+\end{itemize}
+\section{Method lookup}
+\begin{itemize}
+	\item The variable is accessed
+	\item The object stored in the variable is found
+	\item The class of the object is found
+	\item The class is searched for a method match
+	\item If no match is found, the superclass is searched
+	\item This is repeated until a match is found, or the class hierarchy is exhausted
+	\item Overriding methods take precedence
+\end{itemize}
+\section{Super call in methods}
+\begin{itemize}
+	\item Overriden methods are hidden, but we often still want to be able to call them
+	\item An overriden method can be called from the method that overrides it
+	\begin{itemize}
+		\item \mintinline{java}{super.method(...)}
+	\end{itemize}
+\end{itemize}
+\section{Method polymorphism}
+\begin{itemize}
+	\item Method calls are polymorphic - the actual method called depends on the dynamic object type
+\end{itemize}
+\section{The Object class' methods}
+\begin{itemize}
+	\item Methods in the objects are inherited by all classes
+	\item Any of those may be overriden
+	\item The \mintinline{java}{toString} method is commonly overriden:
+	\begin{itemize}
+		\item \mintinline{java}{public String toString()}
+		\item Returns a string representation of the object
+		\item The programmer might want a custom representation of the data as a string
+		\item Note that calls to println with just an object automatically result in toString being called
+	\end{itemize}
+	\item Equals can also be overridden if the manner in which two things equal each other is not the traditional definition
+\end{itemize}
+\section{Protected access}
+\begin{itemize}
+	\item Private access in the superclass may be too restrictive for a subclass
+	\item The closer inheritance relationship is supported by protected access
+	\item Protected access is more restricted than public access
+	\item It is still recommended to keep fields provided and to define protected accessors and mutators 
+\end{itemize}
 \begin{center}
-	\includegraphics[scale=0.7]{inherit}
+	\includegraphics[scale=0.6]{"protected access"}
 \end{center}
-
-
 
 
 

@@ -1,0 +1,108 @@
+\documentclass{article}[18pt]
+\input{../../../../format}
+\lhead{Programming Paradigms - OO Programming}
+\usepackage{minted}
+\setminted[java]{tabsize=4}
+\begin{document}
+\begin{center}
+\underline{\huge Building GUIs}
+\end{center}
+\begin{definition}[Stage]
+The window, along with decorations like a menu bar and window controls
+\end{definition}
+\begin{definition}[Scene]
+The area inside the window in which to put the content
+\end{definition}
+\section{Creating a stage}
+\begin{minted}{java}
+public void initialiseGUI1(){
+	Stage stage = new Stage();
+	stage.setTitle("Hello World");
+	stage.show();
+}
+\end{minted}
+\section{Launching the GUI}
+\begin{itemize}
+	\item Usually just extending the application class, but it is slightly different in Bluej
+\end{itemize}
+\begin{minted}{java}
+public void launchFX(){
+	new JFXPanel();
+	Platform.setImplicitExit(false);
+	Platform.runLater(() -> initialiseGUI1());
+}
+\end{minted}
+\subsection{Lambda expressions}
+\begin{itemize}
+	\item They were added to Java 8 for defining anonymous methods
+	\item e.g
+\end{itemize}
+\begin{minted}{java}
+() -> initialiseGUI1()
+\end{minted}
+\section{Adding content to the scene}
+\begin{minted}{java}
+public void initialiseGUI2(){
+	Stage stage = new Stage();
+	stage.setTitle("Hello World");
+	Button btn = new Button();
+	btn.setText("Say 'hello world'");
+	StackPane root = new StackPane(); 
+	root.getChildren().add(btn);
+	stage.setScene(new Scene(root, 300, 250));
+	stage.show();
+}
+\end{minted}
+\section{Event Handling}
+\begin{itemize}
+	\item Events correspond to use interactions with components
+	\item Clicking on a button causes an ActionEvent
+	\item An object implements the EventHandler interface
+	\begin{itemize}
+		\item Defines a handle method
+	\end{itemize}
+	\item It registers as a handler with setOnAction
+\end{itemize}
+\section{Nested class syntax}
+Class definitions may be nested
+\begin{minted}{java}
+public class enclosing
+{
+	private class Innner
+	{
+		...
+	}
+}
+\end{minted}
+\subsection{Inner classes}
+\begin{itemize}
+	\item Instances of the inner class are localised within the enclosing class
+	\item Instances of the inner class have access to the private members of the enclosing class
+\end{itemize}
+\subsubsection{Anonymous inner classes}
+\begin{itemize}
+	\item Obey the rules of inner classes
+	\item Used to create one-off objects for which a class name is not required
+	\item Use a special syntax
+	\item The instance is always referenced by its supertype, as it has no subtype name
+\end{itemize}
+\section{Anonymous event handler}
+\begin{minted}{java}
+btn.setOnAction(new EventHandler<ActionEvent>() {
+	@Override                
+	public void handle(ActionEvent event){
+		System.out.println("Hello World");
+	}            
+});
+\end{minted}
+\begin{itemize}
+	\item Creates object with new
+	\item Overrides methods
+	\item Can be used with interfaces (only way to use interfaces with new)
+	\item @Override annotation is checked by compiler
+\end{itemize}
+
+
+
+
+\end{document}

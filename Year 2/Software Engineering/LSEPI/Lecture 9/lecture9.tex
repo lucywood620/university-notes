@@ -1,0 +1,125 @@
+\documentclass{article}
+\input{../../../../format}
+\lhead{Software Engineering - LSEPI}
+\usepackage{enumerate}
+
+\definecolor{links}{HTML}{2A1B81}
+\hypersetup{colorlinks,linkcolor=,urlcolor=blue}
+
+\makeatletter
+\g@addto@macro{\UrlBreaks}{\UrlOrds}
+\makeatother
+
+
+\begin{document}
+
+\begin{center}
+	\underline{\huge Ethical \& Social Issues, Open Source}
+\end{center}
+
+
+
+
+
+
+\section{The Open Source Definition}
+What conditions does software have to satisfy to be \emph{open source}?
+
+
+\begin{enumerate}
+\item {\bf Free Redistribution:}
+The licence shall not restrict any party from selling or giving away the software as a component of an aggregate software distribution containing programs from several different sources. The licence shall not require a royalty or other fee for such sale.
+
+\item {\bf Source Code:}
+The program must include source code, and must allow distribution in source code as well as compiled form. Where some form of a product is not distributed with source code, there must be a well-publicised means of obtaining the source code for no more than a reasonable reproduction cost, preferably downloading via the Internet without charge. The source code must be the preferred form in which a programmer would modify the program. Deliberately obfuscated source code is not allowed. Intermediate forms such as the output of a preprocessor or translator are not allowed.
+
+\item {\bf Derived Works:}
+The licence must allow modifications and derived works, and must allow them to be distributed under the same terms as the licence of the original software.
+
+\item {\bf Integrity of The Author's Source Code:}
+The licence may restrict source-code from being distributed in modified form only if the licence allows the distribution of ``patch files'' with the source code for the purpose of modifying the program at build time. The licence must explicitly permit distribution of software built from modified source code. The licence may require derived works to carry a different name or version number from the original software.
+
+\item {\bf No Discrimination Against Persons or Groups:}
+The licence must not discriminate against any person or group of persons.
+
+\item {\bf No Discrimination Against Fields of Endeavour:}
+The licence must not restrict anyone from making use of the program in a specific field of endeavour. For example, it may not restrict the program from being used in a business, or from being used for genetic research.
+
+
+\item {\bf Distribution of Licence:}
+The rights attached to the program must apply to all to whom the program is redistributed without the need for execution of an additional licence by those parties.
+
+\item {\bf Licence Must Not Be Specific to a Product:}
+The rights attached to the program must not depend on the program's being part of a particular software distribution. If the program is extracted from that distribution and used or distributed within the terms of the program's licence, all parties to whom the program is redistributed should have the same rights as those that are granted in conjunction with the original software distribution.
+
+\item {\bf Licence Must Not Restrict Other Software:}
+The licence must not place restrictions on other software that is distributed along with the licenced software. For example, the licence must not insist that all other programs distributed on the same medium must be open-source software.
+
+\item {\bf Licence Must Be Technology-Neutral:}
+No provision of the licence may be predicated on any individual technology or style of interface.
+\end{enumerate}
+
+\begin{itemize}
+\item ``The process involves human judgement \ldots This means that if you think you've found a loophole then you don't quite understand how this works.''
+\item Try to avoid creating new licenses.
+\end{itemize}
+
+
+\newpage
+\section{How to Tell if a Licence is Open Source}
+
+\begin{itemize}
+\item The {\bf Desert Island} test.
+
+    Imagine a castaway on a desert island with a solar-powered computer. This would make it impossible to fulfil any requirement to make changes publicly available or to send patches to some particular place. This holds even if such requirements are only upon request, as the castaway might be able to receive messages but be unable to send them. To be free, software must be modifiable by this unfortunate castaway, who must also be able to legally share modifications with friends on the island.
+
+\item The {\bf Dissident} test.
+
+    Consider a dissident in a totalitarian state who wishes to share a modified bit of software with fellow dissidents, but does not wish to reveal the identity of the modifier, or directly reveal the modifications themselves, or even possession of the program, to the government. Any requirement for sending source modifications to anyone other than the recipient of the modified binary---in fact any forced distribution at all, beyond giving source to those who receive a copy of the binary---would put the dissident in danger. For software to be considered free, it must not require any such ``excess'' distribution.
+
+\item The {\bf Tentacles of Evil} test.
+
+    Imagine that the author is hired by a large evil corporation and, now in their thrall, attempts to do the worst to the users of the program: to make their lives miserable, to make them stop using the program, to expose them to legal liability, to make the program non-free, to discover their secrets, etc. The same can happen to a corporation bought out by a larger corporation bent on destroying free software in order to maintain its monopoly and extend its evil empire. The licence cannot allow even the author to take away the required freedoms!
+\end{itemize}
+
+
+
+
+
+
+
+\section{Example: GNU General Public Licence (GPL)}
+In brief:
+\begin{itemize}
+\item You can copy and distribute the program
+\item You can charge a fee for transferring the program or providing warranty protection
+\item You can modify the program and distribute your resulting derivative work
+\item If you need distribute your derivative work, you need to license it under the GPL, otherwise your licence to use the program terminates
+\item You may distribute the program or work based on it in object code or executable form as long as you either:
+\begin{enumerate}
+\item include the complete machine-readable source code
+\item include a written offer to give any third party the source code for a charge that is no more than the cost of distribution
+\item information you received as to such an offer
+\end{enumerate}
+\end{itemize}
+
+
+
+\section{Example: GNU General Public Licence (GPL)}
+\begin{itemize}
+\item GPL versions 2 and 3 are commonly used.
+\item GPLv3 is compatible with some other open source licences.
+\item GPLv3 includes a patent licence to use any of the patents required to use the software
+\item GPLv3 gives you explicit permission to remove Digital Rights Management (DRM) from the software
+\item In practice, software is often licensed as ``GPL version 2 or any later version'' or ``GPL version 3 or any later version''
+\item You {\bf cannot} link GPL software with software that has an incompatible licence
+\begin{itemize}
+\item The Lesser GPL (LGPL) does allow you to do this e.g. in a shared library, as long as the code for the library is released under the LGPL and you can update the library to a newer version.
+\end{itemize}
+\end{itemize}
+
+
+
+
+
+\end{document}

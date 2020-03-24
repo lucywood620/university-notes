@@ -8,13 +8,159 @@
 \underline{\huge Extreme Programming (XP)}
 \end{center}
 \section{Plan-driven vs Agile}
-\begin{defin}[Plan Driven]
+\begin{definition}[Plan Driven]
 Well established means for transferring knowledge about how to structure and design systems
 \begin{itemize}
 	\item Tend to put emphasis upon following procedures, and making use of notations to create models of the system
 	\item Work well for those classes of problem that lend themselves to being modelled using widely-available forms
 \end{itemize}
-\end{defin}
+\end{definition}
+\begin{definition}[Agile]
+More flexible and more centred around "concepts" and "social models"
+\begin{itemize}
+	\item They still require discipline in their application, and risk degenerating to a "code and fix" form without this
+	\item There is often still a need to determine the type of system architecture required, and what its main elements should be
+\end{itemize}
+\end{definition}
+\section{Evolution of agile forms}
+\begin{itemize}
+	\item Waterfall model - descriptor of the over-arching process borrowed from a manufacturing context, but in practice each step is not as precise as implied
+	\item Prototyping
+	\item Spiral model - Incremental form
+	\item Rapid application development
+	\item Scrum - process driven approach
+	\item DevOps - operations staff involved in process
+\end{itemize}
+\section{Extreme Programming}
+Employs a mix of practices and techniques (rather than procedures) so forms a well established and sell defined example of the agile concept
+\subsection{Characterising XP}
+\subsubsection{Values}
+Communication:
+\begin{itemize}
+	\item Rich collection of procedures and activities to support this
+	\item Stakeholders include customers, users, developers
+\end{itemize}
+Feedback:
+\begin{itemize}
+	\item Emphasis is on delivering quality, rather than on speed
+\end{itemize}
+Simplicity:
+\begin{itemize}
+	\item Every aspect of the system must be justified
+\end{itemize}
+Courage:
+\begin{itemize}
+	\item Confidence to do risky things and accept change
+\end{itemize}
+Respect
+\begin{itemize}
+	\item Core underpinning of an effective team approach
+\end{itemize}
+\subsubsection{Practices}
+The planning game:
+\begin{itemize}
+	\item At the start of each iteration, customers, managers and developers meet to flesh out, estimate and prioritise requirements called user stories, captured on story cards
+\end{itemize}
+Small releases:
+\begin{itemize}
+	\item Release early and release often. Each release implements more stories and adds useful functionality
+\end{itemize}
+Metaphor:
+\begin{itemize}
+	\item Basis for the system model, creating classes and methods to achieve the functionality embedded in the stories
+\end{itemize}
+Simple design:
+\begin{itemize}
+	\item Avoid "bells and whistles" and ask "does the customer really need this feature"
+\end{itemize}
+Test-first programming:
+\begin{itemize}
+	\item Write the tests before writing the code and then test continuously
+\end{itemize}
+Refactoring:
+\begin{itemize}
+	\item Restructure the code without changing functionality to simplify
+\end{itemize}
+Pair programming:
+\begin{itemize}
+	\item All code is written by two programmers working at a single machine discussing their work as they go
+\end{itemize}
+Continuous integration:
+\begin{itemize}
+	\item Code is integrated into the system as often as possible, and after passing unit tests
+\end{itemize}
+Collective ownership
+\begin{itemize}
+	\item The code is owned by all and they may make changes to it wherever they feel it necessary
+\end{itemize}
+On-site customer
+\begin{itemize}
+	\item The customer works with the team to answer questions, perform acceptance tests and monitor progress
+\end{itemize}
+40 hour weeks
+\begin{itemize}
+	\item Iterations should be sized so that overtime is not needed, on the basis that tired programmers make mistakes
+\end{itemize}
+Open workspace:
+\begin{itemize}
+	\item Developers share workspace and use shared coding standards with clear conventions
+\end{itemize}
+\section{Design in XP}
+XP is neither design-led nor plan-driven\\
+\\
+Characteristics of design strategy in XP:
+\begin{itemize}
+	\item KISS principle
+	\item Use CRC (Class/Responsibilities/Collaboration) cards
+	\item Reduce risk by using "spike" solutions where appropriate
+	\item Have a metaphor for talking/naming
+	\item Add extra functions for the customer (only)
+	\item Refactor regularly and mercilessly
+	\item Design for test
+\end{itemize}
+\section{CRC Cards}
+A "classic" modelling technique, primarily used to handle requirements elicitation\\
+\\
+CRC stands for Class-Responsibility-Collaborators and the use of the term "class" can be used to describe any design element\\
+\\
+Used to document collaborative design decisions and
+\begin{itemize}
+	\item Identify components
+	\item Discuss design issues in (customer-developer) teams
+	\item Provide an informal specification of components
+\end{itemize}
+\section{Coding}
+The popular emphasis on pair programming can easily obscure other aspects of the XP view of coding:
+\begin{itemize}
+	\item The customer is always available
+	\item The code must be written to agreed standards
+	\item The unit tests are coded first
+	\item All production code is developed by pair programming
+	\item Only one pair integrates code at a time
+	\item Integrate often
+	\item Use collective code ownership
+	\item Leave optimisation until last
+	\item Coding should involve no overtime
+\end{itemize}
+\section{Pair programming}
+All programming is undertaken by teams of two
+\begin{itemize}
+	\item One person (the driver) uses the keyboard, and the other (the observer or navigator) looks at the screen while they discuss what they are doing
+	\item The pairs swap roles on a regular basis
+	\item Provides learning benefit for less experienced programmers
+\end{itemize}
+To work it does require:
+\begin{itemize}
+	\item Mutual respect between the team
+	\item Getting used to talking while programming
+\end{itemize}
+\section{Test-First}
+\begin{itemize}
+	\item All code must have unit tests that are written before any code is produced
+	\item All code must pass unit tests before it is released
+	\item When a bug is found, tests are created
+	\item Acceptance tests are run often and the score from these is published
+\end{itemize}
 
 
 \end{document}

@@ -5,10 +5,31 @@
 
 \begin{document}
 \begin{center}
-\underline{\huge SD Methodologies III}
+\underline{\huge SCRUM Model}
 \end{center}
-\section{SCRUM}
-\subsection{Sprint}
+The Scrum process is suited for projects with rapidly changing or highly emergent requirements. Its focus is on managing iterative development rather than specific agile practices.\\
+\\
+Scrum is empirical in that it provides a means for teams to establish a hypothesis of how they think something works, try it out, reflect on the experience, and make the appropriate adjustments\\
+\\
+When to use:
+\begin{itemize}
+	\item SCRUM is best suited in the base where a cross functional team is working in a product development setting where there is a non trivial amount of work that lends itself to being split into more than one 1-4 week iteration
+\end{itemize}
+\section{Roles}
+\begin{definition}[Product Owner (PO)]
+	Single person who has the vision behind the product dev; makes a final call on what the priorities of the work are: what is top of the list in the sprint backlog; makes business decisions focused on what not how and people go through him/her to the team
+\end{definition}
+
+\begin{definition}[Scrum Team]
+	No hierarchy; 4-9 people ideally; build a shippable product in each sprint; each sprint they improve and collaboration increases between the team
+\end{definition}
+
+
+\begin{definition}[Scrum Master (SM)]
+	Has NO managerial authority over the team; facilitates team needs without authority.  Protects teams from distractions and interruptions; and teaches people to use scrum, good engineering practices, and enforces time boxes.
+\end{definition}
+
+\section{Sprint}
 \begin{center}
 	\includegraphics[scale=0.7]{sprint}
 \end{center}
@@ -16,10 +37,10 @@
 	\item The starting point for planning is the product backlog (user stories), which is the list of work to be done on the project
 	\item Once these are agreed, the team organise themselves to develop the software - the team creates a spring backlog (their to-do list for the sprint). At the end of the sprint, the work done is reviewed and presented to stakeholder. The next sprint cycle then begins
 \end{itemize}
-\subsection{Artifacts}
-\begin{defin}[Scrum Product Backlog (SPB)]
+\section{Artifacts}
+\begin{definition}[Scrum Product Backlog (SPB)]
 	A list of all things that need to be done within the project. It replaces the traditional requirements specification artifacts. These items can have a technical nature or can be user-centric e.g. in the form of user stories
-\end{defin}
+\end{definition}
 \begin{itemize}
 	\item Each scrum product backlog has certain properties that differentiate it from a simple to-do list:
 	\begin{itemize}
@@ -31,13 +52,13 @@
 		\item SPB entries can be scenarios or use cases
 	\end{itemize}
 \end{itemize}
-\subsection{SPB items (SPBI)}
+\section{SPB items (SPBI)}
 \begin{itemize}
 	\item What you have agreed to do (SPBI) in the current sprint; has an end
 	\item How is breaking the SPBIs into small pieces - sprint tasks
 	\item These tasks can be tested
 \end{itemize}
-\subsection{Meetings}
+\section{Meetings}
 Sprint planning:
 \begin{itemize}
 	\item Plan one sprint. PO and team decide what SPBIs go into sprint backlog (have top priorities); try to get it clear what they have to do and how much they can do in the time allocated (timebox)
@@ -62,7 +83,7 @@ Refinement meeting:
 \end{itemize}
 
 
-\subsection{Estimation}
+\section{Estimation}
 How much effort is involved:
 \begin{itemize}
 	\item Focus is on the collective effort not the individual effort per task
@@ -74,7 +95,7 @@ Velocity:
 	\item Measure of work completed by the development team in a given sprint
 	\item Is based on your estimated targets
 \end{itemize}
-\subsection{Advantages}
+\section{Advantages}
 \begin{itemize}
 	\item The product is broken down into a set of manageable and understandable chunks
 	\item Unstable requirements do not hold up progress
@@ -82,7 +103,7 @@ Velocity:
 	\item Customers see on-time delivery of increments and gain feedback on how the product works
 	\item Trust between customers and developers is established and a positive culture is created in which everyone expects the project to succeed
 \end{itemize}
-\subsection{Disadvantages}
+\section{Disadvantages}
 \begin{itemize}
 	\item It can be difficult to keep the interest of customers who are involved in the process
 	\item Prioritising changes can be difficult where there are multiple stakeholders
@@ -91,41 +112,8 @@ Velocity:
 	\item Team members may be unsuited to the intense involvement that characterises agile methods
 \end{itemize}
 
-\section{Kanban Boards}
-Used to track itemised work at any level:
-\begin{itemize}
-	\item Arrangement of columns to track work progress
-	\item Each column represents a step in the development process
-	\item Each user story tracked across the columns
-	\item Used to define next steps to be completed
-	\item Easy to identify progress and bottlenecks
-\end{itemize}
 
-\section{Agile}
-\subsection{User stories}
-\begin{defin}[User stories]
-User stories are part of an agile approach that helps shift the focus from writing about requirements to talking about them. All agile user stories include a written sentence or two and, more importantly, a series of conversations about the desired functionality
-\end{defin}
-\begin{itemize}
-	\item Captures the spirit
-	\item Ignores details
-	\item Make sense to customer
-	\item Delivers value to customer
-	\item End to end (full stack)
-	\item Independent
-	\item Testable
-	\item Small (1-5 days) so easy to estimate
-\end{itemize}
-\subsubsection{Behaviour Driven Development}
-\begin{defin}[Behaviour Driven Development]
-An agile process what supports and encourages collaborative development
-\end{defin}
-Built on TDD (Test Driven Development) and ATDD (Acceptance TDD), plus:
-\begin{itemize}
-	\item Where to start in the process
-	\item What to test and what not to test
-	\item How much to test in one go
-	\item What to call the tests
-	\item How to understand why a test fails
-\end{itemize}
+
+
+
 \end{document}

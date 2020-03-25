@@ -22,11 +22,42 @@ Some examples of what we want to know about include:
 	\item Execution of code
 	\item Steps in development
 	\item Specifications
-	\item Design prope
+	\item Design properties
+	\item Testing outcomes
 \end{itemize}
-
-
-
-
+\section{Attributes and Measures for Code}
+Two key attributes when thinking about development and evolution are:
+\begin{itemize}
+	\item Size
+	\item Relationships between elements
+\end{itemize}
+\subsection{Halstead's Measures}
+Focused on counting lexical tokens in programs to extract measure like
+\begin{itemize}
+	\item Number of unique operators
+	\item Number of unique operands
+	\item Total occur
+	\item Total occurrences of operands
+	\item Size of a program	
+\end{itemize}
+\subsection{Lines of code}
+Widely used as a size metric as it is easy to measure, however it has limitations:
+\begin{itemize}
+	\item Do you count empty lines?
+	\item Do you count comments
+	\item Statements can be expanded onto more lines for readability
+\end{itemize}
+\subsection{Cyclomatic Complexity}
+Defined as
+$$V(G)=e-n+2$$
+or can also be computed as number of decision points+1\\
+\\
+This means there is no penalty for writing more legible code
+\subsubsection{Compound conditions}
+\begin{itemize}
+	\item Compound conditions are a problem for this as different routes could require different numbers of decisions
+	\item The original rule treated any compound condition as a single decision
+	\item There has been a suggestion of treating each element in a compound condition as a separate decision to get an upper bound
+\end{itemize}
 
 \end{document}

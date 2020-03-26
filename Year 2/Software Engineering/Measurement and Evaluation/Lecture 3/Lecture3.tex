@@ -56,7 +56,97 @@ DIT is basically a count of tree height from a node to the root of a tree:
 	\item Wider trees are more loosely coupled, but may also indicate that the commonality between classes is not exploited well
 	\item DIT offers no significant predictive ability for fault proneness
 \end{itemize}
-
-
+\subsection{NOC: number of children}
+NOC is a count of the number of immediate subclasses of a class that exists in the class hierarchy:
+\begin{itemize}
+	\item Concerned with the scope of properties and the number of subclasses that will inherit the methods of the parent class
+	\item The number of children gives an idea of the potential influence that a class has on the design, and hence of the amount of testing of methods required
+	\item A large number may indicate a poor abstraction in the parent class, or that is is used in a variety of settings
+\end{itemize}
+This has some ability to discriminate with regard to effects of changes
+\subsection{CBO: coupling between objects}
+This is the count of the number of couples that exist between a class and other classes
+\begin{itemize}
+	\item Coupling is assumed to exist if one class uses methods or instance variables of another
+	\item Excessive coupling can be considered as being detrimental to modular design and likely to prevent reuse
+	\item May require consideration of the form and strength of coupling involved
+\end{itemize}
+This has moderate predictive ability with regard to change proneness
+\subsection{RFC: Response for a class}
+RFC provides a measure that seeks to recognise the influence of the "immediate surroundings of as class"
+\begin{itemize}
+	\item The response set of a class is the set of methods accessed by the set of methods belonging to an object of that class
+	\item The more methods can be invoked from an object, the greater its complexity in terms of the effort needed to comprehend its operation and the level of understanding required to test it
+\end{itemize}
+Research suggests some correlation with the likely number of defects/fault proneness
+\subsection{LCOM: Lack of cohesion in methods}
+LCOM is based upon the concept of cohesion. The original definition (LCOM1) was a count of the number of methods that do not share attributes
+\begin{itemize}
+	\item If some methods use one subset of state variables, while others use another subset, then there is a lack of cohesion and maybe the class should be split into two
+	\item LCOM is then a measure of the number of disjoint sets of methods of a class based upon this use of state variables
+\end{itemize}
+The value for LCOM should be 0 where a class is fully cohesive\\
+\\
+LCOM2 was later defined as:
+\begin{center}
+	Number of pairs with no common attributes - number of pairs with common attributes
+\end{center}
+\section{Pattern decay and grime}
+\begin{definition}[Grime]
+	The build up of unrelated artefacts in the classes that play roles in the implementation of a design pattern
+\end{definition}
+Metrics used to assess grime can also be used to help assess the related issue of technical debt
+\section{Cognitive dimensions}
+{\renewcommand{\arraystretch}{2}
+\begin{tabularx}{\textwidth}{|X|X|}
+\hline
+\textbf{Dimension}& \textbf{Interpretation}\\
+\hline
+Abstraction& Types and availability of abstraction mechanisms\\
+\hline
+Hidden dependencies& Important links between entities are not visible\\
+\hline
+Premature commitment& Constraints on the order of doing things\\
+\hline
+Secondary notation& Extra information provided in means other than formal syntax\\
+\hline
+Viscosity& Resistance to change\\
+\hline
+Visibility& Ability to view components easily\\
+\hline
+Closeness of mapping& Closeness of representation to domain\\
+\hline
+Consistency&Similar semantics expressed in similar syntactic forms\\
+\hline
+Diffuseness& Verbosity of language\\
+\hline
+Error proneness & Notation invites mistakes\\
+\hline
+Hard mental operations& High demand on cognitive resources\\
+\hline
+Progressive evaluation & Work to date can be checked at any time\\
+\hline
+Provisionality& Degree of commitment to actions or marks\\
+\hline
+Role-expressiveness& The purpose of a component is readily inferred\\
+\hline
+\end{tabularx}
+}
+\subsection{Using cognitive dimensions}
+Essentially this is a reflective set of metrics. In using them to assess design notations, there are limitations when using them for evaluation, including:
+\begin{itemize}
+	\item Vague definitions
+	\item CDs define properties, not if they are bad or good
+	\item A lack of clear evaluation procedures
+\end{itemize}
+However CDs do provide a framework that can be used for analysing and describing visual structures. And they remain a valuable tool in the absence of more developed models and metrics
+\section{Design notations}
+The following are issues in diagrammatic notations used for software design such as UML
+\begin{itemize}
+	\item Symbol redundancy: where there are alternative forms that can be used
+	\item Visual distance: allowing easy discrimination between the symbols used
+	\item Primacy of shape: shape is a good discriminator for symbols.
+	\item Textual differentiation: used to differentiate excessive graphic complexity
+\end{itemize}
 
 \end{document}

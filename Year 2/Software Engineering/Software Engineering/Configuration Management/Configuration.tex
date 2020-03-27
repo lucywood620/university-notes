@@ -1,0 +1,80 @@
+\documentclass{article}[18pt]
+\input{../../../../format}
+\lhead{Software Engineering}
+
+
+\begin{document}
+\begin{center}
+\underline{\huge Configuration Management}
+\end{center}
+\begin{definition}[Configuration Management]
+Concerned with the policies, processes and tools with managing changing software systems
+\end{definition}
+You need CM because it is easy to lose track of what changes and component versions have been incorporated into each system version
+\section{Overview}
+Change management:
+\begin{itemize}
+	\item Keeping track of requests for changes to the software for customers and developers, working out the costs and impact of changes, and deciding the changes should be implemented
+\end{itemize}
+Version management
+\begin{itemize}
+	\item Keeping track of the multiple versions of software components and ensuring that changes made to components by different developers do not interfere with each other
+\end{itemize}
+System building
+\begin{itemize}
+	\item The process of assembling program components, data and libraries, then compiling these to create an executable system
+\end{itemize}
+Release management:
+\begin{itemize}
+	\item Preparing software for external release and keeping track of the system versions that have been released for customer use
+\end{itemize}
+\section{Change management}
+To be effective must:
+\begin{itemize}
+	\item Identify areas of potential conflict
+	\item Address the needs of everyone in the organisation
+	\item Bridge the gap between the aspirations of managers and the people affected by the change
+\end{itemize}
+\subsection{Impact analysis}
+Factors in impact analysis:
+\begin{itemize}
+	\item The consequence of not making the change
+	\item The benefits of the change
+	\item The number of users affected by the change
+	\item The costs of making the change
+	\item The product release cycle
+\end{itemize}
+\newpage
+\section{Version Management}
+\begin{definition}[Codelines]
+A sequence of versions of source code with later versions in the sequence derived from earlier versions\\
+Known as a branch in Git
+\end{definition}
+\begin{definition}[Baselines]
+Specifies the component versions that are included in the system plus a specification of the libraries used, configuration files etc
+\end{definition}
+\section{System Building}
+This is just an automated build system, think \texttt{make} for C or any of the build systems static site generators use
+\section{Release management}
+\begin{itemize}
+	\item A system release is a version of a software system that is distributed to customers
+	\item For mass market software it is usually possible to identify two types of release:
+	\begin{itemize}
+		\item Major releases which deliver significant new functionality
+		\item Minor releases which repair bugs and fix customer problems that have been reported
+	\end{itemize}
+	\item For custom software or software product lines, releases of the system may have to be produced for each customer and individual customers may be running several different releases of the system at the same time
+\end{itemize}
+\section{Release tracking and reproduction}
+When a system release is produced, it must be documented to ensure that it can be recreated exactly in the future
+\begin{itemize}
+	\item Customers may use a single release of these systems for many years and may require specific changes to a particular software system long after its original release date
+\end{itemize}
+To document a release, you have to record:
+\begin{itemize}
+	\item The specific versions of the source code components that were used to create the executable code
+	\item The versions of the operating system, libraries, compilers and other tools used to build the software
+	\item And keep copies of the source code files, corresponding executables and all data and configuration files
+\end{itemize}
+
+\end{document}

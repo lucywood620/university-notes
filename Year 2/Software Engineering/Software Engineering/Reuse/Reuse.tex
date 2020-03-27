@@ -1,0 +1,134 @@
+\documentclass{article}[18pt]
+\input{../../../../format}
+\lhead{Software Engineering}
+
+
+\begin{document}
+\begin{center}
+\underline{\huge Software Reuse}
+\end{center}
+\begin{definition}[Software reuse]
+Using existing software artifacts to construct a new software system
+\end{definition}
+\begin{definition}[Artifact]
+A piece of formalised knowledge that can contribute to the software development process
+\end{definition}
+There are two types of software artifacts
+\begin{itemize}
+	\item Software products that are created as deliverables during the development process
+	\item Development knowledge that is applied to the process
+\end{itemize}
+\section{Reuse levels}
+Abstraction level
+\begin{itemize}
+	\item Use the concepts, not actual code
+\end{itemize}
+Object level:
+\begin{itemize}
+	\item Reuse objects or functions from code
+\end{itemize}
+Component level:
+\begin{itemize}
+	\item Reuse a collection of objects and object classes
+\end{itemize}
+System level:
+\begin{itemize}
+	\item Reuse the whole system
+\end{itemize}
+\section{Reusable assets in the software lifecycle}
+Requirements:
+\begin{itemize}
+	\item Analysis: Project models, histories, system simulations
+	\item Requirements specifications, trade studies, cost models
+\end{itemize}
+Design:
+\begin{itemize}
+	\item Designs, standards, frameworks, consumer reports, historical engineering costs, design simulations
+\end{itemize}
+Develop:
+\begin{itemize}
+	\item Code modules, programmer's manuals, operating manuals, unit test cases, codes simulations, operating training programs
+\end{itemize}
+Integrate and test:
+\begin{itemize}
+	\item System and subsystem test plans, procedures and cases; detailed interface simulations
+\end{itemize}
+Maintain:
+\begin{itemize}
+	\item Problem/trouble report tracking systems, regression test plans, procedures, cases
+\end{itemize}
+\section{Benefits of software reuse}
+\begin{itemize}
+	\item Reduced development costs - fewer components to spec, designed, implemented etc
+	\item Accelerated development - reduction in development and validation time
+	\item Increased dependability - tried and tested
+	\item Reduced process risk - reduced margin of error in project cost estimation
+	\item Effective use of specialists - encapsulation of their knowledge; not re-inventing the wheel
+	\item Standards compliance
+\end{itemize}
+\section{Problems with reuse}
+\begin{itemize}
+	\item Increased maintenance costs - source code of reused component etc not available
+	\item "Not-invented-here syndrome" - software engineers prefer to write own code as it has better quality
+	\item Creating, maintaining and using a component library - populating and structuring can be expensive. The development processes used need to be adapted so they can use the library
+	\item Finding, understanding and adapting reusable components- components in library need to be understood and adapted for new environment
+\end{itemize}
+\section{COTS product reuse}
+\begin{definition}[COTS]
+Commercial off the shelf - a software system that can be adapted for different customers without changing the source code of the system
+\end{definition}
+COTS systems have generic features and so can be used/reused in different environments\\
+\\
+COTS products are adapted by using built in configuration mechanisms that allow the functionality of the system to be tailored to specific customer needs
+\subsection{Benefits of COTS reuse}
+As with other types of reuse, more rapid deployment of a reliable system may be possible\\
+\\
+It is possible to see what functionality is provided by the applications and so it is easier to judge whether or not they are likely to be suitable\\
+\\
+Some development risks are avoided by using existing software. However, this approach has its own risks\\
+\\
+Businesses can focus on their core activity without having to devote a lot of resources to IT systems development\\
+\\
+As operating platforms evolve, technology updates may be simplified as these are the responsibility of the COTS product vendor rather than the customer
+\subsection{Problems of COTS reuse}
+Requirements usually have to be adapted to reflect the functionality and mode of operation of the COTS product\\
+\\
+The COTS product may be based on assumptions that are practically impossible to change\\
+\\
+Choosing the right COTS system for an enterprise can be a difficult process, especially as many COTS products are not well documented\\
+\\
+There may be a lack of local expertise to support systems development\\
+\\
+The COTS product vendor controls system support and evaluation
+\subsection{Risks of using COTS}
+Vendor risks:
+\begin{itemize}
+	\item Failure of vendor to provide support when required
+	\item Vendor goes out of business or drops product from its portfolio
+\end{itemize}
+Product risks:
+\begin{itemize}
+	\item Incompatible event/data model with other systems
+	\item Inadequate performance when integrated with other systems
+	\item Product is undependable in intended operating environment
+\end{itemize}
+Process risk
+\begin{itemize}
+	\item Time required to understand how to integrate product is higher than expected
+\end{itemize}
+\subsubsection{Risks reduction}
+\begin{itemize}
+	\item Only dealing with vendors that allow access to source code if they go out of business
+	\item By extensive research and testing of product capabilities before using, discussion with other users etc
+	\item In general though, because COTS are provided by external vendors, risk reduction is difficult
+\end{itemize}
+\section{Reuse costs}
+\begin{itemize}
+	\item The costs of the time spent in looking for software to reuse and assessing whether or not it meets your needs
+	\item Where applicable, the costs of buying the reusable software for large off the shelf systems can be very high
+	\item The costs of adapting and configuring the reusable software components or systems to reflect the requirements of the system that you are developing
+	\item The costs of integrating reusable software elements with each other and with the new code that you have developed
+\end{itemize}
+
+
+\end{document}

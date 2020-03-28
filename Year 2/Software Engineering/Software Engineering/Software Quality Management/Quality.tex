@@ -1,0 +1,135 @@
+\documentclass{article}[18pt]
+\input{../../../../format}
+\lhead{Software Engineering}
+
+
+\begin{document}
+\begin{center}
+\underline{\huge Software Quality Management}
+\end{center}
+Concerned with ensuring that the required level of quality is achieved in a software product\\
+\\
+Two typical concerns:
+\begin{itemize}
+	\item At the organisational level, quality management is concerned with establishing a framework of organisational processes and standards that will lead to high quality software
+	\item At the project level, quality management involves establishing a quality plan for a project which sets out the quality goals for the project and define what processes and standards are to be used; also checking that these planned processes have been followed
+\end{itemize}
+\section{Quality management activities}
+Quality management provides an independent check on the software development process\\
+\\
+The quality management process checks the project deliverables to ensure that they are consistent with organisational standards and goals\\
+\\
+The quality team should be independent from the development team so that they can take an objective view of the software. This allows them to report on software quality without being influenced by software development issues
+\section{Quality planning}
+A quality plan sets out the desired product qualities and how these are assessed and defines the most significant quality attributes.\\
+\\
+The quality plan should define the quality assessment process\\
+\\
+It should set out which organisational standards should be applied and, where necessary, define new standards to be used
+\section{Software quality}
+Quality, simplistically means that the product should meet its specification\\
+\\
+This is a problem for software systems:
+\begin{itemize}
+	\item There is a tension between customer quality requirements and developer quality requirements
+	\item Some quality requirements are difficult to specify in an unambiguous way
+	\item Software specifications are usually incomplete and often inconsistent
+\end{itemize} 
+\subsection{Software fitness for purpose}
+\begin{itemize}
+	\item Have programming and documentation standards been followed in the development process?
+	\item Has the software been properly tested
+	\item Is the software sufficiently dependable to be put into use
+	\item Is the performance of the software acceptable for normal use
+	\item Is the software usable
+	\item Is the software well structured and understandable
+\end{itemize}
+\section{Reviews and inspections}
+Both are quality assurance activities to check the quality of project deliverables: documents to find potential problems\\
+\\
+There are different types of review with different objectives:
+\begin{itemize}
+	\item Inspections for defect removal (product)
+	\item Reviews for progress assessment (product and process)
+	\item Quality reviews (product and standards)
+\end{itemize}
+Software or documents may be "signed off" at a review which signifies that progress to the next development stage has been approved by management
+\subsection{Review process}
+Code, designs, specifications, test plans, standards etc can all be reviewed\\
+\\
+Review should check consistency and completeness of the docs or code under review and make sure quality standards have been followed
+\subsection{Code inspection}
+Team members from different backgrounds examine source code line by line with the aim of discovering errors and defects\\
+\\
+A defect is a block of code which does not properly implement its requirements or could be improved\\
+\\
+Checklist of common programming errors is often used to focus the search for bugs\\
+\\
+Each organisation should also develop its own checklist based on local standards and practices
+\subsection{Agile methods}
+Reviews are usually informal in agile development\\
+\\
+Agile processes rarely use formal inspection or peer review processes\\
+\\
+Rather, they rely on team members cooperating to check each others code
+\section{Estimation}
+Estimating project costs is one of the crucial aspects of project planning and management\\
+\\
+Estimating cost has to be done as early as possible during the project life cycle\\
+\\
+Types of costs:
+\begin{itemize}
+	\item Facilities: hardware, space, furniture, telephone etc
+	\item Software tools for designing software
+	\item Staff (effort): the biggest component of cost
+\end{itemize}
+\subsection{Estimation techniques}
+Organisations need to make software effort and cost estimates. There are a few techniques that can be used to do this
+\subsubsection{Expert judgement}
+The estimate of future effort requirements are based on the managers experience of past projects and the application domain. Essentially, the manager makes an informed judgement of what the effort requirements are likely to be\\
+\\
+The disadvantage of this is that it is no better than the expertise and objectivity of the estimator, who may be biased. This is overcome by having a group consensus
+\subsubsection{Top down}
+\begin{itemize}
+	\item Estimate overall cost from global properties of the product
+	\item Split up among various components
+	\item Disadvantage: low level tech problems not identified
+\end{itemize}
+\subsubsection{Bottom up}
+\begin{itemize}
+	\item Estimate made for each component by the developer
+	\item Costs summmed
+	\item Disadvantage: can look over many system level costs
+\end{itemize}
+\subsubsection{Algorithmic cost modelling}
+In this approach, a formulaic approach is used to compute the project effort based on estimates of product attributes, such as size, and process characteristics, such as experience of staff involved, reuse and approach to software development\\
+\\
+An example of this is CoCoMo II, this algorithmic model uses:
+\begin{itemize}
+	\item Scale drivers (on a 5 point scale) describe your project and determine the exponent in the effort equation based primarily on the software project size
+	\item Cost drivers (15 of these) assess the project development environment and team
+	\item Scale drivers:
+	\begin{itemize}
+		\item \textbf{Precedentedness} - is the project comparable to projects your team has done before
+		\item \textbf{Dev flexibility} - are your reqs flexible, or must you meet them all?
+		\item \textbf{Architecture/risk resolution} - to what degree have you already defined the architecture
+		\item \textbf{Team cohesion} - how would you describe the relationships among the stakeholders?
+		\item \textbf{Process maturity}
+	\end{itemize}
+\end{itemize}
+\subsection{Causes of inaccurate estimates}
+\begin{itemize}
+	\item Frequent request for change by users
+	\item Overlooked tasks
+	\item User's lack of understanding of the requirements
+	\item Insufficient analysis when developing estimates
+	\item Lack of coordination of system development, technical services, operations, data administration and other functions during development
+	\item Lack of an adequate method or guidelines for estimating
+	\item Complexity of the proposed application system
+	\item Capabilities of the project team members/number of project team members
+	\item Project team's experience with the application, the programming language and hardware
+	\item Extent of programming and documentation standards
+\end{itemize}
+
+
+\end{document}

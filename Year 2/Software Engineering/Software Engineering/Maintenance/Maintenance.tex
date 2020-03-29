@@ -1,0 +1,84 @@
+\documentclass{article}[18pt]
+\input{../../../../format}
+\lhead{Software Engineering}
+
+
+\begin{document}
+\begin{center}
+\underline{\huge Software Maintenance}
+\end{center}
+\section{Types of maintenance}
+\begin{definition}[Corrective Maintenance]
+	Fixed/repaired
+\end{definition}
+\begin{definition}[Adaptive maintenance]
+	Adapted to changing needs
+\end{definition}
+\begin{definition}[Perfective maintenance]
+	Improved in performance or maintainability
+\end{definition}
+\begin{definition}[Preventive maintenance]
+	Improved by fixing bugs before they activate
+\end{definition}
+\section{Maintenance problems}
+Staff problems:
+\begin{itemize}
+	\item Limited understanding
+	\item Management priorities
+	\item Morale
+\end{itemize}
+Technical problems:
+\begin{itemize}
+	\item Artifacts and paradigms
+	\item Testing difficulties
+\end{itemize}
+\section{Process metrics}
+May be used to assess maintainability:
+\begin{itemize}
+	\item Number of requests for corrective maintenance
+	\item Average time required for impact analysis
+	\item Average time taken to implement a change request
+	\item Number of outstanding change requests
+\end{itemize}
+\section{Techniques for maintenance}
+\begin{definition}[Program comprehension]
+	Reading and understanding programs in order to implement change
+\end{definition}
+\begin{definition}[Reverse engineering]
+Analyse software to identify the components and their inter-relationships to produce call graphs and control flow graphs
+\end{definition}
+\begin{definition}[Migration]
+Modify to run in a different environment
+\end{definition}
+\begin{definition}[Re-engineering]
+Restructuring or rewriting part or all of a legacy system without changing its functionality to make it easier to maintain
+\end{definition}
+\section{Re-engineering}
+\begin{center}
+	\includegraphics[scale=0.7]{re-engineering}
+\end{center}
+\subsection{Refactoring vs re-engineering}
+Refactoring is a continuous process of improvement throughout the development and evolution process. It is intended to avoid the structure and code degradation that increases the costs and difficulties of maintaining a system.\\
+\\
+Re-engineering takes place after a system has been maintained for some time and maintenance costs are increasing. You use automated tools to process and re-engineer a legacy system to create a new system that is more maintainable. 
+\section{Legacy systems}
+Multiple strategies for legacy systems:
+\begin{itemize}
+	\item Scrap the system completely
+	\item Continue maintaining the system
+	\item Transform the system by re-engineering to improve its maintainability
+	\item Replace the system with a new system
+\end{itemize}
+\subsection{Legacy system categories}
+{\renewcommand{\arraystretch}{2}
+\begin{tabularx}{\textwidth}{|X|X|X|}
+\hline
+& Low quality & High quality\\
+\hline
+Low business value& Scrap the system & Replace with COTS, scrap or maintain\\
+\hline
+High business value& Re-engineer or replace& Continue in operation with maintenance\\
+\hline
+\end{tabularx}}
+
+\end{document}

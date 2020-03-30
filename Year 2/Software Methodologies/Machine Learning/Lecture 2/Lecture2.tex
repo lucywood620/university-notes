@@ -1,0 +1,71 @@
+\documentclass{article}[18pt]
+\input{../../../../format}
+\lhead{Software Methodologies - Machine Learning}
+
+
+\begin{document}
+\begin{center}
+\underline{\huge Linear Regression, Training and Loss}
+\end{center}
+\section{Linear regression}
+\begin{definition}[Linear regression]
+A method for finding the straight line or hyperplane that best fits a set of points
+\end{definition}
+$$y=b+w_1x_1$$
+y - the predicted label\\
+b - the bias, sometimes referred to as $w_0$\\
+$w_1$ - the weight of feature 1\\
+$x_1$ - a feature
+\section{Training and loss}
+\begin{definition}[Training a model]
+Learning good values for all weights and the bias from labelled examples
+\end{definition}
+\begin{definition}[Loss]
+The penalty for a bad prediction
+\end{definition}
+\begin{definition}[Empirical Risk Minimisation]
+The process of examining many examples and attempting to find a model that minimises loss
+\end{definition}
+\subsection{Squared loss}
+The square of the difference between the label and the prediction
+$$(\text{observation}-\text{prediction}(x))^2$$
+$$(y-\hat{y})^2$$
+\subsection{Mean square error}
+$$MSE=\dfrac{1}{N}\sum_{(x,y)\in D}(y-\text{predicition}(x))^2$$
+(x,y) is an example where
+\begin{itemize}
+	\item x is the set of features used by the model to make predictions
+	\item y is the example's label
+\end{itemize}
+prediction(x) is a function of the weights and bias in combination with the set of features x\\
+D is the dataset containing many labelled examples\\
+N is the number of examples in D
+\section{Reducing loss}
+\begin{itemize}
+	\item Hyperparameters are the configuration settings used to tune how the model is trained
+	\item Derivative of loss with respect to weights and biases tells us how loss changes for a given example
+	\item So we repeatedly take small steps in the direction that minimises loss, we call these \textbf{Gradient steps}
+\end{itemize}
+\begin{center}
+	\includegraphics[scale=0.5]{"Gradient Descent"}
+\end{center}
+\subsection{Weight initialisation}
+For convex problem, weights can start anywhere forming a graph that looks like $x^2$\\
+\\
+Foreshadowing: not true for neural networks
+\begin{itemize}
+	\item More than one minimum
+	\item Strong dependency on initial values
+\end{itemize}
+\subsection{Efficiency of reducing loss}
+\begin{itemize}
+	\item Could compute gradient over entire dataset on each step, but this turns out to be unnecessary
+	\item Computing gradient on small data examples works well
+	\item \textbf{Stochastic Gradient Descent} - one example at a time
+	\item \textbf{Mini-batch Gradient Descent} - batches of 10-1000
+\end{itemize}
+\subsection{Learning rate}
+The ideal learning rate in one-dimension is
+$$\dfrac{1}{f(x)''}$$
+The ideal learning rate for 2 or more dimension is the inverse of the Hessian (matrix of second partial derivatives)
+\end{document}

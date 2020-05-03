@@ -1,0 +1,66 @@
+\documentclass{article}[18pt]
+\input{../../../../format}
+\lhead{Theory of Computation - Algorithms and Complexity}
+\newtheorem{theorem}{Theorem}
+
+\begin{document}
+\begin{center}
+\underline{\huge Coping with Intractability}
+\end{center}
+If an optimisation problem is NP-hard we generally regard it as intractable\\
+\\
+We traditionally cope with this in the following ways
+\begin{enumerate}
+	\item Restrict the input
+	\item Use heuristics
+	\item Use approximation algorithms
+	\item Random, fixed parameter, exact algorithms, average case etc
+\end{enumerate}
+\section{Restricting the input}
+A planar graph is a graph that can be drawn in the plane without edge crossings
+\begin{theorem}
+	Every planar graph is 4-colourable
+\end{theorem}
+So 4 colouring is trivial for planar graphs, the answer is always yes
+\begin{theorem}
+3 colouring is NP complete for planar graphs
+\end{theorem}
+\begin{theorem}
+Every triangle free planar graph is 3 colourable
+\end{theorem}
+Hence 3 colouring is trivial for triangle free planar graphs
+\section{Using Heuristics}
+A well know heuristic for colouring is first fit
+\begin{itemize}
+	\item Order the vertices of an n-vertex graph G as $v_1,...,v_n$
+	\item Colour the vertices one by one in that order assigning the smallest available colour
+	\item So, $v_i$ gets the smallest colour $x$ not used on $N(v_i)\cap\{v_1,...,v_{i-1}\}$ where $N(v_i)$ denotes the neighbourhood of $v_i$ in $G$
+	\item Every tree is bipartite so can eb coloured with at most 2 colours
+\end{itemize}
+\section{Approximation algorithms}
+\begin{itemize}
+	\item An algorithm is a k-approximation if it always finds a solution that is a factor of k within the optimum
+\end{itemize}
+\subsection{Vertex cover}
+Here is an approximation algorithm for vertex cover
+\begin{lstlisting}[caption=Approx-Vertex-Cover({G=(V,E)})]
+C=$\varnothing$
+E'=E(G)
+while E'$\neq\varnothing$ do
+	let (u,v) be an arbitrary edge of E'
+	C=C$\cup${u,v}
+	remove from E' every edge incident with either u or v
+return C
+\end{lstlisting}
+\begin{theorem}
+	The algorithm is a 2 approximation for vertex cover
+\end{theorem}
+\textbf{Proof}
+\begin{itemize}
+	\item Let $C=\{u_1,v_1,u_2,v_2,...,u_p,v_p\}$ be the output, where the edges $(u_i,v_i)$ were chosen in executions of step 3, so $|C|=2p$
+	\item By construction, $G-C$ has no edges so C is a vertex cover
+	\item Let $C^*$ be a minimum vertex cover of G. As $(u_i,v_i)$ is an edge, at least one of $u_i,v_i$ belongs to $C^*$. So $|C^*|\geqslant p$. Hence $|C|=2p\leqslant 2|C^*|$
+\end{itemize}
+
+
+\end{document}

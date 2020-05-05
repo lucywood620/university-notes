@@ -1,0 +1,144 @@
+\documentclass{article}[18pt]
+\input{../../../../format}
+\lhead{Software Methodologies - Computer Graphics}
+
+
+\begin{document}
+
+\begin{center}
+	\underline{\huge Texture Mapping}
+\end{center}
+\begin{itemize}
+	\item A method for adding surface details
+	\item Aims at increasing realism
+	\begin{itemize}
+		\item Relying on mesh geometry to create such details is expensive
+		\item Lighting/shading models are not enough
+	\end{itemize}
+	\item Associate 2D information with 3D surface
+\end{itemize}
+\section{Texture and 3D object}
+\begin{itemize}
+	\item Texture image: 2D array of colour values (Texels)
+	\item Assigning texture coordinates (s,t) at vertex with object coordinates (x,y,z,w)
+	\begin{itemize}
+		\item Use interpolated (s,t) for texel lookup at each pixel
+		\item Use the retrieved colour value to modify a polygon's colour (or other surface properties)
+		\item Can be done manually or automatically
+	\end{itemize}
+\end{itemize}
+\begin{definition}[Texture Atlas]
+A large image containing a collection of sub-images, each of which is a texture for some part of an object
+\end{definition}
+\section{Types of texture mapping methods}
+\begin{definition}[Mapping]
+Identify the correspondence between a texel and a screen pixel
+\end{definition}
+There are two types of mapping methods
+\begin{definition}[Forward texture mapping]
+Compute 3D positions of the texture points and then project them onto the image plane
+\end{definition}
+\begin{definition}[Inverse texture mapping]
+Select every pixel in the image plane and identify which point of the texture image is projected there
+\end{definition}
+\section{Coordinate systems in CG application}
+\begin{definition}[Parametric Coordinates]
+A logical coordinate system for processing the surface and the internal space of a 3D object
+\end{definition}
+\begin{definition}[Texture coordinates]
+Used to identify points in the image to be mapped
+\end{definition}
+\begin{definition}[Local or world coordinates]
+Used to position 3D objects
+\end{definition}
+\begin{definition}[Window coordinates]
+Where the final output image is really produced
+\end{definition}
+\section{Types of texture mapping}
+\subsection{Forward Texture Mapping}
+Mapping from texture coordinates to points on a surface, need three functions:
+$$x=x(s,t)$$
+$$y=y(s,t)$$
+$$z=z(s,t)$$
+Main Problem - Adjacent texture points may project onto non adjacent image points, thus creating a non coloured image area
+\subsection{Backwards texture mapping}
+Given a point on an object, we identify to which point in the texture map it corresponds, need a map of the form
+$$s=s(x,y,z)$$
+$$t=t(x,y,z)$$
+Good - Make sure every object has a corresponding texel, particularly visibility of an object point is considered.\\
+Bad - Such functions are difficult to find in general
+\subsection{Two part mapping process}
+Map a texture image to a complicated shape to create texture mapping coordinates (UV map is difficult)\\
+\\
+Break the texture mapping into two parts
+\begin{itemize}
+	\item Map the texture to a simple intermediate surface
+	\item The textured intermediate surface is then mapped to the object
+\end{itemize}
+\subsection{Second mapping}
+Map from intermediate object
+\begin{itemize}
+	\item Normals from intermediate to actual
+	\item Normals from actual to intermediate
+	\item Vectors from center of intermediate
+\end{itemize}
+\section{MIP Mapping}
+Use an image pyramid to precompute coarse versions of a texture, store the whole pyramid in a single block of memory. This helps with aliasing.\\
+\\
+Advantages of MIP mapping
+\begin{itemize}
+	\item Reduce memory consumption of running application
+	\item Support anti aliasing, offering better output quality of a CG application
+	\item Only 1/3 more space required
+\end{itemize}
+\section{Normal Mapping}
+Normal vectors encoded as an image. Generate visually 3D effect by applying lighting to perturbed normal vectors on the object surface.
+\section{Bump mapping}
+\begin{itemize}
+	\item Treat the texture as a single valued height function
+	\item Compute the normal from the partial derivatives in the texture
+	\item The heights encode the amount by which to perturb N in the (u,v) directions of the parametric space describing the object surface
+\end{itemize}
+\section{Normal Map vs Bump Map}
+Bump Map:
+\begin{itemize}
+	\item Texture (greyscale) encodes height
+	\item Modifies the geometric normal
+	\item Harder to implement
+	\item Easier to specify
+\end{itemize}
+Normal map:
+\begin{itemize}
+	\item Texture (RGB) encodes normal directly
+	\item Replaces the normal
+	\item Easier to implement
+	\item Harder to specify
+\end{itemize}
+\section{Displacement Mapping}
+\begin{itemize}
+	\item Use texture map to actually move surface points
+	\item Geometry must be displaced before visibility is determined
+	\item Done as a preprocess or with complicated vertex/fragment shader implementation
+\end{itemize}
+\section{Environment Maps}
+\begin{itemize}
+	\item We can simulate reflections by using the direction of the reflected ray to index a spherical texture map at "infinity"
+	\item Assumes that all reflected rays begin from the same point
+\end{itemize}
+\section{Light mapping}
+\begin{itemize}
+	\item Realistic lighting can be achieved
+	\item Every single bit of expensive lighting calculation is done pre-process time, avoiding overhead
+	\item At run times, all calculations are done by hardware and so is very fast
+	\item Visual quality of the lighting is directly dependent on the size of the light map texture(s)
+	\item For every triangle, a diffuse texture map is applied first and then a light map is usually modulated with it
+\end{itemize}
+\section{Fog maps}
+\begin{itemize}
+	\item Dynamic modification of light maps
+	\item Put fog objects into the scene
+	\item Compute where they intersect with geometry and paint the fog density into a dynamic light map
+	\item Apply the fog map as with a light map
+\end{itemize}
+
+\end{document}

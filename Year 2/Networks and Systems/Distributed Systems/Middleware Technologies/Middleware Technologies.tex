@@ -105,5 +105,34 @@ Run time execution:
 	\end{itemize}
 \end{itemize}
 \subsection{Registries (Object Broker)}
+A registry is a running process on a host machine\\
+\\
+Name and look up remote objects:
+\begin{itemize}
+	\item Servers can register their objects
+	\item Clients can find server objects by name and obtain a remote reference
+	\item Clients can obtain a stub for a remote object
+	\item Can also request a list of remote objects from the registry
+\end{itemize}
+\section{Properties of OOM}
+Follow object oriented programming model
+\begin{itemize}
+	\item Objects, methods, interfaces, encapsulation, (and exceptions)
+\end{itemize}
+Synchronous request/reply interaction
+\begin{itemize}
+	\item Same as RPC
+\end{itemize}
+Location transparency
+\begin{itemize}
+	\item Object request broker maps object references to physical locations
+\end{itemize}
+Services comprising of multiple servers are easier to built
+\begin{itemize}
+	\item All services can be acquired through the object request broker
+	\item Geographical complexity and changes of services are hidden
+\end{itemize}
+
+
 
 \end{document}
